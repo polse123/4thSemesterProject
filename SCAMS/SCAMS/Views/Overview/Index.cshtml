@@ -9,52 +9,77 @@
 <html>
 <head>
 
-
-
-    <link href="~/Views/Login/LoginStyleSheet.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/OverviewStyleSheet.css" />
+    
 
 </head>
-<body>
-    <div id="buttons" class="buttonclass">
+    <body>
+        <div id="buttons" class="buttonclass">
 
-        <button type="button"> Start</button> <br>
-        <button type="button"> Stop</button> <br>
-        <button type="button"> Clear</button> <br>
-        <button type="button"> Abort</button> <br>
-        <button type="button"> Reset</button>
+            <button type="button"> Start</button> <br>
+            <button type="button"> Stop</button> <br>
+            <button type="button"> Clear</button> <br>
+            <button type="button"> Abort</button> <br>
+            <button type="button"> Reset</button>
 
-    </div>
+        </div>
 
-    <div id="ingredients" class="ingredientclass">
+        <div id="ingredients" class="ingredientclass">
 
-        Yeast: <input type="text" disabled> </input >
-        Hops: <input type="text" disabled> </input >
-        Wheat: <input type="text" disabled> </input >
-        Barley: <input type="text" disabled> </input >
-        Malt: <input type="text" disabled> </input >
-
-
-    </div>
-
-    <div id="batchqueue" class="batchqueueclass">
+            Yeast: <input type="text" disabled>
+            Hops: <input type="text" disabled>
+            Wheat: <input type="text" disabled>
+            Barley: <input type="text" disabled>
+            Malt: <input type="text" disabled>
 
 
-    </div>
+        </div>
 
-    <div id="livecharts" class="livechartsclass">
+        <div id="batchqueue" class="batchqueueclass">
+
+            <table>
+                <tr>
+                    <th>Number in queue:</th>
+                    <th>Amount:</th>
+                    <th>Speed:</th>
+                    <th>Type:</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>10</td>
+                    <td>100</td>
+                    <td>3</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>100</td>
+                    <td>200</td>
+                    <td>2</td>
+                </tr>
+
+            </table>
+        </div>
+
+        <div id="livecharts" class="livechartsclass">
 
 
-    </div>
+        </div>
 
-    <div id="infofields" class="infofieldsclass">
+        <div id="infofields" class="infofieldsclass">
+
+            Batch ID: <input type="text" disabled> </input>
+            Acceptable Products: <input type="text" disabled> </input>
+            Defect Products: <input type="text" disabled> </input>
+            Speed: <input type="text" disabled> </input>
+            Product Type: <input type="text" disabled> </input>
+            Machine State: <input type="text" disabled> </input>
+
+        </div>
+
+        <div id="maintenancebar" class="maintenancebarclass">
 
 
-    </div>
-
-    <div id="maintenancebar" class="maintenancebarclass">
-
-
-    </div>
-</body>
+        </div>
+    </body>
 </html>
 
