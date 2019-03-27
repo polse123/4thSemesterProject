@@ -6,6 +6,7 @@
 }
 
 <!DOCTYPE html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 <html>
 <head>
 
@@ -16,7 +17,7 @@
 <body>
     <div id="buttons" class="buttonclass">
 
-        <button type="button"> Start</button> <br>
+        <button type="button" onClick ="test()" id="start"> Start</button> <br>
         <button type="button"> Stop</button> <br>
         <button type="button"> Clear</button> <br>
         <button type="button"> Abort</button> <br>
@@ -27,10 +28,10 @@
     <div id="ingredients" class="ingredientclass">
 
         Yeast: <p id="yeast"></p>
-        Hops: <input type="text" disabled>
-        Wheat: <input type="text" disabled>
-        Barley: <input type="text" disabled>
-        Malt: <input type="text" disabled>
+        Hops: <p id="hops"></p>
+        Wheat: <p id="wheat"></p>
+        Barley: <p id="barley"></p>
+        Malt: <p id="malt"></p>
 
 
     </div>
@@ -67,12 +68,12 @@
 
     <div id="infofields" class="infofieldsclass">
 
-        Batch ID: <input type="text" disabled> </input>
-        Acceptable Products: <input type="text" disabled> </input>
-        Defect Products: <input type="text" disabled> </input>
-        Speed: <input type="text" disabled> </input>
-        Product Type: <input type="text" disabled> </input>
-        Machine State: <input type="text" disabled> </input>
+        Producing:  <p id="producing"></p>
+        Acceptable Products:  <p id="produced"></p>
+        Defect Products:  <p id="failed"></p>
+        Speed:  <p id="speed"></p>
+        Product Type:  <p id="type"></p>
+        Machine State:  <p id="state"></p>
 
     </div>
 
@@ -84,18 +85,26 @@
 </html>
 <script>
     function contentLoaded() {
-
-        var source = new EventSource('overview/message');
-
-        var yeast = document.getElementById("yeast");
-
+        var source = new EventSource('/overview/message');
         source.onmessage = function (e) {
             var opcData = JSON.parse(e.data)
-            yeast = opcData.Yeast;
-
+            console.log(e.data);
+            // set value of ingredient elements
+            $("#yeast").text(opcData.Yeast);
+            $("#malt").text(opcData.Malt);
+            $("#hops").text(opcData.Hops);
+            $("#barley").text(opcData.Barley);
+            $("#wheat").text(opcData.Wheat);
+            // set value of batch elements
+            $("#produced").text(opcData.Produced);
+            $("#failed").text(opcData.Failed);
+            $("#speed").text(opcData.Speed);
+            $("#type").text(opcData.ProductType);
+            $("#producing").text(opcData.Producing);
+            // set value of machine element
+            $("#state").text(opcData.MachineState);
         }
-
-    }
+    };
     window.addEventListener("DOMContentLoaded", contentLoaded, false);
 
 </script>

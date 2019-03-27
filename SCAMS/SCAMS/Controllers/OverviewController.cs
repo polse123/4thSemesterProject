@@ -33,21 +33,24 @@ namespace SCAMS.Controllers
             Wheat = 1000;
             Barley = 1000;
             Malt = 1000;
-            Producing = amountToProduce;
+            Producing = 100;
+            Speed = 100;
+            ProductType = 3;
             MachineState = 14;
         }
         public void update() {
-            if(Failed+Produced >= Producing || MachineState != 17) {
+            if(Producing != 0) {
                 Yeast--;
                 Hops--;
                 Wheat--;
                 Barley--;
                 Malt--;
-                if (rand.Next(0, 1) == 1) {
+                if (rand.Next(0, 2) == 1) {
                     Produced++;
                 } else {
                     Failed++; ;
                 }
+                Producing--;
             } else {
                 MachineState = 17;
             }
@@ -63,14 +66,22 @@ namespace SCAMS.Controllers
         {
             return View();
         }
+        //not being used rn
+        //public void Setup(int amountToProduce, int speed, int productType) {
+        //    opc = new OPCMachine(amountToProduce);
+        //    opc.Speed = speed;
+        //    opc.ProductType = productType;
+        //}
         public void Message() {
             Response.ContentType = "text/event-stream";
             do {
-                if (opc.MachineState != 17) {
-                    opc.update();
-                    Response.WriteAsync("data:" + JsonConvert.SerializeObject(opc, Formatting.None) + "\n\n");
+                if(opc != null) {
+                    if (opc.MachineState != 17) {
+                        opc.update();
+                        Response.WriteAsync("data:" + JsonConvert.SerializeObject(opc, Formatting.None) + "\n\n");
+                    }
                 }
-                Thread.Sleep(100);
+                Thread.Sleep((60*100)/opc.Speed);
             } while (true);
         }
     }
