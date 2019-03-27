@@ -12,6 +12,7 @@ namespace SCAMS.Controllers {
             return View();
         }
 
+        //Comment by brchr.
         public IActionResult About() {
             ViewData["Message"] = "Your application description page.";
 
