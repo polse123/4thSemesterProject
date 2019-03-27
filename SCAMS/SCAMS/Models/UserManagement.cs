@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SCAMS.Models
 {
-    public class UserCreationModel
+    public class UserManagement
     {
     }
 }

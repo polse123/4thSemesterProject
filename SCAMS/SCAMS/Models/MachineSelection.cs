@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SCAMS.Models
 {
-    public class HistoryModel
+    public class MachineSelection
     {
     }
 }
