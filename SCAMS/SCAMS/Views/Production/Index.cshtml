@@ -1,5 +1,21 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿<!DOCTYPE html>
+<html>
+<head>
+    @Styles.Render("~/Content/dropdown.css")
+</head>
+<body>
+    <div class="dropdown">
+        <button class="dropbtn" id="recipeSelect">Recipes</button>
+        <div class="dropdown-content">
+            <a href="">Test 1</a>
+            <a href="">Test 2</a>
+        </div>
+    </div>
+    <div id="textFields">
+        Speed: <input type="text" id="speedField"> </input>
+    </div>
+    <div id="button">
+        <button type="Submit" id="loginButton">Login</button>
+    </div>
+</body>
+</html>

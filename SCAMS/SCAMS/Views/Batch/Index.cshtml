@@ -1,5 +1,52 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿<!DOCTYPE html>
+<html>
+<head>
+    @Styles.Render("~/Content/BatchStyleSheet.css")
+</head>
+<body>
+    <div class="grid-container">
+        <div class="grid-item item1">
+            <button type="button" id="historyButton" class="buttons"> History</button>
+            <br>
+            <br>
+            <button type="button" id="batchReportButton" class="buttons"> Batch Report</button>
+        </div>
+        <div class="grid-item item2">
+            <div id="searchtable" class="searchclass">
+
+                <table class="searchtableclass" id="searchtableid">
+                    <tr>
+                        <th>Batch ID:</th>
+                        <th>Date:</th>
+                        <th>Type:</th>
+                        <th>Machine:</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>10</td>
+                        <td>100</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>100</td>
+                        <td>200</td>
+                        <td>2</td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+        <div class="grid-item item3">
+            Batch ID:      <input type="text" id="idSearchField" class="searchFieldClass" /><br><br>
+            Latest:      <input type="text" id="latestSearchField" class="searchFieldClass" /><br><br>
+            Date:      <input type="text" id="dateSearchField" class="searchFieldClass" /><br><br>
+            Machine:      <input type="text" id="machineSearchField" class="searchFieldClass" /><br><br>
+            Product Type:      <input type="text" id="productSearchField" class="searchFieldClass" /><br><br>
+            <button type="button" id="searchButton" class="buttons" class="searchFieldClass" > Search</button>
+        </div>
+
+    </div>
+
+</body>
+</html>

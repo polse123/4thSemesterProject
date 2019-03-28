@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
 using System.Web;
-
+using System.Web.Mvc;
 
 namespace MvcMovie.Controllers {
     public class MachineSelectionController : Controller {

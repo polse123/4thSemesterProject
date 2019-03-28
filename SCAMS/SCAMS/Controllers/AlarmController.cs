@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+using System.Web.Mvc;
 
 namespace SCAMS.Controllers
 {
     public class AlarmController : Controller
     {
-        public IActionResult Index()
+        public ActionResult Index()
         {
             return View();
         }
