@@ -2,11 +2,11 @@
 .grid-container{
     display: grid;
     grid-gap: 10px;
-    background-color: #0094ff;
+    background-color: white;
     padding: 10px;
 }
 .grid-item{
-    background-color: chartreuse;
+    background-color: lightblue;
     text-align: center;
     padding: 20px;
     font-size: 20px;
@@ -41,14 +41,48 @@
     margin: 10px 50px;
 }
 
-.buttons{
+.buttons {
     margin-top: 20px;
+   
+}
+#stop {
+    background-color: black;
+    color: white;
+}
+#clear {
+    background-color: white;
+}
+#abort {
+    background-color: red;
+    color: white;
+}
+#reset {
+    background-color: blue;
+    color: white;
 }
 
-.batchtableclass {
-    border-collapse:separate;
-    border-spacing: 20px;
+.batchtableclass, th, td {
+    border-collapse: collapse;
+    border-spacing: 10px;
+    padding: 10px;
+    border: 2px solid black;
 }
+
+.barclass{
+    width: 100%;
+    background-color: grey;
+
+}
+.level{
+    text-align: right;
+    padding: 10px;
+    color: white;
+
+
+}
+.maintenance{
+    width:50%; 
+    background-color: red;
 
 .chartsclass {
     width: 170px;
