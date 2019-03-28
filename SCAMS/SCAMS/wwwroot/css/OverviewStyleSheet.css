@@ -41,8 +41,24 @@
     margin: 10px 50px;
 }
 
-.buttons{
+.buttons {
     margin-top: 20px;
+   
+}
+#stop {
+    background-color: black;
+    color: white;
+}
+#clear {
+    background-color: white;
+}
+#abort {
+    background-color: red;
+    color: white;
+}
+#reset {
+    background-color: blue;
+    color: white;
 }
 
 .batchtableclass {
