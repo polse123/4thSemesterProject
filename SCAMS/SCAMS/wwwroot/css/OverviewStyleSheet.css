@@ -66,3 +66,20 @@
     border-spacing: 20px;
 }
 
+.barclass{
+    width: 100%;
+    background-color: grey;
+
+}
+.level{
+    text-align: right;
+    padding: 10px;
+    color: white;
+
+
+}
+.maintenance{
+    width:50%; 
+    background-color: red;
+
+} 
