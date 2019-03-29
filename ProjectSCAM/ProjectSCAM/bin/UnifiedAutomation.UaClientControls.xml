@@ -1,0 +1,2189 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>UnifiedAutomation.UaClientControls</name>
+    </assembly>
+    <members>
+        <member name="T:UnifiedAutomation.UaClient.Controls.ClientUtils">
+            <summary>
+            A class that provide various common utility functions and shared resources.
+            </summary>
+            <summary>
+            Defines numerous re-useable utility functions.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.ClientUtils.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:UnifiedAutomation.UaClient.Controls.ClientUtils"/> class.
+            </summary>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.ClientUtils.Icons">
+            <summary>
+            The known icons.
+            </summary>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.ClientUtils.Icons.Error">
+            <summary>
+            An error.
+            </summary>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.ClientUtils.Icons.Method">
+            <summary>
+            A method.
+            </summary>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.ClientUtils.Icons.Object">
+            <summary>
+            An object.
+            </summary>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.ClientUtils.Icons.ObjectType">
+            <summary>
+            An object type.
+            </summary>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.ClientUtils.Icons.Property">
+            <summary>
+            A property.
+            </summary>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.ClientUtils.Icons.ReferenceType">
+            <summary>
+            A reference type.
+            </summary>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.ClientUtils.Icons.OpenFolder">
+            <summary>
+            An open folder.
+            </summary>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.ClientUtils.Icons.ClosedFolder">
+            <summary>
+            A closed folder.
+            </summary>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.ClientUtils.Icons.Variable">
+            <summary>
+            A variable.
+            </summary>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.ClientUtils.Icons.VariableType">
+            <summary>
+            A variable type.
+            </summary>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.ClientUtils.Icons.View">
+            <summary>
+            A view.
+            </summary>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.ClientUtils.Icons.DataType">
+            <summary>
+            A data type.
+            </summary>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.ClientUtils.Icons.Attribute">
+            <summary>
+            An attribute.
+            </summary>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.ClientUtils.Icons.Reference">
+            <summary>
+            A reference.
+            </summary>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.ClientUtils.Icons.NumberValue">
+            <summary>
+            A numerical value.
+            </summary>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.ClientUtils.Icons.StringValue">
+            <summary>
+            A string value.
+            </summary>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.ClientUtils.Icons.ByteStringValue">
+            <summary>
+            A byte string value.
+            </summary>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.ClientUtils.Icons.StructureValue">
+            <summary>
+            A structured value.
+            </summary>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.ClientUtils.Icons.ArrayValue">
+            <summary>
+            An array value.
+            </summary>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.ClientUtils.Icons.InputArgument">
+            <summary>
+            An input argument.
+            </summary>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.ClientUtils.Icons.OutputArgument">
+            <summary>
+            An output argument.
+            </summary>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.ClientUtils.Icons.Certificate">
+            <summary>
+            A certificate.
+            </summary>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.ClientUtils.Icons.CertificateWithPrivateKey">
+            <summary>
+            A certificate with a private key.
+            </summary>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.ClientUtils.Icons.Computer">
+            <summary>
+            A computer
+            </summary>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.ClientUtils.Icons.Service">
+            <summary>
+            A service
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.ClientUtils.GetImageIndex(System.Boolean,System.Object)">
+            <summary>
+            Returns an image index for the specified method argument.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.ClientUtils.GetImageIndex(System.UInt32,System.Object)">
+            <summary>
+            Returns an image index for the specified attribute.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.ClientUtils.GetImageIndex(UnifiedAutomation.UaClient.Session,UnifiedAutomation.UaBase.NodeClass,UnifiedAutomation.UaBase.ExpandedNodeId,System.Boolean)">
+            <summary>
+            Returns an image index for the specified attribute.
+            </summary>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.ClientUtils.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.ClientUtils.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.ClientUtils.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.ClientUtils.ImageList2">
+            <summary>
+            A list of shared images for controls.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.ClientUtils.GetAppIcon">
+            <summary>
+            Gets the application icon.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.ClientUtils.GetAccessLevelDisplayText(System.Byte)">
+            <summary>
+            Gets the display text for the access level attribute.
+            </summary>
+            <param name="accessLevel">The access level.</param>
+            <returns>The access level formatted as a string.</returns>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.ClientUtils.GetEventNotifierDisplayText(System.Byte)">
+            <summary>
+            Gets the display text for the event notifier attribute.
+            </summary>
+            <param name="eventNotifier">The event notifier.</param>
+            <returns>The event notifier formatted as a string.</returns>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.ClientUtils.GetValueRankDisplayText(System.Int32)">
+            <summary>
+            Gets the display text for the value rank attribute.
+            </summary>
+            <param name="valueRank">The value rank.</param>
+            <returns>The value rank formatted as a string.</returns>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.ClientUtils.GetAttributeDisplayText(UnifiedAutomation.UaClient.Session,System.UInt32,UnifiedAutomation.UaBase.Variant)">
+            <summary>
+            Gets the display text for the specified attribute.
+            </summary>
+            <param name="session">The currently active session.</param>
+            <param name="attributeId">The id of the attribute.</param>
+            <param name="value">The value of the attribute.</param>
+            <returns>The attribute formatted as a string.</returns>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.ControlManager">
+            <summary>
+            Manages a group of controls that use a session.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.ControlManager.ChangeSession(UnifiedAutomation.UaClient.Session)">
+            <summary>
+            Changes the session.
+            </summary>
+            <param name="session">The session.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.ControlManager.RegisterControl(UnifiedAutomation.UaClient.Controls.ISessionControl)">
+            <summary>
+            Registers a form so it will be notified when the status of the connection changes.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.ControlManager.ISessionForm_FormClosing(System.Object,System.Windows.Forms.FormClosingEventArgs)">
+            <summary>
+            Called when a registered form closes.
+            </summary>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.ISessionControl">
+            <summary>
+            An interface to a form that uses a session.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.ISessionControl.ChangeSession(UnifiedAutomation.UaClient.Session)">
+            <summary>
+            Changes the session.
+            </summary>
+            <param name="session">The session.</param>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.ShowStructuredValueTreeViewCtrl">
+            <summary>
+            UserControl that can show a GenericEncodeableObject readonly in a treeview
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.ShowStructuredValueTreeViewCtrl.#ctor">
+            <summary>
+            Creates the control.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.ShowStructuredValueTreeViewCtrl.SetEncodeable(UnifiedAutomation.UaBase.GenericEncodeableObject)">
+            <summary>
+            Adds the value to the tree view
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.ShowStructuredValueTreeViewCtrl.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.ShowStructuredValueTreeViewCtrl.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.ShowStructuredValueTreeViewCtrl.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.ShowSchemaParserValueDlg">
+            <summary>
+            Prompts the user to edit a value.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.ShowSchemaParserValueDlg.#ctor">
+            <summary>
+            Creates an empty form.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.ShowSchemaParserValueDlg.ShowDialog(UnifiedAutomation.UaBase.GenericValue)">
+            <summary>
+            Prompts the user to edit the value.
+            </summary>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.ShowSchemaParserValueDlg.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.ShowSchemaParserValueDlg.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.ShowSchemaParserValueDlg.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.ElementOperandDlg">
+            <summary>
+            Shows a dialog edits an element operand.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.ElementOperandDlg.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:UnifiedAutomation.UaClient.Controls.ElementOperandDlg"/> class.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.ElementOperandDlg.ShowDialog(UnifiedAutomation.UaBase.ContentFilter,System.Int32,UnifiedAutomation.UaBase.ElementOperand)">
+            <summary>
+            Shows the dialog.
+            </summary>
+            <param name="filter">The filter.</param>
+            <param name="index">The index.</param>
+            <param name="operand">The operand.</param>
+            <returns></returns>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.ElementOperandDlg.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.ElementOperandDlg.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.ElementOperandDlg.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.EditSubscriptionCtrl">
+            <summary>
+            A control that allows a subscription to be created, changed or deleted.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditSubscriptionCtrl.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:UnifiedAutomation.UaClient.Controls.EditSubscriptionCtrl"/> class.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditSubscriptionCtrl.ChangeSession(UnifiedAutomation.UaClient.Session)">
+            <summary>
+            Changes the session.
+            </summary>
+            <param name="session">The session.</param>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.EditSubscriptionCtrl.Subscription">
+            <summary>
+            Gets the subscription.
+            </summary>
+            <value>
+            The subscription.
+            </value>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditSubscriptionCtrl.ChangeSubscription(UnifiedAutomation.UaClient.Subscription)">
+            <summary>
+            Changes the subscription.
+            </summary>
+            <param name="subscription">The subscription.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditSubscriptionCtrl.UpdateControls">
+            <summary>
+            Updates the controls.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditSubscriptionCtrl.SetRequestInProgress">
+            <summary>
+            Updates the controls to indicate a request is in progress.
+            </summary>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.EditSubscriptionCtrl.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditSubscriptionCtrl.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditSubscriptionCtrl.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.EditSubscriptionDlg">
+            <summary>
+            A dialog used to change the state of a subscription.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditSubscriptionDlg.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:UnifiedAutomation.UaClient.Controls.EditSubscriptionDlg"/> class.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditSubscriptionDlg.ChangeSession(UnifiedAutomation.UaClient.Session)">
+            <summary>
+            Changes the session.
+            </summary>
+            <param name="session">The session.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditSubscriptionDlg.ChangeSubscription(UnifiedAutomation.UaClient.Subscription)">
+            <summary>
+            Changes the subscription.
+            </summary>
+            <param name="subscription">The subscription.</param>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.EditSubscriptionDlg.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditSubscriptionDlg.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditSubscriptionDlg.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl">
+            <summary>
+            Allows the user to edit a complex value.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.#ctor">
+            <summary>
+            Constructs the object.
+            </summary>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.AccessInfo">
+            <summary>
+            Stores the state of field.
+            </summary>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.MaxDisplayTextLength">
+            <summary>
+            The maximum length of a value string displayed in a column.
+            </summary>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.CanGoBack">
+            <summary>
+            Returns true if the Back command can be called.
+            </summary>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.CanSetArraySize">
+            <summary>
+            Returns true if the ArraySize can be changed.
+            </summary>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.CanChangeType">
+            <summary>
+            Returns true if the data type can be changed.
+            </summary>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.CurrentType">
+            <summary>
+            Returns the current data type.
+            </summary>
+        </member>
+        <member name="E:UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.ValueChanged">
+            <summary>
+            Raised when the value is changed.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.ChangeSession(UnifiedAutomation.UaClient.Session)">
+            <summary>
+            Changes the session used for editing the value.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.Clear">
+            <summary>
+            Clears this instance.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.Back">
+            <summary>
+            Moves the displayed value back.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.SetType">
+            <summary>
+            Changes the array size.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.SetType(UnifiedAutomation.UaBase.BuiltInType)">
+            <summary>
+            Changes the data type.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.Convert(System.Object,UnifiedAutomation.UaBase.TypeInfo,UnifiedAutomation.UaBase.TypeInfo,System.Boolean)">
+            <summary>
+            Converts the old type to the new type.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.ShowMappedValue(System.String,UnifiedAutomation.UaBase.NodeId,UnifiedAutomation.UaBase.ModelHandle,System.Boolean)">
+            <summary>
+            Shows the mapped value in the control.
+            </summary>
+            <param name="name">The name.</param>
+            <param name="nodeId">The node id.</param>
+            <param name="handle">The handle.</param>
+            <param name="readOnly">if set to <c>true</c> [read only].</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.ShowValue(System.String,UnifiedAutomation.UaBase.Variant,UnifiedAutomation.UaBase.TypeInfo,System.Boolean)">
+            <summary>
+            Shows the attribute value.
+            </summary>
+            <param name="name">The name.</param>
+            <param name="value">The value.</param>
+            <param name="expectedType">The expected type.</param>
+            <param name="readOnly">if set to <c>true</c> [read only].</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.ShowValue(System.String,System.Object,UnifiedAutomation.UaBase.TypeInfo,System.Boolean)">
+            <summary>
+            Shows the attribute value.
+            </summary>
+            <param name="name">The name.</param>
+            <param name="value">The value.</param>
+            <param name="expectedType">The expected type.</param>
+            <param name="readOnly">if set to <c>true</c> [read only].</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.ShowMappedValue(UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.AccessInfo)">
+            <summary>
+            Shows the mapped value.
+            </summary>
+            <param name="parent">The parent.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.GetValue">
+            <summary>
+            Returns the edited value.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.EndEdit">
+            <summary>
+            Validates the value currently being edited.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.ShowAttributeValue(UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.AccessInfo)">
+            <summary>
+            Displays the value in the control.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.ShowValue(UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.AccessInfo)">
+            <summary>
+            Displays the value in the control.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.ShowSimpleValue(UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.AccessInfo)">
+            <summary>
+            Displays the value in the control.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.GetDefaultValue(System.Type,UnifiedAutomation.UaBase.BuiltInType)">
+            <summary>
+            Gets the default value.
+            </summary>
+            <param name="systemType">Type of the system.</param>
+            <param name="builtInType">Type of the built in.</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.GetIndexFromCount(System.Int32,System.Int32[])">
+            <summary>
+            Returns the index based on the current count.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.ShowIndexedValue(UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.AccessInfo)">
+            <summary>
+            Adds the value at an array index to the control.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.GetListElementType(System.Collections.IList)">
+            <summary>
+            Returns the element type for a list.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.GetDataType(UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.AccessInfo)">
+            <summary>
+            Returns the data type of the value.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.GetDataTypeString(UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.AccessInfo)">
+            <summary>
+            Returns the data type of the value.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.ShowNamedValue(UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.AccessInfo)">
+            <summary>
+            Adds the value with the specified name to the control.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.ShowTextValue(System.Object,UnifiedAutomation.UaBase.TypeInfo)">
+            <summary>
+            Displays a value in the control.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.ShowTextValue(System.String)">
+            <summary>
+            Displays a string in the control.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.ShowTextValue(System.Byte[])">
+            <summary>
+            Displays a complete byte string in the control.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.ShowTextValue(System.Xml.XmlElement)">
+            <summary>
+            Displays a complete XML element in the control.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.ValueToString(System.Object,UnifiedAutomation.UaBase.TypeInfo)">
+            <summary>
+            Converts a value to a string for display in the grid.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.IsSimpleValue(UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.AccessInfo)">
+            <summary>
+            Whether the value can be edited in the grid view.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.UpdateParent(UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.AccessInfo)">
+            <summary>
+            Recusivesly updates the parent values.
+            </summary>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditComplexValueCtrl.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.EditComplexValueDlg">
+            <summary>
+            Prompts the user to edit a value.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditComplexValueDlg.#ctor">
+            <summary>
+            Creates an empty form.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditComplexValueDlg.ShowDialog(System.String,System.Object,System.String,System.Boolean)">
+            <summary>
+            Prompts the user to edit the value.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditComplexValueDlg.ShowDialog(System.String,UnifiedAutomation.UaBase.Variant,UnifiedAutomation.UaBase.TypeInfo,System.String,System.Boolean)">
+            <summary>
+            Prompts the user to edit the value.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditComplexValueDlg.ShowDialog(UnifiedAutomation.UaClient.Session,System.String,UnifiedAutomation.UaBase.NodeId,UnifiedAutomation.UaBase.ModelHandle,System.String)">
+            <summary>
+            Prompts the user to edit the value.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditComplexValueDlg.ChangeSession(UnifiedAutomation.UaClient.Session)">
+            <summary>
+            Changes the session used.
+            </summary>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.EditComplexValueDlg.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditComplexValueDlg.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EditComplexValueDlg.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.Properties.Resources.Bad">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.Properties.Resources.configure_toolbars">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.Properties.Resources.Find">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.Properties.Resources.Good">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.Properties.Resources.More">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.Properties.Resources.serveradd">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.Properties.Resources.serverconnect">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.Properties.Resources.serverdisconnect">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.Properties.Resources.Start">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.Properties.Resources.Stop">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.Properties.Resources.Uncertain">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.AcceptCertificateDlg">
+            <summary>
+            Prompts the user to edit a value.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.AcceptCertificateDlg.#ctor">
+            <summary>
+            Creates an empty form.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.AcceptCertificateDlg.ShowDialog(System.String,UnifiedAutomation.UaBase.ICertificate,UnifiedAutomation.UaBase.StatusCode,System.String)">
+            <summary>
+            Prompts the user to Trust (OK), Accept (Retry) or Reject (Cancel)
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.AcceptCertificateDlg.ChangeSession(UnifiedAutomation.UaClient.Session)">
+            <summary>
+            Changes the session used.
+            </summary>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.AcceptCertificateDlg.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.AcceptCertificateDlg.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.AcceptCertificateDlg.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.CertificatesCtrl">
+            <summary>
+            A control which displays the contents of a certificate store.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.CertificatesCtrl.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:UnifiedAutomation.UaClient.Controls.BrowseCtrl"/> class.
+            </summary>
+        </member>
+        <member name="E:UnifiedAutomation.UaClient.Controls.CertificatesCtrl.AfterSelect">
+            <summary>
+            Occurs when [after select].
+            </summary>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.CertificatesCtrl.Store">
+            <summary>
+            Gets the store.
+            </summary>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.CertificatesCtrl.SelectedCertificates">
+            <summary>
+            Gets the selected certificates.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.CertificatesCtrl.Add(UnifiedAutomation.UaBase.ICertificate)">
+            <summary>
+            Adds the specified certificate.
+            </summary>
+            <param name="certificate">The certificate.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.CertificatesCtrl.Remove(UnifiedAutomation.UaBase.ICertificate)">
+            <summary>
+            Removes the specified certificate.
+            </summary>
+            <param name="certificate">The certificate.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.CertificatesCtrl.ChangeStore(UnifiedAutomation.UaBase.ICertificateStore)">
+            <summary>
+            Changes the store.
+            </summary>
+            <param name="store">The store.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.CertificatesCtrl.AddItem(UnifiedAutomation.UaBase.ICertificate)">
+            <summary>
+            Updates the item.
+            </summary>
+            <param name="certificate">The certificate.</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.CertificatesCtrl.UpdateItem(System.Windows.Forms.ListViewItem,UnifiedAutomation.UaBase.ICertificate)">
+            <summary>
+            Updates the item.
+            </summary>
+            <param name="item">The item.</param>
+            <param name="certificate">The certificate.</param>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.CertificatesCtrl.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.CertificatesCtrl.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.CertificatesCtrl.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.CertificatesDlg">
+            <summary>
+            A dialog used to change the state of a subscription.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.CertificatesDlg.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:UnifiedAutomation.UaClient.Controls.CertificatesDlg"/> class.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.CertificatesDlg.ShowDialog(UnifiedAutomation.UaBase.ICertificateStore,System.Boolean,System.String)">
+            <summary>
+            Shows the dialog.
+            </summary>
+            <param name="store">The store.</param>
+            <param name="changeStore">if set to <c>true</c> the certificate store can be changed.</param>
+            <param name="caption">The caption.</param>
+            <returns></returns>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.CertificatesDlg.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.CertificatesDlg.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.CertificatesDlg.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.CertificateStoresCtrl">
+            <summary>
+            A control which displays the contents of a certificate store.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.CertificateStoresCtrl.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:UnifiedAutomation.UaClient.Controls.CertificateStoresCtrl"/> class.
+            </summary>
+        </member>
+        <member name="E:UnifiedAutomation.UaClient.Controls.CertificateStoresCtrl.AfterSelect">
+            <summary>
+            Occurs when [after select].
+            </summary>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.CertificateStoresCtrl.SelectedStore">
+            <summary>
+            Gets the selected store.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.CertificateStoresCtrl.ChangeStoreType(System.String)">
+            <summary>
+            Changes the type of the store.
+            </summary>
+            <param name="storeType">Type of the store.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.CertificateStoresCtrl.ChangeStorePath(System.String)">
+            <summary>
+            Changes the type of the store.
+            </summary>
+            <param name="storePath">The store path.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.CertificateStoresCtrl.AddStoreType(System.Environment.SpecialFolder)">
+            <summary>
+            Adds the type of the store.
+            </summary>
+            <param name="folder">The folder.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.CertificateStoresCtrl.AddStoreType(UnifiedAutomation.UaBase.WindowsStoreType)">
+            <summary>
+            Adds the type of the store.
+            </summary>
+            <param name="storeType">Type of the store.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.CertificateStoresCtrl.AddFolders(System.Windows.Forms.TreeNode,System.IO.DirectoryInfo)">
+            <summary>
+            Adds the folders.
+            </summary>
+            <param name="parent">The parent.</param>
+            <param name="directory">The directory.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.CertificateStoresCtrl.IsCertificateStore(System.IO.DirectoryInfo)">
+            <summary>
+            Determines whether [has certificate stores] [the specified directory].
+            </summary>
+            <param name="directory">The directory.</param>
+            <returns>
+              <c>true</c> if [has certificate stores] [the specified directory]; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.CertificateStoresCtrl.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.CertificateStoresCtrl.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.CertificateStoresCtrl.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.CertificateStoresDlg">
+            <summary>
+            A dialog used to change the state of a subscription.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.CertificateStoresDlg.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:UnifiedAutomation.UaClient.Controls.CertificatesDlg"/> class.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.CertificateStoresDlg.ShowDialog(System.String,System.String)">
+            <summary>
+            Shows the dialog.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.CertificateStoresDlg.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.CertificateStoresDlg.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.CertificateStoresDlg.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.CreateCertificateDialog">
+            <summary>
+            A dialog that allows a user to create a new application certificate.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.CreateCertificateDialog.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:UnifiedAutomation.UaClient.Controls.CreateCertificateDialog"/> class.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.CreateCertificateDialog.ShowDialog(UnifiedAutomation.UaClient.Controls.CreateCertificateDialogSettings)">
+            <summary>
+            Shows the dialog.
+            </summary>
+            <param name="settings">The settings.</param>
+            <returns>
+            The new certificate.
+            </returns>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.CreateCertificateDialog.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.CreateCertificateDialog.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.CreateCertificateDialog.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.CreateCertificateDialogSettings">
+            <summary>
+            The settings used to initialize a CreateCertificateDialog.
+            </summary>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.CreateCertificateDialogSettings.Instructions">
+            <summary>
+            Gets or sets the instructions.
+            </summary>
+            <value>
+            The instructions.
+            </value>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.CreateCertificateDialogSettings.Application">
+            <summary>
+            Gets or sets the application instance.
+            </summary>
+            <value>
+            The application instance.
+            </value>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.CreateCertificateDialogSettings.StorePath">
+            <summary>
+            Gets or sets the store path.
+            </summary>
+            <value>
+            The store path.
+            </value>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.CreateCertificateDialogSettings.IssuerKeyFilePath">
+            <summary>
+            Gets or sets the issuer key file path.
+            </summary>
+            <value>
+            The issuer key file path.
+            </value>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.CreateCertificateDialogSettings.SubjectName">
+            <summary>
+            Gets or sets the certificate distinguished subject name.
+            </summary>
+            <value>
+            The certificate distinguished subject name.
+            </value>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.CreateCertificateDialogSettings.DomainNames">
+            <summary>
+            Gets or sets the domain names.
+            </summary>
+            <value>
+            The domain names.
+            </value>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.CreateCertificateDialogSettings.IsHttpsCertificate">
+            <summary>
+            Gets or sets a value indicating whether an HTTP certificate is being created.
+            </summary>
+            <value>
+            <c>true</c> if an HTTP certificate is being created; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.CreateCertificateDialogSettings.HttpsDomainName">
+            <summary>
+            Gets or sets the HTTPS domain name.
+            </summary>
+            <value>
+            The HTTPS domain names.
+            </value>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.CreateCertificateDialogSettings.Template">
+            <summary>
+            Gets or sets the exsiting certificate or a template to copy.
+            </summary>
+            <value>
+            The exsiting certificate or a template to copy.
+            </value>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.TrustCertificateDialog">
+            <summary>
+            A dialog that allows a user to review and accept or reject an untrusted certificate.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.TrustCertificateDialog.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:UnifiedAutomation.UaClient.Controls.TrustCertificateDialog"/> class.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.TrustCertificateDialog.ShowDialog(System.Windows.Forms.Form,UnifiedAutomation.UaClient.Controls.TrustCertificateDialogSettings,System.Int32)">
+            <summary>
+            Shows the dialog.
+            </summary>
+            <param name="owner">The owner.</param>
+            <param name="settings">The settings.</param>
+            <param name="timeout">The timeout.</param>
+            <returns>True if the certificate should be trusted.</returns>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.TrustCertificateDialog.ShowDialog(System.Windows.Forms.IWin32Window,UnifiedAutomation.UaClient.Controls.TrustCertificateDialogSettings)">
+            <summary>
+            Shows the dialog.
+            </summary>
+            <param name="owner">The owner.</param>
+            <param name="settings">The settings.</param>
+            <returns>The new certificate.</returns>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.TrustCertificateDialog.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.TrustCertificateDialog.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.TrustCertificateDialog.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.TrustCertificateDialogSettings">
+            <summary>
+            The settings used to initialize a TrustCertificateDialog.
+            </summary>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.TrustCertificateDialogSettings.Application">
+            <summary>
+            Gets or sets the application instance.
+            </summary>
+            <value>
+            The application instance.
+            </value>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.TrustCertificateDialogSettings.UntrustedCertificate">
+            <summary>
+            Gets or sets the untrusted certificate.
+            </summary>
+            <value>
+            The untrusted certificate.
+            </value>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.TrustCertificateDialogSettings.Issuers">
+            <summary>
+            Gets or sets the issuer certificates included with the certificate.
+            </summary>
+            <value>
+            The issuer certificates included with the certificate.
+            </value>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.TrustCertificateDialogSettings.ValidationError">
+            <summary>
+            Gets or sets the certificate validation error.
+            </summary>
+            <value>
+            The certificate validation error.
+            </value>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.TrustCertificateDialogSettings.IsHttpsCertificate">
+            <summary>
+            Gets or sets a value indicating whether the untrusted certificate is an HTTPS certificate.
+            </summary>
+            <value>
+              <c>true</c> if the certificate is an HTTPS certificate; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.TrustCertificateDialogSettings.SaveToTrustList">
+            <summary>
+            Gets or sets a value indicating whether save the certificate to the application trust list.
+            </summary>
+            <value>
+            <c>true</c> if certificate should be saved to the application trust list; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.TrustListControl">
+            <summary>
+            A control that displays the application's trust list.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.TrustListControl.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:UnifiedAutomation.UaClient.Controls.TrustListControl"/> class.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.TrustListControl.Initialize(UnifiedAutomation.UaBase.ApplicationInstance)">
+            <summary>
+            Displays the application's certificate trust list in the control.
+            </summary>
+            <param name="application">The application.</param>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.TrustListControl.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.TrustListControl.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.TrustListControl.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.AttributesCtrl">
+            <summary>
+            A control which displays a browse tree along with panes for attribute values and references.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.AttributesCtrl.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:UnifiedAutomation.UaClient.Controls.BrowseCtrl"/> class.
+            </summary>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.AttributesCtrl.AsyncState">
+            <summary>
+            The user data passed to an asynchronous request.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.AttributesCtrl.ChangeSession(UnifiedAutomation.UaClient.Session)">
+            <summary>
+            Changes the session.
+            </summary>
+            <param name="session">The session.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.AttributesCtrl.DisplayNode(UnifiedAutomation.UaBase.ExpandedNodeId)">
+            <summary>
+            Displays the attribues for the node.
+            </summary>
+            <param name="nodeId">The node id.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.AttributesCtrl.OnReadAttributesComplete(System.IAsyncResult)">
+            <summary>
+            Called when [read attributes complete].
+            </summary>
+            <param name="result">The result.</param>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.AttributesCtrl.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.AttributesCtrl.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.AttributesCtrl.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.BrowseCtrl">
+            <summary>
+            A control which displays a browse tree along with panes for attribute values and references.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.BrowseCtrl.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:UnifiedAutomation.UaClient.Controls.BrowseCtrl"/> class.
+            </summary>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.BrowseCtrl.AsyncState">
+            <summary>
+            The user data passed to an asynchronous request.
+            </summary>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.BrowseCtrl.SelectNodeAsyncData">
+            <summary>
+            The user data passed when a select node request is suspended waiting for a browse.
+            </summary>
+        </member>
+        <member name="E:UnifiedAutomation.UaClient.Controls.BrowseCtrl.NodeSelected">
+            <summary>
+            Occurs when a node is selected.
+            </summary>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.BrowseCtrl.SelectedNodeId">
+            <summary>
+            Gets the selected node id.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.BrowseCtrl.ChangeSession(UnifiedAutomation.UaClient.Session)">
+            <summary>
+            Changes the session.
+            </summary>
+            <param name="session">The session.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.BrowseCtrl.Reset(UnifiedAutomation.UaBase.NodeId,UnifiedAutomation.UaBase.NodeId)">
+            <summary>
+            Initializes the browse control.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.BrowseCtrl.SelectNode(System.Collections.Generic.IList{UnifiedAutomation.UaBase.ReferenceDescription})">
+            <summary>
+            Selects the node.
+            </summary>
+            <param name="references">The referencesto follow.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.BrowseCtrl.GetSelectedHierarchy(System.Boolean)">
+            <summary>
+            Gets the selected hierarchy.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.BrowseCtrl.Session_ConnectionStatusUpdate(UnifiedAutomation.UaClient.Session,UnifiedAutomation.UaClient.ServerConnectionStatusUpdateEventArgs)">
+            <summary>
+            Handles the connection status update.
+            </summary>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.BrowseCtrl.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.BrowseCtrl.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.BrowseCtrl.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.NodeSelectedEventArgs">
+            <summary>
+            The arguments passed with a NodeSelected event.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.NodeSelectedEventArgs.#ctor(UnifiedAutomation.UaBase.ReferenceDescription)">
+            <summary>
+            Initializes a new instance of the <see cref="T:UnifiedAutomation.UaClient.Controls.NodeSelectedEventArgs"/> class.
+            </summary>
+            <param name="reference">The reference.</param>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.NodeSelectedEventArgs.Reference">
+            <summary>
+            Gets the selected reference.
+            </summary>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.NodeSelectedEventHandler">
+            <summary>
+            A function that handles NodeSelected events.
+            </summary>
+            <param name="sender">The sender.</param>
+            <param name="e">The <see cref="T:UnifiedAutomation.UaClient.Controls.NodeSelectedEventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.BrowseDlg">
+            <summary>
+            A dialog browses the server address space.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.BrowseDlg.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:UnifiedAutomation.UaClient.Controls.BrowseDlg"/> class.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.BrowseDlg.ChangeSession(UnifiedAutomation.UaClient.Session)">
+            <summary>
+            Changes the session.
+            </summary>
+            <param name="session">The session.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.BrowseDlg.ShowDialog(UnifiedAutomation.UaClient.Session,UnifiedAutomation.UaBase.NodeId,UnifiedAutomation.UaBase.NodeId)">
+            <summary>
+            Shows the dialog.
+            </summary>
+            <param name="session">The session.</param>
+            <param name="rootId">The root id.</param>
+            <param name="referenceTypeId">The reference type id.</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.BrowseDlg.ShowDialog(UnifiedAutomation.UaClient.Session,UnifiedAutomation.UaBase.NodeId,UnifiedAutomation.UaBase.NodeId,System.Collections.Generic.IList{UnifiedAutomation.UaBase.ReferenceDescription})">
+            <summary>
+            Shows the dialog.
+            </summary>
+            <param name="session">The session.</param>
+            <param name="rootId">The root id.</param>
+            <param name="referenceTypeId">The reference type id.</param>
+            <param name="selection">The selection.</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.BrowseDlg.Show(UnifiedAutomation.UaClient.Session,UnifiedAutomation.UaBase.NodeId,UnifiedAutomation.UaBase.NodeId)">
+            <summary>
+            Shows the dialog.
+            </summary>
+            <param name="session">The session.</param>
+            <param name="rootId">The root id.</param>
+            <param name="referenceTypeId">The reference type id.</param>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.BrowseDlg.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.BrowseDlg.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.BrowseDlg.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.ContentFilterDlg">
+            <summary>
+            Shows a dialog which demonstrates a create monitored items operation.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.ContentFilterDlg.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:UnifiedAutomation.UaClient.Controls.ContentFilterDlg"/> class.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.ContentFilterDlg.ChangeSession(UnifiedAutomation.UaClient.Session)">
+            <summary>
+            Changes the session.
+            </summary>
+            <param name="session">The session.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.ContentFilterDlg.ShowDialog(UnifiedAutomation.UaBase.ContentFilter,System.Int32)">
+            <summary>
+            Shows the dialog.
+            </summary>
+            <param name="filter">The filter.</param>
+            <param name="index">The index.</param>
+            <returns></returns>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.ContentFilterDlg.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.ContentFilterDlg.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.ContentFilterDlg.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.EventFilterDlg">
+            <summary>
+            Shows a dialog which demonstrates a create monitored items operation.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EventFilterDlg.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:UnifiedAutomation.UaClient.Controls.EventFilterDlg"/> class.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EventFilterDlg.ChangeSession(UnifiedAutomation.UaClient.Session)">
+            <summary>
+            Changes the session.
+            </summary>
+            <param name="session">The session.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EventFilterDlg.ShowDialog(UnifiedAutomation.UaClient.ItemEventFilter)">
+            <summary>
+            Shows the dialog.
+            </summary>
+            <param name="filter">The filter.</param>
+            <returns></returns>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.EventFilterDlg.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EventFilterDlg.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.EventFilterDlg.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.FilterBrowseDlg">
+            <summary>
+            Prompts the user specify the data type and array dimensions.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.FilterBrowseDlg.#ctor">
+            <summary>
+            Creates an empty form.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.FilterBrowseDlg.ShowDialog(System.String@)">
+            <summary>
+            Prompts the user to decide what to do.
+            </summary>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.FilterBrowseDlg.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.FilterBrowseDlg.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.FilterBrowseDlg.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.FindServersDlg">
+            <summary>
+            Display a list of servers available on a machine.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.FindServersDlg.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:UnifiedAutomation.UaClient.Controls.FindServersDlg"/> class.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.FindServersDlg.ShowDialog(UnifiedAutomation.UaBase.ApplicationInstance,System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IList{System.String},System.String)">
+            <summary>
+            Shows the dialog.
+            </summary>
+            <param name="application">The application.</param>
+            <param name="locales">The locales.</param>
+            <param name="machineNames">The machine names.</param>
+            <param name="selectedMachineName">Name of the selected machine.</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.FindServersDlg.Form_Closing(System.Object,System.Windows.Forms.FormClosingEventArgs)">
+            <summary>
+            Disposes the instance of Discovery.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.FindServersDlg.DiscoverBTN_Click(System.Object,System.EventArgs)">
+            <summary>
+            Handles the Click event of the DiscoverBTN control.
+            </summary>
+            <param name="sender">The source of the event.</param>
+            <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.FindServersDlg.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.FindServersDlg.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.FindServersDlg.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.GetEndpointsDlg">
+            <summary>
+            Display a list of servers available on a machine.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.GetEndpointsDlg.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:UnifiedAutomation.UaClient.Controls.FindServersDlg"/> class.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.GetEndpointsDlg.ShowDialog(UnifiedAutomation.UaBase.ApplicationInstance,System.Collections.Generic.IEnumerable{System.String},UnifiedAutomation.UaBase.EndpointDescription,System.Collections.Generic.IEnumerable{UnifiedAutomation.UaBase.EndpointDescription})">
+            <summary>
+            Shows the dialog.
+            </summary>
+            <param name="application">The application.</param>
+            <param name="locales">The locales.</param>
+            <param name="endpoint">The endpoint.</param>
+            <param name="availableEndpoints">The available endpoints.</param>
+            <returns></returns>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.GetEndpointsDlg.Form_Closing(System.Object,System.Windows.Forms.FormClosingEventArgs)">
+            <summary>
+            Disposes the instance of Discovery.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.GetEndpointsDlg.GetEndpointsBTN_Click(System.Object,System.EventArgs)">
+            <summary>
+            Handles the Click event of the DiscoverBTN control.
+            </summary>
+            <param name="sender">The source of the event.</param>
+            <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.GetEndpointsDlg.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.GetEndpointsDlg.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.GetEndpointsDlg.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.ReferencesCtrl">
+            <summary>
+            A control which displays a browse tree along with panes for attribute values and references.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.ReferencesCtrl.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:UnifiedAutomation.UaClient.Controls.BrowseCtrl"/> class.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.ReferencesCtrl.ChangeSession(UnifiedAutomation.UaClient.Session)">
+            <summary>
+            Changes the session.
+            </summary>
+            <param name="session">The session.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.ReferencesCtrl.DisplayNode(UnifiedAutomation.UaBase.ExpandedNodeId)">
+            <summary>
+            Displays the references for the node.
+            </summary>
+            <param name="nodeId">The node id.</param>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.ReferencesCtrl.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.ReferencesCtrl.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.ReferencesCtrl.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl">
+            <summary>
+            A control to allow the selection of an endpoint to connect to a server.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl"/> class.
+            </summary>
+        </member>
+        <member name="E:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.ConnectServer">
+            <summary>
+            Occurs when the Connect button is clicked.
+            </summary>
+        </member>
+        <member name="E:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.DisconnectServer">
+            <summary>
+            Occurs when the Disconnect button is clicked.
+            </summary>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.ConnectOnChange">
+            <summary>
+            Gets or sets a value indicating whether a connect callback should be called when the FindServers or GetEndpoints dialog closes.
+            </summary>
+            <value>
+              <c>true</c> if call the connect callback; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.Application">
+            <summary>
+            Gets or sets the application.
+            </summary>
+            <value>
+            The application.
+            </value>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.PreferredLocales">
+            <summary>
+            Gets or sets the preferred locales.
+            </summary>
+            <value>
+            The preferred locales.
+            </value>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.SelectedEndpoint">
+            <summary>
+            Gets the selected endpoint.
+            </summary>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.SelectedEndpointIndex">
+            <summary>
+            Gets or sets the index of the selected endpoint.
+            </summary>
+            <value>
+            The index of the selected endpoint.
+            </value>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.Endpoints">
+            <summary>
+            Gets the endpoints known to the application.
+            </summary>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.MachineNames">
+            <summary>
+            Gets the names of machines known to the application.
+            </summary>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.MachineNameCollection">
+            <summary>
+            A collection of EndpointDescriptions.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.MachineNameCollection.#ctor(UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl)">
+            <summary>
+            Initializes a new instance of the <see cref="T:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.MachineNameCollection"/> class.
+            </summary>
+            <param name="control">The control.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.MachineNameCollection.IndexOf(System.String)">
+            <summary>
+            Determines the index of a specific item in the <see cref="T:System.Collections.Generic.IList`1"/>.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.MachineNameCollection.Insert(System.Int32,System.String)">
+            <summary>
+            Inserts an item to the <see cref="T:System.Collections.Generic.IList`1"/> at the specified index.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.MachineNameCollection.RemoveAt(System.Int32)">
+            <summary>
+            Removes the <see cref="T:System.Collections.Generic.IList`1"/> item at the specified index.
+            </summary>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.MachineNameCollection.Item(System.Int32)">
+            <summary>
+            Gets or sets the element at the specified index.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.MachineNameCollection.Add(System.String)">
+            <summary>
+            Adds an item to the <see cref="T:System.Collections.Generic.ICollection`1"/>.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.MachineNameCollection.Clear">
+            <summary>
+            Removes all items from the <see cref="T:System.Collections.Generic.ICollection`1"/>.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.MachineNameCollection.Contains(System.String)">
+            <summary>
+            Determines whether the <see cref="T:System.Collections.Generic.ICollection`1"/> contains a specific value.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.MachineNameCollection.CopyTo(System.String[],System.Int32)">
+            <summary>
+            Copies the elements of the <see cref="T:System.Collections.Generic.ICollection`1"/> to an <see cref="T:System.Array"/>, starting at a particular <see cref="T:System.Array"/> index.
+            </summary>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.MachineNameCollection.Count">
+            <summary>
+            Gets the number of elements contained in the <see cref="T:System.Collections.Generic.ICollection`1"/>.
+            </summary>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.MachineNameCollection.IsReadOnly">
+            <summary>
+            Gets a value indicating whether the <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.MachineNameCollection.Remove(System.String)">
+            <summary>
+            Removes the first occurrence of a specific object from the <see cref="T:System.Collections.Generic.ICollection`1"/>.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.MachineNameCollection.GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through the collection.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.MachineNameCollection.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through a collection.
+            </summary>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.EndpointDescriptionCollection">
+            <summary>
+            A collection of EndpointDescriptions.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.EndpointDescriptionCollection.#ctor(UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl)">
+            <summary>
+            Initializes a new instance of the <see cref="T:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.EndpointDescriptionCollection"/> class.
+            </summary>
+            <param name="control">The control.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.EndpointDescriptionCollection.IndexOf(UnifiedAutomation.UaBase.EndpointDescription)">
+            <summary>
+            Determines the index of a specific item in the <see cref="T:System.Collections.Generic.IList`1"/>.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.EndpointDescriptionCollection.Insert(System.Int32,UnifiedAutomation.UaBase.EndpointDescription)">
+            <summary>
+            Inserts an item to the <see cref="T:System.Collections.Generic.IList`1"/> at the specified index.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.EndpointDescriptionCollection.RemoveAt(System.Int32)">
+            <summary>
+            Removes the <see cref="T:System.Collections.Generic.IList`1"/> item at the specified index.
+            </summary>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.EndpointDescriptionCollection.Item(System.Int32)">
+            <summary>
+            Gets or sets the element at the specified index.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.EndpointDescriptionCollection.Add(UnifiedAutomation.UaBase.EndpointDescription)">
+            <summary>
+            Adds an item to the <see cref="T:System.Collections.Generic.ICollection`1"/>.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.EndpointDescriptionCollection.Clear">
+            <summary>
+            Removes all items from the <see cref="T:System.Collections.Generic.ICollection`1"/>.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.EndpointDescriptionCollection.Contains(UnifiedAutomation.UaBase.EndpointDescription)">
+            <summary>
+            Determines whether the <see cref="T:System.Collections.Generic.ICollection`1"/> contains a specific value.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.EndpointDescriptionCollection.CopyTo(UnifiedAutomation.UaBase.EndpointDescription[],System.Int32)">
+            <summary>
+            Copies the elements of the <see cref="T:System.Collections.Generic.ICollection`1"/> to an <see cref="T:System.Array"/>, starting at a particular <see cref="T:System.Array"/> index.
+            </summary>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.EndpointDescriptionCollection.Count">
+            <summary>
+            Gets the number of elements contained in the <see cref="T:System.Collections.Generic.ICollection`1"/>.
+            </summary>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.EndpointDescriptionCollection.IsReadOnly">
+            <summary>
+            Gets a value indicating whether the <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.EndpointDescriptionCollection.Remove(UnifiedAutomation.UaBase.EndpointDescription)">
+            <summary>
+            Removes the first occurrence of a specific object from the <see cref="T:System.Collections.Generic.ICollection`1"/>.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.EndpointDescriptionCollection.GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through the collection.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.EndpointDescriptionCollection.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through a collection.
+            </summary>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.SelectEndpointCtrl.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.ConnectServerEventArgs">
+            <summary>
+            The arguments for a ConnectServer event.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.ConnectServerEventArgs.#ctor(UnifiedAutomation.UaBase.EndpointDescription)">
+            <summary>
+            Initializes a new instance of the <see cref="T:UnifiedAutomation.UaClient.Controls.ConnectServerEventArgs"/> class.
+            </summary>
+            <param name="endpoint">The endpoint.</param>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.ConnectServerEventArgs.Endpoint">
+            <summary>
+            Gets the endpoint.
+            </summary>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.ConnectServerEventHandler">
+            <summary>
+            Used to handle ConnectServer events.
+            </summary>
+            <param name="sender">The sender.</param>
+            <param name="e">The <see cref="T:UnifiedAutomation.UaClient.Controls.ConnectServerEventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.SelectNodeCtrl">
+            <summary>
+            A control with button that displays an open file dialog.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.SelectNodeCtrl.#ctor">
+            <summary>
+            Creates a new instance of the control.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.SelectNodeCtrl.ChangeSession(UnifiedAutomation.UaClient.Session)">
+            <summary>
+            Changes the session.
+            </summary>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.SelectNodeCtrl.RootId">
+            <summary>
+            Gets or sets starting node.
+            </summary>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.SelectNodeCtrl.View">
+            <summary>
+            Gets or sets the view to use.
+            </summary>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.SelectNodeCtrl.ReferenceTypeId">
+            <summary>
+            Gets or sets the reference type to follow.
+            </summary>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.SelectNodeCtrl.SelectedNode">
+            <summary>
+            Gets or sets the currently selected node.
+            </summary>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.SelectNodeCtrl.SelectedReference">
+            <summary>
+            Gets or sets the currently selected reference.
+            </summary>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.SelectNodeCtrl.NodeControl">
+            <summary>
+            Gets or sets the control that is stores with the current node.
+            </summary>
+        </member>
+        <member name="E:UnifiedAutomation.UaClient.Controls.SelectNodeCtrl.NodeSelected">
+            <summary>
+            Raised when a new node is selected.
+            </summary>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.SelectNodeCtrl.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.SelectNodeCtrl.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.SelectNodeCtrl.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.SessionStatusCtrl">
+            <summary>
+            Displays the current status of a session.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.SessionStatusCtrl.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:UnifiedAutomation.UaClient.Controls.SessionStatusCtrl"/> class.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.SessionStatusCtrl.ChangeSession(UnifiedAutomation.UaClient.Session)">
+            <summary>
+            Changes the session.
+            </summary>
+            <param name="session">The session.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.SessionStatusCtrl.OnStatusUpdate(UnifiedAutomation.UaClient.Session,UnifiedAutomation.UaClient.ServerConnectionStatusUpdateEventArgs)">
+            <summary>
+            Called when [status update].
+            </summary>
+            <param name="session">The session.</param>
+            <param name="e">The <see cref="T:UnifiedAutomation.UaClient.ServerConnectionStatusUpdateEventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.SessionStatusCtrl.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.SessionStatusCtrl.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.SessionStatusCtrl.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.SetTypeDlg">
+            <summary>
+            Prompts the user specify the data type and array dimensions.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.SetTypeDlg.#ctor">
+            <summary>
+            Creates an empty form.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.SetTypeDlg.ChangeSession(UnifiedAutomation.UaClient.Session)">
+            <summary>
+            Changes the session.
+            </summary>
+            <param name="session">The session.</param>
+        </member>
+        <member name="T:UnifiedAutomation.UaClient.Controls.SetTypeDlg.SetTypeResult">
+            <summary>
+            The values updated by the dialog.
+            </summary>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.SetTypeDlg.SetTypeResult.TypeInfo">
+            <summary>
+            The new type info.
+            </summary>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.SetTypeDlg.SetTypeResult.DataTypeId">
+            <summary>
+            The data type id for structured types.
+            </summary>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.SetTypeDlg.SetTypeResult.ArrayDimensions">
+            <summary>
+            The dimensions for array types.
+            </summary>
+        </member>
+        <member name="P:UnifiedAutomation.UaClient.Controls.SetTypeDlg.SetTypeResult.UseDefaultOnError">
+            <summary>
+            If true then the default value will be used if a conversion error occurs.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.SetTypeDlg.ShowDialog(UnifiedAutomation.UaBase.TypeInfo,System.Int32[],UnifiedAutomation.UaBase.NodeId,System.Boolean)">
+            <summary>
+            Displays the available areas in a tree view.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.SetTypeDlg.GetDimensions">
+            <summary>
+            Gets the dimensions.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:UnifiedAutomation.UaClient.Controls.SetTypeDlg.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.SetTypeDlg.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:UnifiedAutomation.UaClient.Controls.SetTypeDlg.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+    </members>
+</doc>
