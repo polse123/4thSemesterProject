@@ -1,0 +1,20 @@
+﻿.wrapper {
+    width: 200px;
+    overflow: hidden;
+    display: flex;
+}
+
+.first {
+    width: 20%;
+    float: left;
+}
+
+.second {
+    border-style: solid;
+    border-width: thin;
+    border-height: 10%;
+    text-align: center;
+    background-color: lightgray;
+    width: 80%;
+    float: left;
+}
