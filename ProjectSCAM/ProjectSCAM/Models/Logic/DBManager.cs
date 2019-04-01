@@ -31,17 +31,26 @@ namespace ProjectSCAM.Models.Logic {
         public LinkedList<UserModel> retrieveUsers() {
             LinkedList<UserModel> users = new LinkedList<UserModel>();
             // change to async when using real database
-            conn.Open();
-            string query = "SELECT * FROM Users WHERE isactive = true";
-            NpgsqlCommand command = new NpgsqlCommand(query, conn);
-            NpgsqlDataReader dr = command.ExecuteReader();
-            while(dr.Read()) {
-                UserModel user = new UserModel(
-                    (int)dr[0],dr[1].ToString(),dr[2].ToString(),dr[3].ToString(), 
-                    dr[4].ToString(), dr[5].ToString(), dr[6].ToString(), (bool)dr[7],(int)dr[8]);
-                users.AddLast(user);
+            try {
+                conn.Open();
+                string query = "SELECT * FROM Users WHERE isactive = true";
+                NpgsqlCommand command = new NpgsqlCommand(query, conn);
+                NpgsqlDataReader dr = command.ExecuteReader();
+                while (dr.Read()) {
+                    UserModel user = new UserModel(
+                        (int)dr[0], dr[1].ToString(), dr[2].ToString(), dr[3].ToString(),
+                        dr[4].ToString(), dr[5].ToString(), dr[6].ToString(), (bool)dr[7], (int)dr[8]);
+                    users.AddLast(user);
+                }
             }
-            conn.Close();
+            catch(NpgsqlException ex) {
+                throw ex;
+            }
+            finally {
+                conn.Close();
+            }
+
+
             return users;
             
         }

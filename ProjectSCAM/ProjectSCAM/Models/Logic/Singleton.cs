@@ -15,7 +15,7 @@ namespace ProjectSCAM.Models.Logic {
 
         private Singleton() {
             dbManager = new DBManager("balarama.db.elephantsql.com","5432", "ppcrexqw", "HL8HORvW5RUPUlBUcf_PIcZWxjlOoc1F",
-                "SCAM_db");
+                "ppcrexqw");
         }
 
         public static Singleton Instance {
