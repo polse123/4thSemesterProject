@@ -216,6 +216,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\dropdown.css" />
     <Content Include="Content\firstSecond.css" />
+    <Content Include="Content\HistoryStyleSheet.css" />
     <Content Include="Content\optimization.css" />
     <Content Include="Content\OverviewStyleSheet.css" />
     <Content Include="favicon.ico" />
