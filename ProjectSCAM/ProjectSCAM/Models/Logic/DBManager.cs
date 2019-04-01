@@ -41,6 +41,7 @@ namespace ProjectSCAM.Models.Logic {
                     dr[4].ToString(), dr[5].ToString(), dr[6].ToString(), (bool)dr[7],(int)dr[8]);
                 users.AddLast(user);
             }
+            conn.Close();
             return users;
             
         }
