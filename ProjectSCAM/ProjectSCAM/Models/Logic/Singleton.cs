@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace ProjectSCAM.Models {
+namespace ProjectSCAM.Models.Logic {
     public sealed class Singleton {
-        // should contain opc & db modules
-        // e.g OPCManager & DBManager
-        // all logic & persistence belongs to the model layer
+        public DBManager dbManager { get; set; }
         private static readonly Singleton instance = new Singleton();
 
         // Explicit static constructor to tell C# compiler
@@ -16,6 +14,8 @@ namespace ProjectSCAM.Models {
         }
 
         private Singleton() {
+            dbManager = new DBManager("balarama.db.elephantsql.com","5432", "ppcrexqw", "HL8HORvW5RUPUlBUcf_PIcZWxjlOoc1F",
+                "ppcrexqw");
         }
 
         public static Singleton Instance {

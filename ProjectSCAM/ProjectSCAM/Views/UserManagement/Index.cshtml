@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@model LinkedList<ProjectSCAM.Models.UserModel>
+<!DOCTYPE html>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 <html>
 <head>
@@ -21,6 +22,18 @@
                 <th> Phone number </th>
                 <th> User type </th>
             </tr>
+                @foreach (var item in Model) {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Username</td>
+                <td>@item.FirstName</td>
+                <td>@item.LastName</td>
+                <td>@item.Email</td>
+                <td>@item.PhoneNumber</td>
+                <td>@item.UserType</td>
+            </tr>
+
+                }
         </table>
     </div>
 </body>

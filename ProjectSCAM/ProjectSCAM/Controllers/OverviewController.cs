@@ -25,7 +25,12 @@ namespace SCAMS.Controllers {
             OpcClient opc = new OpcClient();
             do {
                 Response.Write("data:" + JsonConvert.SerializeObject(opc, Formatting.None) + "\n\n");
-                Response.FlushAsync();
+                try {
+                    Response.FlushAsync();
+                } catch {
+
+                }
+                
                 Thread.Sleep(1000);
             } while (true);
         }
