@@ -1,21 +1,85 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
+    @Styles.Render("~/Content/ProductionStyleSheet.css")
     @Styles.Render("~/Content/dropdown.css")
 </head>
 <body>
-    <div class="dropdown">
-        <button class="dropbtn" id="recipeSelect">Recipes</button>
-        <div class="dropdown-content">
-            <a href="">Test 1</a>
-            <a href="">Test 2</a>
+    <div class="grid-container">
+        <div class="grid-item item1">
+            <div id="insert" class="insetclass">
+                <div id="textFields">
+                    Speed: <input type="text" id="speedField"><br><br>
+                    Amount: <input type="text" id="speedField">
+                </div>
+                <div id="button">
+                </div>
+                <br><br>
+                <div class="dropdown">
+
+                    <button class="dropbtn" id="machineSelect">Production Type:</button>
+                    <div class="dropdown-content">
+                        <br>
+                        <a href="">Alcahole Free</a>
+                        <a href="">Pilsner</a>
+                        <br>
+                    </div>
+                </div>
+            </div>
+            <br><br>
+
+            <button type="Submit" id="createButton">Create Batch</button>
+
         </div>
-    </div>
-    <div id="textFields">
-        Speed: <input type="text" id="speedField">
-    </div>
-    <div id="button">
-        <button type="Submit" id="loginButton">Login</button>
-    </div>
+
+        <div class="grid-item item2">
+            <div id="batchQueue" class="batchQueueclass">
+
+
+                <table class="batchtQueueTableClass" id="batchQueueTableid">
+                    <tr>
+                        <th>Batch ID:</th>
+                        <th>Beer Type:</th>
+                        <th>Amount:</th>
+                        <th>Time Start:</th>
+                        <th>Time End:</th>
+                        <th>Speed:</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>10</td>
+                        <td>100</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>100</td>
+                        <td>200</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>3</td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+                    <div class="grid-item item3">
+                        <div id="batchQueue" class="batchQueueclass">
+
+                            <button type="Submit" id="moveButton">Move Up</button><br><br>
+                            <button type="Submit" id="moveButton">Move Down</button><br><br>
+                            <button type="Submit" id="moveButton">Delete</button><br><br>
+                          
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+          
+
+      
 </body>
-</html>
+    </html>

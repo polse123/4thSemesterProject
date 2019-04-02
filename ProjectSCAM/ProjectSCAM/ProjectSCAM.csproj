@@ -220,6 +220,7 @@
     <Content Include="Content\HistoryStyleSheet.css" />
     <Content Include="Content\optimization.css" />
     <Content Include="Content\OverviewStyleSheet.css" />
+    <Content Include="Content\ProductionStyleSheet.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
