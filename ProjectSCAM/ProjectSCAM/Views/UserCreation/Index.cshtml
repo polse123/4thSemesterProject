@@ -1,5 +1,49 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿<!DOCTYPE html>
+<html>
+<head>
+
+    @Styles.Render("~/Content/CreateUserStyleSheet.css")
+
+
+
+</head>
+<body>
+    <div class="spanHead">
+        User creation <span id="userCreationHead" class="userCreationHeadLine" style="font-size: 20px;"></span> <br> <br>
+
+    </div>
+    <div class="createUser-content">
+        
+
+                User information:  <p id="userParagraph"></p>
+                                   <form method="post">
+                                       Username: <input type="text" name="usernameField" id="usernameField"> <br> <br>
+                                       Password: <input type="password" name="passwordField" id="passwordField"> <br> <br>
+                                       Repeat password: <input type="password" name="repeatPasswordField" id="repeatPasswordField"> <br> <br>
+                                       Firstname: <input type="text" name="firstnameField" id="firstnameField"> <br> <br>
+                                       Lastname: <input type="text" name="lastnameField" id="lastnameField"> <br> <br>
+                                       Phonenumber: <input type="text" name="phonenumberField" id="phonenumberField"> <br> <br>
+                                       Email address: <input type="text" name="emailField" id="emailField"> <br> <br>
+
+
+                                       <div class="dropdownUserTypes">
+                                           <button class="dropbtnUserTypes" id="UserTypesSelect">User type</button>
+                                           <div class="dropdownUserType-content">
+
+                                               <input type="radio" name="userType" value="userType" id="userType1" checked>User type 1 <br>
+                                               <input type="radio" name="userType" value="userType" id="userType2">User type 2 <br>
+                                               <input type="radio" name="userType" value="userType" id="userType3">User type 3 <br>
+                                           </div>
+                                       </div> <br> <br>
+
+                                       <input type="submit" name="submitButton" value="create user" id="submitButton">
+
+                                   </form>
+
+
+    </div>
+
+
+</body>
+</html>
+
