@@ -19,7 +19,7 @@ namespace ProjectSCAM.Models.Logic
         /// Retrieve a list of users (excludes Users.password and Users.isactive, includes UserTypes.role).
         /// Optionally add query append (start with " " or ";").
         /// </summary>
-        /// <param name="query"></param>
+        /// <param name="append"></param>
         /// <returns></returns>
         public LinkedList<UserModel> RetrieveUsers(string append)
         {
@@ -58,7 +58,7 @@ namespace ProjectSCAM.Models.Logic
         /// Retrieve recipes.
         /// Optionally add query append (start with " " or ";").
         /// </summary>
-        /// <param name="query"></param>
+        /// <param name="append"></param>
         /// <returns></returns>
         public LinkedList<RecipeModel> RetrieveRecipes(string append)
         {
@@ -92,7 +92,7 @@ namespace ProjectSCAM.Models.Logic
         /// Retrieve batches from the batch queue (icludes Recipes.beerid).
         /// Optionally add query append (start with " " or ";").
         /// </summary>
-        /// <param name="query"></param>
+        /// <param name="append"></param>
         /// <returns></returns>
         public LinkedList<BatchQueueModel> RetrieveFromBatchQueue(string append)
         {
@@ -128,7 +128,7 @@ namespace ProjectSCAM.Models.Logic
         /// Retrieve batches (includes Recipes.beerid).
         /// Optionally add query append (start with " " or ";").
         /// </summary>
-        /// <param name="query"></param>
+        /// <param name="append"></param>
         /// <returns></returns>
         public LinkedList<BatchModel> RetrieveBatches(string append)
         {
