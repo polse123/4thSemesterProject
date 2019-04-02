@@ -30,19 +30,7 @@ namespace SCAMS.Controllers {
         }
         [HttpPost]
         public string RefreshBQ() {
-            LinkedList<BatchQueueModel> batchq = new LinkedList<BatchQueueModel>();
-            BatchQueueModel bqm = new BatchQueueModel() {
-                Amount = 651,
-                Speed = 85,
-                Type = 1
-            };
-            BatchQueueModel bqm2 = new BatchQueueModel() {
-                Amount = 435,
-                Speed = 75,
-                Type = 2
-            };
-            batchq.AddLast(bqm);
-            batchq.AddLast(bqm2);
+            LinkedList<BatchQueueModel> batchq = Singleton.Instance.dbManager.RetrieveFromBatchQueue();
             return JsonConvert.SerializeObject(batchq, Formatting.None);
 
         }

@@ -98,7 +98,7 @@ namespace ProjectSCAM.Models.Logic
         {
             string query = "SELECT BatchQueue.queueid, BatchQueue.amount, BatchQueue.speed, " +
                             "BatchQueue.beerid, Recipes.beerid " +
-                            "FROM Batches INNER JOIN Recipes ON Batches.beerid = Recipes.beerid" +
+                            "FROM BatchQueue INNER JOIN Recipes ON BatchQueue.beerid = Recipes.beerid" +
                             append;
 
             LinkedList<BatchQueueModel> list = new LinkedList<BatchQueueModel>();
