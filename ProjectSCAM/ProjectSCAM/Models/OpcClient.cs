@@ -134,6 +134,27 @@ namespace SCAMS.Models {
             // create the actual subscription
             s.Create(new RequestSettings() { OperationTimeout = 10000 });
         }
+        public void HandleCommand(string command) {
+            switch (command) {
+                case "start":
+                    StartMachine(10, 1, 1000, 60);
+                    break;
+                case "stop":
+                    StopMachine();
+                    break;
+                case "clear":
+                    ClearMachine();
+                    break;
+                case "abort":
+                    AbortMachine();
+                    break;
+                case "reset":
+                    ResetMachine();
+                    break;
+                default:
+                    throw new Exception("Invalid command");
+            }
+        }
         private void OnDataChanged(Subscription s, DataChangedEventArgs e) {
             foreach (DataChange dc in e.DataChanges) {
                 switch (dc.MonitoredItem.NodeId.Identifier.ToString()) {
