@@ -22,18 +22,19 @@
                 <th> Phone number </th>
                 <th> User type </th>
             </tr>
-                @foreach (var item in Model) {
-            <tr>
-                <td>@item.Id</td>
-                <td>@item.Username</td>
-                <td>@item.FirstName</td>
-                <td>@item.LastName</td>
-                <td>@item.Email</td>
-                <td>@item.PhoneNumber</td>
-                <td>@item.UserType</td>
-            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Username</td>
+                    <td>@item.FirstName</td>
+                    <td>@item.LastName</td>
+                    <td>@item.Email</td>
+                    <td>@item.PhoneNumber</td>
+                    <td>@item.Role</td>
+                </tr>
 
-                }
+            }
         </table>
     </div>
 </body>

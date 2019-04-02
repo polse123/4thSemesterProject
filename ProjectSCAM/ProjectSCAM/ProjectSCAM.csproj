@@ -229,6 +229,7 @@
     <Compile Include="Models\BatchQueueModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Logic\DBManager.cs" />
+    <Compile Include="Models\Logic\QueryExecuter.cs" />
     <Compile Include="Models\MachineModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\OpcClientModel.cs" />
