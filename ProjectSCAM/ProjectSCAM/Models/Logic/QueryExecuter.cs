@@ -16,6 +16,67 @@ namespace ProjectSCAM.Models.Logic
         }
 
         /// <summary>
+        /// Retrieve recipes.
+        /// Optionally add query append (start with " " or ";").
+        /// </summary>
+        /// <param name="append"></param>
+        /// <returns></returns>
+        public LinkedList<RecipeModel> RetrieveRecipes(string append)
+        {
+            string query = "SELECT * FROM Recipes" + append;
+
+            LinkedList<RecipeModel> list = new LinkedList<RecipeModel>();
+            try
+            {
+                conn.Open();
+                NpgsqlCommand command = new NpgsqlCommand(query, conn);
+                NpgsqlDataReader dr = command.ExecuteReader();
+                while (dr.Read())
+                {
+                    RecipeModel recipe = new RecipeModel((int)dr[0], (int)dr[1], dr[2].ToString().Trim(),
+                        (int)dr[3], (int)dr[4], (int)dr[5], (int)dr[6], (int)dr[7]);
+                    list.AddLast(recipe);
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return list;
+        }
+
+        public LinkedList<MachineModel> RetrieveMachines(string append)
+        {
+            string query = "SELECT * FROM Machines" + append;
+
+            LinkedList<MachineModel> list = new LinkedList<MachineModel>();
+            try
+            {
+                conn.Open();
+                NpgsqlCommand command = new NpgsqlCommand(query, conn);
+                NpgsqlDataReader dr = command.ExecuteReader();
+                while (dr.Read())
+                {
+                    MachineModel machine = new MachineModel((int)dr[0], dr[1].ToString().Trim(), dr[2].ToString().Trim());
+                    list.AddLast(machine);
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return list;
+        }
+
+        /// <summary>
         /// Retrieve a list of users (excludes Users.password and Users.isactive, includes UserTypes.role).
         /// Optionally add query append (start with " " or ";").
         /// </summary>
@@ -40,40 +101,6 @@ namespace ProjectSCAM.Models.Logic
                         (int)dr[0], dr[1].ToString().Trim(), dr[2].ToString().Trim(), dr[3].ToString().Trim(),
                         dr[4].ToString().Trim(), dr[5].ToString().Trim(), (int)dr[6], dr[7].ToString().Trim());
                     list.AddLast(user);
-                }
-            }
-            catch (NpgsqlException ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                conn.Close();
-            }
-            return list;
-        }
-
-        /// <summary>
-        /// Retrieve recipes.
-        /// Optionally add query append (start with " " or ";").
-        /// </summary>
-        /// <param name="append"></param>
-        /// <returns></returns>
-        public LinkedList<RecipeModel> RetrieveRecipes(string append)
-        {
-            string query = "SELECT * FROM Recipes" + append;
-
-            LinkedList<RecipeModel> list = new LinkedList<RecipeModel>();
-            try
-            {
-                conn.Open();
-                NpgsqlCommand command = new NpgsqlCommand(query, conn);
-                NpgsqlDataReader dr = command.ExecuteReader();
-                while (dr.Read())
-                {
-                    RecipeModel recipe = new RecipeModel((int)dr[0], (int)dr[1], dr[2].ToString().Trim(),
-                        (int)dr[3], (int)dr[4], (int)dr[5], (int)dr[6], (int)dr[7]);
-                    list.AddLast(recipe);
                 }
             }
             catch (NpgsqlException ex)

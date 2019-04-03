@@ -34,16 +34,6 @@ namespace ProjectSCAM.Models.Logic
         }
 
         /// <summary>
-        /// Retrieve all active users
-        /// </summary>
-        /// <returns></returns>
-        public LinkedList<UserModel> RetrieveUsers()
-        {
-            string append = " WHERE isactive = true;";
-            return exe.RetrieveUsers(append);
-        }
-
-        /// <summary>
         /// Retrieve all recipes
         /// </summary>
         /// <returns></returns>
@@ -51,6 +41,22 @@ namespace ProjectSCAM.Models.Logic
         {
             string append = ";";
             return exe.RetrieveRecipes(append);
+        }
+
+        public LinkedList<MachineModel> RetrieveMachines()
+        {
+            string append = ";";
+            return exe.RetrieveMachines(append);
+        }
+
+        /// <summary>
+        /// Retrieve all active users
+        /// </summary>
+        /// <returns></returns>
+        public LinkedList<UserModel> RetrieveUsers()
+        {
+            string append = " WHERE isactive = true;";
+            return exe.RetrieveUsers(append);
         }
 
         /// <summary>
