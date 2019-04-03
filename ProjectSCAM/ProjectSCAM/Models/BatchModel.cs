@@ -7,23 +7,24 @@ namespace ProjectSCAM.Models
 {
     public class BatchModel
     {
-        public int Id { get; set; }
-        public int AcceptableProducts { get; set; }
-        public int DefectProducts { get; set; }
-        public string TimestampStart { get; set; }
-        public string TimestampEnd { get; set; }
-        public string ExpirationDate { get; set; }
-        public double Performance { get; set; }
-        public double Quality { get; set; }
-        public double Availability { get; set; }
-        public int Speed { get; set; }
-        public int BeerId { get; set; }
-        public int Machine { get; set; }
+        public int Id { get; }
+        public int AcceptableProducts { get; }
+        public int DefectProducts { get; }
+        public string TimestampStart { get; }
+        public string TimestampEnd { get; }
+        public string ExpirationDate { get; }
+        public bool Succeeded { get; }
+        public double Performance { get; }
+        public double Quality { get; }
+        public double Availability { get; }
+        public int Speed { get; }
+        public int BeerId { get; }
+        public int Machine { get; }
 
         public string RecipeName { get; set; }
 
         public BatchModel(int id, int acceptableProducts, int defectProducts,
-            string timestampStart, string timestampEnd, string expirationDate,
+            string timestampStart, string timestampEnd, string expirationDate, bool succeeded,
             double performance, double quality, double availability,
             int speed, int beerId, int machine, string recipeName)
         {
@@ -33,6 +34,7 @@ namespace ProjectSCAM.Models
             TimestampStart = timestampStart ?? throw new ArgumentNullException(nameof(timestampStart));
             TimestampEnd = timestampEnd ?? throw new ArgumentNullException(nameof(timestampEnd));
             ExpirationDate = expirationDate ?? throw new ArgumentNullException(nameof(expirationDate));
+            Succeeded = succeeded;
             Performance = performance;
             Quality = quality;
             Availability = availability;

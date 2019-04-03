@@ -24,9 +24,9 @@ namespace ProjectSCAM.Models.Logic
         public LinkedList<UserModel> RetrieveUsers(string append)
         {
             string query = "SELECT Users.userid, Users.username, Users.firstname, Users.lastname, " +
-                           "Users.email, Users.phonenumber, Users.usertype, Usertypes.role " +
-                           "FROM Users INNER JOIN UserTypes ON Users.usertype = UserTypes.typeid " +
-                           append;
+                "Users.email, Users.phonenumber, Users.usertype, Usertypes.role " +
+                "FROM Users INNER JOIN UserTypes ON Users.usertype = UserTypes.typeid " +
+                append;
 
             LinkedList<UserModel> list = new LinkedList<UserModel>();
             try
@@ -37,9 +37,8 @@ namespace ProjectSCAM.Models.Logic
                 while (dr.Read())
                 {
                     UserModel user = new UserModel(
-                        (int)dr[0], dr[1].ToString(), dr[2].ToString(),
-                        dr[3].ToString(), dr[4].ToString(), dr[5].ToString(),
-                        (int)dr[6], dr[7].ToString());
+                        (int)dr[0], dr[1].ToString().Trim(), dr[2].ToString().Trim(), dr[3].ToString().Trim(),
+                        dr[4].ToString().Trim(), dr[5].ToString().Trim(), (int)dr[6], dr[7].ToString().Trim());
                     list.AddLast(user);
                 }
             }
@@ -72,8 +71,8 @@ namespace ProjectSCAM.Models.Logic
                 NpgsqlDataReader dr = command.ExecuteReader();
                 while (dr.Read())
                 {
-                    RecipeModel recipe = new RecipeModel((int)dr[0], (int)dr[1], (string)dr[2], (int)dr[3],
-                        (int)dr[4], (int)dr[5], (int)dr[6], (int)dr[7]);
+                    RecipeModel recipe = new RecipeModel((int)dr[0], (int)dr[1], dr[2].ToString().Trim(),
+                        (int)dr[3], (int)dr[4], (int)dr[5], (int)dr[6], (int)dr[7]);
                     list.AddLast(recipe);
                 }
             }
@@ -96,10 +95,10 @@ namespace ProjectSCAM.Models.Logic
         /// <returns></returns>
         public LinkedList<BatchQueueModel> RetrieveFromBatchQueue(string append)
         {
-            string query = "SELECT BatchQueue.queueid, BatchQueue.amount, BatchQueue.speed, " +
-                            "BatchQueue.beerid, Recipes.name " +
-                            "FROM BatchQueue INNER JOIN Recipes ON BatchQueue.beerid = Recipes.beerid" +
-                            append;
+            string query = "SELECT BatchQueue.queueid, BatchQueue.amount," +
+                "BatchQueue.speed, BatchQueue.beerid, Recipes.name " +
+                "FROM BatchQueue INNER JOIN Recipes ON BatchQueue.beerid = Recipes.beerid" +
+                append;
 
             LinkedList<BatchQueueModel> list = new LinkedList<BatchQueueModel>();
             try
@@ -109,7 +108,8 @@ namespace ProjectSCAM.Models.Logic
                 NpgsqlDataReader dr = command.ExecuteReader();
                 while (dr.Read())
                 {
-                    BatchQueueModel batch = new BatchQueueModel((int)dr[0], (int)dr[1], (int)dr[2], (int)dr[3], dr[4].ToString().Trim());
+                    BatchQueueModel batch = new BatchQueueModel((int)dr[0], (int)dr[1],
+                        (int)dr[2], (int)dr[3], dr[4].ToString().Trim());
                     list.AddLast(batch);
                 }
             }
@@ -134,7 +134,7 @@ namespace ProjectSCAM.Models.Logic
         {
             string query = "SELECT Batches.batchid, Batches.acceptableproducts, Batches.defectproducts, " +
                 "Batches.timestampstart, Batches.timestampend, Batches.expirationdate, " +
-                "Batches.performance, Batches.quality, Batches.availablity, " +
+                "Batches.succeeded, Batches.performance, Batches.quality, Batches.availablity, " +
                 "Batches.speed, Batches.beerid, Batches.machine, Recipes.name" +
                 "FROM Batches INNER JOIN Recipes ON Batches.beerid = Recipes.beerid" +
                 append;
@@ -148,9 +148,9 @@ namespace ProjectSCAM.Models.Logic
                 while (dr.Read())
                 {
                     BatchModel batch = new BatchModel((int)dr[0], (int)dr[1], (int)dr[2],
-                        (string)dr[3], (string)dr[4], (string)dr[5],
-                        (double)dr[6], (double)dr[7], (double)dr[8],
-                        (int)dr[9], (int)dr[10], (int)dr[11], (string)dr[12]);
+                        dr[3].ToString().Trim(), dr[4].ToString().Trim(), dr[5].ToString().Trim(),
+                        (bool)dr[6], (double)dr[7], (double)dr[8], (double)dr[9],
+                        (int)dr[10], (int)dr[11], (int)dr[12], dr[13].ToString().Trim());
                     list.AddLast(batch);
                 }
             }
