@@ -19,7 +19,7 @@ namespace ProjectSCAM.Models.Logic
         /// Retrieve a list of users (excludes Users.password and Users.isactive, includes UserTypes.role).
         /// Optionally add query append (start with " " or ";").
         /// </summary>
-        /// <param name="query"></param>
+        /// <param name="append"></param>
         /// <returns></returns>
         public LinkedList<UserModel> RetrieveUsers(string append)
         {
@@ -58,7 +58,7 @@ namespace ProjectSCAM.Models.Logic
         /// Retrieve recipes.
         /// Optionally add query append (start with " " or ";").
         /// </summary>
-        /// <param name="query"></param>
+        /// <param name="append"></param>
         /// <returns></returns>
         public LinkedList<RecipeModel> RetrieveRecipes(string append)
         {
@@ -92,13 +92,13 @@ namespace ProjectSCAM.Models.Logic
         /// Retrieve batches from the batch queue (icludes Recipes.beerid).
         /// Optionally add query append (start with " " or ";").
         /// </summary>
-        /// <param name="query"></param>
+        /// <param name="append"></param>
         /// <returns></returns>
         public LinkedList<BatchQueueModel> RetrieveFromBatchQueue(string append)
         {
             string query = "SELECT BatchQueue.queueid, BatchQueue.amount, BatchQueue.speed, " +
-                            "BatchQueue.beerid, Recipes.beerid " +
-                            "FROM Batches INNER JOIN Recipes ON Batches.beerid = Recipes.beerid" +
+                            "BatchQueue.beerid, Recipes.name " +
+                            "FROM BatchQueue INNER JOIN Recipes ON BatchQueue.beerid = Recipes.beerid" +
                             append;
 
             LinkedList<BatchQueueModel> list = new LinkedList<BatchQueueModel>();
@@ -109,7 +109,7 @@ namespace ProjectSCAM.Models.Logic
                 NpgsqlDataReader dr = command.ExecuteReader();
                 while (dr.Read())
                 {
-                    BatchQueueModel batch = new BatchQueueModel((int)dr[0], (int)dr[1], (int)dr[2], (int)dr[3], (string)dr[4]);
+                    BatchQueueModel batch = new BatchQueueModel((int)dr[0], (int)dr[1], (int)dr[2], (int)dr[3], dr[4].ToString().Trim());
                     list.AddLast(batch);
                 }
             }
@@ -128,7 +128,7 @@ namespace ProjectSCAM.Models.Logic
         /// Retrieve batches (includes Recipes.beerid).
         /// Optionally add query append (start with " " or ";").
         /// </summary>
-        /// <param name="query"></param>
+        /// <param name="append"></param>
         /// <returns></returns>
         public LinkedList<BatchModel> RetrieveBatches(string append)
         {

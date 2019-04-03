@@ -5,30 +5,45 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Newtonsoft.Json;
+using ProjectSCAM.Models;
+using ProjectSCAM.Models.Logic;
 using SCAMS.Models;
 
 namespace SCAMS.Controllers {
     public class OverviewController : Controller {
-        public object OpcClientModel { get; private set; }
-
         public ActionResult Index() {
             return View();
         }
-        //not being used rn
-        //public void Setup(int amountToProduce, int speed, int productType) {
-        //    opc = new OPCMachine(amountToProduce);
-        //    opc.Speed = speed;
-        //    opc.ProductType = productType;
-        //}
+        // series of actionmethods that handle post requests
+        [HttpPost]
+        public string MachineControl() {
+            // get value of command variable in the request
+            string value = Request["command"];
+            // let opc manager handle the command
+            try {
+                Singleton.Instance.opcManager.HandleCommand(value);
+                return "command valid";
+            } catch(Exception ex) {
+                return ex.Message;
+            }
+            
+        }
+        [HttpPost]
+        public string RefreshBQ() {
+            LinkedList<BatchQueueModel> batchq = Singleton.Instance.dbManager.RetrieveFromBatchQueue();
+            return JsonConvert.SerializeObject(batchq, Formatting.None);
+
+        }
+       
         public void Message() {
             Response.ContentType = "text/event-stream";
-            OpcClient opc = new OpcClient();
+
             do {
-                Response.Write("data:" + JsonConvert.SerializeObject(opc, Formatting.None) + "\n\n");
+                Response.Write("data:" + JsonConvert.SerializeObject(Singleton.Instance.opcManager, Formatting.None) + "\n\n");
                 try {
                     Response.FlushAsync();
                 } catch {
-
+                    Response.Close();
                 }
                 
                 Thread.Sleep(1000);
