@@ -21,7 +21,9 @@ namespace ProjectSCAM.Models
         public int BeerId { get; }
         public int Machine { get; }
 
-        public string RecipeName { get; set; }
+        public BatchValueCollection Values { get; set; }
+
+        public string RecipeName { get; }
 
         public BatchModel(int id, int acceptableProducts, int defectProducts,
             string timestampStart, string timestampEnd, string expirationDate, bool succeeded,
@@ -41,6 +43,7 @@ namespace ProjectSCAM.Models
             Speed = speed;
             BeerId = beerId;
             Machine = machine;
+            Values = new BatchValueCollection();
             RecipeName = recipeName ?? throw new ArgumentNullException(nameof(recipeName));
         }
     }

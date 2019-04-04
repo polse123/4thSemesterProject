@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 
 namespace ProjectSCAM.Models.Logic
@@ -9,6 +10,8 @@ namespace ProjectSCAM.Models.Logic
     public class QueryExecuter
     {
         private NpgsqlConnection conn;
+
+        private string[] valueTables = { "temperatureValues", "humidityValues", "vibrationValues" };
 
         public QueryExecuter(NpgsqlConnection conn)
         {
@@ -151,6 +154,48 @@ namespace ProjectSCAM.Models.Logic
             return list;
         }
 
+        public bool RegisterBatch(int acceptableProducts, int defectProducts,
+            string timestampStart, string timestampEnd, string expirationDate,
+            bool succeeded, double performance, double quality, double availability,
+            int speed, int beerId, int machine,
+            List<KeyValuePair<string, double>> temperatureValues,
+            List<KeyValuePair<string, double>> humidityValues,
+            List<KeyValuePair<string, double>> vibrationsValues)
+        {
+            string query = "INSERT INTO Batches(acceptableproducts, defectproducts," +
+                " timestampstart, timestampend, expirationdate, succeeded," +
+                " performance, quality, availability, speed, beerid, machine)" +
+                " VALUES(" + acceptableProducts + ", " + defectProducts + ", " +
+                timestampStart + ", " + timestampEnd + ", " + expirationDate + ", " +
+                succeeded + ", " + performance + ", " + quality + ", " + availability + ", " +
+                speed + ", " + beerId + ", " + machine + " RETURNING batchid);";
+            try
+            {
+                int? batchId = null;
+                conn.Open();
+                NpgsqlCommand command = new NpgsqlCommand(query, conn);
+                NpgsqlDataReader dr = command.ExecuteReader();
+                while (dr.Read())
+                {
+                    batchId = (int)dr[0];
+                }
+                if (batchId != null)
+                {
+                    RegisterBatchValues(conn, (int)batchId, temperatureValues, humidityValues, vibrationsValues);
+                    return true;
+                }
+                else return false;
+            }
+            catch (NpgsqlException ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
         /// <summary>
         /// Retrieve batches (includes Recipes.beerid).
         /// Optionally add query append (start with " " or ";").
@@ -190,6 +235,91 @@ namespace ProjectSCAM.Models.Logic
                 conn.Close();
             }
             return list;
+        }
+
+
+
+        public BatchValueCollection RetrieveBatchValues(int batchId, string append)
+        {
+            string[] queries = new string[3];
+            for (int i = 0; i < 3; i++)
+            {
+                queries[i] = "SELECT " + valueTables[i] + ".value, " + valueTables[i] + ".timestamp FROM " + valueTables[i] + append;
+            }
+            BatchValueCollection values = new BatchValueCollection();
+            try
+            {
+                conn.Open();
+                for (int i = 0; i < 3; i++)
+                {
+                    NpgsqlCommand command = new NpgsqlCommand(queries[i], conn);
+                    NpgsqlDataReader dr = command.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        KeyValuePair<string, double> value = new KeyValuePair<string, double>(dr[1].ToString().Trim(), (int)dr[0]);
+                        if (i == 0)
+                        {
+                            values.TemperatureValues.Add(value);
+                        }
+                        else if (i == 1)
+                        {
+                            values.HumidityValues.Add(value);
+                        }
+                        else if (i == 2)
+                        {
+                            values.VibrationValues.Add(value);
+                        }
+                    }
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return values;
+        }
+
+        private bool RegisterBatchValues(NpgsqlConnection conn, int batchId,
+            List<KeyValuePair<string, double>> temperatureValues,
+            List<KeyValuePair<string, double>> humidityValues,
+            List<KeyValuePair<string, double>> vibrationsValues)
+        {
+            string[] queries = new string[temperatureValues.Count + humidityValues.Count + vibrationsValues.Count];
+            List<KeyValuePair<string, double>>[] valueLists = { temperatureValues, humidityValues, vibrationsValues };
+            int qIndex = 0;
+            for (int i = 0; i < valueLists.Length; i++)
+            {
+                foreach (KeyValuePair<string, double> value in valueLists[i])
+                {
+                    queries[qIndex] = "INSERT INTO " + valueTables[i] + " VALUES(" + value.Value + ", " + value.Key + ", " + batchId + ");";
+                    qIndex++;
+                }
+            }
+            try
+            {
+                for (int i = 0; i < queries.Length; i++)
+                {
+                    try
+                    {
+                        NpgsqlCommand command = new NpgsqlCommand(queries[i], conn);
+                        command.ExecuteReader();
+                    }
+                    catch (NpgsqlException ex) { }
+                }
+            }
+            catch (NpgsqlException)
+            {
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return true;
         }
     }
 }

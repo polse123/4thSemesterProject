@@ -144,5 +144,45 @@ namespace ProjectSCAM.Models.Logic
             append.Append(" beerid = " + beerId + ";");
             return exe.RetrieveBatches(append.ToString());
         }
+
+        public bool RegisterBatch(int acceptableProducts, int defectProducts,
+            string timestampStart, string timestampEnd, string expirationDate, bool succeeded,
+            double performance, double quality, double availability,
+            int speed, int beerId, int machine,
+            List<KeyValuePair<string, double>> temperatureValues,
+            List<KeyValuePair<string, double>> humidityValues,
+            List<KeyValuePair<string, double>> vibrationsValues)
+        {
+            if (acceptableProducts >= 0 && defectProducts >= 0 &&
+                timestampStart.Length == 23 && timestampEnd.Length == 23 &&
+                expirationDate.Length == 10 &&
+                performance >= 0 && performance <= 1 &&
+                quality >= 0 && quality <= 1 &&
+                availability >= 0 && availability <= 1)
+            {
+                return exe.RegisterBatch(acceptableProducts, defectProducts,
+                    timestampStart, timestampEnd, expirationDate, succeeded,
+                    performance, quality, availability, speed, beerId, machine,
+                    temperatureValues, humidityValues, vibrationsValues);
+            }
+            else { return false; }
+        }
+
+        public BatchModel RetrieveBatch(int batchId)
+        {
+            string append = " WHERE batchid = " + batchId + ";";
+            LinkedList<BatchModel> list = exe.RetrieveBatches(append);
+            if (list.Count == 1)
+            {
+                return list.First();
+            }
+            else { return null; }
+        }
+
+        public BatchValueCollection RetrieveBatchValues(int batchId)
+        {
+            string append = " WHERE belongingto = " + batchId + ";";
+            return exe.RetrieveBatchValues(batchId, append);
+        }
     }
 }
