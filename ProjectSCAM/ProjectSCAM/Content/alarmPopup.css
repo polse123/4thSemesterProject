@@ -4,7 +4,7 @@
 
 /* The Modal (background) */
 .modal {
-    display: none; /* Hidden by default */
+    display: block; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
     padding-top: 100px; /* Location of the box */
@@ -34,7 +34,7 @@
 
 /* The Close Button */
 .close {
-    color: white;
+    color: black;
     float: right;
     font-size: 28px;
     font-weight: bold;
@@ -42,7 +42,7 @@
 
     .close:hover,
     .close:focus {
-        color: #000;
+        color: black;
         text-decoration: none;
         cursor: pointer;
     }
@@ -50,7 +50,7 @@
 .modal-header {
     padding: 2px 16px;
     background-color: red;
-    color: white;
+    color: black;
 }
 
 .modal-body {
@@ -58,7 +58,15 @@
 }
 
 .modal-footer {
-    padding: 2px 16px;
+    padding: 15px 16px;
     background-color: red;
-    color: white;
+    color: black;
+    text-align:left;
+}
+
+.popuptableclass, th, td {
+    border-collapse: collapse;
+    border-spacing: 10px;
+    padding: 10px;
+    border: 2px solid black;
 }
