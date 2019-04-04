@@ -69,7 +69,7 @@ namespace ProjectSCAM.Models.Logic
         /// <returns></returns>
         public LinkedList<BatchQueueModel> RetrieveFromBatchQueue()
         {
-            string append = ";";
+            string append = " ORDER BY priority DESC;";
             return exe.RetrieveFromBatchQueue(append);
         }
 
