@@ -17,11 +17,12 @@ namespace SCAMS.Controllers {
         // series of actionmethods that handle post requests
         [HttpPost]
         public string MachineControl() {
+            string s = "yeet";
             // get value of command variable in the request
             string value = Request["command"];
             // let opc manager handle the command
             try {
-                Singleton.Instance.opcManager.HandleCommand(value);
+                Singleton.Instance.OpcManager.HandleCommand(value);
                 return "command valid";
             } catch(Exception ex) {
                 return ex.Message;
@@ -30,7 +31,7 @@ namespace SCAMS.Controllers {
         }
         [HttpPost]
         public string RefreshBQ() {
-            LinkedList<BatchQueueModel> batchq = Singleton.Instance.dbManager.RetrieveFromBatchQueue();
+            LinkedList<BatchQueueModel> batchq = Singleton.Instance.DbManager.RetrieveFromBatchQueue();
             return JsonConvert.SerializeObject(batchq, Formatting.None);
 
         }
@@ -39,7 +40,7 @@ namespace SCAMS.Controllers {
             Response.ContentType = "text/event-stream";
 
             do {
-                Response.Write("data:" + JsonConvert.SerializeObject(Singleton.Instance.opcManager, Formatting.None) + "\n\n");
+                Response.Write("data:" + JsonConvert.SerializeObject(Singleton.Instance.OpcManager, Formatting.None) + "\n\n");
                 try {
                     Response.FlushAsync();
                 } catch {

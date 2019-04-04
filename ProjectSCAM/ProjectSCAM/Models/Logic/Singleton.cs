@@ -6,8 +6,9 @@ using System.Web;
 
 namespace ProjectSCAM.Models.Logic {
     public sealed class Singleton {
-        public DBManager dbManager { get; set; }
-        public OpcClient opcManager { get; set; }
+        public DBManager DbManager { get; set; }
+        public OpcClient OpcManager { get; set; }
+        public LinkedList<AlarmModel> Alarms { get; set; }
         private static readonly Singleton instance = new Singleton();
 
         // Explicit static constructor to tell C# compiler
@@ -16,9 +17,10 @@ namespace ProjectSCAM.Models.Logic {
         }
 
         private Singleton() {
-            dbManager = new DBManager("balarama.db.elephantsql.com","5432", "ppcrexqw", "HL8HORvW5RUPUlBUcf_PIcZWxjlOoc1F",
+            DbManager = new DBManager("balarama.db.elephantsql.com","5432", "ppcrexqw", "HL8HORvW5RUPUlBUcf_PIcZWxjlOoc1F",
                 "ppcrexqw");
-            opcManager = new OpcClient();
+            OpcManager = new OpcClient();
+            Alarms = new LinkedList<AlarmModel>();
         }
 
         public static Singleton Instance {

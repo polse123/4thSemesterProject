@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using ProjectSCAM.Models.Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,6 +13,17 @@ namespace SCAMS.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+        [HttpGet]
+        public string Popup() {
+            bool popup = Singleton.Instance.Alarms.Count > 0 && Singleton.Instance.Alarms != null;
+            return JsonConvert.SerializeObject(popup,Formatting.None);
+
+        }
+        [HttpPost]
+        public void Handle() {
+            Singleton.Instance.Alarms.Clear();
+
         }
     }
 }
