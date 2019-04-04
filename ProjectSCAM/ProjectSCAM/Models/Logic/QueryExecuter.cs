@@ -122,7 +122,7 @@ namespace ProjectSCAM.Models.Logic
         /// <returns></returns>
         public LinkedList<BatchQueueModel> RetrieveFromBatchQueue(string append)
         {
-            string query = "SELECT BatchQueue.queueid, BatchQueue.amount," +
+            string query = "SELECT BatchQueue.queueid, BatchQueue.priority, BatchQueue.amount," +
                 "BatchQueue.speed, BatchQueue.beerid, Recipes.name " +
                 "FROM BatchQueue INNER JOIN Recipes ON BatchQueue.beerid = Recipes.beerid" +
                 append;
@@ -135,8 +135,8 @@ namespace ProjectSCAM.Models.Logic
                 NpgsqlDataReader dr = command.ExecuteReader();
                 while (dr.Read())
                 {
-                    BatchQueueModel batch = new BatchQueueModel((int)dr[0], (int)dr[1],
-                        (int)dr[2], (int)dr[3], dr[4].ToString().Trim());
+                    BatchQueueModel batch = new BatchQueueModel((int)dr[0], (int)dr[1], (int)dr[2],
+                        (int)dr[3], (int)dr[4], dr[5].ToString().Trim());
                     list.AddLast(batch);
                 }
             }

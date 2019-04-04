@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 
 namespace ProjectSCAM.Models.Logic
@@ -9,6 +10,9 @@ namespace ProjectSCAM.Models.Logic
     public class DBManager
     {
         private QueryExecuter exe;
+
+        // query appendages
+        private string succeededBatchesOnlyAppend = " WHERE succeeded = true"; // to be used when running queries on the Batches table
 
         public DBManager(string server, string port, string userid, string password, string database)
         {
@@ -72,20 +76,31 @@ namespace ProjectSCAM.Models.Logic
         /// <summary>
         /// Retrieve all batches
         /// </summary>
+        /// <param name="succeededOnly"></param>
         /// <returns></returns>
-        public LinkedList<BatchModel> RetrieveBatches()
+        public LinkedList<BatchModel> RetrieveBatches(bool succeededOnly)
         {
-            string append = ";";
-            return exe.RetrieveBatches(append);
+            StringBuilder append = new StringBuilder();
+            if (succeededOnly)
+            {
+                append.Append(succeededBatchesOnlyAppend);
+            }
+            append.Append(";");
+            return exe.RetrieveBatches(append.ToString());
         }
 
-        public LinkedList<BatchModel> RetrieveBatchesByAmount(int amount)
+        public LinkedList<BatchModel> RetrieveBatchesByAmount(int amount, bool succeededOnly)
         {
-            string append = " ORDER BY timestampstart DESC LIMIT " + amount + ";";
-            return exe.RetrieveBatches(append);
+            StringBuilder append = new StringBuilder();
+            if (succeededOnly)
+            {
+                append.Append(succeededBatchesOnlyAppend);
+            }
+            append.Append(" ORDER BY timestampstart DESC LIMIT " + amount + ";");
+            return exe.RetrieveBatches(append.ToString());
         }
 
-        public LinkedList<BatchModel> RetrieveBatchesByMonth(string month, string year)
+        public LinkedList<BatchModel> RetrieveBatchesByMonth(string month, string year, bool succeededOnly)
         {
             if (month.Length == 1)
             {
@@ -93,22 +108,41 @@ namespace ProjectSCAM.Models.Logic
             }
             if (month.Length == 2 && year.Length == 4)
             {
-                string append = " WHERE timestampEnd LIKE '" + month + "/" + "__" + "/" + year + "%'";
-                return exe.RetrieveBatches(append);
+                StringBuilder append = new StringBuilder();
+                if (succeededOnly)
+                {
+                    append.Append(succeededBatchesOnlyAppend + " AND");
+                }
+                else { append.Append(" WHERE"); }
+
+                append.Append(" timestampEnd LIKE '" + month + "/" + "__" + "/" + year + "%'");
+                return exe.RetrieveBatches(append.ToString());
             }
             else throw new Exception();
         }
 
-        public LinkedList<BatchModel> RetrieveBatchesByMachine(int machine)
+        public LinkedList<BatchModel> RetrieveBatchesByMachine(int machine, bool succeededOnly)
         {
-            string append = " WHERE machine = " + machine + ";";
-            return exe.RetrieveBatches(append);
+            StringBuilder append = new StringBuilder();
+            if (succeededOnly)
+            {
+                append.Append(succeededBatchesOnlyAppend + " AND");
+            }
+            else { append.Append(" WHERE"); }
+            append.Append(" machine = " + machine + ";");
+            return exe.RetrieveBatches(append.ToString());
         }
 
-        public LinkedList<BatchModel> RetrieveBatchesByRecipe(int beerId)
+        public LinkedList<BatchModel> RetrieveBatchesByRecipe(int beerId, bool succeededOnly)
         {
-            string append = " WHERE beerid = " + beerId + ";";
-            return exe.RetrieveBatches(append);
+            StringBuilder append = new StringBuilder();
+            if (succeededOnly)
+            {
+                append.Append(succeededBatchesOnlyAppend + " AND");
+            }
+            else { append.Append(" WHERE"); }
+            append.Append(" beerid = " + beerId + ";");
+            return exe.RetrieveBatches(append.ToString());
         }
     }
 }
