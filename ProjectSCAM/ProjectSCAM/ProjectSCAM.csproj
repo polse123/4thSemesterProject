@@ -208,6 +208,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\alarmPopup.css" />
     <Content Include="Content\AlarmStyleSheet.css" />
     <Content Include="Content\BatchStyleSheet.css" />
     <Content Include="Content\bootstrap-theme.css" />
