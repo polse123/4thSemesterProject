@@ -227,11 +227,20 @@ namespace ProjectSCAM.Models.Logic
             List<KeyValuePair<string, double>> humidityValues,
             List<KeyValuePair<string, double>> vibrationsValues)
         {
+            return RegisterBatch(query, temperatureValues, humidityValues, vibrationsValues, null);
+        }
+
+        public bool RegisterBatch(string batchQuery,
+            List<KeyValuePair<string, double>> temperatureValues,
+            List<KeyValuePair<string, double>> humidityValues,
+            List<KeyValuePair<string, double>> vibrationsValues,
+            StringBuilder alarmQuery)
+        {
             int? batchId = null;
             try
             {
                 conn.Open();
-                NpgsqlCommand command = new NpgsqlCommand(query, conn);
+                NpgsqlCommand command = new NpgsqlCommand(batchQuery, conn);
                 NpgsqlDataReader dr = command.ExecuteReader();
                 while (dr.Read())
                 {
@@ -239,10 +248,16 @@ namespace ProjectSCAM.Models.Logic
                 }
                 if (batchId != null)
                 {
+                    // Register batch values
                     RegisterBatchValues(conn, (int)batchId, temperatureValues, humidityValues, vibrationsValues);
+                    if (alarmQuery != null)
+                    {
+                        // Register alarm
+                        RegisterAlarm(conn, alarmQuery, (int)batchId);
+                    }
                     return true;
                 }
-                else return false;
+                return false;
             }
             catch (NpgsqlException ex)
             {
@@ -368,16 +383,27 @@ namespace ProjectSCAM.Models.Logic
                     }
                     catch (NpgsqlException ex) { }
                 }
+                return true;
             }
-            catch (NpgsqlException)
+            catch (NpgsqlException ex)
             {
                 return false;
             }
-            finally
+        }
+
+        public bool RegisterAlarm(NpgsqlConnection conn, StringBuilder query, int batchId)
+        {
+            query.Append(batchId + ");");
+            try
             {
-                conn.Close();
+                NpgsqlCommand command = new NpgsqlCommand(query.ToString(), conn);
+                command.ExecuteNonQuery();
+                return true;
             }
-            return true;
+            catch (NpgsqlException ex)
+            {
+                return false;
+            }
         }
     }
 }

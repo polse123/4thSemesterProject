@@ -11,6 +11,9 @@ namespace ProjectSCAM.Models.Logic
     {
         private QueryExecuter exe;
 
+        private readonly int timestampLength = 23;
+        private readonly int expirationDateLength = 10;
+
         // query appendages
         private string succeededBatchesOnlyAppend = " WHERE succeeded = true"; // to be used when running queries on the Batches table
 
@@ -174,19 +177,16 @@ namespace ProjectSCAM.Models.Logic
             List<KeyValuePair<string, double>> vibrationsValues)
         {
             if (acceptableProducts >= 0 && defectProducts >= 0 &&
-                timestampStart.Length == 23 && timestampEnd.Length == 23 &&
-                expirationDate.Length == 10 &&
+                timestampStart.Length == timestampLength &&
+                timestampEnd.Length == timestampLength &&
+                expirationDate.Length == expirationDateLength &&
                 performance >= 0 && performance <= 1 &&
                 quality >= 0 && quality <= 1 &&
                 availability >= 0 && availability <= 1)
             {
-                string query = "INSERT INTO Batches(acceptableproducts, defectproducts," +
-               " timestampstart, timestampend, expirationdate, succeeded," +
-               " performance, quality, availability, speed, beerid, machine)" +
-               " VALUES(" + acceptableProducts + ", " + defectProducts + ", " +
-               timestampStart + ", " + timestampEnd + ", " + expirationDate + ", " +
-               succeeded + ", " + performance + ", " + quality + ", " + availability + ", " +
-               speed + ", " + beerId + ", " + machine + " RETURNING batchid);";
+                string query = MakeInsertIntoBatchesQuery(acceptableProducts, defectProducts,
+                    timestampStart, timestampEnd, expirationDate, succeeded,
+                    performance, quality, availability, speed, beerId, machine);
 
                 return exe.RegisterBatch(query, temperatureValues, humidityValues, vibrationsValues);
             }
@@ -208,6 +208,51 @@ namespace ProjectSCAM.Models.Logic
         {
             string append = " WHERE belongingto = " + batchId + ";";
             return exe.RetrieveBatchValues(batchId, append);
+        }
+
+        public bool RegisterBatchAndAlarm(int acceptableProducts, int defectProducts,
+            string timestampStart, string timestampEnd, string expirationDate, bool succeeded,
+            double performance, double quality, double availability,
+            int speed, int beerId, int machine,
+            List<KeyValuePair<string, double>> temperatureValues,
+            List<KeyValuePair<string, double>> humidityValues,
+            List<KeyValuePair<string, double>> vibrationsValues,
+            string alarmTimestamp, int stopReason)
+        {
+            if (acceptableProducts >= 0 && defectProducts >= 0 &&
+            timestampStart.Length == timestampLength &&
+            timestampEnd.Length == timestampLength &&
+            expirationDate.Length == expirationDateLength &&
+            performance >= 0 && performance <= 1 &&
+            quality >= 0 && quality <= 1 &&
+            availability >= 0 && availability <= 1 &&
+                alarmTimestamp.Length == timestampLength)
+            {
+                string batchQuery = MakeInsertIntoBatchesQuery(acceptableProducts, defectProducts,
+                    timestampStart, timestampEnd, expirationDate, succeeded,
+                    performance, quality, availability, speed, beerId, machine);
+
+                StringBuilder alarmQuery = new StringBuilder();
+                alarmQuery.Append("INSERT INTO Alarms(timestamp, stopreason, handledby, batch) " +
+                "VALUES('" + alarmTimestamp + "', " + stopReason + ", null, ");
+
+                return exe.RegisterBatch(batchQuery, temperatureValues, humidityValues, vibrationsValues, alarmQuery);
+            }
+            else { return false; }
+        }
+
+        private string MakeInsertIntoBatchesQuery(int acceptableProducts, int defectProducts,
+            string timestampStart, string timestampEnd, string expirationDate, bool succeeded,
+            double performance, double quality, double availability,
+            int speed, int beerId, int machine)
+        {
+            return "INSERT INTO Batches(acceptableproducts, defectproducts," +
+               " timestampstart, timestampend, expirationdate, succeeded," +
+               " performance, quality, availability, speed, beerid, machine)" +
+               " VALUES(" + acceptableProducts + ", " + defectProducts + ", '" +
+               timestampStart + "', '" + timestampEnd + "', '" + expirationDate + "', " +
+               succeeded + ", " + performance + ", " + quality + ", " + availability + ", " +
+               speed + ", " + beerId + ", " + machine + ") RETURNING batchid;";
         }
     }
 }
