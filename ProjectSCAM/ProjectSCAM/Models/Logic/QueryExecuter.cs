@@ -18,6 +18,33 @@ namespace ProjectSCAM.Models.Logic
             this.conn = conn;
         }
 
+        public List<UserType> RetrieveUserTypes(string append)
+        {
+            string query = "SELECT * FROM UserTypes" + append;
+
+            List<UserType> list = new List<UserType>();
+            try
+            {
+                conn.Open();
+                NpgsqlCommand command = new NpgsqlCommand(query, conn);
+                NpgsqlDataReader dr = command.ExecuteReader();
+                while (dr.Read())
+                {
+                    UserType type = new UserType((int)dr[0], dr[1].ToString().Trim());
+                    list.Add(type);
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return list;
+        }
+
         /// <summary>
         /// Retrieve recipes.
         /// Optionally add query append (start with " " or ";").

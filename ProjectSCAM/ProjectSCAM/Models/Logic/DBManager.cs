@@ -37,6 +37,12 @@ namespace ProjectSCAM.Models.Logic
             return new NpgsqlConnection(connstring);
         }
 
+        public List<UserType> RetrieveUserTypes()
+        {
+            string append = ";";
+            return exe.RetrieveUserTypes(append);
+        }
+
         /// <summary>
         /// Retrieve all recipes
         /// </summary>
