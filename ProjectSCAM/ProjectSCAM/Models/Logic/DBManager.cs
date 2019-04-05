@@ -160,10 +160,15 @@ namespace ProjectSCAM.Models.Logic
                 quality >= 0 && quality <= 1 &&
                 availability >= 0 && availability <= 1)
             {
-                return exe.RegisterBatch(acceptableProducts, defectProducts,
-                    timestampStart, timestampEnd, expirationDate, succeeded,
-                    performance, quality, availability, speed, beerId, machine,
-                    temperatureValues, humidityValues, vibrationsValues);
+                string query = "INSERT INTO Batches(acceptableproducts, defectproducts," +
+               " timestampstart, timestampend, expirationdate, succeeded," +
+               " performance, quality, availability, speed, beerid, machine)" +
+               " VALUES(" + acceptableProducts + ", " + defectProducts + ", " +
+               timestampStart + ", " + timestampEnd + ", " + expirationDate + ", " +
+               succeeded + ", " + performance + ", " + quality + ", " + availability + ", " +
+               speed + ", " + beerId + ", " + machine + " RETURNING batchid);";
+
+                return exe.RegisterBatch(query, temperatureValues, humidityValues, vibrationsValues);
             }
             else { return false; }
         }

@@ -154,21 +154,11 @@ namespace ProjectSCAM.Models.Logic
             return list;
         }
 
-        public bool RegisterBatch(int acceptableProducts, int defectProducts,
-            string timestampStart, string timestampEnd, string expirationDate,
-            bool succeeded, double performance, double quality, double availability,
-            int speed, int beerId, int machine,
+        public bool RegisterBatch(string query,
             List<KeyValuePair<string, double>> temperatureValues,
             List<KeyValuePair<string, double>> humidityValues,
             List<KeyValuePair<string, double>> vibrationsValues)
         {
-            string query = "INSERT INTO Batches(acceptableproducts, defectproducts," +
-                " timestampstart, timestampend, expirationdate, succeeded," +
-                " performance, quality, availability, speed, beerid, machine)" +
-                " VALUES(" + acceptableProducts + ", " + defectProducts + ", " +
-                timestampStart + ", " + timestampEnd + ", " + expirationDate + ", " +
-                succeeded + ", " + performance + ", " + quality + ", " + availability + ", " +
-                speed + ", " + beerId + ", " + machine + " RETURNING batchid);";
             try
             {
                 int? batchId = null;
