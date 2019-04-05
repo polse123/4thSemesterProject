@@ -63,6 +63,14 @@ namespace ProjectSCAM.Models.Logic
             return exe.RetrieveUsers(append);
         }
 
+        public bool RegisterIntoBatchQueue(int queueid,
+            int priority, int amount, int speed, int beerid)
+        {
+            string query = " INSERT INTO BatchQueue VALUES(" + queueid + ", " +
+                priority + ", " + amount + ", " + speed + ", " + beerid + ");";
+            return exe.RegisterIntoBatchQueue(query);
+        }
+
         /// <summary>
         /// Retrieve all batches from batch queue
         /// </summary>
@@ -71,6 +79,12 @@ namespace ProjectSCAM.Models.Logic
         {
             string append = " ORDER BY priority DESC;";
             return exe.RetrieveFromBatchQueue(append);
+        }
+
+        public bool RemoveFromBatchQueue(int queueId)
+        {
+            string append = " WHERE queueid = " + queueId + ";";
+            return exe.RemoveFromBatchQueue(append);
         }
 
         /// <summary>

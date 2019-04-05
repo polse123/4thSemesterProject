@@ -117,8 +117,27 @@ namespace ProjectSCAM.Models.Logic
             return list;
         }
 
+        public bool RegisterIntoBatchQueue(string query)
+        {
+            try
+            {
+                conn.Open();
+                NpgsqlCommand command = new NpgsqlCommand(query, conn);
+                command.ExecuteNonQuery();
+                return true;
+            }
+            catch (NpgsqlException ex)
+            {
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
         /// <summary>
-        /// Retrieve batches from the batch queue (icludes Recipes.beerid).
+        /// Retrieve batches from the batch queue (includes Recipes.beerid).
         /// Optionally add query append (start with " " or ";").
         /// </summary>
         /// <param name="append"></param>
@@ -154,14 +173,36 @@ namespace ProjectSCAM.Models.Logic
             return list;
         }
 
+        public bool RemoveFromBatchQueue(string append)
+        {
+            string query = "DELETE FROM BatchQueue" + append;
+
+            LinkedList<BatchQueueModel> list = new LinkedList<BatchQueueModel>();
+            try
+            {
+                conn.Open();
+                NpgsqlCommand command = new NpgsqlCommand(query, conn);
+                command.ExecuteNonQuery();
+                return true;
+            }
+            catch (NpgsqlException ex)
+            {
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
         public bool RegisterBatch(string query,
             List<KeyValuePair<string, double>> temperatureValues,
             List<KeyValuePair<string, double>> humidityValues,
             List<KeyValuePair<string, double>> vibrationsValues)
         {
+            int? batchId = null;
             try
             {
-                int? batchId = null;
                 conn.Open();
                 NpgsqlCommand command = new NpgsqlCommand(query, conn);
                 NpgsqlDataReader dr = command.ExecuteReader();
@@ -296,7 +337,7 @@ namespace ProjectSCAM.Models.Logic
                     try
                     {
                         NpgsqlCommand command = new NpgsqlCommand(queries[i], conn);
-                        command.ExecuteReader();
+                        command.ExecuteNonQuery();
                     }
                     catch (NpgsqlException ex) { }
                 }
