@@ -193,23 +193,6 @@ namespace ProjectSCAM.Models.Logic
             else { return false; }
         }
 
-        public BatchModel RetrieveBatch(int batchId)
-        {
-            string append = " WHERE batchid = " + batchId + ";";
-            LinkedList<BatchModel> list = exe.RetrieveBatches(append);
-            if (list.Count == 1)
-            {
-                return list.First();
-            }
-            else { return null; }
-        }
-
-        public BatchValueCollection RetrieveBatchValues(int batchId)
-        {
-            string append = " WHERE belongingto = " + batchId + ";";
-            return exe.RetrieveBatchValues(batchId, append);
-        }
-
         public bool RegisterBatchAndAlarm(int acceptableProducts, int defectProducts,
             string timestampStart, string timestampEnd, string expirationDate, bool succeeded,
             double performance, double quality, double availability,
@@ -239,6 +222,23 @@ namespace ProjectSCAM.Models.Logic
                 return exe.RegisterBatch(batchQuery, temperatureValues, humidityValues, vibrationsValues, alarmQuery);
             }
             else { return false; }
+        }
+
+        public BatchModel RetrieveBatch(int batchId)
+        {
+            string append = " WHERE batchid = " + batchId + ";";
+            LinkedList<BatchModel> list = exe.RetrieveBatches(append);
+            if (list.Count == 1)
+            {
+                return list.First();
+            }
+            else { return null; }
+        }
+
+        public BatchValueCollection RetrieveBatchValues(int batchId)
+        {
+            string append = " WHERE belongingto = " + batchId + ";";
+            return exe.RetrieveBatchValues(batchId, append);
         }
 
         private string MakeInsertIntoBatchesQuery(int acceptableProducts, int defectProducts,
