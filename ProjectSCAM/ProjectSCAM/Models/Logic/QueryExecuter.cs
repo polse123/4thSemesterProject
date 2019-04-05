@@ -310,7 +310,49 @@ namespace ProjectSCAM.Models.Logic
             return list;
         }
 
+        public bool RegisterAlarm(NpgsqlConnection conn, StringBuilder query, int batchId)
+        {
+            query.Append(batchId + ");");
+            try
+            {
+                NpgsqlCommand command = new NpgsqlCommand(query.ToString(), conn);
+                command.ExecuteNonQuery();
+                return true;
+            }
+            catch (NpgsqlException ex)
+            {
+                return false;
+            }
+        }
 
+        public List<AlarmModel> RetrieveAlarms(string append)
+        {
+            // Not working yet
+            string query = "" +
+               append;
+
+            List<AlarmModel> list = new List<AlarmModel>();
+            try
+            {
+                conn.Open();
+                NpgsqlCommand command = new NpgsqlCommand(query, conn);
+                NpgsqlDataReader dr = command.ExecuteReader();
+                while (dr.Read())
+                {
+                    //AlarmModel alarm = new AlarmModel();
+                    //list.Add(alarm);
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return list;
+        }
 
         public BatchValueCollection RetrieveBatchValues(int batchId, string append)
         {
@@ -383,21 +425,6 @@ namespace ProjectSCAM.Models.Logic
                     }
                     catch (NpgsqlException ex) { }
                 }
-                return true;
-            }
-            catch (NpgsqlException ex)
-            {
-                return false;
-            }
-        }
-
-        public bool RegisterAlarm(NpgsqlConnection conn, StringBuilder query, int batchId)
-        {
-            query.Append(batchId + ");");
-            try
-            {
-                NpgsqlCommand command = new NpgsqlCommand(query.ToString(), conn);
-                command.ExecuteNonQuery();
                 return true;
             }
             catch (NpgsqlException ex)
