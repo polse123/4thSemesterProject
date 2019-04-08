@@ -264,6 +264,12 @@ namespace ProjectSCAM.Models.Logic
             else return null;
         }
 
+        public bool SetAlarmHandler(int userId, int alarmId)
+        {
+            string append = " WHERE alarmid = " + alarmId + ";";
+            return exe.SetAlarmHandler(userId, append);
+        }
+
         private string MakeInsertIntoBatchesQuery(int acceptableProducts, int defectProducts,
             string timestampStart, string timestampEnd, string expirationDate, bool succeeded,
             double performance, double quality, double availability,

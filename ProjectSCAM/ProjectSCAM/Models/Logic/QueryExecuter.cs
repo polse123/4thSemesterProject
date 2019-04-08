@@ -249,11 +249,11 @@ namespace ProjectSCAM.Models.Logic
                 if (batchId != null)
                 {
                     // Register batch values
-                    RegisterBatchValues(conn, (int)batchId, temperatureValues, humidityValues, vibrationsValues);
+                    RegisterBatchValues((int)batchId, temperatureValues, humidityValues, vibrationsValues);
                     if (alarmQuery != null)
                     {
                         // Register alarm
-                        RegisterAlarm(conn, alarmQuery, (int)batchId);
+                        RegisterAlarm(alarmQuery, (int)batchId);
                     }
                     return true;
                 }
@@ -297,52 +297,6 @@ namespace ProjectSCAM.Models.Logic
                         (bool)dr[6], (double)dr[7], (double)dr[8], (double)dr[9],
                         (int)dr[10], (int)dr[11], (int)dr[12], dr[13].ToString().Trim());
                     list.AddLast(batch);
-                }
-            }
-            catch (NpgsqlException ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                conn.Close();
-            }
-            return list;
-        }
-
-        public bool RegisterAlarm(NpgsqlConnection conn, StringBuilder query, int batchId)
-        {
-            query.Append(batchId + ");");
-            try
-            {
-                NpgsqlCommand command = new NpgsqlCommand(query.ToString(), conn);
-                command.ExecuteNonQuery();
-                return true;
-            }
-            catch (NpgsqlException ex)
-            {
-                return false;
-            }
-        }
-
-        public List<AlarmModel> RetrieveAlarms(string append)
-        {
-            string query = "SELECT Alarms.alarmid, Alarms.timestamp, Alarms.stopreason, Alarms.handledby, " +
-                "Alarms.batch, StopReasons.stopdescription, Users.firstname, Users.lastname " +
-                "FROM Alarms LEFT JOIN StopReasons ON Alarms.stopreason = StopReasons.stopid " +
-                "LEFT JOIN Users on Alarms.handledby = Users.userid" + append;
-
-            List<AlarmModel> list = new List<AlarmModel>();
-            try
-            {
-                conn.Open();
-                NpgsqlCommand command = new NpgsqlCommand(query, conn);
-                NpgsqlDataReader dr = command.ExecuteReader();
-                while (dr.Read())
-                {
-                    AlarmModel alarm = new AlarmModel((int)dr[0], dr[1].ToString(), (int)dr[2],
-                        (int)dr[3], (int)dr[4], dr[5].ToString(), dr[6].ToString());
-                    list.Add(alarm);
                 }
             }
             catch (NpgsqlException ex)
@@ -400,7 +354,68 @@ namespace ProjectSCAM.Models.Logic
             return values;
         }
 
-        private bool RegisterBatchValues(NpgsqlConnection conn, int batchId,
+        public bool RegisterAlarm(StringBuilder query, int batchId)
+        {
+            query.Append(batchId + ");");
+            try
+            {
+                NpgsqlCommand command = new NpgsqlCommand(query.ToString(), conn);
+                command.ExecuteNonQuery();
+                return true;
+            }
+            catch (NpgsqlException ex)
+            {
+                return false;
+            }
+        }
+
+        public List<AlarmModel> RetrieveAlarms(string append)
+        {
+            string query = "SELECT Alarms.alarmid, Alarms.timestamp, Alarms.stopreason, Alarms.handledby, " +
+                "Alarms.batch, StopReasons.stopdescription, Users.firstname, Users.lastname " +
+                "FROM Alarms LEFT JOIN StopReasons ON Alarms.stopreason = StopReasons.stopid " +
+                "LEFT JOIN Users on Alarms.handledby = Users.userid" + append;
+
+            List<AlarmModel> list = new List<AlarmModel>();
+            try
+            {
+                conn.Open();
+                NpgsqlCommand command = new NpgsqlCommand(query, conn);
+                NpgsqlDataReader dr = command.ExecuteReader();
+                while (dr.Read())
+                {
+                    AlarmModel alarm = new AlarmModel((int)dr[0], dr[1].ToString(), (int)dr[2],
+                        (int)dr[3], (int)dr[4], dr[5].ToString(), dr[6].ToString());
+                    list.Add(alarm);
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return list;
+        }
+
+        public bool SetAlarmHandler(int userId, string append)
+        {
+            string query = "UPDATE Alarms SET handledby = " + userId + append;
+            try
+            {
+                NpgsqlCommand command = new NpgsqlCommand(query, conn);
+                command.ExecuteNonQuery();
+                return true;
+            }
+            catch (NpgsqlException ex)
+            {
+                return false;
+            }
+        }
+
+        private bool RegisterBatchValues(int batchId,
             List<KeyValuePair<string, double>> temperatureValues,
             List<KeyValuePair<string, double>> humidityValues,
             List<KeyValuePair<string, double>> vibrationsValues)
