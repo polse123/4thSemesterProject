@@ -86,13 +86,9 @@
     <Compile Include="Controllers\HomeControllerTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ProjectSCAM\ProjectSCAM.csproj">
-      <Project>{D52C9428-9A10-4C84-824F-B2690D22345D}</Project>
-      <Name>ProjectSCAM</Name>
-    </ProjectReference>
+    <Content Include="App.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
