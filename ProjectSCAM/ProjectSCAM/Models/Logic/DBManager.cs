@@ -56,10 +56,29 @@ namespace ProjectSCAM.Models.Logic
             return exe.RetrieveRecipes(append);
         }
 
+        public bool RegisterMachine(string ipAddress, string description)
+        {
+            string query = "INSERT INTO Machines(ipaddress, description)" +
+                "VALUES('" + ipAddress + "', '" + description + "');";
+
+            return exe.ExecuteQuery(query);
+        }
+
         public LinkedList<MachineModel> RetrieveMachines()
         {
             string append = ";";
             return exe.RetrieveMachines(append);
+        }
+
+        public bool RegisterUser(string username, string password, string firstName,
+            string lastName, string email, string phoneNumber, int userType)
+        {
+            string query = "INSERT INTO Users(username, password, firstname, " +
+                "lastname, email, phonenumber, isactive, usertype) " +
+                "VALUES('" + username + "', '" + password + "', '" + firstName + "', '" +
+                lastName + "', '" + email + "', '" + phoneNumber + "', true, '" + userType + "');";
+
+            return exe.ExecuteQuery(query);
         }
 
         /// <summary>
@@ -72,12 +91,18 @@ namespace ProjectSCAM.Models.Logic
             return exe.RetrieveUsers(append);
         }
 
+        public bool MakeUserInactive(int userid)
+        {
+            string query = "UPDATE Users SET isActive = false WHERE userid = " + userid + ";";
+            return exe.ExecuteQuery(query);
+        }
+
         public bool RegisterIntoBatchQueue(int queueid,
             int priority, int amount, int speed, int beerid)
         {
             string query = " INSERT INTO BatchQueue VALUES(" + queueid + ", " +
                 priority + ", " + amount + ", " + speed + ", " + beerid + ");";
-            return exe.RegisterIntoBatchQueue(query);
+            return exe.ExecuteQuery(query);
         }
 
         /// <summary>
@@ -266,8 +291,8 @@ namespace ProjectSCAM.Models.Logic
 
         public bool SetAlarmHandler(int userId, int alarmId)
         {
-            string append = " WHERE alarmid = " + alarmId + ";";
-            return exe.SetAlarmHandler(userId, append);
+            string query = "UPDATE Alarms SET handledby = " + userId + " WHERE alarmid = " + alarmId + ";";
+            return exe.ExecuteQuery(query);
         }
 
         private string MakeInsertIntoBatchesQuery(int acceptableProducts, int defectProducts,

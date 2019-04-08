@@ -18,6 +18,25 @@ namespace ProjectSCAM.Models.Logic
             this.conn = conn;
         }
 
+        public bool ExecuteQuery(string query)
+        {
+            try
+            {
+                conn.Open();
+                NpgsqlCommand command = new NpgsqlCommand(query, conn);
+                command.ExecuteNonQuery();
+                return true;
+            }
+            catch (NpgsqlException ex)
+            {
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
         public List<UserType> RetrieveUserTypes(string append)
         {
             string query = "SELECT * FROM UserTypes" + append;
@@ -144,25 +163,6 @@ namespace ProjectSCAM.Models.Logic
             return list;
         }
 
-        public bool RegisterIntoBatchQueue(string query)
-        {
-            try
-            {
-                conn.Open();
-                NpgsqlCommand command = new NpgsqlCommand(query, conn);
-                command.ExecuteNonQuery();
-                return true;
-            }
-            catch (NpgsqlException ex)
-            {
-                return false;
-            }
-            finally
-            {
-                conn.Close();
-            }
-        }
-
         /// <summary>
         /// Retrieve batches from the batch queue (includes Recipes.beerid).
         /// Optionally add query append (start with " " or ";").
@@ -203,23 +203,7 @@ namespace ProjectSCAM.Models.Logic
         public bool RemoveFromBatchQueue(string append)
         {
             string query = "DELETE FROM BatchQueue" + append;
-
-            LinkedList<BatchQueueModel> list = new LinkedList<BatchQueueModel>();
-            try
-            {
-                conn.Open();
-                NpgsqlCommand command = new NpgsqlCommand(query, conn);
-                command.ExecuteNonQuery();
-                return true;
-            }
-            catch (NpgsqlException ex)
-            {
-                return false;
-            }
-            finally
-            {
-                conn.Close();
-            }
+            return ExecuteQuery(query);
         }
 
         public bool RegisterBatch(string query,
@@ -357,16 +341,7 @@ namespace ProjectSCAM.Models.Logic
         public bool RegisterAlarm(StringBuilder query, int batchId)
         {
             query.Append(batchId + ");");
-            try
-            {
-                NpgsqlCommand command = new NpgsqlCommand(query.ToString(), conn);
-                command.ExecuteNonQuery();
-                return true;
-            }
-            catch (NpgsqlException ex)
-            {
-                return false;
-            }
+            return ExecuteQuery(query.ToString());
         }
 
         public List<AlarmModel> RetrieveAlarms(string append)
@@ -398,21 +373,6 @@ namespace ProjectSCAM.Models.Logic
                 conn.Close();
             }
             return list;
-        }
-
-        public bool SetAlarmHandler(int userId, string append)
-        {
-            string query = "UPDATE Alarms SET handledby = " + userId + append;
-            try
-            {
-                NpgsqlCommand command = new NpgsqlCommand(query, conn);
-                command.ExecuteNonQuery();
-                return true;
-            }
-            catch (NpgsqlException ex)
-            {
-                return false;
-            }
         }
 
         private bool RegisterBatchValues(int batchId,
