@@ -232,7 +232,7 @@ namespace ProjectSCAM.Models.Logic
             {
                 return list.First();
             }
-            else { return null; }
+            else return null;
         }
 
         public BatchValueCollection RetrieveBatchValues(int batchId)
@@ -251,6 +251,17 @@ namespace ProjectSCAM.Models.Logic
         {
             string append = " ORDER BY timestamp DESC LIMIT " + amount + ";";
             return exe.RetrieveAlarms(append);
+        }
+
+        public AlarmModel RetrieveAlarm(int alarmId)
+        {
+            string append = " WHERE alarmid = " + alarmId + ";";
+            List<AlarmModel> list = exe.RetrieveAlarms(append);
+            if (list.Count == 1)
+            {
+                return list.First();
+            }
+            else return null;
         }
 
         private string MakeInsertIntoBatchesQuery(int acceptableProducts, int defectProducts,
