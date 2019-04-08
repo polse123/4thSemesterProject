@@ -245,6 +245,7 @@
     <Content Include="Content\dropdown.css" />
     <Content Include="Content\firstSecond.css" />
     <Content Include="Content\HistoryStyleSheet.css" />
+    <Content Include="Content\LoginSheet.css" />
     <Content Include="Content\optimization.css" />
     <Content Include="Content\OverviewStyleSheet.css" />
     <Content Include="Content\ProductionStyleSheet.css" />
@@ -273,6 +274,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\loginScript.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\OverviewScript.js" />
     <Content Include="Web.config" />
