@@ -327,9 +327,10 @@ namespace ProjectSCAM.Models.Logic
 
         public List<AlarmModel> RetrieveAlarms(string append)
         {
-            // Not working yet
-            string query = "" +
-               append;
+            string query = "SELECT Alarms.alarmid, Alarms.timestamp, Alarms.stopreason, Alarms.handledby, " +
+                "Alarms.batch, StopReasons.stopdescription, Users.firstname, Users.lastname " +
+                "FROM Alarms LEFT JOIN StopReasons ON Alarms.stopreason = StopReasons.stopid " +
+                "LEFT JOIN Users on Alarms.handledby = Users.userid" + append;
 
             List<AlarmModel> list = new List<AlarmModel>();
             try
@@ -339,8 +340,9 @@ namespace ProjectSCAM.Models.Logic
                 NpgsqlDataReader dr = command.ExecuteReader();
                 while (dr.Read())
                 {
-                    //AlarmModel alarm = new AlarmModel();
-                    //list.Add(alarm);
+                    AlarmModel alarm = new AlarmModel((int)dr[0], dr[1].ToString(), (int)dr[2],
+                        (int)dr[3], (int)dr[4], dr[5].ToString(), dr[6].ToString());
+                    list.Add(alarm);
                 }
             }
             catch (NpgsqlException ex)

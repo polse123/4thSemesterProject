@@ -241,10 +241,10 @@ namespace ProjectSCAM.Models.Logic
             return exe.RetrieveBatchValues(batchId, append);
         }
 
-        //public List<AlarmModel> RetrieveAlarms()
-        //{
-        //
-        //}
+        public List<AlarmModel> RetrieveAlarms()
+        {
+            return exe.RetrieveAlarms(";");
+        }
 
         private string MakeInsertIntoBatchesQuery(int acceptableProducts, int defectProducts,
             string timestampStart, string timestampEnd, string expirationDate, bool succeeded,
