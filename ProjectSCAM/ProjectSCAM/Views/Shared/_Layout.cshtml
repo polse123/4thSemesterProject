@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/alarmPopup.css")
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
@@ -34,6 +35,43 @@
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
+    </div>
+    <!-- The Modal -->
+    <div id="alarmModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2>Alarm!</h2>
+            </div>
+            <div class="modal-body">
+                <p>Alarm info:</p>
+                <table class="popupstableclass" id="popuptableid">
+                    <tr>
+                        <th>AlarmID:</th>
+                        <th>BatchID:</th>
+                        <th>Date/time:</th>
+                        <th>Stop reason:</th>
+                        <th>MachineID:</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>10</td>
+                        <td>100</td>
+                        <td>3</td>
+                        <td>3</td>
+                        
+                    </tr>
+                   
+
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="handleButton" class="handleAlarmButton">Handle alarm</button>
+            </div>
+        </div>
+
     </div>
     <div class="container body-content">
         @RenderBody()

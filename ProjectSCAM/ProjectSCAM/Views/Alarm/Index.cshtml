@@ -1,5 +1,108 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿<!DOCTYPE html>
+<html>
+<head>
+
+    @Styles.Render("~/Content/AlarmStyleSheet.css")
+
+    
+
+</head>
+<body>
+
+    <div class="grid-container">
+        <div class="grid-item item1">
+            <div id="ingredients" class="ingredientclass">
+
+                Alarms <span id="alarms" class="alarmsclass"></span>
+                
+
+
+            </div>
+        </div>
+        
+        <div class="grid-item item2">
+            <div id="alarmInfoFields" class="alarmInfofieldsclass">
+
+                Show:  <p id="show"></p>
+                <div class="dropdownAlarms">
+                    <button class="dropbtnAlarms" id="alarmsMachineSelect">Machine</button>
+                    <div class="dropdownAlarmsMachine-content">
+
+                        <input type="checkbox" name="machine1" value="machine" id="machine1">Machine 1 <br>
+                        <input type="checkbox" name="machine2" value="machine" id="machine2">Machine 2 <br>
+                        <input type="checkbox" name="machine3" value="machine" id="machine3">Machine 3 <br>
+                    </div>
+                </div> <br> <br>
+                <div class="dropdownAlarms">
+                    <button class="dropbtnAlarms" id="alarmsMachineSelect">Type</button>
+                    <div class="dropdownAlarmsMachine-content">
+
+                        <input type="checkbox" name="type1" value="type" id="type1">Type 1 <br>
+                        <input type="checkbox" name="type2" value="type" id="type2">Type 2 <br>
+                        <input type="checkbox" name="type3" value="type" id="type3">Type 3 <br>
+                    </div>
+                </div> <br> <br>
+                <div class="dropdownAlarms">
+                    <button class="dropbtnAlarms" id="alarmsMachineSelect">Month</button>
+                    <div class="dropdownAlarmsMachine-content">
+
+                        <input type="checkbox" name="month1" value="month" id="month1">Month 1 <br>
+                        <input type="checkbox" name="month2" value="month" id="month2">Month 2 <br>
+                        <input type="checkbox" name="month3" value="month" id="month3">Month 3 <br>
+                    </div>
+                </div> &nbsp; &nbsp;
+                <div class="dropdownAlarms">
+                    <button class="dropbtnAlarms" id="alarmsMachineSelect">Year</button>
+                    <div class="dropdownAlarmsMachine-content">
+
+                        <input type="checkbox" name="year1" value="year" id="year1">Year 1 <br>
+                        <input type="checkbox" name="year2" value="year" id="year2">Year 2 <br>
+                        <input type="checkbox" name="year3" value="year" id="year3">Year 3 <br>
+                    </div>
+                </div> <br> <br>
+                <input type="checkbox" name="unhandledButton" value="unhandled" id="unhandledButton">Unhandled
+
+            </div>
+        </div>
+        <div class="grid-item item3">
+            <div id="alarmtable" class="alarmtableclass">
+
+                <table class="alarmstableclass" id="alarmstableid">
+                    <tr>
+                        <th>Alarm number:</th>
+                        <th>BatchID:</th>
+                        <th>Date/time:</th>
+                        <th>Stop reason:</th>
+                        <th>StopID:</th>
+                        <th>Handled by:</th>
+                        <th>Required (True/false):</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>10</td>
+                        <td>100</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>100</td>
+                        <td>200</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                    </tr>
+                    
+                </table>
+            </div>
+        </div>
+        
+    </div>
+
+
+</body>
+</html>
+
