@@ -15,6 +15,11 @@ namespace ProjectSCAM.Models.Logic
         private NpgsqlConnection conn;
 
         /// <summary>
+        /// Lock for the connection.
+        /// </summary>
+        private readonly object connectionLock;
+
+        /// <summary>
         /// string array with the names of the three batch values tables.
         /// Index 0 holds the name of the temperature table.
         /// Index 1 holds the name of the humidity table.
@@ -38,20 +43,23 @@ namespace ProjectSCAM.Models.Logic
         /// <returns></returns>
         public bool ExecuteQuery(string query)
         {
-            try
+            lock (connectionLock)
             {
-                conn.Open();
-                NpgsqlCommand command = new NpgsqlCommand(query, conn);
-                command.ExecuteNonQuery();
-                return true;
-            }
-            catch (NpgsqlException ex)
-            {
-                return false;
-            }
-            finally
-            {
-                conn.Close();
+                try
+                {
+                    conn.Open();
+                    NpgsqlCommand command = new NpgsqlCommand(query, conn);
+                    command.ExecuteNonQuery();
+                    return true;
+                }
+                catch (NpgsqlException ex)
+                {
+                    return false;
+                }
+                finally
+                {
+                    conn.Close();
+                }
             }
         }
 
@@ -64,26 +72,29 @@ namespace ProjectSCAM.Models.Logic
         public List<UserType> RetrieveUserTypes(string append)
         {
             string query = "SELECT * FROM UserTypes" + append;
-
             List<UserType> list = new List<UserType>();
-            try
+
+            lock (connectionLock)
             {
-                conn.Open();
-                NpgsqlCommand command = new NpgsqlCommand(query, conn);
-                NpgsqlDataReader dr = command.ExecuteReader();
-                while (dr.Read())
+                try
                 {
-                    UserType type = new UserType((int)dr[0], dr[1].ToString().Trim());
-                    list.Add(type);
+                    conn.Open();
+                    NpgsqlCommand command = new NpgsqlCommand(query, conn);
+                    NpgsqlDataReader dr = command.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        UserType type = new UserType((int)dr[0], dr[1].ToString().Trim());
+                        list.Add(type);
+                    }
                 }
-            }
-            catch (NpgsqlException ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                conn.Close();
+                catch (NpgsqlException ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    conn.Close();
+                }
             }
             return list;
         }
@@ -97,27 +108,30 @@ namespace ProjectSCAM.Models.Logic
         public LinkedList<RecipeModel> RetrieveRecipes(string append)
         {
             string query = "SELECT * FROM Recipes" + append;
-
             LinkedList<RecipeModel> list = new LinkedList<RecipeModel>();
-            try
+
+            lock (connectionLock)
             {
-                conn.Open();
-                NpgsqlCommand command = new NpgsqlCommand(query, conn);
-                NpgsqlDataReader dr = command.ExecuteReader();
-                while (dr.Read())
+                try
                 {
-                    RecipeModel recipe = new RecipeModel((int)dr[0], (int)dr[1], dr[2].ToString().Trim(),
-                        (int)dr[3], (int)dr[4], (int)dr[5], (int)dr[6], (int)dr[7]);
-                    list.AddLast(recipe);
+                    conn.Open();
+                    NpgsqlCommand command = new NpgsqlCommand(query, conn);
+                    NpgsqlDataReader dr = command.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        RecipeModel recipe = new RecipeModel((int)dr[0], (int)dr[1], dr[2].ToString().Trim(),
+                            (int)dr[3], (int)dr[4], (int)dr[5], (int)dr[6], (int)dr[7]);
+                        list.AddLast(recipe);
+                    }
                 }
-            }
-            catch (NpgsqlException ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                conn.Close();
+                catch (NpgsqlException ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    conn.Close();
+                }
             }
             return list;
         }
@@ -131,26 +145,30 @@ namespace ProjectSCAM.Models.Logic
         public LinkedList<MachineModel> RetrieveMachines(string append)
         {
             string query = "SELECT * FROM Machines" + append;
-
             LinkedList<MachineModel> list = new LinkedList<MachineModel>();
-            try
+
+            lock (connectionLock)
             {
-                conn.Open();
-                NpgsqlCommand command = new NpgsqlCommand(query, conn);
-                NpgsqlDataReader dr = command.ExecuteReader();
-                while (dr.Read())
+                try
                 {
-                    MachineModel machine = new MachineModel((int)dr[0], dr[1].ToString().Trim(), dr[2].ToString().Trim());
-                    list.AddLast(machine);
+                    conn.Open();
+                    NpgsqlCommand command = new NpgsqlCommand(query, conn);
+                    NpgsqlDataReader dr = command.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        MachineModel machine = new MachineModel((int)dr[0],
+                            dr[1].ToString().Trim(), dr[2].ToString().Trim());
+                        list.AddLast(machine);
+                    }
                 }
-            }
-            catch (NpgsqlException ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                conn.Close();
+                catch (NpgsqlException ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    conn.Close();
+                }
             }
             return list;
         }
@@ -169,26 +187,30 @@ namespace ProjectSCAM.Models.Logic
                 append;
 
             LinkedList<UserModel> list = new LinkedList<UserModel>();
-            try
+
+            lock (connectionLock)
             {
-                conn.Open();
-                NpgsqlCommand command = new NpgsqlCommand(query, conn);
-                NpgsqlDataReader dr = command.ExecuteReader();
-                while (dr.Read())
+                try
                 {
-                    UserModel user = new UserModel(
-                        (int)dr[0], dr[1].ToString().Trim(), dr[2].ToString().Trim(), dr[3].ToString().Trim(),
-                        dr[4].ToString().Trim(), dr[5].ToString().Trim(), (int)dr[6], dr[7].ToString().Trim());
-                    list.AddLast(user);
+                    conn.Open();
+                    NpgsqlCommand command = new NpgsqlCommand(query, conn);
+                    NpgsqlDataReader dr = command.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        UserModel user = new UserModel(
+                            (int)dr[0], dr[1].ToString().Trim(), dr[2].ToString().Trim(), dr[3].ToString().Trim(),
+                            dr[4].ToString().Trim(), dr[5].ToString().Trim(), (int)dr[6], dr[7].ToString().Trim());
+                        list.AddLast(user);
+                    }
                 }
-            }
-            catch (NpgsqlException ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                conn.Close();
+                catch (NpgsqlException ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    conn.Close();
+                }
             }
             return list;
         }
@@ -207,25 +229,29 @@ namespace ProjectSCAM.Models.Logic
                 append;
 
             LinkedList<BatchQueueModel> list = new LinkedList<BatchQueueModel>();
-            try
+
+            lock (connectionLock)
             {
-                conn.Open();
-                NpgsqlCommand command = new NpgsqlCommand(query, conn);
-                NpgsqlDataReader dr = command.ExecuteReader();
-                while (dr.Read())
+                try
                 {
-                    BatchQueueModel batch = new BatchQueueModel((int)dr[0], (int)dr[1], (int)dr[2],
-                        (int)dr[3], (int)dr[4], dr[5].ToString().Trim());
-                    list.AddLast(batch);
+                    conn.Open();
+                    NpgsqlCommand command = new NpgsqlCommand(query, conn);
+                    NpgsqlDataReader dr = command.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        BatchQueueModel batch = new BatchQueueModel((int)dr[0], (int)dr[1], (int)dr[2],
+                            (int)dr[3], (int)dr[4], dr[5].ToString().Trim());
+                        list.AddLast(batch);
+                    }
                 }
-            }
-            catch (NpgsqlException ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                conn.Close();
+                catch (NpgsqlException ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    conn.Close();
+                }
             }
             return list;
         }
@@ -271,40 +297,44 @@ namespace ProjectSCAM.Models.Logic
         public bool RegisterBatch(string batchQuery,
             List<KeyValuePair<string, double>> temperatureValues,
             List<KeyValuePair<string, double>> humidityValues,
-            List<KeyValuePair<string, double>> vibrationsValues,
+            List<KeyValuePair<string, double>> vibrationValues,
             StringBuilder alarmQuery)
         {
             int? batchId = null;
-            try
+
+            lock (connectionLock)
             {
-                conn.Open();
-                NpgsqlCommand command = new NpgsqlCommand(batchQuery, conn);
-                NpgsqlDataReader dr = command.ExecuteReader();
-                while (dr.Read())
+                try
                 {
-                    batchId = (int)dr[0];
-                }
-                if (batchId != null)
-                {
-                    // Register batch values
-                    RegisterBatchValues((int)batchId, temperatureValues, humidityValues, vibrationsValues);
-                    if (alarmQuery != null)
+                    conn.Open();
+                    NpgsqlCommand command = new NpgsqlCommand(batchQuery, conn);
+                    NpgsqlDataReader dr = command.ExecuteReader();
+                    while (dr.Read())
                     {
-                        // Register alarm
-                        alarmQuery.Append(batchId + ");");
-                        ExecuteQuery(alarmQuery.ToString());
+                        batchId = (int)dr[0];
                     }
-                    return true;
+                    if (batchId != null)
+                    {
+                        // Register batch values
+                        RegisterBatchValues((int)batchId, temperatureValues, humidityValues, vibrationValues);
+                        if (alarmQuery != null)
+                        {
+                            // Register alarm
+                            alarmQuery.Append(batchId + ");");
+                            ExecuteQuery(alarmQuery.ToString());
+                        }
+                        return true;
+                    }
+                    return false;
                 }
-                return false;
-            }
-            catch (NpgsqlException ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                conn.Close();
+                catch (NpgsqlException ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    conn.Close();
+                }
             }
         }
 
@@ -324,27 +354,31 @@ namespace ProjectSCAM.Models.Logic
                 append;
 
             LinkedList<BatchModel> list = new LinkedList<BatchModel>();
-            try
+
+            lock (connectionLock)
             {
-                conn.Open();
-                NpgsqlCommand command = new NpgsqlCommand(query, conn);
-                NpgsqlDataReader dr = command.ExecuteReader();
-                while (dr.Read())
+                try
                 {
-                    BatchModel batch = new BatchModel((int)dr[0], (int)dr[1], (int)dr[2],
-                        dr[3].ToString().Trim(), dr[4].ToString().Trim(), dr[5].ToString().Trim(),
-                        (bool)dr[6], (double)dr[7], (double)dr[8], (double)dr[9],
-                        (int)dr[10], (int)dr[11], (int)dr[12], dr[13].ToString().Trim());
-                    list.AddLast(batch);
+                    conn.Open();
+                    NpgsqlCommand command = new NpgsqlCommand(query, conn);
+                    NpgsqlDataReader dr = command.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        BatchModel batch = new BatchModel((int)dr[0], (int)dr[1], (int)dr[2],
+                            dr[3].ToString().Trim(), dr[4].ToString().Trim(), dr[5].ToString().Trim(),
+                            (bool)dr[6], (double)dr[7], (double)dr[8], (double)dr[9],
+                            (int)dr[10], (int)dr[11], (int)dr[12], dr[13].ToString().Trim());
+                        list.AddLast(batch);
+                    }
                 }
-            }
-            catch (NpgsqlException ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                conn.Close();
+                catch (NpgsqlException ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    conn.Close();
+                }
             }
             return list;
         }
@@ -361,41 +395,47 @@ namespace ProjectSCAM.Models.Logic
             string[] queries = new string[3];
             for (int i = 0; i < 3; i++)
             {
-                queries[i] = "SELECT " + VALUE_TABLES[i] + ".value, " + VALUE_TABLES[i] + ".timestamp FROM " + VALUE_TABLES[i] + append;
+                queries[i] = "SELECT " + VALUE_TABLES[i] + ".value, " + VALUE_TABLES[i] +
+                    ".timestamp FROM " + VALUE_TABLES[i] + append;
             }
             BatchValueCollection values = new BatchValueCollection();
-            try
+
+            lock (connectionLock)
             {
-                conn.Open();
-                for (int i = 0; i < 3; i++)
+                try
                 {
-                    NpgsqlCommand command = new NpgsqlCommand(queries[i], conn);
-                    NpgsqlDataReader dr = command.ExecuteReader();
-                    while (dr.Read())
+                    conn.Open();
+                    for (int i = 0; i < 3; i++)
                     {
-                        KeyValuePair<string, double> value = new KeyValuePair<string, double>(dr[1].ToString().Trim(), (int)dr[0]);
-                        if (i == 0)
+                        NpgsqlCommand command = new NpgsqlCommand(queries[i], conn);
+                        NpgsqlDataReader dr = command.ExecuteReader();
+                        while (dr.Read())
                         {
-                            values.TemperatureValues.Add(value);
-                        }
-                        else if (i == 1)
-                        {
-                            values.HumidityValues.Add(value);
-                        }
-                        else if (i == 2)
-                        {
-                            values.VibrationValues.Add(value);
+                            KeyValuePair<string, double> value =
+                                new KeyValuePair<string, double>(dr[1].ToString().Trim(), (int)dr[0]);
+                            if (i == 0)
+                            {
+                                values.TemperatureValues.Add(value);
+                            }
+                            else if (i == 1)
+                            {
+                                values.HumidityValues.Add(value);
+                            }
+                            else if (i == 2)
+                            {
+                                values.VibrationValues.Add(value);
+                            }
                         }
                     }
                 }
-            }
-            catch (NpgsqlException ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                conn.Close();
+                catch (NpgsqlException ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    conn.Close();
+                }
             }
             return values;
         }
@@ -414,25 +454,29 @@ namespace ProjectSCAM.Models.Logic
                 "LEFT JOIN Users on Alarms.handledby = Users.userid" + append;
 
             List<AlarmModel> list = new List<AlarmModel>();
-            try
+
+            lock (connectionLock)
             {
-                conn.Open();
-                NpgsqlCommand command = new NpgsqlCommand(query, conn);
-                NpgsqlDataReader dr = command.ExecuteReader();
-                while (dr.Read())
+                try
                 {
-                    AlarmModel alarm = new AlarmModel((int)dr[0], dr[1].ToString(), (int)dr[2],
-                        (int)dr[3], (int)dr[4], dr[5].ToString(), dr[6].ToString());
-                    list.Add(alarm);
+                    conn.Open();
+                    NpgsqlCommand command = new NpgsqlCommand(query, conn);
+                    NpgsqlDataReader dr = command.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        AlarmModel alarm = new AlarmModel((int)dr[0], dr[1].ToString().Trim(), (int)dr[2],
+                            (int)dr[3], (int)dr[4], dr[5].ToString().Trim(), dr[6].ToString().Trim());
+                        list.Add(alarm);
+                    }
                 }
-            }
-            catch (NpgsqlException ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                conn.Close();
+                catch (NpgsqlException ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    conn.Close();
+                }
             }
             return list;
         }
@@ -457,27 +501,32 @@ namespace ProjectSCAM.Models.Logic
             {
                 foreach (KeyValuePair<string, double> value in valueLists[i])
                 {
-                    queries[qIndex] = "INSERT INTO " + VALUE_TABLES[i] + " VALUES(" + value.Value + ", " + value.Key + ", " + batchId + ");";
+                    queries[qIndex] = "INSERT INTO " + VALUE_TABLES[i] +
+                        " VALUES(" + value.Value + ", '" + value.Key + "', " + batchId + ");";
                     qIndex++;
                 }
             }
-            try
+            bool firstExecution = true;
+            for (int i = 0; i < queries.Length; i++)
             {
-                for (int i = 0; i < queries.Length; i++)
+                try
                 {
-                    try
+                    NpgsqlCommand command = new NpgsqlCommand(queries[i], conn);
+                    command.ExecuteNonQuery();
+                    if (firstExecution)
                     {
-                        NpgsqlCommand command = new NpgsqlCommand(queries[i], conn);
-                        command.ExecuteNonQuery();
+                        firstExecution = false;
                     }
-                    catch (NpgsqlException ex) { }
                 }
-                return true;
+                catch (NpgsqlException ex)
+                {
+                    if (firstExecution)
+                    {
+                        return false;
+                    }
+                }
             }
-            catch (NpgsqlException ex)
-            {
-                return false;
-            }
+            return true;
         }
     }
 }
