@@ -243,7 +243,14 @@ namespace ProjectSCAM.Models.Logic
 
         public List<AlarmModel> RetrieveAlarms()
         {
-            return exe.RetrieveAlarms(";");
+            string append = ";";
+            return exe.RetrieveAlarms(append);
+        }
+
+        public List<AlarmModel> RetrieveAlarms(int amount)
+        {
+            string append = " ORDER BY timestamp DESC LIMIT " + amount + ";";
+            return exe.RetrieveAlarms(append);
         }
 
         private string MakeInsertIntoBatchesQuery(int acceptableProducts, int defectProducts,
