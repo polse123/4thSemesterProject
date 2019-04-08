@@ -9,15 +9,33 @@ namespace ProjectSCAM.Models.Logic
 {
     public class QueryExecuter
     {
+        /// <summary>
+        /// The connection to the db.
+        /// </summary>
         private NpgsqlConnection conn;
 
-        private string[] valueTables = { "temperatureValues", "humidityValues", "vibrationValues" };
+        /// <summary>
+        /// string array with the names of the three batch values tables.
+        /// Index 0 holds the name of the temperature table.
+        /// Index 1 holds the name of the humidity table.
+        /// Index 2 holds the name of the vibration table.
+        /// </summary>
+        private string[] VALUE_TABLES = { "TemperatureValues", "HumidityValues", "VibrationValues" };
 
+        /// <summary>
+        /// Constructor for the Query Executer.
+        /// </summary>
+        /// <param name="conn"></param>
         public QueryExecuter(NpgsqlConnection conn)
         {
             this.conn = conn;
         }
 
+        /// <summary>
+        /// Executes a query.
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         public bool ExecuteQuery(string query)
         {
             try
@@ -37,6 +55,12 @@ namespace ProjectSCAM.Models.Logic
             }
         }
 
+        /// <summary>
+        /// Retrieves user types from the db.
+        /// The query append should start with " " or ";".
+        /// </summary>
+        /// <param name="append"></param>
+        /// <returns></returns>
         public List<UserType> RetrieveUserTypes(string append)
         {
             string query = "SELECT * FROM UserTypes" + append;
@@ -65,8 +89,8 @@ namespace ProjectSCAM.Models.Logic
         }
 
         /// <summary>
-        /// Retrieve recipes.
-        /// Optionally add query append (start with " " or ";").
+        /// Retrieves recipes from the db.
+        /// The query append should start with " " or ";".
         /// </summary>
         /// <param name="append"></param>
         /// <returns></returns>
@@ -98,6 +122,12 @@ namespace ProjectSCAM.Models.Logic
             return list;
         }
 
+        /// <summary>
+        /// Retrieves machines from the db.
+        /// The query append should start with " " or ";".
+        /// </summary>
+        /// <param name="append"></param>
+        /// <returns></returns>
         public LinkedList<MachineModel> RetrieveMachines(string append)
         {
             string query = "SELECT * FROM Machines" + append;
@@ -126,8 +156,8 @@ namespace ProjectSCAM.Models.Logic
         }
 
         /// <summary>
-        /// Retrieve a list of users (excludes Users.password and Users.isactive, includes UserTypes.role).
-        /// Optionally add query append (start with " " or ";").
+        /// Retrieves a list of users.
+        /// The query append should start with " " or ";".
         /// </summary>
         /// <param name="append"></param>
         /// <returns></returns>
@@ -164,8 +194,8 @@ namespace ProjectSCAM.Models.Logic
         }
 
         /// <summary>
-        /// Retrieve batches from the batch queue (includes Recipes.beerid).
-        /// Optionally add query append (start with " " or ";").
+        /// Retrieves batches from the batch queue.
+        /// The query append should start with " " or ";".
         /// </summary>
         /// <param name="append"></param>
         /// <returns></returns>
@@ -200,12 +230,26 @@ namespace ProjectSCAM.Models.Logic
             return list;
         }
 
+        /// <summary>
+        /// Removes batches from the batch queue.
+        /// The query append should start with " " or ";".
+        /// </summary>
+        /// <param name="append"></param>
+        /// <returns></returns>
         public bool RemoveFromBatchQueue(string append)
         {
             string query = "DELETE FROM BatchQueue" + append;
             return ExecuteQuery(query);
         }
 
+        /// <summary>
+        /// Registers a batch and its batch values into the db.
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="temperatureValues"></param>
+        /// <param name="humidityValues"></param>
+        /// <param name="vibrationsValues"></param>
+        /// <returns></returns>
         public bool RegisterBatch(string query,
             List<KeyValuePair<string, double>> temperatureValues,
             List<KeyValuePair<string, double>> humidityValues,
@@ -214,6 +258,16 @@ namespace ProjectSCAM.Models.Logic
             return RegisterBatch(query, temperatureValues, humidityValues, vibrationsValues, null);
         }
 
+        /// <summary>
+        /// Registers a batch and its batch values into the db.
+        /// If alarmQuery is not null, an alarm is registered too.
+        /// </summary>
+        /// <param name="batchQuery"></param>
+        /// <param name="temperatureValues"></param>
+        /// <param name="humidityValues"></param>
+        /// <param name="vibrationsValues"></param>
+        /// <param name="alarmQuery"></param>
+        /// <returns></returns>
         public bool RegisterBatch(string batchQuery,
             List<KeyValuePair<string, double>> temperatureValues,
             List<KeyValuePair<string, double>> humidityValues,
@@ -237,7 +291,8 @@ namespace ProjectSCAM.Models.Logic
                     if (alarmQuery != null)
                     {
                         // Register alarm
-                        RegisterAlarm(alarmQuery, (int)batchId);
+                        alarmQuery.Append(batchId + ");");
+                        ExecuteQuery(alarmQuery.ToString());
                     }
                     return true;
                 }
@@ -254,8 +309,8 @@ namespace ProjectSCAM.Models.Logic
         }
 
         /// <summary>
-        /// Retrieve batches (includes Recipes.beerid).
-        /// Optionally add query append (start with " " or ";").
+        /// Retrieves batches.
+        /// The query append should start with " " or ";".
         /// </summary>
         /// <param name="append"></param>
         /// <returns></returns>
@@ -264,7 +319,7 @@ namespace ProjectSCAM.Models.Logic
             string query = "SELECT Batches.batchid, Batches.acceptableproducts, Batches.defectproducts, " +
                 "Batches.timestampstart, Batches.timestampend, Batches.expirationdate, " +
                 "Batches.succeeded, Batches.performance, Batches.quality, Batches.availablity, " +
-                "Batches.speed, Batches.beerid, Batches.machine, Recipes.name" +
+                "Batches.speed, Batches.beerid, Batches.machine, Recipes.name " +
                 "FROM Batches INNER JOIN Recipes ON Batches.beerid = Recipes.beerid" +
                 append;
 
@@ -294,12 +349,19 @@ namespace ProjectSCAM.Models.Logic
             return list;
         }
 
+        /// <summary>
+        /// Retrieves batch values for a specific batch.
+        /// The query append should start with " " or ";".
+        /// </summary>
+        /// <param name="batchId"></param>
+        /// <param name="append"></param>
+        /// <returns></returns>
         public BatchValueCollection RetrieveBatchValues(int batchId, string append)
         {
             string[] queries = new string[3];
             for (int i = 0; i < 3; i++)
             {
-                queries[i] = "SELECT " + valueTables[i] + ".value, " + valueTables[i] + ".timestamp FROM " + valueTables[i] + append;
+                queries[i] = "SELECT " + VALUE_TABLES[i] + ".value, " + VALUE_TABLES[i] + ".timestamp FROM " + VALUE_TABLES[i] + append;
             }
             BatchValueCollection values = new BatchValueCollection();
             try
@@ -338,12 +400,12 @@ namespace ProjectSCAM.Models.Logic
             return values;
         }
 
-        public bool RegisterAlarm(StringBuilder query, int batchId)
-        {
-            query.Append(batchId + ");");
-            return ExecuteQuery(query.ToString());
-        }
-
+        /// <summary>
+        /// Retrieves alarms.
+        /// The query append should start with " " or ";".
+        /// </summary>
+        /// <param name="append"></param>
+        /// <returns></returns>
         public List<AlarmModel> RetrieveAlarms(string append)
         {
             string query = "SELECT Alarms.alarmid, Alarms.timestamp, Alarms.stopreason, Alarms.handledby, " +
@@ -375,6 +437,14 @@ namespace ProjectSCAM.Models.Logic
             return list;
         }
 
+        /// <summary>
+        /// Registers batch values.
+        /// </summary>
+        /// <param name="batchId"></param>
+        /// <param name="temperatureValues"></param>
+        /// <param name="humidityValues"></param>
+        /// <param name="vibrationsValues"></param>
+        /// <returns></returns>
         private bool RegisterBatchValues(int batchId,
             List<KeyValuePair<string, double>> temperatureValues,
             List<KeyValuePair<string, double>> humidityValues,
@@ -387,7 +457,7 @@ namespace ProjectSCAM.Models.Logic
             {
                 foreach (KeyValuePair<string, double> value in valueLists[i])
                 {
-                    queries[qIndex] = "INSERT INTO " + valueTables[i] + " VALUES(" + value.Value + ", " + value.Key + ", " + batchId + ");";
+                    queries[qIndex] = "INSERT INTO " + VALUE_TABLES[i] + " VALUES(" + value.Value + ", " + value.Key + ", " + batchId + ");";
                     qIndex++;
                 }
             }
