@@ -22,6 +22,7 @@
     grid-row: 1 / span 3;
     border: 2px solid black;
     text-align: left;
+    
 }
 .searchtableclass, th, td {
     border-collapse: collapse;
@@ -29,6 +30,7 @@
     padding: 10px;
     border: 2px solid black;
 }
-.searchFieldClass{
-    width: 100px;
+.searchFieldClass {
+    width: 100%;
+    
 }
