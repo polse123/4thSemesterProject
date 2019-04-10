@@ -9,43 +9,56 @@ using ProjectSCAM.Models;
 using ProjectSCAM.Models.Logic;
 using SCAMS.Models;
 
-namespace SCAMS.Controllers {
-    public class OverviewController : Controller {
-        public ActionResult Index() {
+namespace SCAMS.Controllers
+{
+    public class OverviewController : Controller
+    {
+        public ActionResult Index()
+        {
             return View();
         }
         // series of actionmethods that handle post requests
         [HttpPost]
-        public string MachineControl() {
+        public string MachineControl()
+        {
             // get value of command variable in the request
             string value = Request["command"];
             // let opc manager handle the command
-            try {
+            try
+            {
                 Singleton.Instance.opcManager.HandleCommand(value);
                 return "command valid";
-            } catch(Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 return ex.Message;
             }
-            
+
         }
         [HttpPost]
-        public string RefreshBQ() {
-            LinkedList<BatchQueueModel> batchq = Singleton.Instance.dbManager.RetrieveFromBatchQueue();
+        public string RefreshBQ()
+        {
+            IList<BatchQueueModel> batchq = Singleton.Instance.dbManager.RetrieveFromBatchQueue();
             return JsonConvert.SerializeObject(batchq, Formatting.None);
 
         }
-       
-        public void Message() {
+
+        public void Message()
+        {
             Response.ContentType = "text/event-stream";
 
-            do {
+            do
+            {
                 Response.Write("data:" + JsonConvert.SerializeObject(Singleton.Instance.opcManager, Formatting.None) + "\n\n");
-                try {
+                try
+                {
                     Response.FlushAsync();
-                } catch {
+                }
+                catch
+                {
                     Response.Close();
                 }
-                
+
                 Thread.Sleep(1000);
             } while (true);
         }

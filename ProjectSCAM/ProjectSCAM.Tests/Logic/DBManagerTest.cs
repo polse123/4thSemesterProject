@@ -25,13 +25,37 @@ namespace ProjectSCAM.Tests.Logic
         public void RetrieveUsertypes()
         {
             IList<UserType> list = dbManager.RetrieveUserTypes();
-
-
-
+            Assert.IsNotNull(list);
+            if (list.Count != 0)
+            {
+                foreach (UserType element in list)
+                {
+                    Assert.IsNotNull(element);
+                }
+            }
+            else Assert.IsNotNull(null);
         }
 
+        [TestMethod]
+        public void RetrieveRecipes()
+        {
+            IList<RecipeModel> list = dbManager.RetrieveRecipes();
+            Assert.IsNotNull(list);
+            if (list.Count != 0)
+            {
+                foreach (RecipeModel element in list)
+                {
+                    Assert.IsNotNull(element);
+                }
+            }
+            else Assert.IsNotNull(null);
+        }
 
-
+        [TestMethod]
+        public void RegisterMachine()
+        {
+            Assert.IsNotNull(null);
+        }
 
     }
 }
