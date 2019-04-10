@@ -17,7 +17,7 @@ namespace ProjectSCAM.Models.Logic
         /// <summary>
         /// Lock for the connection.
         /// </summary>
-        private readonly object connectionLock;
+        private readonly object CONNECTION_LOCK;
 
         /// <summary>
         /// string array with the names of the three batch values tables.
@@ -25,7 +25,7 @@ namespace ProjectSCAM.Models.Logic
         /// Index 1 holds the name of the humidity table.
         /// Index 2 holds the name of the vibration table.
         /// </summary>
-        private string[] VALUE_TABLES = { "TemperatureValues", "HumidityValues", "VibrationValues" };
+        private readonly string[] VALUE_TABLES = { "TemperatureValues", "HumidityValues", "VibrationValues" };
 
         /// <summary>
         /// Constructor for the Query Executer.
@@ -43,7 +43,7 @@ namespace ProjectSCAM.Models.Logic
         /// <returns></returns>
         public bool ExecuteQuery(string query)
         {
-            lock (connectionLock)
+            lock (CONNECTION_LOCK)
             {
                 try
                 {
@@ -74,7 +74,7 @@ namespace ProjectSCAM.Models.Logic
             string query = "SELECT * FROM UserTypes" + append;
             List<UserType> list = new List<UserType>();
 
-            lock (connectionLock)
+            lock (CONNECTION_LOCK)
             {
                 try
                 {
@@ -110,7 +110,7 @@ namespace ProjectSCAM.Models.Logic
             string query = "SELECT * FROM Recipes" + append;
             LinkedList<RecipeModel> list = new LinkedList<RecipeModel>();
 
-            lock (connectionLock)
+            lock (CONNECTION_LOCK)
             {
                 try
                 {
@@ -147,7 +147,7 @@ namespace ProjectSCAM.Models.Logic
             string query = "SELECT * FROM Machines" + append;
             LinkedList<MachineModel> list = new LinkedList<MachineModel>();
 
-            lock (connectionLock)
+            lock (CONNECTION_LOCK)
             {
                 try
                 {
@@ -188,7 +188,7 @@ namespace ProjectSCAM.Models.Logic
 
             LinkedList<UserModel> list = new LinkedList<UserModel>();
 
-            lock (connectionLock)
+            lock (CONNECTION_LOCK)
             {
                 try
                 {
@@ -230,7 +230,7 @@ namespace ProjectSCAM.Models.Logic
 
             LinkedList<BatchQueueModel> list = new LinkedList<BatchQueueModel>();
 
-            lock (connectionLock)
+            lock (CONNECTION_LOCK)
             {
                 try
                 {
@@ -302,7 +302,7 @@ namespace ProjectSCAM.Models.Logic
         {
             int? batchId = null;
 
-            lock (connectionLock)
+            lock (CONNECTION_LOCK)
             {
                 try
                 {
@@ -355,7 +355,7 @@ namespace ProjectSCAM.Models.Logic
 
             LinkedList<BatchModel> list = new LinkedList<BatchModel>();
 
-            lock (connectionLock)
+            lock (CONNECTION_LOCK)
             {
                 try
                 {
@@ -400,7 +400,7 @@ namespace ProjectSCAM.Models.Logic
             }
             BatchValueCollection values = new BatchValueCollection();
 
-            lock (connectionLock)
+            lock (CONNECTION_LOCK)
             {
                 try
                 {
@@ -455,7 +455,7 @@ namespace ProjectSCAM.Models.Logic
 
             List<AlarmModel> list = new List<AlarmModel>();
 
-            lock (connectionLock)
+            lock (CONNECTION_LOCK)
             {
                 try
                 {
