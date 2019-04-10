@@ -69,7 +69,7 @@ namespace ProjectSCAM.Models.Logic
         /// </summary>
         /// <param name="append"></param>
         /// <returns></returns>
-        public List<UserType> RetrieveUserTypes(string append)
+        public IList<UserType> RetrieveUserTypes(string append)
         {
             string query = "SELECT * FROM UserTypes" + append;
             List<UserType> list = new List<UserType>();
@@ -105,10 +105,10 @@ namespace ProjectSCAM.Models.Logic
         /// </summary>
         /// <param name="append"></param>
         /// <returns></returns>
-        public LinkedList<RecipeModel> RetrieveRecipes(string append)
+        public IList<RecipeModel> RetrieveRecipes(string append)
         {
             string query = "SELECT * FROM Recipes" + append;
-            LinkedList<RecipeModel> list = new LinkedList<RecipeModel>();
+            List<RecipeModel> list = new List<RecipeModel>();
 
             lock (CONNECTION_LOCK)
             {
@@ -121,7 +121,7 @@ namespace ProjectSCAM.Models.Logic
                     {
                         RecipeModel recipe = new RecipeModel((int)dr[0], (int)dr[1], dr[2].ToString().Trim(),
                             (int)dr[3], (int)dr[4], (int)dr[5], (int)dr[6], (int)dr[7]);
-                        list.AddLast(recipe);
+                        list.Add(recipe);
                     }
                 }
                 catch (NpgsqlException ex)
@@ -142,10 +142,10 @@ namespace ProjectSCAM.Models.Logic
         /// </summary>
         /// <param name="append"></param>
         /// <returns></returns>
-        public LinkedList<MachineModel> RetrieveMachines(string append)
+        public IList<MachineModel> RetrieveMachines(string append)
         {
             string query = "SELECT * FROM Machines" + append;
-            LinkedList<MachineModel> list = new LinkedList<MachineModel>();
+            List<MachineModel> list = new List<MachineModel>();
 
             lock (CONNECTION_LOCK)
             {
@@ -158,7 +158,7 @@ namespace ProjectSCAM.Models.Logic
                     {
                         MachineModel machine = new MachineModel((int)dr[0],
                             dr[1].ToString().Trim(), dr[2].ToString().Trim());
-                        list.AddLast(machine);
+                        list.Add(machine);
                     }
                 }
                 catch (NpgsqlException ex)
@@ -179,14 +179,14 @@ namespace ProjectSCAM.Models.Logic
         /// </summary>
         /// <param name="append"></param>
         /// <returns></returns>
-        public LinkedList<UserModel> RetrieveUsers(string append)
+        public IList<UserModel> RetrieveUsers(string append)
         {
             string query = "SELECT Users.userid, Users.username, Users.firstname, Users.lastname, " +
                 "Users.email, Users.phonenumber, Users.usertype, Usertypes.role " +
                 "FROM Users INNER JOIN UserTypes ON Users.usertype = UserTypes.typeid " +
                 append;
 
-            LinkedList<UserModel> list = new LinkedList<UserModel>();
+            List<UserModel> list = new List<UserModel>();
 
             lock (CONNECTION_LOCK)
             {
@@ -200,7 +200,7 @@ namespace ProjectSCAM.Models.Logic
                         UserModel user = new UserModel(
                             (int)dr[0], dr[1].ToString().Trim(), dr[2].ToString().Trim(), dr[3].ToString().Trim(),
                             dr[4].ToString().Trim(), dr[5].ToString().Trim(), (int)dr[6], dr[7].ToString().Trim());
-                        list.AddLast(user);
+                        list.Add(user);
                     }
                 }
                 catch (NpgsqlException ex)
@@ -221,14 +221,14 @@ namespace ProjectSCAM.Models.Logic
         /// </summary>
         /// <param name="append"></param>
         /// <returns></returns>
-        public LinkedList<BatchQueueModel> RetrieveFromBatchQueue(string append)
+        public IList<BatchQueueModel> RetrieveFromBatchQueue(string append)
         {
             string query = "SELECT BatchQueue.queueid, BatchQueue.priority, BatchQueue.amount," +
                 "BatchQueue.speed, BatchQueue.beerid, Recipes.name " +
                 "FROM BatchQueue INNER JOIN Recipes ON BatchQueue.beerid = Recipes.beerid" +
                 append;
 
-            LinkedList<BatchQueueModel> list = new LinkedList<BatchQueueModel>();
+            List<BatchQueueModel> list = new List<BatchQueueModel>();
 
             lock (CONNECTION_LOCK)
             {
@@ -241,7 +241,7 @@ namespace ProjectSCAM.Models.Logic
                     {
                         BatchQueueModel batch = new BatchQueueModel((int)dr[0], (int)dr[1], (int)dr[2],
                             (int)dr[3], (int)dr[4], dr[5].ToString().Trim());
-                        list.AddLast(batch);
+                        list.Add(batch);
                     }
                 }
                 catch (NpgsqlException ex)
@@ -344,7 +344,7 @@ namespace ProjectSCAM.Models.Logic
         /// </summary>
         /// <param name="append"></param>
         /// <returns></returns>
-        public LinkedList<BatchModel> RetrieveBatches(string append)
+        public IList<BatchModel> RetrieveBatches(string append)
         {
             string query = "SELECT Batches.batchid, Batches.acceptableproducts, Batches.defectproducts, " +
                 "Batches.timestampstart, Batches.timestampend, Batches.expirationdate, " +
@@ -353,7 +353,7 @@ namespace ProjectSCAM.Models.Logic
                 "FROM Batches INNER JOIN Recipes ON Batches.beerid = Recipes.beerid" +
                 append;
 
-            LinkedList<BatchModel> list = new LinkedList<BatchModel>();
+            List<BatchModel> list = new List<BatchModel>();
 
             lock (CONNECTION_LOCK)
             {
@@ -368,7 +368,7 @@ namespace ProjectSCAM.Models.Logic
                             dr[3].ToString().Trim(), dr[4].ToString().Trim(), dr[5].ToString().Trim(),
                             (bool)dr[6], (double)dr[7], (double)dr[8], (double)dr[9],
                             (int)dr[10], (int)dr[11], (int)dr[12], dr[13].ToString().Trim());
-                        list.AddLast(batch);
+                        list.Add(batch);
                     }
                 }
                 catch (NpgsqlException ex)
@@ -446,7 +446,7 @@ namespace ProjectSCAM.Models.Logic
         /// </summary>
         /// <param name="append"></param>
         /// <returns></returns>
-        public List<AlarmModel> RetrieveAlarms(string append)
+        public IList<AlarmModel> RetrieveAlarms(string append)
         {
             string query = "SELECT Alarms.alarmid, Alarms.timestamp, Alarms.stopreason, Alarms.handledby, " +
                 "Alarms.batch, StopReasons.stopdescription, Users.firstname, Users.lastname " +

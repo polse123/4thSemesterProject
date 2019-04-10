@@ -71,7 +71,7 @@ namespace ProjectSCAM.Models.Logic
         /// Retrieve all users.
         /// </summary>
         /// <returns></returns>
-        public List<UserType> RetrieveUserTypes()
+        public IList<UserType> RetrieveUserTypes()
         {
             string append = ";";
             return exe.RetrieveUserTypes(append);
@@ -81,7 +81,7 @@ namespace ProjectSCAM.Models.Logic
         /// Retrieve all recipes.
         /// </summary>
         /// <returns></returns>
-        public LinkedList<RecipeModel> RetrieveRecipes()
+        public IList<RecipeModel> RetrieveRecipes()
         {
             string append = ";";
             return exe.RetrieveRecipes(append);
@@ -105,7 +105,7 @@ namespace ProjectSCAM.Models.Logic
         /// Retrieve all machines from the db.
         /// </summary>
         /// <returns></returns>
-        public LinkedList<MachineModel> RetrieveMachines()
+        public IList<MachineModel> RetrieveMachines()
         {
             string append = ";";
             return exe.RetrieveMachines(append);
@@ -138,7 +138,7 @@ namespace ProjectSCAM.Models.Logic
         /// Retrieve all active users.
         /// </summary>
         /// <returns></returns>
-        public LinkedList<UserModel> RetrieveUsers()
+        public IList<UserModel> RetrieveUsers()
         {
             string append = " WHERE isactive = true;";
             return exe.RetrieveUsers(append);
@@ -178,7 +178,7 @@ namespace ProjectSCAM.Models.Logic
         /// The batches are ordered by priority.
         /// </summary>
         /// <returns></returns>
-        public LinkedList<BatchQueueModel> RetrieveFromBatchQueue()
+        public IList<BatchQueueModel> RetrieveFromBatchQueue()
         {
             string append = " ORDER BY priority DESC;";
             return exe.RetrieveFromBatchQueue(append);
@@ -296,7 +296,7 @@ namespace ProjectSCAM.Models.Logic
         /// </summary>
         /// <param name="succeededOnly"></param>
         /// <returns></returns>
-        public LinkedList<BatchModel> RetrieveBatches(bool succeededOnly)
+        public IList<BatchModel> RetrieveBatches(bool succeededOnly)
         {
             StringBuilder append = new StringBuilder();
             if (succeededOnly)
@@ -314,7 +314,7 @@ namespace ProjectSCAM.Models.Logic
         /// <param name="amount"></param>
         /// <param name="succeededOnly"></param>
         /// <returns></returns>
-        public LinkedList<BatchModel> RetrieveBatchesByAmount(int amount, bool succeededOnly)
+        public IList<BatchModel> RetrieveBatchesByAmount(int amount, bool succeededOnly)
         {
             StringBuilder append = new StringBuilder();
             if (succeededOnly)
@@ -332,7 +332,7 @@ namespace ProjectSCAM.Models.Logic
         /// <param name="year"></param>
         /// <param name="succeededOnly"></param>
         /// <returns></returns>
-        public LinkedList<BatchModel> RetrieveBatchesByMonth(string month, string year, bool succeededOnly)
+        public IList<BatchModel> RetrieveBatchesByMonth(string month, string year, bool succeededOnly)
         {
             if (month.Length == 1)
             {
@@ -360,7 +360,7 @@ namespace ProjectSCAM.Models.Logic
         /// <param name="machine"></param>
         /// <param name="succeededOnly"></param>
         /// <returns></returns>
-        public LinkedList<BatchModel> RetrieveBatchesByMachine(int machine, bool succeededOnly)
+        public IList<BatchModel> RetrieveBatchesByMachine(int machine, bool succeededOnly)
         {
             StringBuilder append = new StringBuilder();
             if (succeededOnly)
@@ -378,7 +378,7 @@ namespace ProjectSCAM.Models.Logic
         /// <param name="beerId"></param>
         /// <param name="succeededOnly"></param>
         /// <returns></returns>
-        public LinkedList<BatchModel> RetrieveBatchesByRecipe(int beerId, bool succeededOnly)
+        public IList<BatchModel> RetrieveBatchesByRecipe(int beerId, bool succeededOnly)
         {
             StringBuilder append = new StringBuilder();
             if (succeededOnly)
@@ -398,7 +398,7 @@ namespace ProjectSCAM.Models.Logic
         public BatchModel RetrieveBatch(int batchId)
         {
             string append = " WHERE batchid = " + batchId + ";";
-            LinkedList<BatchModel> list = exe.RetrieveBatches(append);
+            IList<BatchModel> list = exe.RetrieveBatches(append);
             if (list.Count == 1)
             {
                 return list.First();
@@ -421,7 +421,7 @@ namespace ProjectSCAM.Models.Logic
         /// Retrieve all alarms.
         /// </summary>
         /// <returns></returns>
-        public List<AlarmModel> RetrieveAlarms()
+        public IList<AlarmModel> RetrieveAlarms()
         {
             string append = " ORDER BY timestamp DESC;";
             return exe.RetrieveAlarms(append);
@@ -433,7 +433,7 @@ namespace ProjectSCAM.Models.Logic
         /// </summary>
         /// <param name="amount"></param>
         /// <returns></returns>
-        public List<AlarmModel> RetrieveAlarms(int amount)
+        public IList<AlarmModel> RetrieveAlarms(int amount)
         {
             string append = " ORDER BY timestamp DESC LIMIT " + amount + ";";
             return exe.RetrieveAlarms(append);
@@ -447,7 +447,7 @@ namespace ProjectSCAM.Models.Logic
         public AlarmModel RetrieveAlarm(int alarmId)
         {
             string append = " WHERE alarmid = " + alarmId + ";";
-            List<AlarmModel> list = exe.RetrieveAlarms(append);
+            IList<AlarmModel> list = exe.RetrieveAlarms(append);
             if (list.Count == 1)
             {
                 return list.First();
