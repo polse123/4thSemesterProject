@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
 using ProjectSCAM.Models;
 using ProjectSCAM.Models.Logic;
-using SCAMS.Models;
 
 namespace SCAMS.Controllers {
     public class OverviewController : Controller {
         public ActionResult Index() {
+            Session["SelectedMachine"] = "opc.tcp://127.0.0.1:4840";
             return View();
         }
         // series of actionmethods that handle post requests
@@ -19,35 +20,32 @@ namespace SCAMS.Controllers {
         public string MachineControl() {
             // get value of command variable in the request
             string value = Request["command"];
+            
             // let opc manager handle the command
             try {
-                Singleton.Instance.opcManager.HandleCommand(value);
+                Singleton.Instance.opcManager.HandleCommand(Session["SelectedMachine"].ToString(), value);
                 return "command valid";
-            } catch(Exception ex) {
+            } catch (Exception ex) {
                 return ex.Message;
             }
-            
+
         }
-        [HttpPost]
+        [HttpGet]
         public string RefreshBQ() {
             LinkedList<BatchQueueModel> batchq = Singleton.Instance.dbManager.RetrieveFromBatchQueue();
             return JsonConvert.SerializeObject(batchq, Formatting.None);
 
         }
-       
-        public void Message() {
-            Response.ContentType = "text/event-stream";
+        [HttpPost]
+        public string SetSelectedMachine() {
+            string value = Request["ip"];
+            Session["SelectedMachine"] = value;
+            return "lmao";
+        }
 
-            do {
-                Response.Write("data:" + JsonConvert.SerializeObject(Singleton.Instance.opcManager, Formatting.None) + "\n\n");
-                try {
-                    Response.FlushAsync();
-                } catch {
-                    Response.Close();
-                }
-                
-                Thread.Sleep(1000);
-            } while (true);
+        public JsonResult Message() {
+            var x = Singleton.Instance.opcManager.GetOpcConnection(Session["SelectedMachine"].ToString());
+            return Json(x); ;
         }
     }
 }

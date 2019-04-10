@@ -223,10 +223,11 @@
     <Compile Include="Models\BatchQueueModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Logic\DBManager.cs" />
+    <Compile Include="Models\Logic\OPCManager.cs" />
     <Compile Include="Models\Logic\QueryExecuter.cs" />
     <Compile Include="Models\MachineModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\OpcClient.cs" />
+    <Compile Include="Models\Logic\OpcClient.cs" />
     <Compile Include="Models\RecipeModel.cs" />
     <Compile Include="Models\Logic\Singleton.cs" />
     <Compile Include="Models\UserModel.cs" />
