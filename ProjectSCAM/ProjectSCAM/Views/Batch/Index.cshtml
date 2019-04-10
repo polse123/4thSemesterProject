@@ -2,6 +2,7 @@
 <html>
 <head>
     @Styles.Render("~/Content/BatchStyleSheet.css")
+    @Scripts.Render("~/Scripts/createBatchesScript.js")
 </head>
 <body>
     <div class="grid-container">
@@ -39,11 +40,11 @@
         </div>
         <div class="grid-item item3">
             &nbsp;   Create Batch:<br><br>
-            &nbsp;  <input type="text" id="idSearchField" class="searchFieldClass" placeholder="Batch ID:" /><br><br>
-            &nbsp;  <input type="text" id="latestSearchField" class="searchFieldClass" placeholder="Latest:" /><br><br>
-            &nbsp;  <input type="text" id="dateSearchField" class="searchFieldClass" placeholder="Date:" /><br><br>
-            &nbsp;  <input type="text" id="machineSearchField" class="searchFieldClass" placeholder="Machine:" /><br><br>
-            &nbsp;  <input type="text" id="productSearchField" class="searchFieldClass" placeholder="Product Type:" /><br><br>
+            &nbsp;  <input type="text" id="idSearchField" class="searchFieldClass" onblur="checkBatchID()" placeholder="Batch ID:" /><br><br>
+            &nbsp;  <input type="text" id="latestSearchField" class="searchFieldClass" onblur="checkLatestBatch()"placeholder="Latest:" /><br><br>
+            &nbsp;  <input type="text" id="dateSearchField" class="searchFieldClass"  onblur="checkDateOfBatch()" placeholder="Date:" /><br><br>
+            &nbsp;  <input type="text" id="machineSearchField" class="searchFieldClass" onblur="checkMachine()"placeholder="Machine:" /><br><br>
+            &nbsp;  <input type="text" id="productSearchField" class="searchFieldClass" onblur="checkProductType()"placeholder="Product Type:" /><br><br>
             &nbsp;  <button type="button" id="searchButton" class="buttons" class="searchFieldClass"> Search</button>
         </div>
 
