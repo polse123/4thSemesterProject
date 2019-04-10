@@ -17,13 +17,13 @@
 
                 User information:  <p id="userParagraph"></p>
                                    <form onsubmit="return checkFields()" method="post" action="~/Login/Index">
-                                       Username: <input type="text" required name="usernameField" id="usernameField" title="Five or more characters" value="" onblur="checkUsername()"> <br> <br>
-                                       Password: <input type="password" required name="passwordField" id="passwordField" title="Should have atleast 1 uppercase character, 1 lowercase character, 1 number and be atleast 8 characters" onblur="checkPassword"> <br> <br>
-                                       Repeat password: <input type="password" required name="repeatPasswordField" id="repeatPasswordField" title="Should match password" onblur="checkRepeatPassword()"> <br> <br>
-                                       Firstname: <input type="text" required name="firstnameField" id="firstnameField" title="Should contain characters" onblur="checkFirstname()"> <br> <br>
-                                       Lastname: <input type="text" required name="lastnameField" id="lastnameField" title="Should contain characters" onblur="checkLastname()"> <br> <br>
-                                       Phonenumber: <input type="text" required name="phonenumberField" id="phonenumberField" title="Should contain 8 numbers" onblur="checkPhonenumber()"> <br> <br>
-                                       Email address: <input type="email" required name="emailField" id="emailField" title="Must be an email address of the format: characters@characters.domain" onblur="checkEmail()"> <br> <br>
+                                       <input type="text" required name="usernameField" id="usernameField" title="Five or more characters" value="" onblur="checkUsername()"placeholder="Username: "> <br> <br>
+                                       <input type="password" required name="passwordField" id="passwordField" title="Should have atleast 1 uppercase character, 1 lowercase character, 1 number and be atleast 8 characters" onblur="checkPassword" placeholder="Password: "> <br> <br>
+                                       <input type="password" required name="repeatPasswordField" id="repeatPasswordField" title="Should match password" onblur="checkRepeatPassword()"placeholder="Repeat password: "> <br> <br>
+                                       <input type="text" required name="firstnameField" id="firstnameField" title="Should contain characters" onblur="checkFirstname()" placeholder="Firstname:  "> <br> <br>
+                                       <input type="text" required name="lastnameField" id="lastnameField" title="Should contain characters" onblur="checkLastname()" placeholder="Lastname: ">  <br> <br>
+                                       <input type="text" required name="phonenumberField" id="phonenumberField" title="Should contain 8 numbers" onblur="checkPhonenumber()" placeholder=" Phonenumber: "> <br> <br>
+                                       <input type="email" required name="emailField" id="emailField" title="Must be an email address of the format: characters@characters.domain" onblur="checkEmail()" placeholder=" Email address: "> <br> <br>
 
 
                                        <div class="dropdownUserTypes">
