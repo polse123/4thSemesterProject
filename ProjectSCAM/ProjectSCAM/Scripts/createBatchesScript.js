@@ -37,7 +37,7 @@ function checkDateOfBatch() {
 
 
     var dateOfBatch = document.getElementById("dateSearchField").value;
-    var regex = /^[a-zA-Z\d]{5,20}$/;// need to fix 
+    var regex = /^ ([0 - 2][0 - 9] | (3)[0 - 1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/; //Simple date dd/mm/yyyy
 
 
     if (regex.test(dateOfBatch)) {
