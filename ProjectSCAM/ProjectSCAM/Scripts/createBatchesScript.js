@@ -1,7 +1,7 @@
 ﻿function checkBatchID() {
 
     var batchID = document.getElementById("idSearchField").value;
-    var regex = /@"^[\d]$/; // is this right
+    var regex = /^[\d]{1,10}$/; 
 
 
     if (regex.test(batchID)) {
@@ -18,7 +18,7 @@
 function checkLatestBatch() {
 
     var latestBatch = document.getElementById("latestSearchField").value;
-    var regex = /^[a-zA-Z\d]{5,20}$/; // need to fix
+    var regex = /^[\d]{1,10}$/; 
 
 
     if (regex.test(latestBatch)) {
@@ -55,7 +55,7 @@ function checkMachine() {
 
 
     var machine = document.getElementById("machineSearchField").value;
-    var regex = /^[a-zA-Z\d]{5,20}$/;// needs to be fixed
+    var regex = /^[\d]{1,10}$/;
 
 
     if (regex.test(machine)) {
@@ -74,7 +74,7 @@ function checkProductType() {
 
 
     var productType = document.getElementById("productSearchField").value;
-    var regex = /^[a-zA-Z\d]{5,20}$/; // needs to be fixed
+    var regex = /^[0-4]$/;
 
 
     if (regex.test(productType )) {
