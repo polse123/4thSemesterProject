@@ -21,7 +21,7 @@ function checkLatestBatch() {
     var regex = /^[a-zA-Z\d]{5,20}$/; // need to fix
 
 
-    if (regex.test(latestBatch)) 
+    if (regex.test(latestBatch)) {
         document.getElementById("latestSearchField").style.color = "green";
     return regex.test(latestBatch);
 
