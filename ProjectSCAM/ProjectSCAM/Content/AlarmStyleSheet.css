@@ -38,9 +38,9 @@
 
 /* Dropdown Button */
 .dropbtnAlarms {
-    background-color: #4CAF50;
+    background-color: green;
     color: white;
-    padding: 16px;
+    padding: 15px  15px;
     font-size: 16px;
     border: none;
 }
@@ -49,6 +49,7 @@
 .dropdownAlarms {
     position: relative;
     display: inline-block;
+    padding: 20px 20px;
 }
 
 /* Dropdown Content (Hidden by Default) */
@@ -57,7 +58,6 @@
     position: absolute;
     background-color: #f1f1f1;
     min-width: 160px;
-    
     z-index: 1;
 }
 
