@@ -41,12 +41,12 @@ namespace ProjectSCAM.Models.Logic
         /// </summary>
         /// <param name="server"></param>
         /// <param name="port"></param>
-        /// <param name="userid"></param>
+        /// <param name="userId"></param>
         /// <param name="password"></param>
         /// <param name="database"></param>
-        public DBManager(string server, string port, string userid, string password, string database)
+        public DBManager(string server, string port, string userId, string password, string database)
         {
-            exe = new QueryExecuter(InitConnection(server, port, userid, password, database));
+            exe = new QueryExecuter(InitConnection(server, port, userId, password, database));
         }
 
         /// <summary>
@@ -54,15 +54,15 @@ namespace ProjectSCAM.Models.Logic
         /// </summary>
         /// <param name="server"></param>
         /// <param name="port"></param>
-        /// <param name="userid"></param>
+        /// <param name="userId"></param>
         /// <param name="password"></param>
         /// <param name="database"></param>
-        private NpgsqlConnection InitConnection(string server, string port, string userid, string password, string database)
+        private NpgsqlConnection InitConnection(string server, string port, string userId, string password, string database)
         {
             // PostgeSQL-style connection string
             string connstring = String.Format("Server={0};Port={1};" +
                 "User Id={2};Password={3};Database={4};",
-                server, port, userid, password, database);
+                server, port, userId, password, database);
             // Making connection with Npgsql provider
             return new NpgsqlConnection(connstring);
         }
