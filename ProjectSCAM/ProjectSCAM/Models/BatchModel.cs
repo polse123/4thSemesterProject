@@ -20,15 +20,17 @@ namespace ProjectSCAM.Models
         public int Speed { get; }
         public int BeerId { get; }
         public int Machine { get; }
+        public int SoldTo { get; }
 
         public BatchValueCollection Values { get; set; }
 
         public string RecipeName { get; }
+        public string CustomerName { get; }
 
         public BatchModel(int id, int acceptableProducts, int defectProducts,
             string timestampStart, string timestampEnd, string expirationDate, bool succeeded,
             double performance, double quality, double availability,
-            int speed, int beerId, int machine, string recipeName)
+            int speed, int beerId, int machine, int soldTo, string recipeName, string customerName)
         {
             Id = id;
             AcceptableProducts = acceptableProducts;
@@ -43,8 +45,10 @@ namespace ProjectSCAM.Models
             Speed = speed;
             BeerId = beerId;
             Machine = machine;
+            SoldTo = soldTo;
             Values = new BatchValueCollection();
             RecipeName = recipeName ?? throw new ArgumentNullException(nameof(recipeName));
+            CustomerName = customerName;
         }
     }
 }

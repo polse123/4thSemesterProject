@@ -34,6 +34,7 @@ namespace ProjectSCAM.Models.Logic
         public QueryExecuter(NpgsqlConnection conn)
         {
             this.conn = conn;
+            CONNECTION_LOCK = new object();
         }
 
         /// <summary>
@@ -216,6 +217,43 @@ namespace ProjectSCAM.Models.Logic
         }
 
         /// <summary>
+        /// Retrieves a list of customers.
+        /// The query append should start with " " or ";".
+        /// </summary>
+        /// <param name="append"></param>
+        /// <returns></returns>
+        public IList<CustomerModel> RetrieveCustomers(string append)
+        {
+            string query = "SELECT * FROM Customers" + append;
+
+            List<CustomerModel> list = new List<CustomerModel>();
+
+            lock (CONNECTION_LOCK)
+            {
+                try
+                {
+                    conn.Open();
+                    NpgsqlCommand command = new NpgsqlCommand(query, conn);
+                    NpgsqlDataReader dr = command.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        CustomerModel customer = new CustomerModel((int)dr[0], dr[1].ToString().Trim());
+                        list.Add(customer);
+                    }
+                }
+                catch (NpgsqlException ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            }
+            return list;
+        }
+
+        /// <summary>
         /// Retrieves batches from the batch queue.
         /// The query append should start with " " or ";".
         /// </summary>
@@ -270,22 +308,6 @@ namespace ProjectSCAM.Models.Logic
 
         /// <summary>
         /// Registers a batch and its batch values into the db.
-        /// </summary>
-        /// <param name="query"></param>
-        /// <param name="temperatureValues"></param>
-        /// <param name="humidityValues"></param>
-        /// <param name="vibrationsValues"></param>
-        /// <returns></returns>
-        public bool RegisterBatch(string query,
-            List<KeyValuePair<string, double>> temperatureValues,
-            List<KeyValuePair<string, double>> humidityValues,
-            List<KeyValuePair<string, double>> vibrationsValues)
-        {
-            return RegisterBatch(query, temperatureValues, humidityValues, vibrationsValues, null);
-        }
-
-        /// <summary>
-        /// Registers a batch and its batch values into the db.
         /// If alarmQuery is not null, an alarm is registered too.
         /// </summary>
         /// <param name="batchQuery"></param>
@@ -294,11 +316,11 @@ namespace ProjectSCAM.Models.Logic
         /// <param name="vibrationsValues"></param>
         /// <param name="alarmQuery"></param>
         /// <returns></returns>
-        public bool RegisterBatch(string batchQuery,
+        public bool RegisterBatch(int acceptableProducts,
             List<KeyValuePair<string, double>> temperatureValues,
             List<KeyValuePair<string, double>> humidityValues,
             List<KeyValuePair<string, double>> vibrationValues,
-            StringBuilder alarmQuery)
+            string batchQuery, StringBuilder alarmQuery)
         {
             int? batchId = null;
 
@@ -317,6 +339,10 @@ namespace ProjectSCAM.Models.Logic
                     {
                         // Register batch values
                         RegisterBatchValues((int)batchId, temperatureValues, humidityValues, vibrationValues);
+
+                        // Register beers
+                        RegisterBeers((int)batchId, acceptableProducts);
+
                         if (alarmQuery != null)
                         {
                             // Register alarm
@@ -349,8 +375,10 @@ namespace ProjectSCAM.Models.Logic
             string query = "SELECT Batches.batchid, Batches.acceptableproducts, Batches.defectproducts, " +
                 "Batches.timestampstart, Batches.timestampend, Batches.expirationdate, " +
                 "Batches.succeeded, Batches.performance, Batches.quality, Batches.availablity, " +
-                "Batches.speed, Batches.beerid, Batches.machine, Recipes.name " +
-                "FROM Batches INNER JOIN Recipes ON Batches.beerid = Recipes.beerid" +
+                "Batches.speed, Batches.beerid, Batches.machine, Batches.soldto, " +
+                "Recipes.name, Customers.customername " +
+                "FROM Batches LEFT JOIN Recipes ON Batches.beerid = Recipes.beerid " +
+                "LEFT JOIN Customers ON Batches.soldto = Customers.customerid" +
                 append;
 
             List<BatchModel> list = new List<BatchModel>();
@@ -367,7 +395,8 @@ namespace ProjectSCAM.Models.Logic
                         BatchModel batch = new BatchModel((int)dr[0], (int)dr[1], (int)dr[2],
                             dr[3].ToString().Trim(), dr[4].ToString().Trim(), dr[5].ToString().Trim(),
                             (bool)dr[6], (double)dr[7], (double)dr[8], (double)dr[9],
-                            (int)dr[10], (int)dr[11], (int)dr[12], dr[13].ToString().Trim());
+                            (int)dr[10], (int)dr[11], (int)dr[12], (int)dr[13],
+                            dr[14].ToString().Trim(), dr[15].ToString().Trim());
                         list.Add(batch);
                     }
                 }
@@ -384,13 +413,12 @@ namespace ProjectSCAM.Models.Logic
         }
 
         /// <summary>
-        /// Retrieves batch values for a specific batch.
+        /// Retrieves batch values.
         /// The query append should start with " " or ";".
         /// </summary>
-        /// <param name="batchId"></param>
         /// <param name="append"></param>
         /// <returns></returns>
-        public BatchValueCollection RetrieveBatchValues(int batchId, string append)
+        public BatchValueCollection RetrieveBatchValues(string append)
         {
             string[] queries = new string[3];
             for (int i = 0; i < 3; i++)
@@ -441,6 +469,43 @@ namespace ProjectSCAM.Models.Logic
         }
 
         /// <summary>
+        /// Retrieves beers.
+        /// The query append should start with " " or ";".
+        /// </summary>
+        /// <param name="append"></param>
+        /// <returns></returns>
+        public IList<BeerModel> RetrieveBeers(string append)
+        {
+            string query = "SELECT * FROM Beers" + append;
+
+            List<BeerModel> list = new List<BeerModel>();
+
+            lock (CONNECTION_LOCK)
+            {
+                try
+                {
+                    conn.Open();
+                    NpgsqlCommand command = new NpgsqlCommand(query, conn);
+                    NpgsqlDataReader dr = command.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        BeerModel beer = new BeerModel((int)dr[0], (bool)dr[1], (int)dr[2]);
+                        list.Add(beer);
+                    }
+                }
+                catch (NpgsqlException ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            }
+            return list;
+        }
+
+        /// <summary>
         /// Retrieves alarms.
         /// The query append should start with " " or ";".
         /// </summary>
@@ -482,7 +547,40 @@ namespace ProjectSCAM.Models.Logic
         }
 
         /// <summary>
+        /// Executes all queries in an array.
+        /// Needs an open connection.
+        /// </summary>
+        /// <param name="queries"></param>
+        /// <param name="stopIfFirstFails"></param>
+        /// <returns></returns>
+        private bool ExecuteQueries(string[] queries, bool stopIfFirstFails)
+        {
+            bool firstExecution = true;
+            for (int i = 0; i < queries.Length; i++)
+            {
+                try
+                {
+                    NpgsqlCommand command = new NpgsqlCommand(queries[i], conn);
+                    command.ExecuteNonQuery();
+                    if (firstExecution)
+                    {
+                        firstExecution = false;
+                    }
+                }
+                catch (NpgsqlException ex)
+                {
+                    if (firstExecution && stopIfFirstFails)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        /// <summary>
         /// Registers batch values.
+        /// Needs an open connection.
         /// </summary>
         /// <param name="batchId"></param>
         /// <param name="temperatureValues"></param>
@@ -506,27 +604,25 @@ namespace ProjectSCAM.Models.Logic
                     qIndex++;
                 }
             }
-            bool firstExecution = true;
+            return ExecuteQueries(queries, true);
+        }
+
+        /// <summary>
+        /// Registers beers.
+        /// Needs an open connection.
+        /// </summary>
+        /// <param name="batchId"></param>
+        /// <param name="acceptableProducts"></param>
+        /// <returns></returns>
+        private bool RegisterBeers(int batchId, int acceptableProducts)
+        {
+            string[] queries = new string[acceptableProducts];
             for (int i = 0; i < queries.Length; i++)
             {
-                try
-                {
-                    NpgsqlCommand command = new NpgsqlCommand(queries[i], conn);
-                    command.ExecuteNonQuery();
-                    if (firstExecution)
-                    {
-                        firstExecution = false;
-                    }
-                }
-                catch (NpgsqlException ex)
-                {
-                    if (firstExecution)
-                    {
-                        return false;
-                    }
-                }
+                int productNumber = i + 1;
+                queries[i] = "INSERT INTO Beers Values(" + productNumber + ", true, " + batchId + ");";
             }
-            return true;
+            return ExecuteQueries(queries, true);
         }
     }
 }

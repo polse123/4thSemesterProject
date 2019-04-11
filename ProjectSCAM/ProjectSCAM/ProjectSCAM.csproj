@@ -222,6 +222,8 @@
     <Compile Include="Models\BatchModel.cs" />
     <Compile Include="Models\BatchQueueModel.cs" />
     <Compile Include="Models\BatchValueCollection.cs" />
+    <Compile Include="Models\BeerModel.cs" />
+    <Compile Include="Models\CustomerModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Logic\DBManager.cs" />
     <Compile Include="Models\Logic\QueryExecuter.cs" />

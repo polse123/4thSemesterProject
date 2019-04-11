@@ -156,7 +156,41 @@ namespace ProjectSCAM.Models.Logic
         }
 
         /// <summary>
-        /// Insert a batch into the batch queue in the db
+        /// Register a customer.
+        /// </summary>
+        /// <param name="customerName"></param>
+        /// <returns></returns>
+        public bool RegisterCustomer(string customerName)
+        {
+            string query = "INSERT INTO Customers(name) VALUES('" + customerName + "');";
+            return exe.ExecuteQuery(query);
+        }
+
+        /// <summary>
+        /// Retrieve all customers.
+        /// </summary>
+        /// <returns></returns>
+        public IList<CustomerModel> RetrieveCustomers()
+        {
+            string append = ";";
+            return exe.RetrieveCustomers(append);
+        }
+
+        /// <summary>
+        /// Edit the name of a customer.
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <param name="newName"></param>
+        /// <returns></returns>
+        public bool EditCustomerName(int customerId, string newName)
+        {
+            string query = "UPDATE Customers SET name = '" + newName +
+                "' WHERE customerid = " + customerId + ";";
+            return exe.ExecuteQuery(query);
+        }
+
+        /// <summary>
+        /// Insert a batch into the batch queue in the db.
         /// </summary>
         /// <param name="queueid"></param>
         /// <param name="priority"></param>
@@ -234,7 +268,7 @@ namespace ProjectSCAM.Models.Logic
                     timestampStart, timestampEnd, expirationDate, succeeded,
                     performance, quality, availability, speed, beerId, machine);
 
-                return exe.RegisterBatch(query, temperatureValues, humidityValues, vibrationsValues);
+                return exe.RegisterBatch(acceptableProducts, temperatureValues, humidityValues, vibrationsValues, query, null);
             }
             else { return false; }
         }
@@ -286,7 +320,7 @@ namespace ProjectSCAM.Models.Logic
                 alarmQuery.Append("INSERT INTO Alarms(timestamp, stopreason, handledby, batch) " +
                 "VALUES('" + alarmTimestamp + "', " + stopReason + ", null, ");
 
-                return exe.RegisterBatch(batchQuery, temperatureValues, humidityValues, vibrationsValues, alarmQuery);
+                return exe.RegisterBatch(acceptableProducts, temperatureValues, humidityValues, vibrationsValues, batchQuery, alarmQuery);
             }
             else { return false; }
         }
@@ -407,6 +441,19 @@ namespace ProjectSCAM.Models.Logic
         }
 
         /// <summary>
+        /// Register the sale of a batch
+        /// </summary>
+        /// <param name="batchId"></param>
+        /// <param name="customerId"></param>
+        /// <returns></returns>
+        public bool SetSale(int batchId, int customerId)
+        {
+            string query = "UPDATE Batches SET soldto = " + customerId +
+                " WHERE batchid = " + batchId + ";";
+            return exe.ExecuteQuery(query);
+        }
+
+        /// <summary>
         /// Retrieve temperature, humidity and vibration values for a specific batch.
         /// </summary>
         /// <param name="batchId"></param>
@@ -414,7 +461,18 @@ namespace ProjectSCAM.Models.Logic
         public BatchValueCollection RetrieveBatchValues(int batchId)
         {
             string append = " WHERE belongingto = " + batchId + ";";
-            return exe.RetrieveBatchValues(batchId, append);
+            return exe.RetrieveBatchValues(append);
+        }
+
+        /// <summary>
+        /// Retrieve beers from a specific batch.
+        /// </summary>
+        /// <param name="batchId"></param>
+        /// <returns></returns>
+        public IList<BeerModel> RetrieveBeers(int batchId)
+        {
+            string append = " WHERE belongingto = " + batchId + ";";
+            return exe.RetrieveBeers(append);
         }
 
         /// <summary>
