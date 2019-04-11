@@ -3,14 +3,15 @@
 <head>
     @Styles.Render("~/Content/ProductionStyleSheet.css")
     @Styles.Render("~/Content/dropdown.css")
+    @Scripts.Render("~/Scripts/productionScript.js")
 </head>
 <body>
     <div class="grid-container">
         <div class="grid-item item1">
             <div id="insert" class="insetclass">
                 <div id="textFields">
-                    Speed: <input type="text" id="speedField"><br><br>
-                    Amount: <input type="text" id="speedField">
+                    <input type="text" id="speedField" placeholder="Speed" title="Speed has to be: Pilsner: 0-600, Wheat: 0-300, IPA: 0-150, Stout: 0-200, Ale: 0-100, Alcohol Free: 0-125." onblur="checkSpeed()"><br><br>
+                    <input type="text" id="amountField" placeholder="Amount" title="Choose the amount to be produced (number)" onblur="checkAmount()">
                 </div>
                 <div id="button">
                 </div>

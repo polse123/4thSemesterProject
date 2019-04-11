@@ -74,7 +74,7 @@ function checkProductType() {
 
 
     var productType = document.getElementById("productSearchField").value;
-    var regex = /^[0-4]$/;
+    var regex = /^[0-5]$/;
 
 
     if (regex.test(productType )) {
