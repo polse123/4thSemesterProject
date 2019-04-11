@@ -26,7 +26,7 @@ namespace SCAMS.Controllers
             // let opc manager handle the command
             try
             {
-                Singleton.Instance.opcManager.HandleCommand(value);
+                Singleton.Instance.OPCManager.HandleCommand(value);
                 return "command valid";
             }
             catch (Exception ex)
@@ -38,7 +38,7 @@ namespace SCAMS.Controllers
         [HttpPost]
         public string RefreshBQ()
         {
-            IList<BatchQueueModel> batchq = Singleton.Instance.dbManager.RetrieveFromBatchQueue();
+            IList<BatchQueueModel> batchq = Singleton.Instance.DBManager.RetrieveFromBatchQueue();
             return JsonConvert.SerializeObject(batchq, Formatting.None);
 
         }
@@ -49,7 +49,7 @@ namespace SCAMS.Controllers
 
             do
             {
-                Response.Write("data:" + JsonConvert.SerializeObject(Singleton.Instance.opcManager, Formatting.None) + "\n\n");
+                Response.Write("data:" + JsonConvert.SerializeObject(Singleton.Instance.OPCManager, Formatting.None) + "\n\n");
                 try
                 {
                     Response.FlushAsync();
