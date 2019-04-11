@@ -1,9 +1,10 @@
 ﻿function checkSpeed() {
 
-
+    //Create if for each type of beer.
 
     var speed = document.getElementById("speedField").value;
     var regex = /^[0-5]$/;
+    
 
 
     if (regex.test(speed)) {
