@@ -263,15 +263,5 @@ namespace ProjectSCAM.Tests.Logic
             bool success = dbManager.SetSale(...);
             Assert.IsTrue(success);
         }
-
-        [TestMethod]
-        public void BuildDatabase()
-        {
-            string s = "";
-
-
-            bool success = dbManager.ExecuteQuery(...);
-            Assert.IsTrue(success);
-        }
     }
 }
