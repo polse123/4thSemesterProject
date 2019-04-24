@@ -7,16 +7,18 @@ namespace ProjectSCAM.Models
 {
     public class BatchQueueModel
     {
-        public int Id { get; set; }
-        public int Amount { get; set; }
-        public int Speed { get; set; }
-        public int BeerId { get; set; }
+        public int Id { get; }
+        public int Priority { get; set; }
+        public int Amount { get; }
+        public int Speed { get; }
+        public int BeerId { get; }
 
-        public string RecipeName { get; set; }
+        public string RecipeName { get; }
 
-        public BatchQueueModel(int id, int amount, int speed, int beerId, string recipeName)
+        public BatchQueueModel(int id, int priority, int amount, int speed, int beerId, string recipeName)
         {
             Id = id;
+            Priority = priority;
             Amount = amount;
             Speed = speed;
             BeerId = beerId;

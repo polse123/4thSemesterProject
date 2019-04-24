@@ -32,7 +32,7 @@ namespace SCAMS.Controllers {
         }
         [HttpGet]
         public string RefreshBQ() {
-            LinkedList<BatchQueueModel> batchq = Singleton.Instance.dbManager.RetrieveFromBatchQueue();
+            IList<BatchQueueModel> batchq = Singleton.Instance.DBManager.RetrieveFromBatchQueue();
             return JsonConvert.SerializeObject(batchq, Formatting.None);
 
         }

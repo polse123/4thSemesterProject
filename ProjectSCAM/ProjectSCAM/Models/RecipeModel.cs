@@ -7,14 +7,14 @@ namespace ProjectSCAM.Models
 {
     public class RecipeModel
     {
-        public int Id { get; set; }
-        public int MaxSpeed { get; set; }
-        public string Name { get; set; }
-        public int barley { get; set; }
-        public int hops { get; set; }
-        public int malt { get; set; }
-        public int wheat { get; set; }
-        public int yeast { get; set; }
+        public int Id { get; }
+        public int MaxSpeed { get; }
+        public string Name { get; }
+        public int barley { get; }
+        public int hops { get; }
+        public int malt { get; }
+        public int wheat { get; }
+        public int yeast { get; }
 
         public RecipeModel(int id, int maxSpeed, string name, int barley, int hops, int malt, int wheat, int yeast)
         {

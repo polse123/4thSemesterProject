@@ -1,5 +1,6 @@
 ﻿
 using ProjectSCAM.Models;
+using ProjectSCAM.Models.Logic;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
@@ -10,8 +11,8 @@ namespace MvcMovie.Controllers {
         // GET: /MachineSelection/ 
 
         public ActionResult Index() {
-            List<MachineModel> machineModels;
-            return View();
+            IList<MachineModel> machineModels = Singleton.Instance.DBManager.RetrieveMachines();
+            return View(machineModels);
         }
 
         // 

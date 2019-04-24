@@ -8,7 +8,7 @@ namespace ProjectSCAM.Models.Logic {
         public Dictionary<string,OpcClient> OpcConnections { get; set; }
         public OPCManager() {
             OpcConnections = new Dictionary<string, OpcClient>();
-            InitConnections();
+        //    InitConnections();
         }
 
         public void InitConnections() {
