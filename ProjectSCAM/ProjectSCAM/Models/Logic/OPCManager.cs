@@ -16,7 +16,7 @@ namespace ProjectSCAM.Models.Logic {
 
             string ip2 = "opc.tcp://192.168.0.122:4840";
             OpcConnections.Add(ip, new OpcClient(ip));
-            OpcConnections.Add(ip2, new OpcClient(ip2));
+            //OpcConnections.Add(ip2, new OpcClient(ip2));
 
         }
         public bool HandleCommand(string ip, string command) {

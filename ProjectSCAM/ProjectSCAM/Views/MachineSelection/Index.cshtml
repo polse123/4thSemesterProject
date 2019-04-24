@@ -1,4 +1,4 @@
-﻿
+﻿@model List<ProjectSCAM.Models.MachineModel>
 @{
     ViewData["Title"] = "Machine Selection";
 }
@@ -12,8 +12,15 @@
     <div class="dropdown">
         <button class="dropbtn" id="machineSelect">Machines</button>
         <div class="dropdown-content">
+            @foreach(var item in Model) {
+                <a href="">@item.Ip</a>
+            }
             <a href="">Test 1</a>
             <a href="">Test 2</a>
+        </div>
+        <div class="descriptionBox">
+            <span>hello</span>
+
         </div>
     </div>
 </body>

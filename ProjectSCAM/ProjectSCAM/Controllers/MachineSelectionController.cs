@@ -1,4 +1,6 @@
 ﻿
+using ProjectSCAM.Models;
+using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
 
@@ -8,6 +10,7 @@ namespace MvcMovie.Controllers {
         // GET: /MachineSelection/ 
 
         public ActionResult Index() {
+            List<MachineModel> machineModels;
             return View();
         }
 
