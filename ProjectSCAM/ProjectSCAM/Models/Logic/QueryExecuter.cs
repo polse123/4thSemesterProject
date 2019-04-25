@@ -184,7 +184,7 @@ namespace ProjectSCAM.Models.Logic
         {
             string query = "SELECT Users.userid, Users.username, Users.firstname, Users.lastname, " +
                 "Users.email, Users.phonenumber, Users.usertype, Usertypes.role " +
-                "FROM Users INNER JOIN UserTypes ON Users.usertype = UserTypes.typeid " +
+                "FROM Users INNER JOIN UserTypes ON Users.usertype = UserTypes.typeid" +
                 append;
 
             List<UserModel> list = new List<UserModel>();

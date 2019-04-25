@@ -81,13 +81,17 @@ namespace ProjectSCAM.Tests.Logic
             IList<UserModel> list = dbManager.RetrieveUsers();
             Assert.IsNotNull(list); //Test RetrieveUsers
             bool userMadeInactive = false;
-            int highestId = 0;
+            int? highestId = null;
             if (list.Count != 0) // Test RetrieveUsers
             {
                 foreach (UserModel element in list)
                 {
                     Assert.IsNotNull(element); //Test RetrieveUsers
-                    if (element.Id > highestId)
+                    if (highestId == null)
+                    {
+                        highestId = element.Id;
+                    }
+                    else if (element.Id > highestId)
                     {
                         highestId = element.Id;
                     }
@@ -97,13 +101,12 @@ namespace ProjectSCAM.Tests.Logic
                         Assert.IsTrue(userMadeInactive); // Test MakeInactive
                     }
                 }
-                int newUserid = highestId + 1;
-                bool registered = dbManager.RegisterUser("Test" + newUserid, "Password", "Test", "User", "test@mail.com", "00000000", 1);
+                int newUserid = (int)highestId + 1;
+                bool registered = dbManager.RegisterUser("Test" + newUserid, "Password", "Test", "User", "test" + newUserid + "@mail.com", "00000000", 1);
                 Assert.IsTrue(registered); // Test RegisterUser
             }
             else Assert.IsNotNull(null);
         }
-
 
         [TestMethod]
         public void RegisterCustomer()
@@ -145,13 +148,17 @@ namespace ProjectSCAM.Tests.Logic
         {
             IList<BatchQueueModel> list = dbManager.RetrieveFromBatchQueue();
             Assert.IsNotNull(list); // Test RetrieveFromBatchQueue
-            int highestId = 0;
+            int? highestId = null;
             if (list.Count != 0) // Test RetrieveFromBatchQueue
             {
                 foreach (BatchQueueModel element in list)
                 {
                     Assert.IsNotNull(element); // Test RetrieveFromBatchQueue
-                    if (element.Id > highestId)
+                    if (highestId == null)
+                    {
+                        highestId = element.Id;
+                    }
+                    else if (element.Id > highestId)
                     {
                         highestId = element.Id;
                     }
@@ -159,10 +166,10 @@ namespace ProjectSCAM.Tests.Logic
             }
             else Assert.IsNotNull(null);
 
-            bool success1 = dbManager.RegisterIntoBatchQueue(highestId + 1, 10, 100, 600, 0);
+            bool success1 = dbManager.RegisterIntoBatchQueue((int)highestId + 1, 10, 100, 600, 0);
             Assert.IsTrue(success1);
 
-            bool success2 = dbManager.RemoveFromBatchQueue(highestId + 1);
+            bool success2 = dbManager.RemoveFromBatchQueue((int)highestId + 1);
             Assert.IsTrue(success2);
         }
 
@@ -324,6 +331,3 @@ namespace ProjectSCAM.Tests.Logic
         }
     }
 }
-
-
-
