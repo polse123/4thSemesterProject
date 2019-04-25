@@ -317,9 +317,9 @@ namespace ProjectSCAM.Models.Logic
         /// <param name="alarmQuery"></param>
         /// <returns></returns>
         public bool RegisterBatch(int acceptableProducts,
-            List<KeyValuePair<string, double>> temperatureValues,
-            List<KeyValuePair<string, double>> humidityValues,
-            List<KeyValuePair<string, double>> vibrationValues,
+            IList<KeyValuePair<string, double>> temperatureValues,
+            IList<KeyValuePair<string, double>> humidityValues,
+            IList<KeyValuePair<string, double>> vibrationValues,
             string batchQuery, StringBuilder alarmQuery)
         {
             int? batchId = null;
@@ -588,12 +588,12 @@ namespace ProjectSCAM.Models.Logic
         /// <param name="vibrationsValues"></param>
         /// <returns></returns>
         private bool RegisterBatchValues(int batchId,
-            List<KeyValuePair<string, double>> temperatureValues,
-            List<KeyValuePair<string, double>> humidityValues,
-            List<KeyValuePair<string, double>> vibrationsValues)
+            IList<KeyValuePair<string, double>> temperatureValues,
+            IList<KeyValuePair<string, double>> humidityValues,
+            IList<KeyValuePair<string, double>> vibrationsValues)
         {
             string[] queries = new string[temperatureValues.Count + humidityValues.Count + vibrationsValues.Count];
-            List<KeyValuePair<string, double>>[] valueLists = { temperatureValues, humidityValues, vibrationsValues };
+            IList<KeyValuePair<string, double>>[] valueLists = { temperatureValues, humidityValues, vibrationsValues };
             int qIndex = 0;
             for (int i = 0; i < valueLists.Length; i++)
             {

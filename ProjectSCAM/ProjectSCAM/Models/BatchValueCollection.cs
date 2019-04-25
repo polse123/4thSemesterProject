@@ -7,9 +7,9 @@ namespace ProjectSCAM.Models
 {
     public class BatchValueCollection
     {
-        public List<KeyValuePair<string, double>> TemperatureValues { get; set; }
-        public List<KeyValuePair<string, double>> HumidityValues { get; set; }
-        public List<KeyValuePair<string, double>> VibrationValues { get; set; }
+        public IList<KeyValuePair<string, double>> TemperatureValues { get; set; }
+        public IList<KeyValuePair<string, double>> HumidityValues { get; set; }
+        public IList<KeyValuePair<string, double>> VibrationValues { get; set; }
 
         public BatchValueCollection()
         {
@@ -25,6 +25,19 @@ namespace ProjectSCAM.Models
             TemperatureValues = temperatureValues;
             HumidityValues = humidityValues;
             VibrationValues = vibrationValues;
+        }
+
+        /// <summary>
+        /// Retruns an array with lists of values.
+        /// Index 1 is temperature values.
+        /// Index 2 is humidity values.
+        /// Index 3 is vibration values.
+        /// </summary>
+        /// <returns></returns>
+        public IList<KeyValuePair<string, double>>[] ToArray()
+        {
+            IList<KeyValuePair<string, double>>[] array = { TemperatureValues, HumidityValues, VibrationValues };
+            return array;
         }
     }
 }

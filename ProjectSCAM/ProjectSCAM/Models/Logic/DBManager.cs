@@ -252,9 +252,9 @@ namespace ProjectSCAM.Models.Logic
             string timestampStart, string timestampEnd, string expirationDate, bool succeeded,
             double performance, double quality, double availability,
             int speed, int beerId, int machine,
-            List<KeyValuePair<string, double>> temperatureValues,
-            List<KeyValuePair<string, double>> humidityValues,
-            List<KeyValuePair<string, double>> vibrationsValues)
+            IList<KeyValuePair<string, double>> temperatureValues,
+            IList<KeyValuePair<string, double>> humidityValues,
+            IList<KeyValuePair<string, double>> vibrationsValues)
         {
             if (acceptableProducts >= 0 && defectProducts >= 0 &&
                 timestampStart.Length == TIMESTAMP_LENGTH &&
@@ -298,9 +298,9 @@ namespace ProjectSCAM.Models.Logic
             string timestampStart, string timestampEnd, string expirationDate, bool succeeded,
             double performance, double quality, double availability,
             int speed, int beerId, int machine,
-            List<KeyValuePair<string, double>> temperatureValues,
-            List<KeyValuePair<string, double>> humidityValues,
-            List<KeyValuePair<string, double>> vibrationsValues,
+            IList<KeyValuePair<string, double>> temperatureValues,
+            IList<KeyValuePair<string, double>> humidityValues,
+            IList<KeyValuePair<string, double>> vibrationsValues,
             string alarmTimestamp, int stopReason)
         {
             if (acceptableProducts >= 0 && defectProducts >= 0 &&
