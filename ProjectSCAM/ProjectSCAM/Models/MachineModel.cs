@@ -9,8 +9,7 @@ namespace ProjectSCAM.Models
 {
     public class MachineModel
     {
-
-        public int Id { get; set; }
+        public int? Id { get; set; }
         [DisplayName("Enter IP address")]
         [Required]
         [StringLength(15, ErrorMessage = "IP length can't be more than 15.")]
@@ -26,6 +25,7 @@ namespace ProjectSCAM.Models
             Description = description;
         }
         public MachineModel() {
+            Id = 0;
 
         }
     }

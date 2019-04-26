@@ -12,33 +12,41 @@ namespace MvcMovie.Controllers {
         // GET: /MachineSelection/ 
 
         public ActionResult Index() {
-            MachineSelectViewModel msvm = new MachineSelectViewModel();
-            IList<MachineModel> machineModels = Singleton.Instance.DBManager.RetrieveMachines();
-            msvm.Machines = machineModels;
-            return View(msvm);
+            //// instantiate parent model
+            //MachineSelectViewModel msvm = new MachineSelectViewModel();
+            //// retrieve machines from db
+            //IList<MachineModel> machineModels = Singleton.Instance.DBManager.RetrieveMachines();
+            //msvm.Machines = machineModels;
+            //// retrieve message and pass to view
+            if (TempData["statusMessage"] != null) {
+                ViewBag.statusMessage = TempData["statusMessage"].ToString();
+            } else {
+                ViewBag.statusMessage = "";
+            }
+
+            //return View(msvm);
+            ViewBag.Machines = Singleton.Instance.DBManager.RetrieveMachines();
+            ViewBag.Machine = new MachineModel();
+            return View();
         }
         [HttpPost]
-        public string Create(MachineSelectViewModel m) {
-            MachineModel machine = m.Machine;
-            
-            if(ModelState.IsValid) {
-                Singleton.Instance.DBManager.RegisterMachine(m.Machine.Ip, m.Machine.Description);
-                return ModelState.Values.ToString();
-            }
+        public ActionResult Create(MachineModel m) {
             string s = "";
-            foreach(var x in ModelState.Values) {
-                s += x.ToString() + "-" + x.Value.ToString();
+            foreach (ModelState modelState in ViewData.ModelState.Values) {
+                foreach (ModelError error in modelState.Errors) {
+                    s += error.ErrorMessage;
+                }
             }
-            return s;
-        }
-        // 
-        // GET: /MachineSelection/Welcome/ 
+            //pass message to redirect
 
-        public ActionResult Welcome(string name, int numTimes = 1) {
-            ViewBag.Message = "Hello " + name;
-            ViewBag.NumTimes = numTimes;
+            if (ModelState.IsValid) {
+                Singleton.Instance.DBManager.RegisterMachine(m.Ip, m.Description);
+                TempData["statusMessage"] = "Machine registered";
+                return RedirectToAction("Index");
+            }
+            TempData["statusMessage"] = s;
+            return RedirectToAction("Index");
 
-            return View();
         }
     }
 }

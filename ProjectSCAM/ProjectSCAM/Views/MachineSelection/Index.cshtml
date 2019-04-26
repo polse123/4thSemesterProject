@@ -1,8 +1,10 @@
-﻿@model ProjectSCAM.Models.MachineSelectViewModel
+﻿@model ProjectSCAM.Models.MachineModel
 @{
     ViewData["Title"] = "Machine Selection";
 
 }
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,7 +27,7 @@
 <body>
     <div class="dropdown">
         <select id="machineselect" onchange="selectMachine()">
-            @foreach (var item in Model.Machines) {
+            @foreach (var item in ViewBag.Machines) {
                 <option value="@item.Description">@item.Ip</option>
             }
         </select>
@@ -46,22 +48,22 @@
         <fieldset>
             <legend>Machine</legend>
             <div class="editor-label">
-                @Html.LabelFor(model => model.Machine.Ip)
+                @Html.LabelFor(model => model.Ip)
             </div>
             <div class="editor-field">
-                @Html.TextBoxFor(model => model.Machine.Ip)
-                @Html.ValidationMessageFor(model => model.Machine.Ip)
+                @Html.TextBoxFor(model => model.Ip)
+                @Html.ValidationMessageFor(model => model.Ip)
             </div>
             <div class="editor-label">
-                @Html.LabelFor(model => model.Machine.Description)
+                @Html.LabelFor(model => model.Description)
             </div>
             <div class="editor-field">
-                @Html.TextBoxFor(model => model.Machine.Description)
-                @Html.ValidationMessageFor(model => model.Machine.Description)
+                @Html.TextBoxFor(model => model.Description)
+                @Html.ValidationMessageFor(model => model.Description)
             </div>
             <div class="editor-field">
-                @Html.HiddenFor(model => model.Machine.Id)
-                @Html.HiddenFor(model => model.Machines)
+                <span>@ViewBag.statusMessage</span>
+                @Html.HiddenFor(model => model.Id)
             </div>
             <input type="submit" value="Create New Machine" />
         </fieldset>
