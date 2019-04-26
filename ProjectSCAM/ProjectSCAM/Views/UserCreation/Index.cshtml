@@ -1,9 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@model ProjectSCAM.Models.UserModel
+<!DOCTYPE html>
 <html>
 <head>
 
     @Styles.Render("~/Content/CreateUserStyleSheet.css")
     @Scripts.Render("~/Scripts/createUserScript.js")
+   
 
 
 </head>
@@ -12,39 +14,89 @@
         User creation <span id="userCreationHead" class="userCreationHeadLine" style="font-size: 20px;"></span> <br> <br>
 
     </div>
+   
+   @using (Html.BeginForm("RegisterUser", "UserCreationController", FormMethod.Post))
+   {
+    <fieldset>
+        <legend>User</legend>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Username)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Username)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Password)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Password)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.RepeatPassword)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.RepeatPassword)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FirstName)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.FirstName)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.LastName)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.LastName)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Email)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Email)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PhoneNumber)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.PhoneNumber)
+        </div>
+    </fieldset>
+    }
     <div class="createUser-content">
-        
 
-                User information:  <p id="userParagraph"></p>
-                                   <form onsubmit="return checkFields()" method="post" action="~/Login/Index">
-                                       <input type="text" required name="usernameField" id="usernameField" title="Five or more characters" value="" onblur="checkUsername()"placeholder="Username: "> <br> <br>
+
+        <!--  User information:  <p id="userParagraph"></p>
+                                   <form onsubmit="return checkFields()" method="post" action="~/Controllers/UserCreationController/RegisterUser">
+                                       <input type="text" required name="usernameField" id="usernameField" title="Five or more characters" value="" onblur="checkUsername()" placeholder="Username: "> <br> <br>
                                        <input type="password" required name="passwordField" id="passwordField" title="Should have atleast 1 uppercase character, 1 lowercase character, 1 number and be atleast 8 characters" onblur="checkPassword" placeholder="Password: "> <br> <br>
-                                       <input type="password" required name="repeatPasswordField" id="repeatPasswordField" title="Should match password" onblur="checkRepeatPassword()"placeholder="Repeat password: "> <br> <br>
+                                       <input type="password" required name="repeatPasswordField" id="repeatPasswordField" title="Should match password" onblur="checkRepeatPassword()" placeholder="Repeat password: "> <br> <br>
                                        <input type="text" required name="firstnameField" id="firstnameField" title="Should contain characters" onblur="checkFirstname()" placeholder="Firstname:  "> <br> <br>
                                        <input type="text" required name="lastnameField" id="lastnameField" title="Should contain characters" onblur="checkLastname()" placeholder="Lastname: ">  <br> <br>
                                        <input type="text" required name="phonenumberField" id="phonenumberField" title="Should contain 8 numbers" onblur="checkPhonenumber()" placeholder=" Phonenumber: "> <br> <br>
                                        <input type="email" required name="emailField" id="emailField" title="Must be an email address of the format: characters@characters.domain" onblur="checkEmail()" placeholder=" Email address: "> <br> <br>
+        -->
+        <br />
+        <div class="dropdownUserTypes">
+            <button class="dropbtnUserTypes" id="UserTypesSelect">User type</button>
+            <div class="dropdownUserType-content">
+
+                <input type="radio" name="userType" value="userType" id="userType1" checked>Admin <br>
+                <input type="radio" name="userType" value="userType" id="userType2" checked>Production Manager<br>
+
+            </div>
+        </div> <br> <br>
+
+        <input type="submit" name="submitButton" value="create user" id="registerButton">
 
 
-                                       <div class="dropdownUserTypes">
-                                           <button class="dropbtnUserTypes" id="UserTypesSelect">User type</button>
-                                           <div class="dropdownUserType-content">
-
-                                               <input type="radio" name="userType" value="userType" id="userType1" checked>Admin <br>
-                                               <input type="radio" name="userType" value="userType" id="userType2">Production Manager<br>
-                                              
-                                           </div>
-                                       </div> <br> <br>
-
-                                       <input type="submit" name="submitButton" value="create user" id="submitButton">
-
-                                   </form>
+        </form>
 
 
     </div>
-    
 
-</body>
 
-</html>
+    </body>
+
+    </html>
 

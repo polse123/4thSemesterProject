@@ -8,9 +8,18 @@ namespace SCAMS.Controllers
 {
     public class UserCreationController : Controller
     {
-        public ActionResult Index()
+        public ActionResult  Index()
         {
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult RegisterUser()
+        {
+          
+            string s = Request["usernameField, passwordField, repeatPasswordField, firstnameField, lastnameField, phonenumberField, emailField, UserTypesSelect"];
+
+            return View("Index",s);
         }
     }
 }

@@ -7,15 +7,16 @@ namespace ProjectSCAM.Models
 {
     public class UserModel
     {
-        public int Id { get; }
-        public string Username { get; }
-        public string Password { get; }
-        public string FirstName { get; }
-        public string LastName { get; }
-        public string Email { get; }
-        public string PhoneNumber { get; }
+        public int Id { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public string RepeatPassword { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
         public bool IsActive { get; set; }
-        public int UserType { get; }
+        public int UserType { get; set; }
 
         public string Role { get; }
 
