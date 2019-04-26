@@ -9,59 +9,74 @@
 
 
 </head>
+<script>
+    function RegisterUser() {
+        console.log("Registerd");
+        var userselect = document.getElementById("userselect");
+        var selected = userselect.options[userselect.selectedIndex];
+        var span = document.getElementById("description");
+        console.log(selected.value);
+        console.log(selected.text);
+        span.textContent = selected.value;
+    }
+</script>
 <body>
     <div class="spanHead">
         User creation <span id="userCreationHead" class="userCreationHeadLine" style="font-size: 20px;"></span> <br> <br>
 
     </div>
-   
-   @using (Html.BeginForm("RegisterUser", "UserCreationController", FormMethod.Post))
-   {
-    <fieldset>
-        <legend>User</legend>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Username)
-        </div>
-        <div class="editor-field">
-            @Html.TextBoxFor(model => model.Username)
-        </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Password)
-        </div>
-        <div class="editor-field">
-            @Html.TextBoxFor(model => model.Password)
-        </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.RepeatPassword)
-        </div>
-        <div class="editor-field">
-            @Html.TextBoxFor(model => model.RepeatPassword)
-        </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.FirstName)
-        </div>
-        <div class="editor-field">
-            @Html.TextBoxFor(model => model.FirstName)
-        </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.LastName)
-        </div>
-        <div class="editor-field">
-            @Html.TextBoxFor(model => model.LastName)
-        </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Email)
-        </div>
-        <div class="editor-field">
-            @Html.TextBoxFor(model => model.Email)
-        </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.PhoneNumber)
-        </div>
-        <div class="editor-field">
-            @Html.TextBoxFor(model => model.PhoneNumber)
-        </div>
-    </fieldset>
+    <div class="descriptionBox">
+        <span id="description">Please create new user</span>
+
+    </div>
+    </div>
+    @using (Html.BeginForm("RegisterUser", "UserCreationController", FormMethod.Post))
+    {
+        <fieldset>
+            <legend>User</legend>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Username)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Username)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Password)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Password)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.RepeatPassword)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.RepeatPassword)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.FirstName)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.FirstName)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.LastName)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.LastName)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Email)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Email)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.PhoneNumber)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.PhoneNumber)
+            </div>
+        </fieldset>
     }
     <div class="createUser-content">
 
@@ -96,7 +111,7 @@
     </div>
 
 
-    </body>
+</body>
 
     </html>
 
