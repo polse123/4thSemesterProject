@@ -19,12 +19,17 @@ namespace MvcMovie.Controllers {
         }
         [HttpPost]
         public string Create(MachineSelectViewModel m) {
+            MachineModel machine = m.Machine;
+            
             if(ModelState.IsValid) {
-
+                Singleton.Instance.DBManager.RegisterMachine(m.Machine.Ip, m.Machine.Description);
+                return ModelState.Values.ToString();
             }
-            //Singleton.Instance.DBManager.RegisterMachine(msvm.Machine.Ip,msvm.Machine.Description);
-;
-            return m.Machine.Ip;
+            string s = "";
+            foreach(var x in ModelState.Values) {
+                s += x.ToString() + "-" + x.Value.ToString();
+            }
+            return s;
         }
         // 
         // GET: /MachineSelection/Welcome/ 

@@ -1,6 +1,7 @@
 ﻿@model ProjectSCAM.Models.MachineSelectViewModel
 @{
     ViewData["Title"] = "Machine Selection";
+
 }
 <!DOCTYPE html>
 <html>
@@ -39,28 +40,34 @@
     <h2>
         Create a machine
     </h2>
-    @using (Html.BeginForm("Create","MachineSelection",FormMethod.Post)) {
-    <fieldset>
-        <legend>Machine</legend>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Machine.Ip)
-        </div>
-        <div class="editor-field">
-            @Html.TextBoxFor(model => model.Machine.Ip)
-            @Html.ValidationMessageFor(model => model.Machine.Ip)
-        </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Machine.Description)
-        </div>
-        <div class="editor-field">
-            @Html.TextBoxFor(model => model.Machine.Description)
-            @Html.ValidationMessageFor(model => model.Machine.Description)
-        </div>
-        <div class="editor-field">
-            @Html.HiddenFor(model => model.Machine.Id)
-        </div>
-        <input type="submit" value="Create New Machine" />
-    </fieldset>
+    @using (Html.BeginForm("Create", "MachineSelection", FormMethod.Post)) {
+        @Html.ValidationSummary(true)
+        @Html.AntiForgeryToken()
+        <fieldset>
+            <legend>Machine</legend>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Machine.Ip)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Machine.Ip)
+                @Html.ValidationMessageFor(model => model.Machine.Ip)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Machine.Description)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Machine.Description)
+                @Html.ValidationMessageFor(model => model.Machine.Description)
+            </div>
+            <div class="editor-field">
+                @Html.HiddenFor(model => model.Machine.Id)
+                @Html.HiddenFor(model => model.Machines)
+            </div>
+            <input type="submit" value="Create New Machine" />
+        </fieldset>
+    }
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
     }
 </body>
 </html>
