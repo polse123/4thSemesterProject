@@ -12,12 +12,6 @@ namespace MvcMovie.Controllers {
         // GET: /MachineSelection/ 
 
         public ActionResult Index() {
-            //// instantiate parent model
-            //MachineSelectViewModel msvm = new MachineSelectViewModel();
-            //// retrieve machines from db
-            //IList<MachineModel> machineModels = Singleton.Instance.DBManager.RetrieveMachines();
-            //msvm.Machines = machineModels;
-            //// retrieve message and pass to view
             if (TempData["statusMessage"] != null) {
                 ViewBag.statusMessage = TempData["statusMessage"].ToString();
             } else {
@@ -37,8 +31,6 @@ namespace MvcMovie.Controllers {
                     s += error.ErrorMessage;
                 }
             }
-            //pass message to redirect
-
             if (ModelState.IsValid) {
                 Singleton.Instance.DBManager.RegisterMachine(m.Ip, m.Description);
                 TempData["statusMessage"] = "Machine registered";

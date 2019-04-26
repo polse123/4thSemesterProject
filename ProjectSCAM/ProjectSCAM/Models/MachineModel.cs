@@ -25,7 +25,6 @@ namespace ProjectSCAM.Models
             Description = description;
         }
         public MachineModel() {
-            Id = 0;
 
         }
     }
