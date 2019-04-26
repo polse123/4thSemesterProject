@@ -1,6 +1,7 @@
 ﻿
 using ProjectSCAM.Models;
 using ProjectSCAM.Models.Logic;
+using System;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
@@ -11,10 +12,20 @@ namespace MvcMovie.Controllers {
         // GET: /MachineSelection/ 
 
         public ActionResult Index() {
+            MachineSelectViewModel msvm = new MachineSelectViewModel();
             IList<MachineModel> machineModels = Singleton.Instance.DBManager.RetrieveMachines();
-            return View(machineModels);
+            msvm.Machines = machineModels;
+            return View(msvm);
         }
+        [HttpPost]
+        public string Create(MachineSelectViewModel m) {
+            if(ModelState.IsValid) {
 
+            }
+            //Singleton.Instance.DBManager.RegisterMachine(msvm.Machine.Ip,msvm.Machine.Description);
+;
+            return m.Machine.Ip;
+        }
         // 
         // GET: /MachineSelection/Welcome/ 
 

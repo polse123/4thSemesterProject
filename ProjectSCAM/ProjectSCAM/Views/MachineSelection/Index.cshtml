@@ -1,4 +1,4 @@
-﻿@model List<ProjectSCAM.Models.MachineModel>
+﻿@model ProjectSCAM.Models.MachineSelectViewModel
 @{
     ViewData["Title"] = "Machine Selection";
 }
@@ -8,18 +8,59 @@
     @Styles.Render("~/Content/dropdown.css")
 
 </head>
+<script>
+    function selectMachine() {
+        console.log("fired");
+        var machineselect = document.getElementById("machineselect");
+        var selected = machineselect.options[machineselect.selectedIndex];
+        var span = document.getElementById("description");
+        console.log(selected.value);
+        console.log(selected.text);
+        span.textContent = selected.value;
+
+
+    }
+</script>
 <body>
     <div class="dropdown">
-        <button class="dropbtn" id="machineSelect">Machines</button>
-        <div class="dropdown-content">
-            @foreach(var item in Model) {
-                <a href="">@item.Ip</a>
+        <select id="machineselect" onchange="selectMachine()">
+            @foreach (var item in Model.Machines) {
+                <option value="@item.Description">@item.Ip</option>
             }
+        </select>
+        <div class="dropdown-content">
+
         </div>
         <div class="descriptionBox">
-            <span>hello</span>
+            <span id="description">Please choose a machine</span>
 
         </div>
     </div>
+    <h2>
+        Create a machine
+    </h2>
+    @using (Html.BeginForm("Create","MachineSelection",FormMethod.Post)) {
+    <fieldset>
+        <legend>Machine</legend>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Machine.Ip)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Machine.Ip)
+            @Html.ValidationMessageFor(model => model.Machine.Ip)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Machine.Description)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Machine.Description)
+            @Html.ValidationMessageFor(model => model.Machine.Description)
+        </div>
+        <div class="editor-field">
+            @Html.HiddenFor(model => model.Machine.Id)
+        </div>
+        <input type="submit" value="Create New Machine" />
+    </fieldset>
+    }
 </body>
 </html>
