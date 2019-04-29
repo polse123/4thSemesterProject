@@ -40,7 +40,7 @@ namespace ProjectSCAM.Tests.Logic
                 }
             }
 
-            string query = File.ReadAllText(dbFile);
+            string query = File.ReadAllText(dbFile); // ERROR: file is null
             bool success = exe.ExecuteQuery(query);
 
             Assert.IsTrue(success);
@@ -79,7 +79,7 @@ namespace ProjectSCAM.Tests.Logic
         [TestMethod]
         public void RegisterMachine()
         {
-            bool success = dbManager.RegisterMachine("localhost", "Local host"); // only works first time
+            bool success = dbManager.RegisterMachine("localhost", "Local host"); // ERROR: only works first time
             Assert.IsTrue(success);
         }
 
