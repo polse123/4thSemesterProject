@@ -88,6 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />
+    <Content Include="Logic\DB_SQL.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ProjectSCAM\ProjectSCAM.csproj">

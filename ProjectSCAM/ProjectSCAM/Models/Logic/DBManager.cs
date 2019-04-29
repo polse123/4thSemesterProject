@@ -36,7 +36,7 @@ namespace ProjectSCAM.Models.Logic
         private readonly string ORDER_BY_TIMESTAMP_END_APPEND = " ORDER BY timestampend DESC";
 
         /// <summary>
-        /// A DBManager is created.
+        /// Constructor for the DBManager.
         /// A QueryExecuter is created inside the DBManager and connection is initialized.
         /// </summary>
         /// <param name="server"></param>
@@ -46,25 +46,17 @@ namespace ProjectSCAM.Models.Logic
         /// <param name="database"></param>
         public DBManager(string server, string port, string userid, string password, string database)
         {
-            exe = new QueryExecuter(InitConnection(server, port, userid, password, database));
+            exe = new QueryExecuter(server, port, userid, password, database);
         }
 
         /// <summary>
-        /// Initializes a connection.
+        /// Constructor for the DBManager.
+        /// An already initialized QueryExecuter is provided.
         /// </summary>
-        /// <param name="server"></param>
-        /// <param name="port"></param>
-        /// <param name="userid"></param>
-        /// <param name="password"></param>
-        /// <param name="database"></param>
-        private NpgsqlConnection InitConnection(string server, string port, string userid, string password, string database)
+        /// <param name="exe"></param>
+        public DBManager(QueryExecuter exe)
         {
-            // PostgeSQL-style connection string
-            string connstring = String.Format("Server={0};Port={1};" +
-                "User Id={2};Password={3};Database={4};",
-                server, port, userid, password, database);
-            // Making connection with Npgsql provider
-            return new NpgsqlConnection(connstring);
+            this.exe = exe;
         }
 
         /// <summary>

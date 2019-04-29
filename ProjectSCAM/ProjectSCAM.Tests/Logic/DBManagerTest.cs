@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProjectSCAM.Models;
 using ProjectSCAM.Models.Logic;
@@ -9,16 +10,41 @@ namespace ProjectSCAM.Tests.Logic
     [TestClass]
     public class DBManagerTest
     {
-        public DBManagerTest()
-        {
-            dbManager = new DBManager(DB_INFO[0], DB_INFO[1], DB_INFO[2], DB_INFO[3], DB_INFO[4]);
-        }
-
         private DBManager dbManager;
+        private QueryExecuter exe;
 
         // server, port, user id, password, database
         private readonly string[] DB_INFO = {"balarama.db.elephantsql.com",
             "5432", "ppcrexqw", "HL8HORvW5RUPUlBUcf_PIcZWxjlOoc1F", "ppcrexqw"};
+
+        public DBManagerTest()
+        {
+            exe = new QueryExecuter(DB_INFO[0], DB_INFO[1], DB_INFO[2], DB_INFO[3], DB_INFO[4]);
+            dbManager = new DBManager(exe);
+        }
+
+        [TestMethod]
+        public void ResetAndCreateDatabase()
+        {
+            string path = Directory.GetCurrentDirectory();
+            string[] files = Directory.GetFiles(path);
+
+            //string dbFile = path + "/DB_SQL.txt";
+
+            string dbFile = null;
+            foreach (string file in files)
+            {
+                if (file.Contains("DB_SQL.txt"))
+                {
+                    dbFile = file;
+                }
+            }
+
+            string query = File.ReadAllText(dbFile);
+            bool success = exe.ExecuteQuery(query);
+
+            Assert.IsTrue(success);
+        }
 
         [TestMethod]
         public void RetrieveUsertypes()
@@ -53,7 +79,7 @@ namespace ProjectSCAM.Tests.Logic
         [TestMethod]
         public void RegisterMachine()
         {
-            bool success = dbManager.RegisterMachine("localhost", "Local host");
+            bool success = dbManager.RegisterMachine("localhost", "Local host"); // only works first time
             Assert.IsTrue(success);
         }
 
