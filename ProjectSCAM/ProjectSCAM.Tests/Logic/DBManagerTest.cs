@@ -24,26 +24,23 @@ namespace ProjectSCAM.Tests.Logic
         }
 
         [TestMethod]
-        public void ResetAndCreateDatabase()
+        public void ResetDatabase()
         {
-            string path = Directory.GetCurrentDirectory();
-            string[] files = Directory.GetFiles(path);
-
-            //string dbFile = path + "/DB_SQL.txt";
-
-            string dbFile = null;
-            foreach (string file in files)
+            // Get the current directory
+            string directory = Directory.GetCurrentDirectory();
+            // Set the correct path to the file
+            int index = directory.IndexOf("ProjectSCAM.Tests");
+            string path = directory.Remove(index) + "\\ProjectSCAM.Tests\\Logic\\DB_SQL.txt";
+            if (File.Exists(path))
             {
-                if (file.Contains("DB_SQL.txt"))
-                {
-                    dbFile = file;
-                }
+                // Read the file
+                string query = File.ReadAllText(path);
+                // Execute the query
+                bool success = exe.ExecuteQuery(query);
+                // Check
+                Assert.IsTrue(success);
             }
-
-            string query = File.ReadAllText(dbFile); // ERROR: file is null
-            bool success = exe.ExecuteQuery(query);
-
-            Assert.IsTrue(success);
+            else Assert.IsNotNull(null);
         }
 
         [TestMethod]
@@ -79,7 +76,7 @@ namespace ProjectSCAM.Tests.Logic
         [TestMethod]
         public void RegisterMachine()
         {
-            bool success = dbManager.RegisterMachine("localhost", "Local host"); // ERROR: only works first time
+            bool success = dbManager.RegisterMachine("localhost", "Local host");
             Assert.IsTrue(success);
         }
 
