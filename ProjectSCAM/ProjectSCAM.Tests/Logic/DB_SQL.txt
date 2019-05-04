@@ -148,7 +148,7 @@ INSERT INTO recipes VALUES(5, 125, 'Alcohol Free', 1, 1, 4, 5, 0);
 
 /* Test data */
 
-INSERT INTO machines(ipaddress, description) VALUES('10.112.254.165', 'A physical simulation');
+INSERT INTO machines(ipaddress, description) VALUES('10.112.254.69', 'A physical simulation');
 INSERT INTO machines(ipaddress, description) VALUES('127.0.0.1', 'A virtual simulation');
 
 INSERT INTO users(username, password, firstname, lastname, email, phonenumber, isactive, usertype)

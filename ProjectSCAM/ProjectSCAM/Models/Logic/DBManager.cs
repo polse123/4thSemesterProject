@@ -1,9 +1,7 @@
-﻿using Npgsql;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Web;
 
 namespace ProjectSCAM.Models.Logic
 {
@@ -208,6 +206,19 @@ namespace ProjectSCAM.Models.Logic
         {
             string append = " ORDER BY priority DESC;";
             return exe.RetrieveFromBatchQueue(append);
+        }
+
+        /// <summary>
+        /// Edit the priority of a batch in the batch queue.
+        /// </summary>
+        /// <param name="queueId"></param>
+        /// <param name="priority"></param>
+        /// <returns></returns>
+        public bool EditPriority(int queueId, int priority)
+        {
+            string query = "UPDATE BatchQueue SET priority = " + priority +
+                " WHERE queueid = " + queueId + ";";
+            return exe.ExecuteQuery(query);
         }
 
         /// <summary>
@@ -513,7 +524,8 @@ namespace ProjectSCAM.Models.Logic
         /// <returns></returns>
         public bool SetAlarmHandler(int userId, int alarmId)
         {
-            string query = "UPDATE Alarms SET handledby = " + userId + " WHERE alarmid = " + alarmId + ";";
+            string query = "UPDATE Alarms SET handledby = " + userId +
+                " WHERE alarmid = " + alarmId + ";";
             return exe.ExecuteQuery(query);
         }
 

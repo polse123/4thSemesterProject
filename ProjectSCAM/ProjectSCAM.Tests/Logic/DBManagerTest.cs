@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ProjectSCAM.Models;
 using ProjectSCAM.Models.Logic;
+using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace ProjectSCAM.Tests.Logic
 {
@@ -40,7 +40,7 @@ namespace ProjectSCAM.Tests.Logic
                 // Check
                 Assert.IsTrue(success);
             }
-            else Assert.IsNotNull(null);
+            else Assert.IsTrue(false);
         }
 
         [TestMethod]
@@ -55,7 +55,7 @@ namespace ProjectSCAM.Tests.Logic
                     Assert.IsNotNull(element);
                 }
             }
-            else Assert.IsNotNull(null);
+            else Assert.IsTrue(false);
         }
 
         [TestMethod]
@@ -70,7 +70,7 @@ namespace ProjectSCAM.Tests.Logic
                     Assert.IsNotNull(element);
                 }
             }
-            else Assert.IsNotNull(null);
+            else Assert.IsTrue(false);
         }
 
         [TestMethod]
@@ -92,7 +92,7 @@ namespace ProjectSCAM.Tests.Logic
                     Assert.IsNotNull(element);
                 }
             }
-            else Assert.IsNotNull(null);
+            else Assert.IsTrue(false);
         }
 
         /// <summary>
@@ -103,8 +103,10 @@ namespace ProjectSCAM.Tests.Logic
         {
             IList<UserModel> list = dbManager.RetrieveUsers();
             Assert.IsNotNull(list); //Test RetrieveUsers
+
             bool userMadeInactive = false;
             int? highestId = null;
+
             if (list.Count != 0) // Test RetrieveUsers
             {
                 foreach (UserModel element in list)
@@ -124,11 +126,13 @@ namespace ProjectSCAM.Tests.Logic
                         Assert.IsTrue(userMadeInactive); // Test MakeInactive
                     }
                 }
+
                 int newUserid = (int)highestId + 1;
+
                 bool registered = dbManager.RegisterUser("Test" + newUserid, "Password", "Test", "User", "test" + newUserid + "@mail.com", "00000000", 1);
                 Assert.IsTrue(registered); // Test RegisterUser
             }
-            else Assert.IsNotNull(null);
+            else Assert.IsTrue(false);
         }
 
         [TestMethod]
@@ -146,7 +150,9 @@ namespace ProjectSCAM.Tests.Logic
         {
             IList<CustomerModel> list = dbManager.RetrieveCustomers();
             Assert.IsNotNull(list); // Test RetrieveCustomers
+
             int? customerId = null;
+
             if (list.Count != 0) // Test RetrieveCustomers
             {
                 foreach (CustomerModel element in list)
@@ -160,18 +166,20 @@ namespace ProjectSCAM.Tests.Logic
                 bool success = dbManager.EditCustomerName((int)customerId, "Test");
                 Assert.IsTrue(success); // Test EditCustomer
             }
-            else Assert.IsNotNull(null);
+            else Assert.IsTrue(false);
         }
 
         /// <summary>
-        /// RetrieveFromBatchQueue, RegisterIntoBatchQueue, RemoveFromBatchQueue
+        /// RetrieveFromBatchQueue, RegisterIntoBatchQueue, EditPriority, RemoveFromBatchQueue
         /// </summary>
         [TestMethod]
-        public void RegisterIntoBatchQueue()
+        public void BatchQueueTest()
         {
             IList<BatchQueueModel> list = dbManager.RetrieveFromBatchQueue();
             Assert.IsNotNull(list); // Test RetrieveFromBatchQueue
+
             int? highestId = null;
+
             if (list.Count != 0) // Test RetrieveFromBatchQueue
             {
                 foreach (BatchQueueModel element in list)
@@ -187,13 +195,22 @@ namespace ProjectSCAM.Tests.Logic
                     }
                 }
             }
-            else Assert.IsNotNull(null);
+            else Assert.IsTrue(false);
 
-            bool success1 = dbManager.RegisterIntoBatchQueue((int)highestId + 1, 10, 100, 600, 0);
-            Assert.IsTrue(success1);
+            if (highestId != null)
+            {
+                int newId = (int)highestId + 1;
 
-            bool success2 = dbManager.RemoveFromBatchQueue((int)highestId + 1);
-            Assert.IsTrue(success2);
+                bool regiSuccess = dbManager.RegisterIntoBatchQueue(newId, 10, 100, 600, 0);
+                Assert.IsTrue(regiSuccess); // Test RegisterIntoBatchQueue
+
+                bool editSuccess = dbManager.EditPriority(newId, 20);
+                Assert.IsTrue(editSuccess); // Test priority
+
+                bool remoSuccess = dbManager.RemoveFromBatchQueue(newId);
+                Assert.IsTrue(remoSuccess); // Test RemoveFromBatchQueue
+            }
+            else Assert.IsTrue(false);
         }
 
         /// <summary>
