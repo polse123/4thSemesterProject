@@ -143,7 +143,7 @@ namespace ProjectSCAM.Tests.Logic
         }
 
         /// <summary>
-        /// RetreieveCustomers, EditCustomerName
+        /// RetrieveCustomers, EditCustomerName
         /// </summary>
         [TestMethod]
         public void CustomerTest()
@@ -163,8 +163,12 @@ namespace ProjectSCAM.Tests.Logic
                         customerId = element.Id;
                     }
                 }
-                bool success = dbManager.EditCustomerName((int)customerId, "Test");
-                Assert.IsTrue(success); // Test EditCustomer
+                if (customerId != null)
+                {
+                    bool success = dbManager.EditCustomerName((int)customerId, "Test");
+                    Assert.IsTrue(success); // Test EditCustomer
+                }
+                else Assert.IsTrue(false);
             }
             else Assert.IsTrue(false);
         }

@@ -1,9 +1,7 @@
 ﻿using Npgsql;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Web;
 
 namespace ProjectSCAM.Models.Logic
 {
@@ -366,15 +364,16 @@ namespace ProjectSCAM.Models.Logic
                         // Register beers
                         RegisterBeers((int)batchId, acceptableProducts);
 
+                        // Register alarm
                         if (alarmQuery != null)
                         {
-                            // Register alarm
                             alarmQuery.Append(batchId + ");");
                             ExecuteQuery(alarmQuery.ToString());
                         }
+
                         return true;
                     }
-                    return false;
+                    else return false;
                 }
                 catch (NpgsqlException ex)
                 {
@@ -643,7 +642,7 @@ namespace ProjectSCAM.Models.Logic
             for (int i = 0; i < queries.Length; i++)
             {
                 int productNumber = i + 1;
-                queries[i] = "INSERT INTO Beers Values(" + productNumber + ", true, " + batchId + ");";
+                queries[i] = "INSERT INTO Beers VALUES(" + productNumber + ", true, " + batchId + ");";
             }
             return ExecuteQueries(queries, true);
         }

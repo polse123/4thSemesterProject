@@ -152,7 +152,7 @@ namespace ProjectSCAM.Models.Logic
         /// <returns></returns>
         public bool RegisterCustomer(string customerName)
         {
-            string query = "INSERT INTO Customers(name) VALUES('" + customerName + "');";
+            string query = "INSERT INTO Customers(customername) VALUES('" + customerName + "');";
             return exe.ExecuteQuery(query);
         }
 
@@ -174,7 +174,7 @@ namespace ProjectSCAM.Models.Logic
         /// <returns></returns>
         public bool EditCustomerName(int customerId, string newName)
         {
-            string query = "UPDATE Customers SET name = '" + newName +
+            string query = "UPDATE Customers SET customername = '" + newName +
                 "' WHERE customerid = " + customerId + ";";
             return exe.ExecuteQuery(query);
         }

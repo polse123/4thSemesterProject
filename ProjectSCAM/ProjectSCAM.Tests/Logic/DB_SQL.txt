@@ -162,7 +162,7 @@ INSERT INTO batchqueue VALUES(0, 10, 200, 600, 0);
 INSERT INTO batchqueue VALUES(1, 20, 200, 300, 1);
 
 INSERT INTO batches(acceptableproducts, defectproducts, timestampstart, timestampend, expirationdate, succeeded, performance, quality, availability, speed, beerid, machine, soldto)
-	VALUES(5, 195, '03/03/2019 13:10:00.000', '03/03/2019 13:10:20.000', '03/09/2019', true, 0.5, 0.6, 0.7, 600, 0, 1, 1);
+	VALUES(180, 20, '03/03/2019 13:10:00.000', '03/03/2019 13:10:20.000', '03/09/2019', true, 0.5, 0.6, 0.7, 600, 0, 1, 1);
 INSERT INTO batches(acceptableproducts, defectproducts, timestampstart, timestampend, expirationdate, succeeded, performance, quality, availability, speed, beerid, machine)
 	VALUES(175, 25, '03/03/2019 13:12:00.000', '03/03/2019 13:13:00.000', '03/09/2019', true, 0.5, 0.6, 0.7, 200, 3, 1);
 
