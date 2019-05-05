@@ -396,14 +396,14 @@ namespace ProjectSCAM.Models.Logic
         {
             string query = "SELECT Batches.batchid, Batches.acceptableproducts, Batches.defectproducts, " +
                 "Batches.timestampstart, Batches.timestampend, Batches.expirationdate, " +
-                "Batches.succeeded, Batches.performance, Batches.quality, Batches.availablity, " +
+                "Batches.succeeded, Batches.performance, Batches.quality, Batches.availability, " +
                 "Batches.speed, Batches.beerid, Batches.machine, Batches.soldto, " +
                 "Recipes.name, Customers.customername " +
                 "FROM Batches LEFT JOIN Recipes ON Batches.beerid = Recipes.beerid " +
                 "LEFT JOIN Customers ON Batches.soldto = Customers.customerid" +
                 append;
 
-            List<BatchModel> list = new List<BatchModel>();
+            IList<BatchModel> list = new List<BatchModel>();
 
             lock (CONN_LOCK)
             {
@@ -417,8 +417,8 @@ namespace ProjectSCAM.Models.Logic
                         BatchModel batch = new BatchModel((int)dr[0], (int)dr[1], (int)dr[2],
                             dr[3].ToString().Trim(), dr[4].ToString().Trim(), dr[5].ToString().Trim(),
                             (bool)dr[6], (double)dr[7], (double)dr[8], (double)dr[9],
-                            (int)dr[10], (int)dr[11], (int)dr[12], (int)dr[13],
-                            dr[14].ToString().Trim(), dr[15].ToString().Trim());
+                            (int)dr[10], (int)dr[11], (int)dr[12], (int?)dr[13],
+                            dr[14].ToString().Trim(), (string)dr[15]);
                         list.Add(batch);
                     }
                 }
@@ -442,27 +442,28 @@ namespace ProjectSCAM.Models.Logic
         /// <returns></returns>
         public BatchValueCollection RetrieveBatchValues(string append)
         {
+            BatchValueCollection values = new BatchValueCollection();
+
             string[] queries = new string[3];
             for (int i = 0; i < 3; i++)
             {
                 queries[i] = "SELECT " + VALUE_TABLES[i] + ".value, " + VALUE_TABLES[i] +
                     ".timestamp FROM " + VALUE_TABLES[i] + append;
             }
-            BatchValueCollection values = new BatchValueCollection();
 
             lock (CONN_LOCK)
             {
                 try
                 {
-                    CONN.Open();
                     for (int i = 0; i < 3; i++)
                     {
+                        CONN.Open();
                         NpgsqlCommand command = new NpgsqlCommand(queries[i], CONN);
                         NpgsqlDataReader dr = command.ExecuteReader();
                         while (dr.Read())
                         {
                             KeyValuePair<string, double> value =
-                                new KeyValuePair<string, double>(dr[1].ToString().Trim(), (int)dr[0]);
+                                new KeyValuePair<string, double>(dr[1].ToString().Trim(), (double)dr[0]);
                             if (i == 0)
                             {
                                 values.TemperatureValues.Add(value);
@@ -476,6 +477,7 @@ namespace ProjectSCAM.Models.Logic
                                 values.VibrationValues.Add(value);
                             }
                         }
+                        CONN.Close();
                     }
                 }
                 catch (NpgsqlException ex)
@@ -551,9 +553,19 @@ namespace ProjectSCAM.Models.Logic
                     NpgsqlDataReader dr = command.ExecuteReader();
                     while (dr.Read())
                     {
-                        AlarmModel alarm = new AlarmModel((int)dr[0], dr[1].ToString().Trim(), (int)dr[2],
-                            (int)dr[3], (int)dr[4], dr[5].ToString().Trim(), dr[6].ToString().Trim());
-                        list.Add(alarm);
+                        if (dr[3] != null || dr[6] != null || dr[7] != null)
+                        {
+                            AlarmModel alarm = new AlarmModel((int)dr[0], dr[1].ToString().Trim(), (int)dr[2],
+                                (int)dr[3], (int)dr[4], dr[5].ToString().Trim(),
+                                dr[6].ToString().Trim() + " " + dr[7].ToString().Trim());
+                            list.Add(alarm);
+                        }
+                        else
+                        {
+                            AlarmModel alarm = new AlarmModel((int)dr[0], dr[1].ToString().Trim(), (int)dr[2],
+                               null, (int)dr[4], dr[5].ToString().Trim(), null);
+                            list.Add(alarm);
+                        }
                     }
                 }
                 catch (NpgsqlException ex)

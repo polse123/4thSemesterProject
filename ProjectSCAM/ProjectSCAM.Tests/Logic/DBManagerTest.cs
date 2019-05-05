@@ -299,7 +299,7 @@ namespace ProjectSCAM.Tests.Logic
         [TestMethod]
         public void RetrieveBatchValues()
         {
-            BatchValueCollection values = dbManager.RetrieveBatchValues(0);
+            BatchValueCollection values = dbManager.RetrieveBatchValues(1);
             Assert.IsNotNull(values);
             IList<KeyValuePair<string, double>>[] array = values.ToArray();
             for (int i = 0; i < 3; i++)
@@ -318,7 +318,7 @@ namespace ProjectSCAM.Tests.Logic
         [TestMethod]
         public void RetrieveBeers()
         {
-            IList<BeerModel> list = dbManager.RetrieveBeers(0);
+            IList<BeerModel> list = dbManager.RetrieveBeers(1);
             Assert.IsNotNull(list);
             if (list.Count != 0)
             {
@@ -327,7 +327,7 @@ namespace ProjectSCAM.Tests.Logic
                     Assert.IsNotNull(element);
                 }
             }
-            else Assert.IsNotNull(null);
+            else Assert.IsTrue(false);
         }
 
         /// <summary>
