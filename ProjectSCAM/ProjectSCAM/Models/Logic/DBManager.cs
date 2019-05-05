@@ -271,7 +271,9 @@ namespace ProjectSCAM.Models.Logic
                     timestampStart, timestampEnd, expirationDate, succeeded,
                     performance, quality, availability, speed, beerId, machine);
 
-                return exe.RegisterBatch(acceptableProducts, temperatureValues, humidityValues, vibrationsValues, query, null);
+                return exe.RegisterBatch(acceptableProducts,
+                    temperatureValues, humidityValues,
+                    vibrationsValues, query, null);
             }
             else { return false; }
         }
@@ -323,7 +325,9 @@ namespace ProjectSCAM.Models.Logic
                 alarmQuery.Append("INSERT INTO Alarms(timestamp, stopreason, handledby, batch) " +
                 "VALUES('" + alarmTimestamp + "', " + stopReason + ", null, ");
 
-                return exe.RegisterBatch(acceptableProducts, temperatureValues, humidityValues, vibrationsValues, batchQuery, alarmQuery);
+                return exe.RegisterBatch(acceptableProducts,
+                    temperatureValues, humidityValues,
+                    vibrationsValues, batchQuery, alarmQuery);
             }
             else { return false; }
         }
