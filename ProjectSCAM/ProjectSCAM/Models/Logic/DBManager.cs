@@ -1,9 +1,7 @@
-﻿using Npgsql;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Web;
 
 namespace ProjectSCAM.Models.Logic
 {
@@ -36,7 +34,7 @@ namespace ProjectSCAM.Models.Logic
         private readonly string ORDER_BY_TIMESTAMP_END_APPEND = " ORDER BY timestampend DESC";
 
         /// <summary>
-        /// A DBManager is created.
+        /// Constructor for the DBManager.
         /// A QueryExecuter is created inside the DBManager and connection is initialized.
         /// </summary>
         /// <param name="server"></param>
@@ -46,25 +44,17 @@ namespace ProjectSCAM.Models.Logic
         /// <param name="database"></param>
         public DBManager(string server, string port, string userid, string password, string database)
         {
-            exe = new QueryExecuter(InitConnection(server, port, userid, password, database));
+            exe = new QueryExecuter(server, port, userid, password, database);
         }
 
         /// <summary>
-        /// Initializes a connection.
+        /// Constructor for the DBManager.
+        /// An already initialized QueryExecuter is provided.
         /// </summary>
-        /// <param name="server"></param>
-        /// <param name="port"></param>
-        /// <param name="userid"></param>
-        /// <param name="password"></param>
-        /// <param name="database"></param>
-        private NpgsqlConnection InitConnection(string server, string port, string userid, string password, string database)
+        /// <param name="exe"></param>
+        public DBManager(QueryExecuter exe)
         {
-            // PostgeSQL-style connection string
-            string connstring = String.Format("Server={0};Port={1};" +
-                "User Id={2};Password={3};Database={4};",
-                server, port, userid, password, database);
-            // Making connection with Npgsql provider
-            return new NpgsqlConnection(connstring);
+            this.exe = exe;
         }
 
         /// <summary>
@@ -162,7 +152,7 @@ namespace ProjectSCAM.Models.Logic
         /// <returns></returns>
         public bool RegisterCustomer(string customerName)
         {
-            string query = "INSERT INTO Customers(name) VALUES('" + customerName + "');";
+            string query = "INSERT INTO Customers(customername) VALUES('" + customerName + "');";
             return exe.ExecuteQuery(query);
         }
 
@@ -184,7 +174,7 @@ namespace ProjectSCAM.Models.Logic
         /// <returns></returns>
         public bool EditCustomerName(int customerId, string newName)
         {
-            string query = "UPDATE Customers SET name = '" + newName +
+            string query = "UPDATE Customers SET customername = '" + newName +
                 "' WHERE customerid = " + customerId + ";";
             return exe.ExecuteQuery(query);
         }
@@ -216,6 +206,19 @@ namespace ProjectSCAM.Models.Logic
         {
             string append = " ORDER BY priority DESC;";
             return exe.RetrieveFromBatchQueue(append);
+        }
+
+        /// <summary>
+        /// Edit the priority of a batch in the batch queue.
+        /// </summary>
+        /// <param name="queueId"></param>
+        /// <param name="priority"></param>
+        /// <returns></returns>
+        public bool EditPriority(int queueId, int priority)
+        {
+            string query = "UPDATE BatchQueue SET priority = " + priority +
+                " WHERE queueid = " + queueId + ";";
+            return exe.ExecuteQuery(query);
         }
 
         /// <summary>
@@ -252,9 +255,9 @@ namespace ProjectSCAM.Models.Logic
             string timestampStart, string timestampEnd, string expirationDate, bool succeeded,
             double performance, double quality, double availability,
             int speed, int beerId, int machine,
-            List<KeyValuePair<string, double>> temperatureValues,
-            List<KeyValuePair<string, double>> humidityValues,
-            List<KeyValuePair<string, double>> vibrationsValues)
+            IList<KeyValuePair<string, double>> temperatureValues,
+            IList<KeyValuePair<string, double>> humidityValues,
+            IList<KeyValuePair<string, double>> vibrationsValues)
         {
             if (acceptableProducts >= 0 && defectProducts >= 0 &&
                 timestampStart.Length == TIMESTAMP_LENGTH &&
@@ -268,7 +271,9 @@ namespace ProjectSCAM.Models.Logic
                     timestampStart, timestampEnd, expirationDate, succeeded,
                     performance, quality, availability, speed, beerId, machine);
 
-                return exe.RegisterBatch(acceptableProducts, temperatureValues, humidityValues, vibrationsValues, query, null);
+                return exe.RegisterBatch(acceptableProducts,
+                    temperatureValues, humidityValues,
+                    vibrationsValues, query, null);
             }
             else { return false; }
         }
@@ -298,9 +303,9 @@ namespace ProjectSCAM.Models.Logic
             string timestampStart, string timestampEnd, string expirationDate, bool succeeded,
             double performance, double quality, double availability,
             int speed, int beerId, int machine,
-            List<KeyValuePair<string, double>> temperatureValues,
-            List<KeyValuePair<string, double>> humidityValues,
-            List<KeyValuePair<string, double>> vibrationsValues,
+            IList<KeyValuePair<string, double>> temperatureValues,
+            IList<KeyValuePair<string, double>> humidityValues,
+            IList<KeyValuePair<string, double>> vibrationsValues,
             string alarmTimestamp, int stopReason)
         {
             if (acceptableProducts >= 0 && defectProducts >= 0 &&
@@ -320,7 +325,9 @@ namespace ProjectSCAM.Models.Logic
                 alarmQuery.Append("INSERT INTO Alarms(timestamp, stopreason, handledby, batch) " +
                 "VALUES('" + alarmTimestamp + "', " + stopReason + ", null, ");
 
-                return exe.RegisterBatch(acceptableProducts, temperatureValues, humidityValues, vibrationsValues, batchQuery, alarmQuery);
+                return exe.RegisterBatch(acceptableProducts,
+                    temperatureValues, humidityValues,
+                    vibrationsValues, batchQuery, alarmQuery);
             }
             else { return false; }
         }
@@ -521,7 +528,8 @@ namespace ProjectSCAM.Models.Logic
         /// <returns></returns>
         public bool SetAlarmHandler(int userId, int alarmId)
         {
-            string query = "UPDATE Alarms SET handledby = " + userId + " WHERE alarmid = " + alarmId + ";";
+            string query = "UPDATE Alarms SET handledby = " + userId +
+                " WHERE alarmid = " + alarmId + ";";
             return exe.ExecuteQuery(query);
         }
 
@@ -546,6 +554,15 @@ namespace ProjectSCAM.Models.Logic
             double performance, double quality, double availability,
             int speed, int beerId, int machine)
         {
+            //return "INSERT INTO batches(acceptableproducts, defectproducts, timestampstart,timestampend,expirationdate,succeeded,performance,quality,availability,speed,beerid,machine) VALUES(" + acceptableProducts + ", " + defectProducts + ", '" + timestampStart + "', '" + timestampEnd + "', '" + expirationDate + "', " + succeeded + ", " + performance + ", " + quality + ", " + availability + ", " + speed + ", " + beerId + ", " + machine + ") RETURNING batchid";
+
+            /*return String.Format("INSERT INTO Batches(acceptableproducts, defectproducts," +
+            " timestampstart, timestampend, expirationdate, succeeded," +
+            " performance, quality, availability, speed, beerid, machine)" +
+            " VALUES({0}, {1}, '{2}', '{3}', '{4}', {5}, {6}, {7}, {8}, {9}, {10}, {11}) RETURNING batchid;",
+               acceptableProducts, defectProducts, timestampStart, timestampEnd, expirationDate,
+               succeeded, performance, quality, availability, speed, beerId, machine);*/
+
             return "INSERT INTO Batches(acceptableproducts, defectproducts," +
                " timestampstart, timestampend, expirationdate, succeeded," +
                " performance, quality, availability, speed, beerid, machine)" +

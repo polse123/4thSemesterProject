@@ -1,9 +1,7 @@
 ﻿using Npgsql;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Web;
 
 namespace ProjectSCAM.Models.Logic
 {
@@ -12,12 +10,12 @@ namespace ProjectSCAM.Models.Logic
         /// <summary>
         /// The connection to the db.
         /// </summary>
-        private NpgsqlConnection conn;
+        private readonly NpgsqlConnection CONN;
 
         /// <summary>
         /// Lock for the connection.
         /// </summary>
-        private readonly object CONNECTION_LOCK;
+        private readonly object CONN_LOCK;
 
         /// <summary>
         /// string array with the names of the three batch values tables.
@@ -28,13 +26,36 @@ namespace ProjectSCAM.Models.Logic
         private readonly string[] VALUE_TABLES = { "TemperatureValues", "HumidityValues", "VibrationValues" };
 
         /// <summary>
-        /// Constructor for the Query Executer.
+        /// Constructor for the QueryExecuter.
+        /// A new connection is initialized.
         /// </summary>
-        /// <param name="conn"></param>
-        public QueryExecuter(NpgsqlConnection conn)
+        /// <param name="server"></param>
+        /// <param name="port"></param>
+        /// <param name="userid"></param>
+        /// <param name="password"></param>
+        /// <param name="database"></param>
+        public QueryExecuter(string server, string port, string userid, string password, string database)
         {
-            this.conn = conn;
-            CONNECTION_LOCK = new object();
+            CONN = InitConnection(server, port, userid, password, database);
+            CONN_LOCK = new object();
+        }
+
+        /// <summary>
+        /// Initializes a connection.
+        /// </summary>
+        /// <param name="server"></param>
+        /// <param name="port"></param>
+        /// <param name="userid"></param>
+        /// <param name="password"></param>
+        /// <param name="database"></param>
+        private NpgsqlConnection InitConnection(string server, string port, string userid, string password, string database)
+        {
+            // PostgeSQL-style connection string
+            string connString = String.Format("Server={0};Port={1};" +
+                "User Id={2};Password={3};Database={4};",
+                server, port, userid, password, database);
+            // Making connection with Npgsql provider
+            return new NpgsqlConnection(connString);
         }
 
         /// <summary>
@@ -44,12 +65,12 @@ namespace ProjectSCAM.Models.Logic
         /// <returns></returns>
         public bool ExecuteQuery(string query)
         {
-            lock (CONNECTION_LOCK)
+            lock (CONN_LOCK)
             {
                 try
                 {
-                    conn.Open();
-                    NpgsqlCommand command = new NpgsqlCommand(query, conn);
+                    CONN.Open();
+                    NpgsqlCommand command = new NpgsqlCommand(query, CONN);
                     command.ExecuteNonQuery();
                     return true;
                 }
@@ -59,7 +80,7 @@ namespace ProjectSCAM.Models.Logic
                 }
                 finally
                 {
-                    conn.Close();
+                    CONN.Close();
                 }
             }
         }
@@ -75,12 +96,12 @@ namespace ProjectSCAM.Models.Logic
             string query = "SELECT * FROM UserTypes" + append;
             List<UserType> list = new List<UserType>();
 
-            lock (CONNECTION_LOCK)
+            lock (CONN_LOCK)
             {
                 try
                 {
-                    conn.Open();
-                    NpgsqlCommand command = new NpgsqlCommand(query, conn);
+                    CONN.Open();
+                    NpgsqlCommand command = new NpgsqlCommand(query, CONN);
                     NpgsqlDataReader dr = command.ExecuteReader();
                     while (dr.Read())
                     {
@@ -94,7 +115,7 @@ namespace ProjectSCAM.Models.Logic
                 }
                 finally
                 {
-                    conn.Close();
+                    CONN.Close();
                 }
             }
             return list;
@@ -111,12 +132,12 @@ namespace ProjectSCAM.Models.Logic
             string query = "SELECT * FROM Recipes" + append;
             List<RecipeModel> list = new List<RecipeModel>();
 
-            lock (CONNECTION_LOCK)
+            lock (CONN_LOCK)
             {
                 try
                 {
-                    conn.Open();
-                    NpgsqlCommand command = new NpgsqlCommand(query, conn);
+                    CONN.Open();
+                    NpgsqlCommand command = new NpgsqlCommand(query, CONN);
                     NpgsqlDataReader dr = command.ExecuteReader();
                     while (dr.Read())
                     {
@@ -131,7 +152,7 @@ namespace ProjectSCAM.Models.Logic
                 }
                 finally
                 {
-                    conn.Close();
+                    CONN.Close();
                 }
             }
             return list;
@@ -148,12 +169,12 @@ namespace ProjectSCAM.Models.Logic
             string query = "SELECT * FROM Machines" + append;
             List<MachineModel> list = new List<MachineModel>();
 
-            lock (CONNECTION_LOCK)
+            lock (CONN_LOCK)
             {
                 try
                 {
-                    conn.Open();
-                    NpgsqlCommand command = new NpgsqlCommand(query, conn);
+                    CONN.Open();
+                    NpgsqlCommand command = new NpgsqlCommand(query, CONN);
                     NpgsqlDataReader dr = command.ExecuteReader();
                     while (dr.Read())
                     {
@@ -168,7 +189,7 @@ namespace ProjectSCAM.Models.Logic
                 }
                 finally
                 {
-                    conn.Close();
+                    CONN.Close();
                 }
             }
             return list;
@@ -184,17 +205,17 @@ namespace ProjectSCAM.Models.Logic
         {
             string query = "SELECT Users.userid, Users.username, Users.firstname, Users.lastname, " +
                 "Users.email, Users.phonenumber, Users.usertype, Usertypes.role " +
-                "FROM Users INNER JOIN UserTypes ON Users.usertype = UserTypes.typeid " +
+                "FROM Users INNER JOIN UserTypes ON Users.usertype = UserTypes.typeid" +
                 append;
 
             List<UserModel> list = new List<UserModel>();
 
-            lock (CONNECTION_LOCK)
+            lock (CONN_LOCK)
             {
                 try
                 {
-                    conn.Open();
-                    NpgsqlCommand command = new NpgsqlCommand(query, conn);
+                    CONN.Open();
+                    NpgsqlCommand command = new NpgsqlCommand(query, CONN);
                     NpgsqlDataReader dr = command.ExecuteReader();
                     while (dr.Read())
                     {
@@ -210,7 +231,7 @@ namespace ProjectSCAM.Models.Logic
                 }
                 finally
                 {
-                    conn.Close();
+                    CONN.Close();
                 }
             }
             return list;
@@ -228,12 +249,12 @@ namespace ProjectSCAM.Models.Logic
 
             List<CustomerModel> list = new List<CustomerModel>();
 
-            lock (CONNECTION_LOCK)
+            lock (CONN_LOCK)
             {
                 try
                 {
-                    conn.Open();
-                    NpgsqlCommand command = new NpgsqlCommand(query, conn);
+                    CONN.Open();
+                    NpgsqlCommand command = new NpgsqlCommand(query, CONN);
                     NpgsqlDataReader dr = command.ExecuteReader();
                     while (dr.Read())
                     {
@@ -247,7 +268,7 @@ namespace ProjectSCAM.Models.Logic
                 }
                 finally
                 {
-                    conn.Close();
+                    CONN.Close();
                 }
             }
             return list;
@@ -268,12 +289,12 @@ namespace ProjectSCAM.Models.Logic
 
             List<BatchQueueModel> list = new List<BatchQueueModel>();
 
-            lock (CONNECTION_LOCK)
+            lock (CONN_LOCK)
             {
                 try
                 {
-                    conn.Open();
-                    NpgsqlCommand command = new NpgsqlCommand(query, conn);
+                    CONN.Open();
+                    NpgsqlCommand command = new NpgsqlCommand(query, CONN);
                     NpgsqlDataReader dr = command.ExecuteReader();
                     while (dr.Read())
                     {
@@ -288,7 +309,7 @@ namespace ProjectSCAM.Models.Logic
                 }
                 finally
                 {
-                    conn.Close();
+                    CONN.Close();
                 }
             }
             return list;
@@ -317,19 +338,19 @@ namespace ProjectSCAM.Models.Logic
         /// <param name="alarmQuery"></param>
         /// <returns></returns>
         public bool RegisterBatch(int acceptableProducts,
-            List<KeyValuePair<string, double>> temperatureValues,
-            List<KeyValuePair<string, double>> humidityValues,
-            List<KeyValuePair<string, double>> vibrationValues,
+            IList<KeyValuePair<string, double>> temperatureValues,
+            IList<KeyValuePair<string, double>> humidityValues,
+            IList<KeyValuePair<string, double>> vibrationValues,
             string batchQuery, StringBuilder alarmQuery)
         {
             int? batchId = null;
 
-            lock (CONNECTION_LOCK)
+            lock (CONN_LOCK)
             {
                 try
                 {
-                    conn.Open();
-                    NpgsqlCommand command = new NpgsqlCommand(batchQuery, conn);
+                    CONN.Open();
+                    NpgsqlCommand command = new NpgsqlCommand(batchQuery, CONN);
                     NpgsqlDataReader dr = command.ExecuteReader();
                     while (dr.Read())
                     {
@@ -338,20 +359,21 @@ namespace ProjectSCAM.Models.Logic
                     if (batchId != null)
                     {
                         // Register batch values
-                        RegisterBatchValues((int)batchId, temperatureValues, humidityValues, vibrationValues);
+                        //RegisterBatchValues((int)batchId, temperatureValues, humidityValues, vibrationValues);
 
                         // Register beers
-                        RegisterBeers((int)batchId, acceptableProducts);
+                        //RegisterBeers((int)batchId, acceptableProducts);
 
+                        // Register alarm
                         if (alarmQuery != null)
                         {
-                            // Register alarm
                             alarmQuery.Append(batchId + ");");
-                            ExecuteQuery(alarmQuery.ToString());
+                            //ExecuteQuery(alarmQuery.ToString());
                         }
+
                         return true;
                     }
-                    return false;
+                    else return false;
                 }
                 catch (NpgsqlException ex)
                 {
@@ -359,7 +381,7 @@ namespace ProjectSCAM.Models.Logic
                 }
                 finally
                 {
-                    conn.Close();
+                    CONN.Close();
                 }
             }
         }
@@ -374,29 +396,29 @@ namespace ProjectSCAM.Models.Logic
         {
             string query = "SELECT Batches.batchid, Batches.acceptableproducts, Batches.defectproducts, " +
                 "Batches.timestampstart, Batches.timestampend, Batches.expirationdate, " +
-                "Batches.succeeded, Batches.performance, Batches.quality, Batches.availablity, " +
+                "Batches.succeeded, Batches.performance, Batches.quality, Batches.availability, " +
                 "Batches.speed, Batches.beerid, Batches.machine, Batches.soldto, " +
                 "Recipes.name, Customers.customername " +
                 "FROM Batches LEFT JOIN Recipes ON Batches.beerid = Recipes.beerid " +
                 "LEFT JOIN Customers ON Batches.soldto = Customers.customerid" +
                 append;
 
-            List<BatchModel> list = new List<BatchModel>();
+            IList<BatchModel> list = new List<BatchModel>();
 
-            lock (CONNECTION_LOCK)
+            lock (CONN_LOCK)
             {
                 try
                 {
-                    conn.Open();
-                    NpgsqlCommand command = new NpgsqlCommand(query, conn);
+                    CONN.Open();
+                    NpgsqlCommand command = new NpgsqlCommand(query, CONN);
                     NpgsqlDataReader dr = command.ExecuteReader();
                     while (dr.Read())
                     {
                         BatchModel batch = new BatchModel((int)dr[0], (int)dr[1], (int)dr[2],
                             dr[3].ToString().Trim(), dr[4].ToString().Trim(), dr[5].ToString().Trim(),
                             (bool)dr[6], (double)dr[7], (double)dr[8], (double)dr[9],
-                            (int)dr[10], (int)dr[11], (int)dr[12], (int)dr[13],
-                            dr[14].ToString().Trim(), dr[15].ToString().Trim());
+                            (int)dr[10], (int)dr[11], (int)dr[12], (int?)dr[13],
+                            dr[14].ToString().Trim(), (string)dr[15]);
                         list.Add(batch);
                     }
                 }
@@ -406,7 +428,7 @@ namespace ProjectSCAM.Models.Logic
                 }
                 finally
                 {
-                    conn.Close();
+                    CONN.Close();
                 }
             }
             return list;
@@ -420,27 +442,28 @@ namespace ProjectSCAM.Models.Logic
         /// <returns></returns>
         public BatchValueCollection RetrieveBatchValues(string append)
         {
+            BatchValueCollection values = new BatchValueCollection();
+
             string[] queries = new string[3];
             for (int i = 0; i < 3; i++)
             {
                 queries[i] = "SELECT " + VALUE_TABLES[i] + ".value, " + VALUE_TABLES[i] +
                     ".timestamp FROM " + VALUE_TABLES[i] + append;
             }
-            BatchValueCollection values = new BatchValueCollection();
 
-            lock (CONNECTION_LOCK)
+            lock (CONN_LOCK)
             {
                 try
                 {
-                    conn.Open();
                     for (int i = 0; i < 3; i++)
                     {
-                        NpgsqlCommand command = new NpgsqlCommand(queries[i], conn);
+                        CONN.Open();
+                        NpgsqlCommand command = new NpgsqlCommand(queries[i], CONN);
                         NpgsqlDataReader dr = command.ExecuteReader();
                         while (dr.Read())
                         {
                             KeyValuePair<string, double> value =
-                                new KeyValuePair<string, double>(dr[1].ToString().Trim(), (int)dr[0]);
+                                new KeyValuePair<string, double>(dr[1].ToString().Trim(), (double)dr[0]);
                             if (i == 0)
                             {
                                 values.TemperatureValues.Add(value);
@@ -454,6 +477,7 @@ namespace ProjectSCAM.Models.Logic
                                 values.VibrationValues.Add(value);
                             }
                         }
+                        CONN.Close();
                     }
                 }
                 catch (NpgsqlException ex)
@@ -462,7 +486,7 @@ namespace ProjectSCAM.Models.Logic
                 }
                 finally
                 {
-                    conn.Close();
+                    CONN.Close();
                 }
             }
             return values;
@@ -480,12 +504,12 @@ namespace ProjectSCAM.Models.Logic
 
             List<BeerModel> list = new List<BeerModel>();
 
-            lock (CONNECTION_LOCK)
+            lock (CONN_LOCK)
             {
                 try
                 {
-                    conn.Open();
-                    NpgsqlCommand command = new NpgsqlCommand(query, conn);
+                    CONN.Open();
+                    NpgsqlCommand command = new NpgsqlCommand(query, CONN);
                     NpgsqlDataReader dr = command.ExecuteReader();
                     while (dr.Read())
                     {
@@ -499,7 +523,7 @@ namespace ProjectSCAM.Models.Logic
                 }
                 finally
                 {
-                    conn.Close();
+                    CONN.Close();
                 }
             }
             return list;
@@ -520,18 +544,28 @@ namespace ProjectSCAM.Models.Logic
 
             List<AlarmModel> list = new List<AlarmModel>();
 
-            lock (CONNECTION_LOCK)
+            lock (CONN_LOCK)
             {
                 try
                 {
-                    conn.Open();
-                    NpgsqlCommand command = new NpgsqlCommand(query, conn);
+                    CONN.Open();
+                    NpgsqlCommand command = new NpgsqlCommand(query, CONN);
                     NpgsqlDataReader dr = command.ExecuteReader();
                     while (dr.Read())
                     {
-                        AlarmModel alarm = new AlarmModel((int)dr[0], dr[1].ToString().Trim(), (int)dr[2],
-                            (int)dr[3], (int)dr[4], dr[5].ToString().Trim(), dr[6].ToString().Trim());
-                        list.Add(alarm);
+                        if (dr[3] != null || dr[6] != null || dr[7] != null)
+                        {
+                            AlarmModel alarm = new AlarmModel((int)dr[0], dr[1].ToString().Trim(), (int)dr[2],
+                                (int)dr[3], (int)dr[4], dr[5].ToString().Trim(),
+                                dr[6].ToString().Trim() + " " + dr[7].ToString().Trim());
+                            list.Add(alarm);
+                        }
+                        else
+                        {
+                            AlarmModel alarm = new AlarmModel((int)dr[0], dr[1].ToString().Trim(), (int)dr[2],
+                               null, (int)dr[4], dr[5].ToString().Trim(), null);
+                            list.Add(alarm);
+                        }
                     }
                 }
                 catch (NpgsqlException ex)
@@ -540,7 +574,7 @@ namespace ProjectSCAM.Models.Logic
                 }
                 finally
                 {
-                    conn.Close();
+                    CONN.Close();
                 }
             }
             return list;
@@ -560,7 +594,7 @@ namespace ProjectSCAM.Models.Logic
             {
                 try
                 {
-                    NpgsqlCommand command = new NpgsqlCommand(queries[i], conn);
+                    NpgsqlCommand command = new NpgsqlCommand(queries[i], CONN);
                     command.ExecuteNonQuery();
                     if (firstExecution)
                     {
@@ -588,12 +622,12 @@ namespace ProjectSCAM.Models.Logic
         /// <param name="vibrationsValues"></param>
         /// <returns></returns>
         private bool RegisterBatchValues(int batchId,
-            List<KeyValuePair<string, double>> temperatureValues,
-            List<KeyValuePair<string, double>> humidityValues,
-            List<KeyValuePair<string, double>> vibrationsValues)
+            IList<KeyValuePair<string, double>> temperatureValues,
+            IList<KeyValuePair<string, double>> humidityValues,
+            IList<KeyValuePair<string, double>> vibrationsValues)
         {
             string[] queries = new string[temperatureValues.Count + humidityValues.Count + vibrationsValues.Count];
-            List<KeyValuePair<string, double>>[] valueLists = { temperatureValues, humidityValues, vibrationsValues };
+            IList<KeyValuePair<string, double>>[] valueLists = { temperatureValues, humidityValues, vibrationsValues };
             int qIndex = 0;
             for (int i = 0; i < valueLists.Length; i++)
             {
@@ -620,7 +654,7 @@ namespace ProjectSCAM.Models.Logic
             for (int i = 0; i < queries.Length; i++)
             {
                 int productNumber = i + 1;
-                queries[i] = "INSERT INTO Beers Values(" + productNumber + ", true, " + batchId + ");";
+                queries[i] = "INSERT INTO Beers VALUES(" + productNumber + ", true, " + batchId + ");";
             }
             return ExecuteQueries(queries, true);
         }
