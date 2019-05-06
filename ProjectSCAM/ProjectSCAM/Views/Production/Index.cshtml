@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{
+    ViewData["Title"] = "Production";
+}
+
+<!DOCTYPE html>
 <html>
 <head>
     @Styles.Render("~/Content/ProductionStyleSheet.css")
@@ -20,7 +24,7 @@
 
                     <button class="dropbtn" id="machineSelect">Production Type:</button>
                     <div class="dropdown-content">
-                        
+
                         <input type="radio" id="pilsnerID" name="beer" value="pilsner">Pilsner<br>
                         <input type="radio" id="wheatID" name="beer" value="wheat">Wheat<br>
                         <input type="radio" id="ipaID" name="beer" value="IPA">IPA<br>
@@ -70,21 +74,21 @@
                 </table>
             </div>
         </div>
-                    <div class="grid-item item3">
-                        <div id="batchQueue" class="batchQueueclass">
+        <div class="grid-item item3">
+            <div id="batchQueue" class="batchQueueclass">
 
-                            <button type="Submit" id="moveButton">Move Up</button><br><br>
-                            <button type="Submit" id="moveButton">Move Down</button><br><br>
-                            <button type="Submit" id="moveButton">Delete</button><br><br>
-                          
+                <button type="Submit" id="moveButton">Move Up</button><br><br>
+                <button type="Submit" id="moveButton">Move Down</button><br><br>
+                <button type="Submit" id="moveButton">Delete</button><br><br>
 
-                        </div>
-                    </div>
+
+            </div>
+        </div>
     </div>
 
-            
-          
 
-      
+
+
+
 </body>
-    </html>
+</html>

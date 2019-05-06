@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{
+    ViewData["Title"] = "Batch";
+}
+
+<!DOCTYPE html>
 <html>
 <head>
     @Styles.Render("~/Content/BatchStyleSheet.css")
@@ -42,9 +46,9 @@
             &nbsp;   Search Batch:<br><br>
             &nbsp;  <input type="text" id="idSearchField" title="Batch ID is a number of length 1-10 digits" class="searchFieldClass" onblur="checkBatchID()" placeholder="Batch ID:" /><br><br>
             &nbsp;  <input type="text" id="latestSearchField" title="Search the latest x amount of batches (number)" class="searchFieldClass" onblur="checkLatestBatch()" placeholder="Latest:" /><br><br>
-            &nbsp;  <input type="text" id="dateSearchField" title="To be decided" class="searchFieldClass"  onblur="checkDateOfBatch()" placeholder="Date:" /><br><br>
-            &nbsp;  <input type="text" id="machineSearchField" title="Search by machine ID which is a number" class="searchFieldClass" onblur="checkMachine()"placeholder="Machine:" /><br><br>
-            &nbsp;  <input type="text" id="productSearchField" title="Search by beer type which is a number (0 for Pilsner, 1 for Wheat, 2 for IPA, 3 for Stout, 4 for Ale, 5 for Alcohol Free)" class="searchFieldClass" onblur="checkProductType()"placeholder="Product Type:" /><br><br>
+            &nbsp;  <input type="text" id="dateSearchField" title="To be decided" class="searchFieldClass" onblur="checkDateOfBatch()" placeholder="Date:" /><br><br>
+            &nbsp;  <input type="text" id="machineSearchField" title="Search by machine ID which is a number" class="searchFieldClass" onblur="checkMachine()" placeholder="Machine:" /><br><br>
+            &nbsp;  <input type="text" id="productSearchField" title="Search by beer type which is a number (0 for Pilsner, 1 for Wheat, 2 for IPA, 3 for Stout, 4 for Ale, 5 for Alcohol Free)" class="searchFieldClass" onblur="checkProductType()" placeholder="Product Type:" /><br><br>
             &nbsp;  <button type="button" id="searchButton" class="buttons" class="searchFieldClass"> Search</button>
         </div>
 

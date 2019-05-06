@@ -1,11 +1,15 @@
-﻿@model ProjectSCAM.Models.UserModel
+﻿@{
+    ViewData["Title"] = "User creation";
+}
+
+@model ProjectSCAM.Models.UserModel
 <!DOCTYPE html>
 <html>
 <head>
 
     @Styles.Render("~/Content/CreateUserStyleSheet.css")
     @Scripts.Render("~/Scripts/createUserScript.js")
-   
+
 
 
 </head>
@@ -19,72 +23,73 @@
 
     </div>
     </div>
-    @using (Html.BeginForm("RegisterUser", "UserCreation", FormMethod.Post)) {
+    @using (Html.BeginForm("RegisterUser", "UserCreation", FormMethod.Post))
+    {
 
         @Html.ValidationSummary(true)
         @Html.AntiForgeryToken()
-    <fieldset>
-        <legend>User</legend>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Username)
-        </div>
-        <div class="editor-field">
-            @Html.TextBoxFor(model => model.Username)
-            @Html.ValidationMessageFor(model => model.Username)
-        </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Password)
-        </div>
-        <div class="editor-field">
-            @Html.PasswordFor(model => model.Password)
-            @Html.ValidationMessageFor(model => model.Password)
-        </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.RepeatPassword)
-        </div>
-        <div class="editor-field">
-            @Html.PasswordFor(model => model.RepeatPassword)
-            @Html.ValidationMessageFor(model => model.RepeatPassword)
-        </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.FirstName)
-        </div>
-        <div class="editor-field">
-            @Html.TextBoxFor(model => model.FirstName)
-            @Html.ValidationMessageFor(model => model.FirstName)
-        </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.LastName)
-        </div>
-        <div class="editor-field">
-            @Html.TextBoxFor(model => model.LastName)
-            @Html.ValidationMessageFor(model => model.LastName)
-        </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Email)
-        </div>
-        <div class="editor-field">
-            @Html.TextBoxFor(model => model.Email)
-            @Html.ValidationMessageFor(model => model.Email)
-        </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.PhoneNumber)
-        </div>
-        <div class="editor-field">
-            @Html.TextBoxFor(model => model.PhoneNumber)
-            @Html.ValidationMessageFor(model => model.PhoneNumber)
-        </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.UserType)
-        </div>
-        <div class="editor-field">
-            @Html.DropDownListFor(model => model.UserType, new List<SelectListItem>()
-{ new SelectListItem{Text = "Admin", Value = "0" }, new SelectListItem{Text = "Production Manager", Value = "1"}})
-            @Html.ValidationMessageFor(model => model.PhoneNumber)
-        </div>
-        <span>@ViewBag.statusMessage</span>
-        <input type="submit" value="Register User" />
-    </fieldset>
+        <fieldset>
+            <legend>User</legend>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Username)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Username)
+                @Html.ValidationMessageFor(model => model.Username)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Password)
+            </div>
+            <div class="editor-field">
+                @Html.PasswordFor(model => model.Password)
+                @Html.ValidationMessageFor(model => model.Password)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.RepeatPassword)
+            </div>
+            <div class="editor-field">
+                @Html.PasswordFor(model => model.RepeatPassword)
+                @Html.ValidationMessageFor(model => model.RepeatPassword)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.FirstName)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.FirstName)
+                @Html.ValidationMessageFor(model => model.FirstName)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.LastName)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.LastName)
+                @Html.ValidationMessageFor(model => model.LastName)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Email)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Email)
+                @Html.ValidationMessageFor(model => model.Email)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.PhoneNumber)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.PhoneNumber)
+                @Html.ValidationMessageFor(model => model.PhoneNumber)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.UserType)
+            </div>
+            <div class="editor-field">
+                @Html.DropDownListFor(model => model.UserType, new List<SelectListItem>()
+    { new SelectListItem{Text = "Admin", Value = "0" }, new SelectListItem{Text = "Production Manager", Value = "1"}})
+                @Html.ValidationMessageFor(model => model.PhoneNumber)
+            </div>
+            <span>@ViewBag.statusMessage</span>
+            <input type="submit" value="Register User" />
+        </fieldset>
         @section Scripts {
             @Scripts.Render("~/bundles/jqueryval")
         }
@@ -108,5 +113,5 @@
 
 </body>
 
-    </html>
+</html>
 
