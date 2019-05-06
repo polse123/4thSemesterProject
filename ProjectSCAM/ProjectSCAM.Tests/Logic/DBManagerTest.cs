@@ -76,7 +76,7 @@ namespace ProjectSCAM.Tests.Logic
         [TestMethod]
         public void RegisterMachine()
         {
-            bool success = dbManager.RegisterMachine("localhost", "Local host");
+            bool success = dbManager.RegisterMachine("Test Data", "This is test data");
             Assert.IsTrue(success);
         }
 

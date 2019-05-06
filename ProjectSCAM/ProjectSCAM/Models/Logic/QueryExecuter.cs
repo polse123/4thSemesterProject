@@ -405,7 +405,7 @@ namespace ProjectSCAM.Models.Logic
             string query = "SELECT Batches.batchid, Batches.acceptableproducts, Batches.defectproducts, " +
                 "Batches.timestampstart, Batches.timestampend, Batches.expirationdate, " +
                 "Batches.succeeded, Batches.performance, Batches.quality, Batches.availability, Batches.oee, " +
-                "Batches.speed, Batches.beerid AS recipeid, Batches.machine, Batches.soldto, " +
+                "Batches.speed, Batches.beerid, Batches.machine, Batches.soldto, " +
                 "Recipes.name, Customers.customername " +
                 "FROM Batches LEFT JOIN Recipes ON Batches.beerid = Recipes.beerid " +
                 "LEFT JOIN Customers ON Batches.soldto = Customers.customerid" +
