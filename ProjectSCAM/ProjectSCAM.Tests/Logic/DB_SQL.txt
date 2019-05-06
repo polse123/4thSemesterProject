@@ -14,7 +14,7 @@ DROP TABLE IF EXISTS usertypes;
 
 CREATE TABLE usertypes (
 	typeid INT PRIMARY KEY,
-	role CHAR(20) NOT NULL UNIQUE
+	role CHAR(40) NOT NULL UNIQUE
 );
 
 CREATE TABLE stopreasons (
@@ -68,7 +68,6 @@ CREATE TABLE batchqueue (
 );
 
 CREATE TABLE batches (
-	batchid SERIAL PRIMARY KEY,
 	acceptableproducts INT NOT NULL,
 	defectproducts INT NOT NULL,
 	timestampstart CHAR(23) NOT NULL,
@@ -83,6 +82,7 @@ CREATE TABLE batches (
 	beerid INT NOT NULL,
 	machine INT NOT NULL,
 	soldto INT,
+	batchid SERIAL PRIMARY KEY,
 	FOREIGN KEY(beerid) REFERENCES recipes(beerid) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY(machine) REFERENCES machines(machineid) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY(soldto) REFERENCES customers(customerid) ON DELETE CASCADE ON UPDATE CASCADE
