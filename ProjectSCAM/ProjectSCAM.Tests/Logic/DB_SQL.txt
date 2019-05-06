@@ -75,9 +75,10 @@ CREATE TABLE batches (
 	timestampend CHAR(23) NOT NULL,
 	expirationdate CHAR(10) NOT NULL,
 	succeeded BOOLEAN NOT NULL,
-	performance FLOAt NOT NULL,
-	quality FLOAt NOT NULL,
-	availability FLOAt NOT NULL,
+	performance CHAR(12) NOT NULL,
+	quality CHAR(12) NOT NULL,
+	availability CHAR(12) NOT NULL,
+	oee CHAR(12) NOT NULL,
 	speed INT NOT NULL,
 	beerid INT NOT NULL,
 	machine INT NOT NULL,
@@ -162,10 +163,10 @@ INSERT INTO customers(customername) VALUES('Jonas');
 INSERT INTO batchqueue VALUES(0, 10, 200, 600, 0);
 INSERT INTO batchqueue VALUES(1, 20, 200, 300, 1);
 
-INSERT INTO batches(acceptableproducts, defectproducts, timestampstart, timestampend, expirationdate, succeeded, performance, quality, availability, speed, beerid, machine, soldto)
-	VALUES(180, 20, '03/03/2019 13:10:00.000', '03/03/2019 13:10:20.000', '03/09/2019', true, 0.5, 0.6, 0.7, 600, 0, 1, 1);
-INSERT INTO batches(acceptableproducts, defectproducts, timestampstart, timestampend, expirationdate, succeeded, performance, quality, availability, speed, beerid, machine)
-	VALUES(175, 25, '03/03/2019 13:12:00.000', '03/03/2019 13:13:00.000', '03/09/2019', true, 0.5, 0.6, 0.7, 200, 3, 1);
+INSERT INTO batches(acceptableproducts, defectproducts, timestampstart, timestampend, expirationdate, succeeded, performance, quality, availability, oee, speed, beerid, machine, soldto)
+	VALUES(180, 20, '03/03/2019 13:10:00.000', '03/03/2019 13:10:20.000', '03/09/2019', true, '0.5000000000', '0.6000000000', '0.7000000000', '0.6000000000', 600, 0, 1, 1);
+INSERT INTO batches(acceptableproducts, defectproducts, timestampstart, timestampend, expirationdate, succeeded, performance, quality, availability, oee, speed, beerid, machine)
+	VALUES(175, 25, '03/03/2019 13:12:00.000', '03/03/2019 13:13:00.000', '03/09/2019', true, '0.5000000000', '0.6000000000', '0.7000000000', '0.6000000000', 200, 3, 1);
 
 INSERT INTO temperaturevalues VALUES(1.1, '03/03/2019 13:10:00.000', 1);
 INSERT INTO temperaturevalues VALUES(1.2, '03/03/2019 13:10:10.000', 1);
