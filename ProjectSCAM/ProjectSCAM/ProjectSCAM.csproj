@@ -226,10 +226,12 @@
     <Compile Include="Models\CustomerModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Logic\DBManager.cs" />
+    <Compile Include="Models\Logic\OPCManager.cs" />
     <Compile Include="Models\Logic\QueryExecuter.cs" />
     <Compile Include="Models\MachineModel.cs" />
+    <Compile Include="Models\MachineSelectViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\OpcClient.cs" />
+    <Compile Include="Models\Logic\OpcClient.cs" />
     <Compile Include="Models\RecipeModel.cs" />
     <Compile Include="Models\Logic\Singleton.cs" />
     <Compile Include="Models\UserModel.cs" />
@@ -279,7 +281,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\loginScript.js" />
+    <Content Include="Scripts\MachineSelectionScript.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\OverviewScript.js" />
     <Content Include="Scripts\productionScript.js" />

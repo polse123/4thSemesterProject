@@ -7,7 +7,7 @@ using System.Windows.Markup;
 using UnifiedAutomation.UaBase;
 using UnifiedAutomation.UaClient;
 
-namespace SCAMS.Models {
+namespace ProjectSCAM.Models {
     public class OpcClient : INotifyPropertyChanged {
         private bool isProcessRunning = false;
         private double processedProducts;
@@ -31,9 +31,11 @@ namespace SCAMS.Models {
 
         private Session session;
         public event PropertyChangedEventHandler PropertyChanged;
+        private string ip;
 
         //Constructor with OPC connect and CreateSubscription
-        public OpcClient() {
+        public OpcClient(string ip) {
+            this.ip = ip;
             Connect();
             CreateSubscription();
         }
@@ -43,8 +45,9 @@ namespace SCAMS.Models {
             session = new Session();
             try {
                 //Connect to server with no security (simulator)
-                session.Connect("opc.tcp://127.0.0.1:4840", SecuritySelection.None);
-                //session.UseDnsNameAndPortFromDiscoveryUrl = true;
+                session.UseDnsNameAndPortFromDiscoveryUrl = true;
+                session.Connect(ip, SecuritySelection.None);
+
                 //Connect to server with no security (machine)
                 //session.Connect("opc.tcp://10.112.254.165:4840", SecuritySelection.None);
             } catch (Exception ex) {

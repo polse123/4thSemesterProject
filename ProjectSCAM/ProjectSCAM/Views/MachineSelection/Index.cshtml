@@ -1,20 +1,75 @@
-﻿
+﻿@model ProjectSCAM.Models.MachineModel
 @{
     ViewData["Title"] = "Machine Selection";
+
 }
+
+
 <!DOCTYPE html>
 <html>
 <head>
     @Styles.Render("~/Content/dropdown.css")
 
 </head>
+<script>
+    function selectMachine() {
+        console.log("fired");
+        var machineselect = document.getElementById("machineselect");
+        var selected = machineselect.options[machineselect.selectedIndex];
+        var span = document.getElementById("description");
+        console.log(selected.value);
+        console.log(selected.text);
+        span.textContent = selected.value;
+
+
+    }
+</script>
 <body>
     <div class="dropdown">
-        <button class="dropbtn" id="machineSelect">Machines</button>
+        <select id="machineselect" onchange="selectMachine()">
+            @foreach (var item in ViewBag.Machines) {
+                <option value="@item.Description">@item.Ip</option>
+            }
+        </select>
         <div class="dropdown-content">
-            <a href="">Test 1</a>
-            <a href="">Test 2</a>
+
+        </div>
+        <div class="descriptionBox">
+            <span id="description">Please choose a machine</span>
+
         </div>
     </div>
+    <h2>
+        Create a machine
+    </h2>
+    @using (Html.BeginForm("Create", "MachineSelection", FormMethod.Post)) {
+        @Html.ValidationSummary(true)
+        @Html.AntiForgeryToken()
+        <fieldset>
+            <legend>Machine</legend>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Ip)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Ip)
+                @Html.ValidationMessageFor(model => model.Ip)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Description)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Description)
+                @Html.ValidationMessageFor(model => model.Description)
+            </div>
+            <div class="editor-field">
+                <span>@ViewBag.statusMessage</span>
+                @Html.HiddenFor(model => model.Id)
+            </div>
+            <input type="submit" value="Create New Machine" />
+        </fieldset>
+    }
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
 </body>
 </html>

@@ -143,7 +143,8 @@
                 <button input type="submit" onclick="machineCommand('clear')" id="clear" class="buttons"> Clear</button> <br>
                 <button input type="submit" onclick="machineCommand('abort')" id="abort" class="buttons"> Abort</button> <br>
                 <button input type="submit" onclick="machineCommand('reset')" id="reset" class="buttons"> Reset</button>
-
+                <button input type="submit" onclick="me()" id="a" class="buttons"> me</button>
+                <button input type="submit" onclick="soren()" id="b" class="buttons"> Reset</button>
             </div>
         </div>
     </div>
@@ -152,28 +153,47 @@
 </body>
 </html>
 <script>
+    me();
+    function me() {
+        console.log("me");
+        $.post("/overview/SetSelectedMachine", { ip: "opc.tcp://127.0.0.1:4840"});
+    }
+    function soren() {
+        console.log("soren");
+        $.post("/overview/SetSelectedMachine", { ip: "opc.tcp://192.168.0.122:4840" });
+        console.log("worked");
+    }
     function contentLoaded() {
-        var source = new EventSource('/overview/message');
-        source.onmessage = function (e) {
-            var opcData = JSON.parse(e.data)
-            console.log(e.data);
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Message")',
+            dataType: 'json',
+            data: { id: '' },
+            success: function (data) {
             // set value of ingredient elements
-            $("#yeast").text(opcData.Yeast);
-            $("#malt").text(opcData.Malt);
-            $("#hops").text(opcData.Hops);
-            $("#barley").text(opcData.Barley);
-            $("#wheat").text(opcData.Wheat);
+                $("#yeast").text(data.Yeast);
+                $("#malt").text(data.Malt);
+                $("#hops").text(data.Hops);
+                $("#barley").text(data.Barley);
+                $("#wheat").text(data.Wheat);
             // set value of batch elements
-            $("#produced").text(opcData.ProcessedProducts);
-            $("#failed").text(opcData.DefectProducts);
-            $("#speed").text(100); // add speed node to monitored items in opc
-            $("#type").text(3); // add type node to monitored items in opc
-            $("#producing").text(opcData.AmountToProduce);
+                $("#produced").text(data.ProcessedProducts);
+                $("#failed").text(data.DefectProducts);
+                $("#speed").text(100); // add speed node to monitored items in opc
+                $("#type").text(3); // add type node to monitored items in opc
+                $("#producing").text(data.AmountToProduce);
             // set value of machine element
-            $("#state").text(opcData.StateCurrent);
-        }
+                $("#state").text(data.StateCurrent);
+            },
+            error: function (ex) {
+                var r = jQuery.parseJSON(response.responseText);
+                alert("Message: " + r.Message);
+                alert("StackTrace: " + r.StackTrace);
+                alert("ExceptionType: " + r.ExceptionType);
+            }
+        });
     };
-    window.addEventListener("DOMContentLoaded", contentLoaded, false);
+    window.setInterval(contentLoaded, 100);
 
 
 
