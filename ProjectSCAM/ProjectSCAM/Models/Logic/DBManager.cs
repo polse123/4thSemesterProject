@@ -554,20 +554,22 @@ namespace ProjectSCAM.Models.Logic
             double performance, double quality, double availability,
             int speed, int beerId, int machine)
         {
-            return String.Format("INSERT INTO Batches(acceptableproducts, defectproducts," +
-               " timestampstart, timestampend, expirationdate, succeeded," +
-               " performance, quality, availability, speed, beerid, machine)" +
-               " VALUES({0}, {1}, '{2}', '{3}', '{4}', {5}, {6}, {7}, {8}, {9}, {10}, {11}) RETURNING batchid;",
-               acceptableProducts, defectProducts, timestampStart, timestampEnd, expirationDate,
-               succeeded, performance, quality, availability, speed, beerId, machine);
+            //return "INSERT INTO batches(acceptableproducts, defectproducts, timestampstart,timestampend,expirationdate,succeeded,performance,quality,availability,speed,beerid,machine) VALUES(" + acceptableProducts + ", " + defectProducts + ", '" + timestampStart + "', '" + timestampEnd + "', '" + expirationDate + "', " + succeeded + ", " + performance + ", " + quality + ", " + availability + ", " + speed + ", " + beerId + ", " + machine + ") RETURNING batchid";
 
-            /*return "INSERT INTO Batches(acceptableproducts, defectproducts," +
+            /*return String.Format("INSERT INTO Batches(acceptableproducts, defectproducts," +
+            " timestampstart, timestampend, expirationdate, succeeded," +
+            " performance, quality, availability, speed, beerid, machine)" +
+            " VALUES({0}, {1}, '{2}', '{3}', '{4}', {5}, {6}, {7}, {8}, {9}, {10}, {11}) RETURNING batchid;",
+               acceptableProducts, defectProducts, timestampStart, timestampEnd, expirationDate,
+               succeeded, performance, quality, availability, speed, beerId, machine);*/
+
+            return "INSERT INTO Batches(acceptableproducts, defectproducts," +
                " timestampstart, timestampend, expirationdate, succeeded," +
                " performance, quality, availability, speed, beerid, machine)" +
                " VALUES(" + acceptableProducts + ", " + defectProducts + ", '" +
                timestampStart + "', '" + timestampEnd + "', '" + expirationDate + "', " +
                succeeded + ", " + performance + ", " + quality + ", " + availability + ", " +
-               speed + ", " + beerId + ", " + machine + ") RETURNING batchid;";*/
+               speed + ", " + beerId + ", " + machine + ") RETURNING batchid;";
         }
     }
 }

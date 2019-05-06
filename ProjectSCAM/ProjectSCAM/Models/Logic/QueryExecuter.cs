@@ -359,16 +359,16 @@ namespace ProjectSCAM.Models.Logic
                     if (batchId != null)
                     {
                         // Register batch values
-                        RegisterBatchValues((int)batchId, temperatureValues, humidityValues, vibrationValues);
+                        //RegisterBatchValues((int)batchId, temperatureValues, humidityValues, vibrationValues);
 
                         // Register beers
-                        RegisterBeers((int)batchId, acceptableProducts);
+                        //RegisterBeers((int)batchId, acceptableProducts);
 
                         // Register alarm
                         if (alarmQuery != null)
                         {
                             alarmQuery.Append(batchId + ");");
-                            ExecuteQuery(alarmQuery.ToString());
+                            //ExecuteQuery(alarmQuery.ToString());
                         }
 
                         return true;
