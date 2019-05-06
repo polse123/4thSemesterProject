@@ -149,16 +149,24 @@ namespace ProjectSCAM.Models.Logic
         /// <returns></returns>
         public UserModel RetrieveUser(int id, bool activeOnly)
         {
-            string append = "WHERE userid = " + id;
+            string append = " WHERE userid = " + id;
             if (activeOnly)
             {
                 append = append + " AND isactive = true;";
             }
             else
             {
-                append = ";";
+                append = append + ";";
             }
-            return (exe.RetrieveUsers(append)).First();
+            IList<UserModel> users = exe.RetrieveUsers(append);
+            if (users != null)
+            {
+                if (users.Count != 0)
+                {
+                    return users.First();
+                }
+            }
+            return null;
         }
 
         /// <summary>

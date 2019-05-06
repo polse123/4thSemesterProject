@@ -96,13 +96,16 @@ namespace ProjectSCAM.Tests.Logic
         }
 
         /// <summary>
-        /// RetrieveUsers, MakeInactive, RegisterUser
+        /// RetrieveUsers, RetrieveUser, MakeInactive, RegisterUser
         /// </summary>
         [TestMethod]
         public void UserTest()
         {
-            IList<UserModel> list = dbManager.RetrieveUsers();
+            IList<UserModel> list = dbManager.RetrieveUsers(true);
             Assert.IsNotNull(list); //Test RetrieveUsers
+
+            UserModel user = dbManager.RetrieveUser(1, true);
+            Assert.IsNotNull(user); //Test RetrieveUser
 
             bool userMadeInactive = false;
             int? highestId = null;
@@ -122,7 +125,7 @@ namespace ProjectSCAM.Tests.Logic
                     }
                     if (!userMadeInactive)
                     {
-                        userMadeInactive = dbManager.MakeUserInactive(element.Id);
+                        userMadeInactive = dbManager.MakeUserInactive(2);
                         Assert.IsTrue(userMadeInactive); // Test MakeInactive
                     }
                 }

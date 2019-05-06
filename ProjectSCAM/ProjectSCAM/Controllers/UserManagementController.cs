@@ -12,7 +12,7 @@ namespace SCAMS.Controllers
     {
         public ActionResult Index()
         {
-            IList<UserModel> users = Singleton.Instance.DBManager.RetrieveUsers();
+            IList<UserModel> users = Singleton.Instance.DBManager.RetrieveUsers(true);
 
             return View(users);
         }
