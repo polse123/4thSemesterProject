@@ -251,9 +251,9 @@ namespace ProjectSCAM.Tests.Logic
                 true, 0.5, 0.6, 1.0, 600, 0, 1, tList, hList, vList);
             Assert.IsTrue(success1); // Test RegisterBatch
 
-            /*bool success2 = dbManager.RegisterBatchAndAlarm(8, 50, "15/02/2019 10:45:10.500", "15/02/2019 10:45:16.300", "15/08/2019",
-                true, 0.5, 0.6, 1.0, 600, 0, 0, tList, hList, vList, "15/02/2019 10:45:16.500", 11);
-            Assert.IsTrue(success2); // Test RegisterBatchAndAlarm*/
+            bool success2 = dbManager.RegisterBatchAndAlarm(10, 50, "15/02/2019 10:45:10.500", "15/02/2019 10:45:16.300", "15/08/2019",
+                true, 0.5, 0.6, 1.0, 600, 0, 1, tList, hList, vList, "15/02/2019 10:45:16.500", 11);
+            Assert.IsTrue(success2); // Test RegisterBatchAndAlarm
         }
 
         /// <summary>

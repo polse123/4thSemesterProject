@@ -349,6 +349,7 @@ namespace ProjectSCAM.Models.Logic
             {
                 try
                 {
+                    // Register batch
                     CONN.Open();
                     NpgsqlCommand command = new NpgsqlCommand(batchQuery, CONN);
                     NpgsqlDataReader dr = command.ExecuteReader();
@@ -356,19 +357,26 @@ namespace ProjectSCAM.Models.Logic
                     {
                         batchId = (int)dr[0];
                     }
+                    CONN.Close();
+
                     if (batchId != null)
                     {
+
                         // Register batch values
-                        //RegisterBatchValues((int)batchId, temperatureValues, humidityValues, vibrationValues);
+                        CONN.Open();
+                        RegisterBatchValues((int)batchId, temperatureValues, humidityValues, vibrationValues);
+                        CONN.Close();
 
                         // Register beers
-                        //RegisterBeers((int)batchId, acceptableProducts);
+                        CONN.Open();
+                        RegisterBeers((int)batchId, acceptableProducts);
+                        CONN.Close();
 
                         // Register alarm
                         if (alarmQuery != null)
                         {
                             alarmQuery.Append(batchId + ");");
-                            //ExecuteQuery(alarmQuery.ToString());
+                            ExecuteQuery(alarmQuery.ToString());
                         }
 
                         return true;

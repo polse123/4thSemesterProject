@@ -14,7 +14,7 @@ DROP TABLE IF EXISTS usertypes;
 
 CREATE TABLE usertypes (
 	typeid INT PRIMARY KEY,
-	role CHAR(40) NOT NULL UNIQUE
+	role CHAR(20) NOT NULL UNIQUE
 );
 
 CREATE TABLE stopreasons (
@@ -36,7 +36,7 @@ CREATE TABLE recipes (
 
 CREATE TABLE machines (
 	machineid SERIAL PRIMARY KEY,
-	ipaddress VARCHAR(15) NOT NULL UNIQUE,
+	ipaddress VARCHAR(40) NOT NULL UNIQUE,
 	description VARCHAR(256)
 );
 
@@ -149,9 +149,9 @@ INSERT INTO recipes VALUES(5, 125, 'Alcohol Free', 1, 1, 4, 5, 0);
 
 /* Test data */
 
-INSERT INTO machines(ipaddress, description) VALUES('10.112.254.69', 'A physical simulation');
-INSERT INTO machines(ipaddress, description) VALUES('127.0.0.1', 'A virtual simulation');
-INSERT INTO machines(ipaddress, description) VALUES('0.0', null);
+INSERT INTO machines(ipaddress, description) VALUES('opc.tcp://10.112.254.69:4840', 'A physical simulation');
+INSERT INTO machines(ipaddress, description) VALUES('opc.tcp://127.0.0.1:4840', 'A virtual simulation');
+INSERT INTO machines(ipaddress, description) VALUES('test', null);
 
 INSERT INTO users(username, password, firstname, lastname, email, phonenumber, isactive, usertype)
 	VALUES('admin', 'password', 'Super', 'Admin', 'admin@scam.com', null, true, 0);
