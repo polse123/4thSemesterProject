@@ -1,0 +1,200 @@
+﻿DROP TABLE IF EXISTS alarms;
+DROP TABLE IF EXISTS beers;
+DROP TABLE IF EXISTS vibrationvalues;
+DROP TABLE IF EXISTS humidityvalues;
+DROP TABLE IF EXISTS temperaturevalues;
+DROP TABLE IF EXISTS batches;
+DROP TABLE IF EXISTS batchqueue;
+DROP TABLE IF EXISTS customers;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS machines;
+DROP TABLE IF EXISTS recipes;
+DROP TABLE IF EXISTS stopreasons;
+DROP TABLE IF EXISTS usertypes;
+
+CREATE TABLE usertypes (
+	typeid INT PRIMARY KEY,
+	role CHAR(20) NOT NULL UNIQUE
+);
+
+CREATE TABLE stopreasons (
+	stopid INT PRIMARY KEY,
+	actionrequired BOOLEAN NOT NULL,
+	stopdescription VARCHAR(256) NOT NULL
+);
+
+CREATE TABLE recipes (
+	beerid INT PRIMARY KEY,
+	maxspeed INT NOT NULL,
+	name CHAR(20) NOT NULL,
+	barley INT NOT NULL,
+	hops INT NOT NULL,
+	malt INT NOT NULL,
+	wheat INT NOT NULL,
+	yeast INT NOT NULL
+);
+
+CREATE TABLE machines (
+	machineid SERIAL PRIMARY KEY,
+	ipaddress VARCHAR(40) NOT NULL UNIQUE,
+	description VARCHAR(256)
+);
+
+CREATE TABLE users (
+	userid SERIAL PRIMARY KEY,
+	username CHAR(16) NOT NULL UNIQUE,
+	password CHAR(32) NOT NULL,
+	firstname CHAR(32) NOT NULL,
+	lastname CHAR(32) NOT NULL,
+	email CHAR(64) NOT NULL UNIQUE,
+	phonenumber CHAR(11),
+	isactive BOOLEAN NOT NULL,
+	usertype INT NOT NULL,
+	FOREIGN KEY(usertype) REFERENCES usertypes(typeid) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE customers (
+	customerid SERIAL PRIMARY KEY,
+	customername CHAR(32) NOT NULL
+);
+
+CREATE TABLE batchqueue (
+	queueid INT PRIMARY KEY,
+	priority INT NOT NULL,
+	amount INT NOT NULL,
+	speed INT NOT NULL,
+	beerid INT NOT NULL,
+	FOREIGN KEY(beerid) REFERENCES recipes(beerid) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE batches (
+	acceptableproducts INT NOT NULL,
+	defectproducts INT NOT NULL,
+	timestampstart CHAR(23) NOT NULL,
+	timestampend CHAR(23) NOT NULL,
+	expirationdate CHAR(10) NOT NULL,
+	succeeded BOOLEAN NOT NULL,
+	performance CHAR(12) NOT NULL,
+	quality CHAR(12) NOT NULL,
+	availability CHAR(12) NOT NULL,
+	oee CHAR(12) NOT NULL,
+	speed INT NOT NULL,
+	beerid INT NOT NULL,
+	machine INT NOT NULL,
+	soldto INT,
+	batchid SERIAL PRIMARY KEY,
+	FOREIGN KEY(beerid) REFERENCES recipes(beerid) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY(machine) REFERENCES machines(machineid) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY(soldto) REFERENCES customers(customerid) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE temperaturevalues (
+	value FLOAt NOT NULL,
+	timestamp CHAR(23) NOT NULL,
+	belongingto INT NOT NULL,
+	PRIMARY KEY(timestamp, belongingto),
+	FOREIGN KEY(belongingto) REFERENCES batches(batchid) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE humidityvalues (
+	value FLOAt NOT NULL,
+	timestamp CHAR(23) NOT NULL,
+	belongingto INT NOT NULL,
+	PRIMARY KEY(timestamp, belongingto),
+	FOREIGN KEY(belongingto) REFERENCES batches(batchid) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE vibrationvalues (
+	value FLOAt NOT NULL,
+	timestamp CHAR(23) NOT NULL,
+	belongingto INT NOT NULL,
+	PRIMARY KEY(timestamp, belongingto),
+	FOREIGN KEY(belongingto) REFERENCES batches(batchid) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE beers (
+	productnumber INT NOT NULL,
+	acceptable BOOLEAN NOT NULL,
+	belongingto INT NOT NULL,
+	PRIMARY KEY(productnumber, belongingto),
+	FOREIGN KEY(belongingto) REFERENCES batches(batchid) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE alarms (
+	alarmid SERIAL PRIMARY KEY,
+	timestamp CHAR(23) NOT NULL,
+	stopreason INT NOT NULL,
+	handledby INT,
+	batch INT NOT NULL,
+	FOREIGN KEY(stopreason) REFERENCES stopreasons(stopid) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY(handledby) REFERENCES users(userid) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY(batch) REFERENCES batches(batchid) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+INSERT INTO usertypes VALUES(0, 'Admin');
+INSERT INTO usertypes VALUES(1, 'Production Manager');
+
+INSERT INTO stopreasons VALUES(10, true, 'Empty inventory');
+INSERT INTO stopreasons VALUES(11, true, 'Maintenance');
+INSERT INTO stopreasons VALUES(12, false, 'Manual stop');
+INSERT INTO stopreasons VALUES(13, false, 'Motor power loss');
+INSERT INTO stopreasons VALUES(14, false, 'Manual abort');
+
+INSERT INTO recipes VALUES(0, 600, 'Pilsner', 4, 2, 1, 1, 4);
+INSERT INTO recipes VALUES(1, 300, 'Wheat', 1, 4, 1, 6, 3);
+INSERT INTO recipes VALUES(2, 150, 'IPA', 4, 1, 5, 4, 1);
+INSERT INTO recipes VALUES(3, 200, 'Stout', 3, 4, 6, 1, 2);
+INSERT INTO recipes VALUES(4, 100, 'Ale', 4, 6, 2, 2, 8);
+INSERT INTO recipes VALUES(5, 125, 'Alcohol Free', 1, 1, 4, 5, 0);
+
+/* Test data */
+
+INSERT INTO machines(ipaddress, description) VALUES('opc.tcp://10.112.254.69:4840', 'A physical simulation');
+INSERT INTO machines(ipaddress, description) VALUES('opc.tcp://127.0.0.1:4840', 'A virtual simulation');
+INSERT INTO machines(ipaddress, description) VALUES('test', null);
+
+INSERT INTO users(username, password, firstname, lastname, email, phonenumber, isactive, usertype)
+	VALUES('admin', 'password', 'Super', 'Admin', 'admin@scam.com', null, true, 0);
+INSERT INTO users(username, password, firstname, lastname, email, phonenumber, isactive, usertype)
+	VALUES('user', 'password', 'Production', 'Manager', 'user@scam.com', null, true, 1);
+
+INSERT INTO customers(customername) VALUES('Jonas');
+
+INSERT INTO batchqueue VALUES(0, 10, 200, 600, 0);
+INSERT INTO batchqueue VALUES(1, 20, 200, 300, 1);
+
+INSERT INTO batches(acceptableproducts, defectproducts, timestampstart, timestampend, expirationdate, succeeded, performance, quality, availability, oee, speed, beerid, machine, soldto)
+	VALUES(180, 20, '03/03/2019 13:10:00.000', '03/03/2019 13:10:20.000', '03/09/2019', true, '0.5000000000', '0.6000000000', '0.7000000000', '0.6000000000', 600, 0, 1, 1);
+INSERT INTO batches(acceptableproducts, defectproducts, timestampstart, timestampend, expirationdate, succeeded, performance, quality, availability, oee, speed, beerid, machine)
+	VALUES(175, 25, '03/03/2019 13:12:00.000', '03/03/2019 13:13:00.000', '03/09/2019', true, '0.5000000000', '0.6000000000', '0.7000000000', '0.6000000000', 200, 3, 1);
+
+INSERT INTO temperaturevalues VALUES(1.1, '03/03/2019 13:10:00.000', 1);
+INSERT INTO temperaturevalues VALUES(1.2, '03/03/2019 13:10:10.000', 1);
+INSERT INTO temperaturevalues VALUES(1.3, '03/03/2019 13:10:20.000', 1);
+
+INSERT INTO humidityvalues VALUES(1.4, '03/03/2019 13:10:00.000', 1);
+INSERT INTO humidityvalues VALUES(1.5, '03/03/2019 13:10:10.000', 1);
+INSERT INTO humidityvalues VALUES(1.6, '03/03/2019 13:10:20.000', 1);
+
+INSERT INTO vibrationvalues VALUES(1.7, '03/03/2019 13:10:00.000', 1);
+INSERT INTO vibrationvalues VALUES(1.8, '03/03/2019 13:10:10.000', 1);
+INSERT INTO vibrationvalues VALUES(1.9, '03/03/2019 13:10:20.000', 1);
+
+INSERT INTO beers VALUES(1, true, 1);
+INSERT INTO beers VALUES(2, true, 1);
+INSERT INTO beers VALUES(3, true, 1);
+INSERT INTO beers VALUES(4, true, 1);
+INSERT INTO beers VALUES(5, true, 1);
+
+INSERT INTO alarms(timestamp, stopreason, handledby, batch)
+	VALUES('03/03/2019 13:10:00.000', 10, null, 1);
+INSERT INTO alarms(timestamp, stopreason, handledby, batch)
+	VALUES('03/03/2019 13:10:00.000', 10, 2, 1);
+
+/*
+
+timestamp example: '15/02/2019 10:52:12.500' CHAR(23)
+expiration date example: '15/08/2019' CHAR(10)
+
+*/
+
