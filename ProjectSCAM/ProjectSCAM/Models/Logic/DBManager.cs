@@ -462,7 +462,7 @@ namespace ProjectSCAM.Models.Logic
                 append.Append(SUCCEEDED_BATCHES_ONLY_APPEND + " AND");
             }
             else { append.Append(" WHERE"); }
-            append.Append(" beerid = " + beerId + ";");
+            append.Append(" Batches.beerid = " + beerId + ";");
             return exe.RetrieveBatches(append.ToString());
         }
 

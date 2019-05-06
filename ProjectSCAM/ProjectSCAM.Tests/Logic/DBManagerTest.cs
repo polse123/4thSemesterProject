@@ -264,14 +264,15 @@ namespace ProjectSCAM.Tests.Logic
         {
             IList<BatchModel> list1 = dbManager.RetrieveBatches(false);
             IList<BatchModel> list2 = dbManager.RetrieveBatchesByAmount(3, false);
-            IList<BatchModel> list3 = dbManager.RetrieveBatchesByMonth("2", "2019", false);
-            IList<BatchModel> list4 = dbManager.RetrieveBatchesByMachine(0, false);
+            IList<BatchModel> list3 = dbManager.RetrieveBatchesByMonth("3", "2019", false);
+            IList<BatchModel> list4 = dbManager.RetrieveBatchesByMachine(1, false);
             IList<BatchModel> list5 = dbManager.RetrieveBatchesByRecipe(0, false);
 
             IList<BatchModel>[] lists = { list1, list2, list3, list4, list5 };
+
             int? batchId = null;
 
-            for (int i = 5; i < 5; i++)
+            for (int i = 0; i < lists.Length; i++)
             {
                 Assert.IsNotNull(lists[i]);
                 if (lists[i].Count != 0)
@@ -288,7 +289,7 @@ namespace ProjectSCAM.Tests.Logic
                 else Assert.IsNotNull(null);
             }
 
-            BatchModel batch = dbManager.RetrieveBatch(0);
+            BatchModel batch = dbManager.RetrieveBatch(1);
             Assert.IsNotNull(batch); // Test RetrieveBatch
         }
 

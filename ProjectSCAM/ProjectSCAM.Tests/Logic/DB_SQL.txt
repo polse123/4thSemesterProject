@@ -188,6 +188,8 @@ INSERT INTO beers VALUES(5, true, 1);
 
 INSERT INTO alarms(timestamp, stopreason, handledby, batch)
 	VALUES('03/03/2019 13:10:00.000', 10, null, 1);
+INSERT INTO alarms(timestamp, stopreason, handledby, batch)
+	VALUES('03/03/2019 13:10:00.000', 10, 2, 1);
 
 /*
 
