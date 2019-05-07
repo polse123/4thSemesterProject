@@ -10,6 +10,7 @@ using ProjectSCAM.Models;
 
 namespace ProjectSCAM.Controllers
 {
+    [AuthorizeUser(Type = "-1")]
     [Authorize]
     public class ManageController : Controller
     {

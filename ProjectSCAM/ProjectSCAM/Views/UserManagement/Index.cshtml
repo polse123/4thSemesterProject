@@ -8,12 +8,17 @@
 <html>
 <head>
     @Styles.Render("~/Content/table.css")
+    @Styles.Render("~/Content/AdminStyleSheet.css")
     @Styles.Render("~/Content/firstSecond.css")
 
 </head>
 <body>
     <div class="first">
-        <button type="button" class="buttons"> Set inactive</button>
+        @using (Html.BeginForm("MakeUserInactive", "UserManagement", FormMethod.Post))
+        {
+            <input type="text" name="userId" id="userId" required>
+            <button type="submit" class="buttons"> Set inactive</button>
+        }
     </div>
     <div class="second">
         <table>
@@ -37,7 +42,6 @@
                     <td>@item.PhoneNumber</td>
                     <td>@item.Role</td>
                 </tr>
-
             }
         </table>
     </div>

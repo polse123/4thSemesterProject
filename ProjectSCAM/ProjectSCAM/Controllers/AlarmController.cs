@@ -9,11 +9,13 @@ using System.Web.Mvc;
 
 namespace SCAMS.Controllers
 {
+    [AuthorizeUser(Type = "1")]
     public class AlarmController : Controller
     {
         public ActionResult Index()
         {
-            return View();
+            IList<AlarmModel> alarms = Singleton.Instance.DBManager.RetrieveAlarms();
+            return View(alarms);
         }
         [HttpGet]
         public string Popup() {

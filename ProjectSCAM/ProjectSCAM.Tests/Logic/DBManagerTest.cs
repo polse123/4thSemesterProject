@@ -348,17 +348,16 @@ namespace ProjectSCAM.Tests.Logic
         {
             IList<AlarmModel> list1 = dbManager.RetrieveAlarms();
             IList<AlarmModel> list2 = dbManager.RetrieveAlarms(2);
+            IList<AlarmModel> list3 = dbManager.RetrieveUnhandledAlarms();
 
-            // Testing RetrieveAlarms Methods
-            Assert.IsNotNull(list1);
-            Assert.IsNotNull(list2);
-
-            IList<AlarmModel>[] alarms = { list1, list2 };
+            IList<AlarmModel>[] alarms = { list1, list2, list3 };
 
             int? alarmId = null;
 
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < alarms.Length; i++)
             {
+                Assert.IsNotNull(alarms[i]); // Testing RetrieveAlarms Methods
+
                 if (alarms[i].Count != 0) // Testing RetrieveAlarms Methods
                 {
                     foreach (AlarmModel element in alarms[i])
