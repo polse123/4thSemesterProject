@@ -37,7 +37,7 @@ namespace SCAMS.Controllers
                 UserModel uM = Singleton.Instance.DBManager.RetrieveUser(u.Username, u.Password, true);
                 if (uM != null)
                 {
-                    if (uM.UserType == 1)
+                    if (uM.UserType == 1) //Mangler login til admin eller andre usertypes!
                     {// session husk!!
                         //Session["userType"] = uM.UserType;
                         //model.userRole = usermodelDB.userRole;

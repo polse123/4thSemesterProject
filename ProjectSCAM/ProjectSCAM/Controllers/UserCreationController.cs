@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace SCAMS.Controllers
 {
+    [AuthorizeUser(Type = "0")]
     public class UserCreationController : Controller
     {
         public ActionResult Index()
