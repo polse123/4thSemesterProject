@@ -32,11 +32,11 @@ namespace ProjectSCAM.Models {
 
         private Session session;
         public event PropertyChangedEventHandler PropertyChanged;
-        private string ip;
+        public string Ip { get; set; }
 
         //Constructor with OPC connect and CreateSubscription
         public OpcClient(string ip) {
-            this.ip = ip;
+            Ip = ip;
             Connect();
             CreateSubscription();
         }
@@ -47,7 +47,7 @@ namespace ProjectSCAM.Models {
             try {
                 //Connect to server with no security (simulator)
                 session.UseDnsNameAndPortFromDiscoveryUrl = true;
-                session.Connect(ip, SecuritySelection.None);
+                session.Connect(Ip, SecuritySelection.None);
 
                 //Connect to server with no security (machine)
                 //session.Connect("opc.tcp://10.112.254.165:4840", SecuritySelection.None);

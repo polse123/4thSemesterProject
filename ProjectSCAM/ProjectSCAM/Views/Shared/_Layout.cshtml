@@ -1,12 +1,43 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - SCAMS</title>
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/alarmPopup.css")
     @Scripts.Render("~/bundles/modernizr")
+    <script>
+        function CheckPopup() {
+            $.get("/alarm/Popup", function (data, status) {
+                var dat = JSON.parse(data);
+                if (dat === true) {
+                    $.get("/alarm/GetAlarm", function (data, status) {
+                        var json = JSON.parse(data);
+                        document.getElementById("modalAlarmId").textContent = json.Id;
+                        document.getElementById("modalBatchId").textContent = json.BatchId;
+                        document.getElementById("modalTimeStamp").textContent = json.timestamp;
+                        document.getElementById("modalMachineId").textContent = json.MachineId;
+                        document.getElementById("modalStopReason").textContent = json.StopReason;
+
+
+                    });
+                    var element = document.querySelector(".modal");
+                    element.style.display = "inline";
+                } else {
+                    var element = document.querySelector(".modal");
+                    element.style.display = "none";
+                };
+                }
+            )
+        };
+        function handleAlarm() {
+            console.log("oof");
+            $.post("/alarm/handle", { command: "oof" });
+        };
+        setInterval(CheckPopup, 1000);
+    </script>
 
 </head>
 <body>
@@ -30,14 +61,14 @@
                     <li>@Html.ActionLink("History", "Index", "History")</li>
                     <li>@Html.ActionLink("Optimization", "Index", "Optimization")</li>
                     @*<li>@Html.ActionLink("User Creation", "Index", "UserCreation")</li>
-                    <li>@Html.ActionLink("User Management", "Index", "UserManagement")</li>*@
+                        <li>@Html.ActionLink("User Management", "Index", "UserManagement")</li>*@
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
     <!-- The Modal -->
-    <div id="alarmModal" class="modal">
+    <div id="alarmModal" style="display:none;" class="modal">
 
         <!-- Modal content -->
         <div class="modal-content">
@@ -56,19 +87,18 @@
                         <th>MachineID:</th>
                     </tr>
                     <tr>
-                        <td>1</td>
-                        <td>10</td>
-                        <td>100</td>
-                        <td>3</td>
-                        <td>3</td>
-                        
+                        <td><span id="modalAlarmId"></span></td>
+                        <td><span id="modalBatchId"></span></td>
+                        <td><span id="modalTimeStamp"></span></td>
+                        <td><span id="modalStopReason"></span></td>
+                        <td><span id="modalMachineId"></span></td>
                     </tr>
-                   
+
 
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="button" id="handleButton" class="handleAlarmButton">Handle alarm</button>
+                <button type="button" id="handleButton" onclick="handleAlarm()"class="handleAlarmButton">Handle alarm</button>
             </div>
         </div>
 

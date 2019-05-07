@@ -7,13 +7,14 @@ namespace ProjectSCAM.Models
 {
     public class AlarmModel
     {
-        public int Id { get; }
-        public string timestamp { get; }
-        public int StopReasonId { get; }
+        public int Id { get; set; }
+        public string timestamp { get; set; }
+        public int StopReasonId { get; set; }
         public int? HandledBy { get; set; }
-        public int BatchId { get; }
+        public int BatchId { get; set; }
+        public int MachineId { get; set; }
 
-        public string StopReason { get; }
+        public string StopReason { get; set; }
         public string HandlerName { get; set; }
 
         /// <summary>
@@ -35,6 +36,9 @@ namespace ProjectSCAM.Models
             BatchId = batchId;
             StopReason = stopReason ?? throw new ArgumentNullException(nameof(stopReason));
             HandlerName = handlerName;
+        }
+        public AlarmModel() {
+
         }
     }
 }

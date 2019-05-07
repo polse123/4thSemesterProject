@@ -12,6 +12,7 @@ using ProjectSCAM.Models.Logic;
 namespace SCAMS.Controllers {
     public class OverviewController : Controller {
         public ActionResult Index() {
+
             ViewBag.BatchQueue = Singleton.Instance.DBManager.RetrieveFromBatchQueue();
             return View(ViewBag);
         }
@@ -44,10 +45,8 @@ namespace SCAMS.Controllers {
         }
 
         public JsonResult Message() {
-
             if (Session["SelectedMachine"] != null) {
                 var x = Singleton.Instance.opcManager.GetOpcConnection(Session["SelectedMachine"].ToString());
-                System.Diagnostics.Debug.WriteLine(Session["SelectedMachine"].ToString());
                 return Json(x);
             } else {
                 return Json("error");
