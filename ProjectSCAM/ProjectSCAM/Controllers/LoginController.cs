@@ -18,10 +18,12 @@ namespace SCAMS.Controllers
             if (TempData["statusMessage"] != null)
             {
                 ViewBag.statusMessage = TempData["statusMessage"].ToString();
-        } else {
+            }
+            else
+            {
                 ViewBag.statusMessage = "";
             }
-  
+
             return View();
         }
 
@@ -29,7 +31,7 @@ namespace SCAMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel u)
         {
-            
+
             if (ModelState.IsValid)
             {
                 UserModel uM = Singleton.Instance.DBManager.RetrieveUser(u.Username, u.Password, true);
@@ -43,26 +45,30 @@ namespace SCAMS.Controllers
                         //System.Web.HttpContext.Current.Session["UserRole"] = usermodelDB.userRole;
                         //var ia = System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
                         System.Web.HttpContext.Current.Session["UserType"] = "1";
-                    {
+
                         Session["userType"] = uM.UserType;
                         Session["userID"] = uM.Id;
                         Session["username"] = uM.Username;
-                        Session["login"] = true; 
+                        Session["login"] = true;
 
                         return RedirectToAction("Index", "Overview");
+
                     }
+
                 }
                 else
-                {  
+                {
                     TempData["statusMessage"] = "Login failed";
                     return RedirectToAction("Index");
 
                 }
             }
-           
-            TempData["statusMessage"] = "Login failed";
-            return RedirectToAction("Index");
+
+                TempData["statusMessage"] = "Login failed";
+                return RedirectToAction("Index");
 
         }
-    }}
+    }
+}
+
 
