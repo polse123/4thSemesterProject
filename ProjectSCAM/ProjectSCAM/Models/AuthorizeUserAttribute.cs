@@ -10,8 +10,10 @@ namespace ProjectSCAM.Models
     public class AuthorizeUserAttribute : AuthorizeAttribute
     {
 
-        //public string Type { get; set; }
-        public string Type = "1";
+        public string Type { get; set; }
+        //public string Type = "1";
+        
+        //public string[] Type = new string[2] {"0", "1"};
         //[AuthorizeUser(Type ="1")]
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         { 
