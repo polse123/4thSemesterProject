@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - SCAMS</title>
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/alarmPopup.css")
     @Scripts.Render("~/bundles/modernizr")
@@ -18,7 +18,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("SCAMS", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("SCAMS", "Index", "Login", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -29,8 +29,8 @@
                     <li>@Html.ActionLink("Alarms", "Index", "Alarm")</li>
                     <li>@Html.ActionLink("History", "Index", "History")</li>
                     <li>@Html.ActionLink("Optimization", "Index", "Optimization")</li>
-                    <li>@Html.ActionLink("UserCreation", "Index", "UserCreation")</li>
-                    <li>@Html.ActionLink("UserManagement", "Index", "UserManagement")</li>
+                    @*<li>@Html.ActionLink("User Creation", "Index", "UserCreation")</li>
+                    <li>@Html.ActionLink("User Management", "Index", "UserManagement")</li>*@
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -77,7 +77,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - SCAMS</p>
         </footer>
     </div>
 

@@ -1,16 +1,21 @@
-﻿<!DOCTYPE html>
+﻿@{
+    ViewData["Title"] = "Production";
+}
+
+<!DOCTYPE html>
 <html>
 <head>
     @Styles.Render("~/Content/ProductionStyleSheet.css")
     @Styles.Render("~/Content/dropdown.css")
+    @Scripts.Render("~/Scripts/productionScript.js")
 </head>
 <body>
     <div class="grid-container">
         <div class="grid-item item1">
             <div id="insert" class="insetclass">
                 <div id="textFields">
-                    Speed: <input type="text" id="speedField"><br><br>
-                    Amount: <input type="text" id="speedField">
+                    <input type="text" id="speedField" placeholder="Speed" title="Speed has to be: Pilsner: 0-600, Wheat: 0-300, IPA: 0-150, Stout: 0-200, Ale: 0-100, Alcohol Free: 0-125." onblur="checkSpeed()"><br><br>
+                    <input type="text" id="amountField" placeholder="Amount" title="Choose the amount to be produced (number)" onblur="checkAmount()">
                 </div>
                 <div id="button">
                 </div>
@@ -19,9 +24,13 @@
 
                     <button class="dropbtn" id="machineSelect">Production Type:</button>
                     <div class="dropdown-content">
-                        <br>
-                        <a href="">Alcahole Free</a>
-                        <a href="">Pilsner</a>
+
+                        <input type="radio" id="pilsnerID" name="beer" value="pilsner">Pilsner<br>
+                        <input type="radio" id="wheatID" name="beer" value="wheat">Wheat<br>
+                        <input type="radio" id="ipaID" name="beer" value="IPA">IPA<br>
+                        <input type="radio" id="stoutID" name="beer" value="Stout">Stout<br>
+                        <input type="radio" id="aleID" name="beer" value="Ale">Ale<br>
+                        <input type="radio" id="alcholFreeID" name="beer" value="Alcholo Free">Alcohol Free
                         <br>
                     </div>
                 </div>
@@ -65,21 +74,21 @@
                 </table>
             </div>
         </div>
-                    <div class="grid-item item3">
-                        <div id="batchQueue" class="batchQueueclass">
+        <div class="grid-item item3">
+            <div id="batchQueue" class="batchQueueclass">
 
-                            <button type="Submit" id="moveButton">Move Up</button><br><br>
-                            <button type="Submit" id="moveButton">Move Down</button><br><br>
-                            <button type="Submit" id="moveButton">Delete</button><br><br>
-                          
+                <button type="Submit" id="moveButton">Move Up</button><br><br>
+                <button type="Submit" id="moveButton">Move Down</button><br><br>
+                <button type="Submit" id="moveButton">Delete</button><br><br>
 
-                        </div>
-                    </div>
-                </div>
 
             </div>
-          
+        </div>
+    </div>
 
-      
+
+
+
+
 </body>
-    </html>
+</html>

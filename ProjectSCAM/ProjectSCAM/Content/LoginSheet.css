@@ -1,0 +1,47 @@
+﻿
+
+grid-container {
+    display: grid;
+    grid-gap: 10px;
+    background-color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+.grid-item {
+    text-align: center;
+    padding: 20px;
+    font-size: 20px;
+}
+
+.grid-container {
+    display: grid;
+    grid-gap: 10px;
+    background-color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+.grid-item {
+    text-align: center;
+    padding: 20px;
+    font-size: 20px;
+}
+.item1 {
+    
+    grid-column: 1;
+    grid-row: 1;
+    text-align: center;
+    
+}
+
+.navbar {
+    display: none !important;
+}
+
+.loginHeader {
+    text-align: center;
+    font-size: 20px;
+}
+
+

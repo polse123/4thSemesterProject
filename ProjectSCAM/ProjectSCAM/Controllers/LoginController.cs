@@ -12,7 +12,8 @@ namespace SCAMS.Controllers
         {
             return View();
         }
-        
+
+      
         //public string Welcome(string name, int numTimes = 1)
         //{
         //    return "Hello {name}, NumTimes is: {numTimes}";

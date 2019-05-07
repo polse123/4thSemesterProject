@@ -251,6 +251,7 @@
     <Content Include="Content\dropdown.css" />
     <Content Include="Content\firstSecond.css" />
     <Content Include="Content\HistoryStyleSheet.css" />
+    <Content Include="Content\LoginSheet.css" />
     <Content Include="Content\optimization.css" />
     <Content Include="Content\OverviewStyleSheet.css" />
     <Content Include="Content\ProductionStyleSheet.css" />
@@ -260,6 +261,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\createBatchesScript.js" />
     <Content Include="Scripts\createUserScript.js" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -282,6 +284,7 @@
     <Content Include="Scripts\MachineSelectionScript.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\OverviewScript.js" />
+    <Content Include="Scripts\productionScript.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

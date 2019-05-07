@@ -1,15 +1,36 @@
-﻿<!DOCTYPE html>
+﻿@{
+    ViewData["Title"] = "Login";
+}
+
+<!DOCTYPE html>
 <html>
 <head>
+    @Styles.Render("~/Content/LoginSheet.css")
+    @Scripts.Render("~/Scripts/loginScript.js")
+
 </head>
 <body>
-    <div id="textFields">
-        Username: <input type="text" id="usernameField"> </input>
-        <br />
-        Password: <input type="password" id="passwordField"> </input>
+    <div class="loginHeader">
+        <span id="loginHeader">Login</span>
     </div>
-    <div id="button">
-        <button type="Login" id="loginButton">Login</button>
+
+    <div class="grid-container">
+        <div class="grid-item item1">
+            <div id="textFields">
+                
+                <input type="text" class="input-field" id="usernameField" onblur="checkUsername()" placeholder="Username">
+                <br />
+                <br />
+                <input type="password" id="passwordField" onblur="checkPassword()" placeholder="Password">
+                <br />
+                <br />
+            </div>
+            <div id="button">
+                <button type="submit" id="loginButton">Login</button>
+            </div>
+
+        </div>
     </div>
+
 </body>
 </html>

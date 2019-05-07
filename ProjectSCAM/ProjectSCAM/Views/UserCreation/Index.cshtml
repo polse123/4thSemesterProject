@@ -1,9 +1,15 @@
-﻿<!DOCTYPE html>
+﻿@{
+    ViewData["Title"] = "User Creation";
+}
+
+@model ProjectSCAM.Models.UserModel
+<!DOCTYPE html>
 <html>
 <head>
 
     @Styles.Render("~/Content/CreateUserStyleSheet.css")
     @Scripts.Render("~/Scripts/createUserScript.js")
+
 
 
 </head>
@@ -12,37 +18,98 @@
         User creation <span id="userCreationHead" class="userCreationHeadLine" style="font-size: 20px;"></span> <br> <br>
 
     </div>
-    <div class="createUser-content">
-        
-
-                User information:  <p id="userParagraph"></p>
-                                   <form onsubmit="return checkFields()" method="post" action="~/Login/Index">
-                                       Username: <input type="text" required name="usernameField" id="usernameField" title="Five or more characters" value="" onblur="checkUsername()"> <br> <br>
-                                       Password: <input type="password" required name="passwordField" id="passwordField" title="Should have atleast 1 uppercase character, 1 lowercase character, 1 number and be atleast 8 characters" onblur="checkPassword"> <br> <br>
-                                       Repeat password: <input type="password" required name="repeatPasswordField" id="repeatPasswordField" title="Should match password" onblur="checkRepeatPassword()"> <br> <br>
-                                       Firstname: <input type="text" required name="firstnameField" id="firstnameField" title="Should contain characters" onblur="checkFirstname()"> <br> <br>
-                                       Lastname: <input type="text" required name="lastnameField" id="lastnameField" title="Should contain characters" onblur="checkLastname()"> <br> <br>
-                                       Phonenumber: <input type="text" required name="phonenumberField" id="phonenumberField" title="Should contain 8 numbers" onblur="checkPhonenumber()"> <br> <br>
-                                       Email address: <input type="email" required name="emailField" id="emailField" title="Must be an email address of the format: characters@characters.domain" onblur="checkEmail()"> <br> <br>
-
-
-                                       <div class="dropdownUserTypes">
-                                           <button class="dropbtnUserTypes" id="UserTypesSelect">User type</button>
-                                           <div class="dropdownUserType-content">
-
-                                               <input type="radio" name="userType" value="userType" id="userType1" checked>User type 1 <br>
-                                               <input type="radio" name="userType" value="userType" id="userType2">User type 2 <br>
-                                               <input type="radio" name="userType" value="userType" id="userType3">User type 3 <br>
-                                           </div>
-                                       </div> <br> <br>
-
-                                       <input type="submit" name="submitButton" value="create user" id="submitButton">
-
-                                   </form>
-
+    <div class="descriptionBox">
+        <span id="description">Please create new user</span>
 
     </div>
-    
+    </div>
+    @using (Html.BeginForm("RegisterUser", "UserCreation", FormMethod.Post))
+    {
+
+        @Html.ValidationSummary(true)
+        @Html.AntiForgeryToken()
+        <fieldset>
+            <legend>User</legend>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Username)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Username)
+                @Html.ValidationMessageFor(model => model.Username)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Password)
+            </div>
+            <div class="editor-field">
+                @Html.PasswordFor(model => model.Password)
+                @Html.ValidationMessageFor(model => model.Password)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.RepeatPassword)
+            </div>
+            <div class="editor-field">
+                @Html.PasswordFor(model => model.RepeatPassword)
+                @Html.ValidationMessageFor(model => model.RepeatPassword)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.FirstName)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.FirstName)
+                @Html.ValidationMessageFor(model => model.FirstName)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.LastName)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.LastName)
+                @Html.ValidationMessageFor(model => model.LastName)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Email)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Email)
+                @Html.ValidationMessageFor(model => model.Email)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.PhoneNumber)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.PhoneNumber)
+                @Html.ValidationMessageFor(model => model.PhoneNumber)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.UserType)
+            </div>
+            <div class="editor-field">
+                @Html.DropDownListFor(model => model.UserType, new List<SelectListItem>()
+    { new SelectListItem{Text = "Admin", Value = "0" }, new SelectListItem{Text = "Production Manager", Value = "1"}})
+                @Html.ValidationMessageFor(model => model.PhoneNumber)
+            </div>
+            <span>@ViewBag.statusMessage</span>
+            <input type="submit" value="Register User" />
+        </fieldset>
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }
+    }
+    <div class="createUser-content">
+
+
+        <!--  User information:  <p id="userParagraph"></p>
+                                   <form onsubmit="return checkFields()" method="post" action="~/Controllers/UserCreationController/RegisterUser">
+                                       <input type="text" required name="usernameField" id="usernameField" title="Five or more characters" value="" onblur="checkUsername()" placeholder="Username: "> <br> <br>
+                                       <input type="password" required name="passwordField" id="passwordField" title="Should have atleast 1 uppercase character, 1 lowercase character, 1 number and be atleast 8 characters" onblur="checkPassword" placeholder="Password: "> <br> <br>
+                                       <input type="password" required name="repeatPasswordField" id="repeatPasswordField" title="Should match password" onblur="checkRepeatPassword()" placeholder="Repeat password: "> <br> <br>
+                                       <input type="text" required name="firstnameField" id="firstnameField" title="Should contain characters" onblur="checkFirstname()" placeholder="Firstname:  "> <br> <br>
+                                       <input type="text" required name="lastnameField" id="lastnameField" title="Should contain characters" onblur="checkLastname()" placeholder="Lastname: ">  <br> <br>
+                                       <input type="text" required name="phonenumberField" id="phonenumberField" title="Should contain 8 numbers" onblur="checkPhonenumber()" placeholder=" Phonenumber: "> <br> <br>
+                                       <input type="email" required name="emailField" id="emailField" title="Must be an email address of the format: characters@characters.domain" onblur="checkEmail()" placeholder=" Email address: "> <br> <br>
+        -->
+        <br />
+    </div>
+
 
 </body>
 
