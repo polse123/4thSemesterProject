@@ -170,6 +170,35 @@ namespace ProjectSCAM.Models.Logic
         }
 
         /// <summary>
+        /// Retrieve a specific user.
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <param name="activeOnly"></param>
+        /// <returns></returns>
+        public UserModel RetrieveUser(string username, string password, bool activeOnly)
+        {
+            string append = " WHERE username = '" + username + "' AND password = '" + password + "'";
+            if (activeOnly)
+            {
+                append = append + " AND isactive = true;";
+            }
+            else
+            {
+                append = append + ";";
+            }
+            IList<UserModel> users = exe.RetrieveUsers(append);
+            if (users != null)
+            {
+                if (users.Count != 0)
+                {
+                    return users.First();
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
         /// The chosen user is made inactive.
         /// </summary>
         /// <param name="userid"></param>

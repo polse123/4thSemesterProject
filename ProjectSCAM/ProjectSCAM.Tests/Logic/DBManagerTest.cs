@@ -73,6 +73,9 @@ namespace ProjectSCAM.Tests.Logic
             else Assert.IsTrue(false);
         }
 
+        /// <summary>
+        /// Only works once after the DB has been reset.
+        /// </summary>
         [TestMethod]
         public void RegisterMachine()
         {
@@ -104,8 +107,11 @@ namespace ProjectSCAM.Tests.Logic
             IList<UserModel> list = dbManager.RetrieveUsers(true);
             Assert.IsNotNull(list); //Test RetrieveUsers
 
-            UserModel user = dbManager.RetrieveUser(1, true);
-            Assert.IsNotNull(user); //Test RetrieveUser
+            UserModel user1 = dbManager.RetrieveUser(1, true);
+            Assert.IsNotNull(user1); //Test RetrieveUser by id
+
+            UserModel user2 = dbManager.RetrieveUser("admin", "password", true);
+            Assert.IsNotNull(user2); //Test RetrieveUser by username and password
 
             bool userMadeInactive = false;
             int? highestId = null;
@@ -257,7 +263,7 @@ namespace ProjectSCAM.Tests.Logic
         }
 
         /// <summary>
-        /// RetrieveBatches, RetrieveBatchesbyAmount, RetrieveBatchesByMonth, RetrieveBatchesByMachine, RetrieveBatchesByRecipe, RetrieveBatch
+        /// RetrieveBatches, RetrieveBatch
         /// </summary>
         [TestMethod]
         public void RetrieveBatches()
