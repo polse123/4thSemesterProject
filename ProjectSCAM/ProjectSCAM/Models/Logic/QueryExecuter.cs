@@ -575,14 +575,15 @@ namespace ProjectSCAM.Models.Logic
                     NpgsqlDataReader dr = command.ExecuteReader();
                     while (dr.Read())
                     {
-                        try
+                        // dr[3], dr[6] and dr[7] might have the value DBNull.
+                        if (!Convert.IsDBNull(dr[3]))
                         {
                             AlarmModel alarm = new AlarmModel((int)dr[0], dr[1].ToString().Trim(), (int)dr[2],
                               (int)dr[3], (int)dr[4], dr[5].ToString().Trim(),
                                 dr[6].ToString().Trim() + " " + dr[7].ToString().Trim());
                             list.Add(alarm);
                         }
-                        catch (InvalidCastException ex)
+                        else
                         {
                             AlarmModel alarm = new AlarmModel((int)dr[0], dr[1].ToString().Trim(), (int)dr[2],
                                null, (int)dr[4], dr[5].ToString().Trim(), null);
