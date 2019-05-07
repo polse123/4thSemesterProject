@@ -12,8 +12,16 @@ namespace SCAMS.Controllers
     {
         public ActionResult Index()
         {
+            if (TempData["statusMessage"] != null)
+            {
+                ViewBag.statusMessage = TempData["statusMessage"].ToString();
+        } else {
+                ViewBag.statusMessage = "";
+            }
+  
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel u)
@@ -29,13 +37,16 @@ namespace SCAMS.Controllers
                     }
                 }
                 else
-                {
+                {   ViewBag.statusMessage = "Login failed";
+                    TempData["statusMessage"] = "Login failed";
                     return RedirectToAction("Index", new { Message = "Login failed" });
 
                 }
             }
+            ViewBag.statusMessage = "Login failed";
+            TempData["statusMessage"] = "Login failed";
             return RedirectToAction("Index", new { Message = "Login failed" });
 
         }
-    }
-}
+    }}
+
