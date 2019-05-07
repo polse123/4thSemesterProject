@@ -13,7 +13,10 @@
 </head>
 <body>
     <div class="first">
-        <button type="button" class="buttons"> Set inactive</button>
+        <form action="/UserCreation/MakUserInactive" method="post">
+            <input type="text" name="userId" required>
+            <button type="button" class="buttons"> Set inactive</button>
+        </form>
     </div>
     <div class="second">
         <table>
