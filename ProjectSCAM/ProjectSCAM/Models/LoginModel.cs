@@ -26,7 +26,10 @@ namespace ProjectSCAM.Models
                 Password = null;
                
             }
-          
+          public LoginModel()
+        {
+
+        }
         }
     }
 
