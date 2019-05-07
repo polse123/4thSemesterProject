@@ -18,19 +18,18 @@ namespace SCAMS.Controllers
         }
 
         [HttpPost]
-        public void MakeUserInactive()
+        public ActionResult MakeUserInactive()
         {
             string value = Request["userId"];
+            System.Diagnostics.Debug.WriteLine(value);
 
             try
             {
                 int.TryParse(value, out int userId);
                 Singleton.Instance.DBManager.MakeUserInactive(userId);
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            catch (Exception) { }
+            return RedirectToAction("Index");
         }
     }
 }
