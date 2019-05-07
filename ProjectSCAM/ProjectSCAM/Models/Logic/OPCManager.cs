@@ -43,12 +43,13 @@ namespace ProjectSCAM.Models.Logic {
             }
             if(e.PropertyName.Equals("StopReasonId")) {
                 OpcClient opc = sender as OpcClient;
+                System.Diagnostics.Debug.WriteLine(opc.StopReasonId);
                 Singleton.Instance.DBManager.RegisterBatchAndAlarm((int)opc.AcceptableProducts, (int)opc.DefectProducts,
                         opc.Start.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.AddYears(10).ToString("MM/dd/yyyy"), true, 1, 1, 1,
                         (int)opc.ProductsPerMinute,
                         3, GetMachineId(opc.Ip), lmao, lmao, lmao,DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"),(int)opc.StopReasonId);
                 IList<AlarmModel> alarmies = Singleton.Instance.DBManager.RetrieveAlarms();
-                AlarmModel a = alarmies[0];
+                AlarmModel a = alarmies[alarmies.Count-1];
                 a.MachineId = GetMachineId(opc.Ip);
                 System.Diagnostics.Debug.WriteLine(a.Id + a.MachineId + a.StopReason + a.StopReasonId);
                 AlarmManager.ActiveAlarms.Add(a);

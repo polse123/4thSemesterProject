@@ -17,7 +17,7 @@
                         var json = JSON.parse(data);
                         document.getElementById("modalAlarmId").textContent = json.Id;
                         document.getElementById("modalBatchId").textContent = json.BatchId;
-                        document.getElementById("modalTimeStamp").textContent = json.timestamp;
+                        document.getElementById("modalTimeStamp").textContent = json.Timestamp;
                         document.getElementById("modalMachineId").textContent = json.MachineId;
                         document.getElementById("modalStopReason").textContent = json.StopReason;
 
@@ -49,19 +49,19 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("SCAMS", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("SCAMS", "Index", "Login", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Overview", "Index", "Overview")</li>
-                    <li>@Html.ActionLink("Machine Selection", "Index", "MachineSelection")</li>
-                    <li>@Html.ActionLink("Production", "Index", "Production")</li>
-                    <li>@Html.ActionLink("Batches", "Index", "Batch")</li>
-                    <li>@Html.ActionLink("Alarms", "Index", "Alarm")</li>
-                    <li>@Html.ActionLink("History", "Index", "History")</li>
-                    <li>@Html.ActionLink("Optimization", "Index", "Optimization")</li>
-                    @*<li>@Html.ActionLink("User Creation", "Index", "UserCreation")</li>
-                        <li>@Html.ActionLink("User Management", "Index", "UserManagement")</li>*@
+                    <li class="userLinks">@Html.ActionLink("Overview", "Index", "Overview")</li>
+                    <li class="userLinks">@Html.ActionLink("Machine Selection", "Index", "MachineSelection")</li>
+                    <li class="userLinks">@Html.ActionLink("Production", "Index", "Production")</li>
+                    <li class="userLinks">@Html.ActionLink("Batches", "Index", "Batch")</li>
+                    <li class="userLinks">@Html.ActionLink("Alarms", "Index", "Alarm")</li>
+                    <li class="userLinks">@Html.ActionLink("History", "Index", "History")</li>
+                    <li class="userLinks">@Html.ActionLink("Optimization", "Index", "Optimization")</li>
+                    <li class="adminLinks">@Html.ActionLink("User Creation", "Index", "UserCreation")</li>
+                    <li class="adminLinks">@Html.ActionLink("User Management", "Index", "UserManagement")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
