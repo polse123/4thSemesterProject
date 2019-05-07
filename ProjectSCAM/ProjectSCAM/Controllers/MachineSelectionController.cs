@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 
 namespace MvcMovie.Controllers {
+    [AuthorizeUser(Type = "1")]
     public class MachineSelectionController : Controller {
         // 
         // GET: /MachineSelection/ 
