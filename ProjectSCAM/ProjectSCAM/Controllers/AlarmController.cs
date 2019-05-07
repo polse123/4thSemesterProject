@@ -15,7 +15,5 @@ namespace SCAMS.Controllers
             IList<AlarmModel> alarms = Singleton.Instance.DBManager.RetrieveAlarms();
             return View(alarms);
         }
-
-
     }
 }
