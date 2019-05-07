@@ -12,8 +12,16 @@ namespace SCAMS.Controllers
     {
         public ActionResult Index()
         {
+            if (TempData["statusMessage"] != null)
+            {
+                ViewBag.statusMessage = TempData["statusMessage"].ToString();
+        } else {
+                ViewBag.statusMessage = "";
+            }
+  
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel u)
@@ -24,18 +32,26 @@ namespace SCAMS.Controllers
                 if (uM != null)
                 {
                     if (uM.UserType == 1)
-                    {// session husk!!
+                    {
+                        Session["userType"] = uM.UserType;
+                        Session["userID"] = uM.Id;
+                        Session["username"] = uM.Username;
+                        Session["login"] = true; 
+
                         return RedirectToAction("Index", "Overview");
                     }
                 }
                 else
-                {
-                    return RedirectToAction("Index", new { Message = "Login failed" });
+                {  
+                    TempData["statusMessage"] = "Login failed";
+                    return RedirectToAction("Index");
 
                 }
             }
-            return RedirectToAction("Index", new { Message = "Login failed" });
+           
+            TempData["statusMessage"] = "Login failed";
+            return RedirectToAction("Index");
 
         }
-    }
-}
+    }}
+
