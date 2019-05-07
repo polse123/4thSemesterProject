@@ -16,15 +16,21 @@ namespace ProjectSCAM.Models
         //public string[] Type = new string[2] {"0", "1"};
         //[AuthorizeUser(Type ="1")]
         protected override bool AuthorizeCore(HttpContextBase httpContext)
-        { 
+        {
             //var isAuthorized = base.AuthorizeCore(httpContext);
             //if (!isAuthorized)
             //{
             //    return false;
             //}
-            if (httpContext.Session["UserType"].ToString() == this.Type)
-            {
-                return true;
+            if (httpContext.Session["UserType"] != null) {
+                if (httpContext.Session["UserType"].ToString() == this.Type)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             else
             {

@@ -15,8 +15,8 @@ namespace SCAMS.Controllers
         public ActionResult Index()
         {
             System.Web.HttpContext.Current.Session["UserType"] = "hello";
-            Session["userType"] = -1;
-            Session["userID"] = -1;
+            Session["userType"] = -2;
+            Session["userID"] = -2;
             Session["username"] = "";
             Session["login"] = false;
             if (TempData["statusMessage"] != null)
