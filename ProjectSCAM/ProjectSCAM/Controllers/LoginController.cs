@@ -43,19 +43,25 @@ namespace SCAMS.Controllers
                         //System.Web.HttpContext.Current.Session["UserRole"] = usermodelDB.userRole;
                         //var ia = System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
                         System.Web.HttpContext.Current.Session["UserType"] = "1";
+                    {
+                        Session["userType"] = uM.UserType;
+                        Session["userID"] = uM.Id;
+                        Session["username"] = uM.Username;
+                        Session["login"] = true; 
+
                         return RedirectToAction("Index", "Overview");
                     }
                 }
                 else
-                {   ViewBag.statusMessage = "Login failed";
-                    TempData["statusMessage"] = "Login failed 1";
-                    return RedirectToAction("Index", new { Message = "Login failed" });
+                {  
+                    TempData["statusMessage"] = "Login failed";
+                    return RedirectToAction("Index");
 
                 }
             }
-            ViewBag.statusMessage = "Login failed";
-            TempData["statusMessage"] = "Login failed 2";
-            return RedirectToAction("Index", new { Message = "Login failed" });
+           
+            TempData["statusMessage"] = "Login failed";
+            return RedirectToAction("Index");
 
         }
     }}

@@ -560,7 +560,7 @@ namespace ProjectSCAM.Models.Logic
         public IList<AlarmModel> RetrieveAlarms(string append)
         {
             string query = "SELECT Alarms.alarmid, Alarms.timestamp, Alarms.stopreason, Alarms.handledby, " +
-                "Alarms.batch, StopReasons.stopdescription, Users.firstname, Users.lastname " +
+                "Alarms.batch, StopReasons.actionrequired, StopReasons.stopdescription, Users.firstname, Users.lastname " +
                 "FROM Alarms LEFT JOIN StopReasons ON Alarms.stopreason = StopReasons.stopid " +
                 "LEFT JOIN Users on Alarms.handledby = Users.userid" + append;
 
@@ -575,18 +575,18 @@ namespace ProjectSCAM.Models.Logic
                     NpgsqlDataReader dr = command.ExecuteReader();
                     while (dr.Read())
                     {
-                        // dr[3], dr[6] and dr[7] might have the value DBNull.
+                        // dr[3], dr[7] and dr[8] might have the value DBNull.
                         if (!Convert.IsDBNull(dr[3]))
                         {
                             AlarmModel alarm = new AlarmModel((int)dr[0], dr[1].ToString().Trim(), (int)dr[2],
-                              (int)dr[3], (int)dr[4], dr[5].ToString().Trim(),
-                                dr[6].ToString().Trim() + " " + dr[7].ToString().Trim());
+                              (int)dr[3], (int)dr[4], (bool)dr[5], dr[6].ToString().Trim(),
+                                dr[7].ToString().Trim() + " " + dr[8].ToString().Trim());
                             list.Add(alarm);
                         }
                         else
                         {
                             AlarmModel alarm = new AlarmModel((int)dr[0], dr[1].ToString().Trim(), (int)dr[2],
-                               null, (int)dr[4], dr[5].ToString().Trim(), null);
+                               null, (int)dr[4], (bool)dr[5], dr[6].ToString().Trim(), null);
                             list.Add(alarm);
                         }
                     }
