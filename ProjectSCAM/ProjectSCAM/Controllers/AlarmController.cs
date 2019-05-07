@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ProjectSCAM.Models;
+using ProjectSCAM.Models.Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,7 +12,10 @@ namespace SCAMS.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            IList<AlarmModel> alarms = Singleton.Instance.DBManager.RetrieveAlarms();
+            return View(alarms);
         }
+
+
     }
 }

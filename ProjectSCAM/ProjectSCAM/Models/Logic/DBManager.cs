@@ -557,7 +557,7 @@ namespace ProjectSCAM.Models.Logic
         /// <returns></returns>
         public IList<AlarmModel> RetrieveAlarms()
         {
-            string append = " ORDER BY timestamp DESC;";
+            string append = " ORDER BY timestamp ASC;";
             return exe.RetrieveAlarms(append);
         }
 
@@ -569,7 +569,17 @@ namespace ProjectSCAM.Models.Logic
         /// <returns></returns>
         public IList<AlarmModel> RetrieveAlarms(int amount)
         {
-            string append = " ORDER BY timestamp DESC LIMIT " + amount + ";";
+            string append = " ORDER BY timestamp ASC LIMIT " + amount + ";";
+            return exe.RetrieveAlarms(append);
+        }
+
+        /// <summary>
+        /// Retrieve alarms that require handling.
+        /// </summary>
+        /// <returns></returns>
+        public IList<AlarmModel> RetrieveUnhandledAlarms()
+        {
+            string append = " WHERE actionrequired AND handledby IS NULL ORDER BY timestamp ASC;";
             return exe.RetrieveAlarms(append);
         }
 
