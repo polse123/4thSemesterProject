@@ -7,6 +7,7 @@
 <head>
 
     @Styles.Render("~/Content/AlarmStyleSheet.css")
+    @Styles.Render("~/Content/UserStyleSheet.css")
 
 
 
@@ -62,8 +63,9 @@
                         <input type="checkbox" name="year3" value="year" id="year3">Year 3 <br>
                     </div>
                 </div> <br> <br>
-                <input type="checkbox" name="unhandledButton" value="unhandled" id="unhandledButton">Unhandled
-
+                <form>
+                    <input type="checkbox" name="unhandledButton" value="unhandled" id="unhandledButton">Unhandled
+                </form>
             </div>
         </div>
         <div class="grid-item item3">
@@ -71,33 +73,28 @@
 
                 <table class="alarmstableclass" id="alarmstableid">
                     <tr>
-                        <th>Alarm number:</th>
-                        <th>BatchID:</th>
-                        <th>Date/time:</th>
-                        <th>Stop reason:</th>
-                        <th>StopID:</th>
-                        <th>Handled by:</th>
-                        <th>Required (True/false):</th>
+                        <th>Alarm ID</th>
+                        <th>Batch ID</th>
+                        <th>Date/time</th>
+                        <th>Stop reason</th>
+                        <th>Stop ID</th>
+                        <th>Handled by</th>
+                        <th>Handler ID</th>
+                        <th>Requiring handling</th>
                     </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>10</td>
-                        <td>100</td>
-                        <td>3</td>
-                        <td>3</td>
-                        <td>3</td>
-                        <td>3</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>100</td>
-                        <td>200</td>
-                        <td>2</td>
-                        <td>3</td>
-                        <td>3</td>
-                        <td>3</td>
-                    </tr>
-
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@item.BatchId</td>
+                            <td>@item.Timestamp</td>
+                            <td>@item.StopReason</td>
+                            <td>@item.StopReasonId</td>
+                            <td>@item.HandlerName</td>
+                            <td>@item.HandledBy</td>
+                            <td>@item.ActionRequired</td>
+                        </tr>
+                    }
                 </table>
             </div>
         </div>

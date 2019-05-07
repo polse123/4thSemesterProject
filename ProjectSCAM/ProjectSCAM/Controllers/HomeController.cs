@@ -1,4 +1,5 @@
-﻿using ProjectSCAM.Models.Logic;
+﻿using ProjectSCAM.Models;
+using ProjectSCAM.Models.Logic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 
 namespace ProjectSCAM.Controllers {
+    [AuthorizeUser(Type = "-1")]
     public class HomeController : Controller {
         public ActionResult Index() {
             return View();

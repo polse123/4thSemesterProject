@@ -2,6 +2,7 @@
     ViewData["Title"] = "Login";
 }
 
+@model ProjectSCAM.Models.LoginModel
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,24 +11,49 @@
 
 </head>
 <body>
-
-
     <div class="grid-container">
+
+
         <div class="grid-item item1">
-            <div id="textFields">
-                <br />
-                <input type="text" class="input-field" id="usernameField" onblur="checkUsername()" placeholder="Username">
-                <br />
-                <br />
-                <input type="password" id="passwordField" onblur="checkPassword()" placeholder="Password">
-                <br />
-                <br />
+  <span id="loginHeader">Login</span>
+        </div>
+        @using (Html.BeginForm("Login", "Login", FormMethod.Post))
+        {
+
+            @Html.ValidationSummary(true)
+            @Html.AntiForgeryToken()
+        <fieldset>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Username)
             </div>
-            <div id="button">
-                <button type="submit" id="loginButton">Login</button>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Username)
+                @Html.ValidationMessageFor(model => model.Username)
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Password)
+            </div>
+            <div class="editor-field">
+                @Html.PasswordFor(model => model.Password)
+                @Html.ValidationMessageFor(model => model.Password)
+            </div>
+            <br>
+            <input type="submit" value="Login" />
+            <br>
+            <div class="editor-field">
+                <span>@ViewBag.statusMessage</span>
+              
+            </div>
+        </fieldset>
+            @section Scripts {
+                @Scripts.Render("~/bundles/jqueryval")
+            }
+        }
+      
+    </div>
+      
             </div>
 
-        </div>
-    </div>
 </body>
 </html>

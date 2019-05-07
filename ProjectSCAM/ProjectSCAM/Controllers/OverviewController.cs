@@ -10,6 +10,7 @@ using ProjectSCAM.Models;
 using ProjectSCAM.Models.Logic;
 
 namespace SCAMS.Controllers {
+    [AuthorizeUser(Type = "1")]
     public class OverviewController : Controller {
         public ActionResult Index() {
 

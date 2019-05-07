@@ -7,38 +7,26 @@ namespace ProjectSCAM.Models
 {
     public class AlarmModel
     {
-        public int Id { get; set; }
-        public string timestamp { get; set; }
-        public int StopReasonId { get; set; }
+        public int Id { get; }
+        public string Timestamp { get; }
+        public int StopReasonId { get; }
         public int? HandledBy { get; set; }
-        public int BatchId { get; set; }
-        public int MachineId { get; set; }
+        public int BatchId { get; }
 
-        public string StopReason { get; set; }
+        public bool ActionRequired { get; }
+        public string StopReason { get; }
         public string HandlerName { get; set; }
 
-        /// <summary>
-        /// Used for initializing alarms with data from the database.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="timestamp"></param>
-        /// <param name="stopReasonId"></param>
-        /// <param name="handledBy"></param>
-        /// <param name="batchId"></param>
-        /// <param name="stopReason"></param>
-        /// <param name="handlerName"></param>
-        public AlarmModel(int id, string timestamp, int stopReasonId, int? handledBy, int batchId, string stopReason, string handlerName)
+        public AlarmModel(int id, string timestamp, int stopReasonId, int? handledBy, int batchId, bool actionRequired, string stopReason, string handlerName)
         {
             Id = id;
-            this.timestamp = timestamp ?? throw new ArgumentNullException(nameof(timestamp));
+            Timestamp = timestamp ?? throw new ArgumentNullException(nameof(timestamp));
             StopReasonId = stopReasonId;
             HandledBy = handledBy;
             BatchId = batchId;
+            ActionRequired = actionRequired;
             StopReason = stopReason ?? throw new ArgumentNullException(nameof(stopReason));
             HandlerName = handlerName;
-        }
-        public AlarmModel() {
-
         }
     }
 }
