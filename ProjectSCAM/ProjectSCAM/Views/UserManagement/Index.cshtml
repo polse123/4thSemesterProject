@@ -16,8 +16,8 @@
     <div class="first">
         @using (Html.BeginForm("MakeUserInactive", "UserManagement", FormMethod.Post))
         {
-            <input type="text" name="userId" required>
-            <button type="button" class="buttons"> Set inactive</button>
+            <input type="text" name="userId" id="userId" required>
+            <button type="submit" class="buttons"> Set inactive</button>
         }
     </div>
     <div class="second">
