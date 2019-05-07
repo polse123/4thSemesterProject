@@ -8,7 +8,7 @@ namespace ProjectSCAM.Models
     public class AlarmModel
     {
         public int Id { get; set; }
-        public string timestamp { get; set; }
+        public string Timestamp { get; set; }
         public int StopReasonId { get; set; }
         public int? HandledBy { get; set; }
         public int BatchId { get; set; }
