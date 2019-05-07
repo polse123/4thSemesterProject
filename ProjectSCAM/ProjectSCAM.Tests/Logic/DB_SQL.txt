@@ -36,7 +36,7 @@ CREATE TABLE recipes (
 
 CREATE TABLE machines (
 	machineid SERIAL PRIMARY KEY,
-	ipaddress VARCHAR(15) NOT NULL UNIQUE,
+	ipaddress VARCHAR(40) NOT NULL UNIQUE,
 	description VARCHAR(256)
 );
 
@@ -68,7 +68,6 @@ CREATE TABLE batchqueue (
 );
 
 CREATE TABLE batches (
-	batchid SERIAL PRIMARY KEY,
 	acceptableproducts INT NOT NULL,
 	defectproducts INT NOT NULL,
 	timestampstart CHAR(23) NOT NULL,
@@ -83,6 +82,7 @@ CREATE TABLE batches (
 	beerid INT NOT NULL,
 	machine INT NOT NULL,
 	soldto INT,
+	batchid SERIAL PRIMARY KEY,
 	FOREIGN KEY(beerid) REFERENCES recipes(beerid) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY(machine) REFERENCES machines(machineid) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY(soldto) REFERENCES customers(customerid) ON DELETE CASCADE ON UPDATE CASCADE
@@ -149,9 +149,9 @@ INSERT INTO recipes VALUES(5, 125, 'Alcohol Free', 1, 1, 4, 5, 0);
 
 /* Test data */
 
-INSERT INTO machines(ipaddress, description) VALUES('10.112.254.69', 'A physical simulation');
-INSERT INTO machines(ipaddress, description) VALUES('127.0.0.1', 'A virtual simulation');
-INSERT INTO machines(ipaddress, description) VALUES('0.0', null);
+INSERT INTO machines(ipaddress, description) VALUES('opc.tcp://10.112.254.69:4840', 'A physical simulation');
+INSERT INTO machines(ipaddress, description) VALUES('opc.tcp://127.0.0.1:4840', 'A virtual simulation');
+INSERT INTO machines(ipaddress, description) VALUES('test', null);
 
 INSERT INTO users(username, password, firstname, lastname, email, phonenumber, isactive, usertype)
 	VALUES('admin', 'password', 'Super', 'Admin', 'admin@scam.com', null, true, 0);
@@ -188,6 +188,8 @@ INSERT INTO beers VALUES(5, true, 1);
 
 INSERT INTO alarms(timestamp, stopreason, handledby, batch)
 	VALUES('03/03/2019 13:10:00.000', 10, null, 1);
+INSERT INTO alarms(timestamp, stopreason, handledby, batch)
+	VALUES('03/03/2019 13:10:00.000', 10, 2, 1);
 
 /*
 

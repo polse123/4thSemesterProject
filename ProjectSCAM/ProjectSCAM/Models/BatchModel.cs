@@ -14,9 +14,10 @@ namespace ProjectSCAM.Models
         public string TimestampEnd { get; }
         public string ExpirationDate { get; }
         public bool Succeeded { get; }
-        public double Performance { get; }
-        public double Quality { get; }
-        public double Availability { get; }
+        public string Performance { get; }
+        public string Quality { get; }
+        public string Availability { get; }
+        public string Oee { get; }
         public int Speed { get; }
         public int BeerId { get; }
         public int Machine { get; }
@@ -29,7 +30,7 @@ namespace ProjectSCAM.Models
 
         public BatchModel(int id, int acceptableProducts, int defectProducts,
             string timestampStart, string timestampEnd, string expirationDate, bool succeeded,
-            double performance, double quality, double availability,
+            string performance, string quality, string availability, string oee,
             int speed, int beerId, int machine, int? soldTo, string recipeName, string customerName)
         {
             Id = id;
@@ -39,9 +40,10 @@ namespace ProjectSCAM.Models
             TimestampEnd = timestampEnd ?? throw new ArgumentNullException(nameof(timestampEnd));
             ExpirationDate = expirationDate ?? throw new ArgumentNullException(nameof(expirationDate));
             Succeeded = succeeded;
-            Performance = performance;
-            Quality = quality;
-            Availability = availability;
+            Performance = performance ?? throw new ArgumentNullException(nameof(performance));
+            Quality = quality ?? throw new ArgumentNullException(nameof(quality));
+            Availability = availability ?? throw new ArgumentNullException(nameof(availability));
+            Oee = oee ?? throw new ArgumentNullException(nameof(oee));
             Speed = speed;
             BeerId = beerId;
             Machine = machine;

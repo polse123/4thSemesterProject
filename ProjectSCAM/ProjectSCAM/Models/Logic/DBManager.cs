@@ -175,6 +175,35 @@ namespace ProjectSCAM.Models.Logic
         }
 
         /// <summary>
+        /// Retrieve a specific user.
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <param name="activeOnly"></param>
+        /// <returns></returns>
+        public UserModel RetrieveUser(string username, string password, bool activeOnly)
+        {
+            string append = " WHERE username = '" + username + "' AND password = '" + password + "'";
+            if (activeOnly)
+            {
+                append = append + " AND isactive = true;";
+            }
+            else
+            {
+                append = append + ";";
+            }
+            IList<UserModel> users = exe.RetrieveUsers(append);
+            if (users != null)
+            {
+                if (users.Count != 0)
+                {
+                    return users.First();
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
         /// The chosen user is made inactive.
         /// </summary>
         /// <param name="userid"></param>
@@ -467,7 +496,7 @@ namespace ProjectSCAM.Models.Logic
                 append.Append(SUCCEEDED_BATCHES_ONLY_APPEND + " AND");
             }
             else { append.Append(" WHERE"); }
-            append.Append(" beerid = " + beerId + ";");
+            append.Append(" Batches.beerid = " + beerId + ";");
             return exe.RetrieveBatches(append.ToString());
         }
 
@@ -594,27 +623,27 @@ namespace ProjectSCAM.Models.Logic
             double performance, double quality, double availability,
             int speed, int beerId, int machine)
         {
-            //string succString = succeeded.ToString();
+            double oee = performance * quality * availability;
 
-            return String.Format(("INSERT INTO batches(acceptableproducts, defectproducts, timestampstart,timestampend,expirationdate,succeeded,performance,quality,availability,speed,beerid,machine)" +
-                       "VALUES({0}, {1}, '{2}', '{3}', '{4}', {5}, {6}, {7}, {8}, {9}, {10}, {11}) RETURNING batchid;"), acceptableProducts, defectProducts, timestampStart, timestampEnd, expirationDate, "true", "0.5", 1.0, availability, speed, beerId, machine);
+            string perf = performance.ToString();
+            string qual = quality.ToString();
+            string avai = availability.ToString();
+            string oeeString = oee.ToString();
 
-            //return "INSERT INTO batches(acceptableproducts, defectproducts, timestampstart,timestampend,expirationdate,succeeded,performance,quality,availability,speed,beerid,machine) VALUES(" + acceptableProducts + ", " + defectProducts + ", '" + timestampStart + "', '" + timestampEnd + "', '" + expirationDate + "', " + succeeded + ", " + performance + ", " + quality + ", " + availability + ", " + speed + ", " + beerId + ", " + machine + ") RETURNING batchid";
+            string[] oeeStrings = { perf, qual, avai, oeeString };
 
-            /*return String.Format("INSERT INTO Batches(acceptableproducts, defectproducts," +
-            " timestampstart, timestampend, expirationdate, succeeded," +
-            " performance, quality, availability, speed, beerid, machine)" +
-            " VALUES({0}, {1}, '{2}', '{3}', '{4}', '{5}', {6}, {7}, {8}, {9}, {10}, {11}) RETURNING batchid;",
-               acceptableProducts, defectProducts, timestampStart, timestampEnd, expirationDate,
-               succString, performance, quality, availability, speed, beerId, machine);*/
+            for (int i = 0; i < oeeStrings.Length; i++)
+            {
+                if (oeeStrings[i].Length > 12)
+                {
+                    oeeStrings[i] = oeeStrings[i].Substring(0, 12);
+                }
+            }
 
-            /*return "INSERT INTO Batches(acceptableproducts, defectproducts," +
-               " timestampstart, timestampend, expirationdate, succeeded," +
-               " performance, quality, availability, speed, beerid, machine)" +
-               " VALUES(" + acceptableProducts + ", " + defectProducts + ", '" +
-               timestampStart + "', '" + timestampEnd + "', '" + expirationDate + "', " +
-               succeeded + ", " + performance + ", " + quality + ", " + availability + ", " +
-               speed + ", " + beerId + ", " + machine + ") RETURNING batchid;";*/
+            return String.Format(("INSERT INTO Batches VALUES({0}, {1}, '{2}', '{3}', '{4}'," +
+                "{5}, '{6}', '{7}', '{8}', '{9}', {10}, {11}, {12}) RETURNING batchid;"),
+                acceptableProducts, defectProducts, timestampStart, timestampEnd, expirationDate,
+                succeeded, oeeStrings[0], oeeStrings[1], oeeStrings[2], oeeStrings[3], speed, beerId, machine);
         }
     }
 }

@@ -73,10 +73,13 @@ namespace ProjectSCAM.Tests.Logic
             else Assert.IsTrue(false);
         }
 
+        /// <summary>
+        /// Only works once after the DB has been reset.
+        /// </summary>
         [TestMethod]
         public void RegisterMachine()
         {
-            bool success = dbManager.RegisterMachine("localhost", "Local host");
+            bool success = dbManager.RegisterMachine("Test Data", "This is test data");
             Assert.IsTrue(success);
         }
 
@@ -104,8 +107,11 @@ namespace ProjectSCAM.Tests.Logic
             IList<UserModel> list = dbManager.RetrieveUsers(true);
             Assert.IsNotNull(list); //Test RetrieveUsers
 
-            UserModel user = dbManager.RetrieveUser(1, true);
-            Assert.IsNotNull(user); //Test RetrieveUser
+            UserModel user1 = dbManager.RetrieveUser(1, true);
+            Assert.IsNotNull(user1); //Test RetrieveUser by id
+
+            UserModel user2 = dbManager.RetrieveUser("admin", "password", true);
+            Assert.IsNotNull(user2); //Test RetrieveUser by username and password
 
             bool userMadeInactive = false;
             int? highestId = null;
@@ -251,27 +257,28 @@ namespace ProjectSCAM.Tests.Logic
                 true, 0.5, 0.6, 1.0, 600, 0, 1, tList, hList, vList);
             Assert.IsTrue(success1); // Test RegisterBatch
 
-            /*bool success2 = dbManager.RegisterBatchAndAlarm(8, 50, "15/02/2019 10:45:10.500", "15/02/2019 10:45:16.300", "15/08/2019",
-                true, 0.5, 0.6, 1.0, 600, 0, 0, tList, hList, vList, "15/02/2019 10:45:16.500", 11);
-            Assert.IsTrue(success2); // Test RegisterBatchAndAlarm*/
+            bool success2 = dbManager.RegisterBatchAndAlarm(10, 50, "15/02/2019 10:45:10.500", "15/02/2019 10:45:16.300", "15/08/2019",
+                true, 0.5, 0.6, 1.0, 600, 0, 1, tList, hList, vList, "15/02/2019 10:45:16.500", 11);
+            Assert.IsTrue(success2); // Test RegisterBatchAndAlarm
         }
 
         /// <summary>
-        /// RetrieveBatches, RetrieveBatchesbyAmount, RetrieveBatchesByMonth, RetrieveBatchesByMachine, RetrieveBatchesByRecipe, RetrieveBatch
+        /// RetrieveBatches, RetrieveBatch
         /// </summary>
         [TestMethod]
         public void RetrieveBatches()
         {
             IList<BatchModel> list1 = dbManager.RetrieveBatches(false);
             IList<BatchModel> list2 = dbManager.RetrieveBatchesByAmount(3, false);
-            IList<BatchModel> list3 = dbManager.RetrieveBatchesByMonth("2", "2019", false);
-            IList<BatchModel> list4 = dbManager.RetrieveBatchesByMachine(0, false);
+            IList<BatchModel> list3 = dbManager.RetrieveBatchesByMonth("3", "2019", false);
+            IList<BatchModel> list4 = dbManager.RetrieveBatchesByMachine(1, false);
             IList<BatchModel> list5 = dbManager.RetrieveBatchesByRecipe(0, false);
 
             IList<BatchModel>[] lists = { list1, list2, list3, list4, list5 };
+
             int? batchId = null;
 
-            for (int i = 5; i < 5; i++)
+            for (int i = 0; i < lists.Length; i++)
             {
                 Assert.IsNotNull(lists[i]);
                 if (lists[i].Count != 0)
@@ -288,7 +295,7 @@ namespace ProjectSCAM.Tests.Logic
                 else Assert.IsNotNull(null);
             }
 
-            BatchModel batch = dbManager.RetrieveBatch(0);
+            BatchModel batch = dbManager.RetrieveBatch(1);
             Assert.IsNotNull(batch); // Test RetrieveBatch
         }
 

@@ -349,6 +349,7 @@ namespace ProjectSCAM.Models.Logic
             {
                 try
                 {
+                    // Register batch
                     CONN.Open();
                     NpgsqlCommand command = new NpgsqlCommand(batchQuery, CONN);
                     NpgsqlDataReader dr = command.ExecuteReader();
@@ -356,19 +357,26 @@ namespace ProjectSCAM.Models.Logic
                     {
                         batchId = (int)dr[0];
                     }
+                    CONN.Close();
+
                     if (batchId != null)
                     {
+
                         // Register batch values
-                        //RegisterBatchValues((int)batchId, temperatureValues, humidityValues, vibrationValues);
+                        CONN.Open();
+                        RegisterBatchValues((int)batchId, temperatureValues, humidityValues, vibrationValues);
+                        CONN.Close();
 
                         // Register beers
-                        //RegisterBeers((int)batchId, acceptableProducts);
+                        CONN.Open();
+                        RegisterBeers((int)batchId, acceptableProducts);
+                        CONN.Close();
 
                         // Register alarm
                         if (alarmQuery != null)
                         {
                             alarmQuery.Append(batchId + ");");
-                            //ExecuteQuery(alarmQuery.ToString());
+                            ExecuteQuery(alarmQuery.ToString());
                         }
 
                         return true;
@@ -396,7 +404,7 @@ namespace ProjectSCAM.Models.Logic
         {
             string query = "SELECT Batches.batchid, Batches.acceptableproducts, Batches.defectproducts, " +
                 "Batches.timestampstart, Batches.timestampend, Batches.expirationdate, " +
-                "Batches.succeeded, Batches.performance, Batches.quality, Batches.availability, " +
+                "Batches.succeeded, Batches.performance, Batches.quality, Batches.availability, Batches.oee, " +
                 "Batches.speed, Batches.beerid, Batches.machine, Batches.soldto, " +
                 "Recipes.name, Customers.customername " +
                 "FROM Batches LEFT JOIN Recipes ON Batches.beerid = Recipes.beerid " +
@@ -414,12 +422,25 @@ namespace ProjectSCAM.Models.Logic
                     NpgsqlDataReader dr = command.ExecuteReader();
                     while (dr.Read())
                     {
-                        BatchModel batch = new BatchModel((int)dr[0], (int)dr[1], (int)dr[2],
-                            dr[3].ToString().Trim(), dr[4].ToString().Trim(), dr[5].ToString().Trim(),
-                            (bool)dr[6], (double)dr[7], (double)dr[8], (double)dr[9],
-                            (int)dr[10], (int)dr[11], (int)dr[12], (int?)dr[13],
-                            dr[14].ToString().Trim(), (string)dr[15]);
-                        list.Add(batch);
+                        // dr[14] and dr[16] might have the value DBNull.
+                        if (!Convert.IsDBNull(dr[14]))
+                        {
+                            BatchModel batch = new BatchModel((int)dr[0], (int)dr[1], (int)dr[2],
+                                dr[3].ToString().Trim(), dr[4].ToString().Trim(), dr[5].ToString().Trim(),
+                                (bool)dr[6], dr[7].ToString().Trim(), dr[8].ToString().Trim(), dr[9].ToString().Trim(),
+                                dr[10].ToString().Trim(), (int)dr[11], (int)dr[12], (int)dr[13], (int)dr[14],
+                                dr[15].ToString().Trim(), dr[16].ToString().Trim());
+                            list.Add(batch);
+                        }
+                        else
+                        {
+                            BatchModel batch = new BatchModel((int)dr[0], (int)dr[1], (int)dr[2],
+                                        dr[3].ToString().Trim(), dr[4].ToString().Trim(), dr[5].ToString().Trim(),
+                                        (bool)dr[6], dr[7].ToString().Trim(), dr[8].ToString().Trim(), dr[9].ToString().Trim(),
+                                        dr[10].ToString().Trim(), (int)dr[11], (int)dr[12], (int)dr[13], null,
+                                        dr[15].ToString().Trim(), null);
+                            list.Add(batch);
+                        }
                     }
                 }
                 catch (NpgsqlException ex)
@@ -506,6 +527,7 @@ namespace ProjectSCAM.Models.Logic
 
             lock (CONN_LOCK)
             {
+                // dr[3] might have type DBNull. In this case, an InvalidCastException will be thrown.
                 try
                 {
                     CONN.Open();
@@ -553,10 +575,11 @@ namespace ProjectSCAM.Models.Logic
                     NpgsqlDataReader dr = command.ExecuteReader();
                     while (dr.Read())
                     {
-                        if (dr[3] != null || dr[6] != null || dr[7] != null)
+                        // dr[3], dr[6] and dr[7] might have the value DBNull.
+                        if (!Convert.IsDBNull(dr[3]))
                         {
                             AlarmModel alarm = new AlarmModel((int)dr[0], dr[1].ToString().Trim(), (int)dr[2],
-                                (int)dr[3], (int)dr[4], dr[5].ToString().Trim(),
+                              (int)dr[3], (int)dr[4], dr[5].ToString().Trim(),
                                 dr[6].ToString().Trim() + " " + dr[7].ToString().Trim());
                             list.Add(alarm);
                         }
