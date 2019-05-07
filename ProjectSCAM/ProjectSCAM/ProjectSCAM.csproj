@@ -242,6 +242,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\AdminStyleSheet.css" />
     <Content Include="Content\alarmPopup.css" />
     <Content Include="Content\AlarmStyleSheet.css" />
     <Content Include="Content\BatchStyleSheet.css" />
@@ -257,6 +258,7 @@
     <Content Include="Content\optimization.css" />
     <Content Include="Content\OverviewStyleSheet.css" />
     <Content Include="Content\ProductionStyleSheet.css" />
+    <Content Include="Content\UserStyleSheet.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
