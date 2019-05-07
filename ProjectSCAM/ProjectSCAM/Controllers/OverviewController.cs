@@ -12,22 +12,28 @@ using ProjectSCAM.Models.Logic;
 namespace SCAMS.Controllers {
     public class OverviewController : Controller {
         public ActionResult Index() {
-            Session["SelectedMachine"] = "opc.tcp://127.0.0.1:4840";
-            return View();
+            ViewBag.BatchQueue = Singleton.Instance.DBManager.RetrieveFromBatchQueue();
+            return View(ViewBag);
         }
-        // series of actionmethods that handle post requests
+
         [HttpPost]
         public string MachineControl() {
             // get value of command variable in the request
             string value = Request["command"];
-            
+
             // let opc manager handle the command
-            try {
-                Singleton.Instance.opcManager.HandleCommand(Session["SelectedMachine"].ToString(), value);
-                return "command valid";
-            } catch (Exception ex) {
-                return ex.Message;
+            if (Session["SelectedMachine"] != null) {
+                try {
+                    Singleton.Instance.opcManager.HandleCommand(Session["SelectedMachine"].ToString(), value);
+                    return "command valid";
+                } catch (Exception ex) {
+                    System.Diagnostics.Debug.WriteLine(Session["SelectedMachine"]);
+                    return ex.Message;
+                }
+            } else {
+                return "Select a machine.";
             }
+
 
         }
         [HttpGet]
@@ -36,16 +42,17 @@ namespace SCAMS.Controllers {
             return JsonConvert.SerializeObject(batchq, Formatting.None);
 
         }
-        [HttpPost]
-        public string SetSelectedMachine() {
-            string value = Request["ip"];
-            Session["SelectedMachine"] = value;
-            return "lmao";
-        }
 
         public JsonResult Message() {
-            var x = Singleton.Instance.opcManager.GetOpcConnection(Session["SelectedMachine"].ToString());
-            return Json(x); ;
+
+            if (Session["SelectedMachine"] != null) {
+                var x = Singleton.Instance.opcManager.GetOpcConnection(Session["SelectedMachine"].ToString());
+                System.Diagnostics.Debug.WriteLine(Session["SelectedMachine"].ToString());
+                return Json(x);
+            } else {
+                return Json("error");
+
+            }
         }
     }
 }

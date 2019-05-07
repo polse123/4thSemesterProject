@@ -9,24 +9,12 @@
 <html>
 <head>
     @Styles.Render("~/Content/dropdown.css")
-
+    @Scripts.Render("~/Scripts/MachineSelectionScript.js")
 </head>
-<script>
-    function selectMachine() {
-        console.log("fired");
-        var machineselect = document.getElementById("machineselect");
-        var selected = machineselect.options[machineselect.selectedIndex];
-        var span = document.getElementById("description");
-        console.log(selected.value);
-        console.log(selected.text);
-        span.textContent = selected.value;
-
-
-    }
-</script>
 <body>
     <div class="dropdown">
-        <select id="machineselect" onchange="selectMachine()">
+        <select id="machineselect" onchange="setMachine()">
+            <option selected="selected" value"">Select Machine</option>
             @foreach (var item in ViewBag.Machines) {
                 <option value="@item.Description">@item.Ip</option>
             }
