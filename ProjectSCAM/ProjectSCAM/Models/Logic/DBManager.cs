@@ -21,6 +21,11 @@ namespace ProjectSCAM.Models.Logic
         /// </summary>
         private readonly int EXPIRATION_DATE_LENGTH = 10;
 
+        internal void RetrieveUser()
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Query appendage used when running queries on the Batches table.
         /// Used when only succeeded queries are wanted.
