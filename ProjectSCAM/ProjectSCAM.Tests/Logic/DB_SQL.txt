@@ -156,7 +156,7 @@ INSERT INTO machines(ipaddress, description) VALUES('test', null);
 INSERT INTO users(username, password, firstname, lastname, email, phonenumber, isactive, usertype)
 	VALUES('admin', 'password', 'Super', 'Admin', 'admin@scam.com', null, true, 0);
 INSERT INTO users(username, password, firstname, lastname, email, phonenumber, isactive, usertype)
-	VALUES('user', 'password', 'Production', 'Manager', 'user@scam.com', '00000000', true, 1);
+	VALUES('user', 'password', 'That', 'Guy', 'user@scam.com', '00000000', true, 1);
 INSERT INTO users(username, password, firstname, lastname, email, phonenumber, isactive, usertype)
 	VALUES('username', 'password', 'Test', 'User', 'test@scam.com', '11111111', true, 1);
 
