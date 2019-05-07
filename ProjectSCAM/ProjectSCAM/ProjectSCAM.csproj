@@ -219,6 +219,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AlarmModel.cs" />
+    <Compile Include="Models\AuthorizeUserAttribute.cs" />
     <Compile Include="Models\BatchModel.cs" />
     <Compile Include="Models\BatchQueueModel.cs" />
     <Compile Include="Models\BatchValueCollection.cs" />
