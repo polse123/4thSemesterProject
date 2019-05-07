@@ -13,8 +13,17 @@ namespace SCAMS.Controllers
         public ActionResult Index()
         {
             IList<UserModel> users = Singleton.Instance.DBManager.RetrieveUsers(true);
-
             return View(users);
+        }
+
+        [HttpPost]
+        public ActionResult MakeUserInactive()
+        {
+            string value = Request["userId"];
+            System.Diagnostics.Debug.WriteLine("Whaaaat");
+
+
+            return null;
         }
     }
 }

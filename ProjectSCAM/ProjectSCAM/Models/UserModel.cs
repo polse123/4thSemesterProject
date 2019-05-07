@@ -29,7 +29,6 @@ namespace ProjectSCAM.Models
         [Required]
         [EmailAddress]
         public string Email { get; set; }
-        [Required]
         [DisplayName("Phone Number")]
         [Phone]
         public string PhoneNumber { get; set; }
@@ -55,7 +54,9 @@ namespace ProjectSCAM.Models
             UserType = userType;
             Role = role ?? throw new ArgumentNullException(nameof(role));
         }
-        public UserModel() {
+
+        public UserModel()
+        {
 
         }
     }
