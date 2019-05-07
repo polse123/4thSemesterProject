@@ -32,20 +32,25 @@ namespace SCAMS.Controllers
                 if (uM != null)
                 {
                     if (uM.UserType == 1)
-                    {// session husk!!
+                    {
+                        Session["userType"] = uM.UserType;
+                        Session["userID"] = uM.Id;
+                        Session["username"] = uM.Username;
+                        Session["login"] = true; 
+
                         return RedirectToAction("Index", "Overview");
                     }
                 }
                 else
-                {   ViewBag.statusMessage = "Login failed";
+                {  
                     TempData["statusMessage"] = "Login failed";
-                    return RedirectToAction("Index", new { Message = "Login failed" });
+                    return RedirectToAction("Index");
 
                 }
             }
-            ViewBag.statusMessage = "Login failed";
+           
             TempData["statusMessage"] = "Login failed";
-            return RedirectToAction("Index", new { Message = "Login failed" });
+            return RedirectToAction("Index");
 
         }
     }}
