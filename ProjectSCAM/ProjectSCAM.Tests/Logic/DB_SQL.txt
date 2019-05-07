@@ -157,6 +157,8 @@ INSERT INTO users(username, password, firstname, lastname, email, phonenumber, i
 	VALUES('admin', 'password', 'Super', 'Admin', 'admin@scam.com', null, true, 0);
 INSERT INTO users(username, password, firstname, lastname, email, phonenumber, isactive, usertype)
 	VALUES('user', 'password', 'Production', 'Manager', 'user@scam.com', '00000000', true, 1);
+INSERT INTO users(username, password, firstname, lastname, email, phonenumber, isactive, usertype)
+	VALUES('username', 'password', 'Test', 'User', 'test@scam.com', '11111111', true, 1);
 
 INSERT INTO customers(customername) VALUES('Jonas');
 
@@ -189,7 +191,9 @@ INSERT INTO beers VALUES(5, true, 1);
 INSERT INTO alarms(timestamp, stopreason, handledby, batch)
 	VALUES('03/03/2019 13:10:00.000', 10, null, 1);
 INSERT INTO alarms(timestamp, stopreason, handledby, batch)
-	VALUES('03/03/2019 13:10:00.000', 10, 2, 1);
+	VALUES('03/03/2019 13:11:00.000', 10, 2, 1);
+INSERT INTO alarms(timestamp, stopreason, handledby, batch)
+	VALUES('03/03/2019 13:12:00.000', 12, null, 1);
 
 /*
 

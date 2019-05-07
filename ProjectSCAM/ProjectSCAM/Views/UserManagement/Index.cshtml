@@ -13,10 +13,11 @@
 </head>
 <body>
     <div class="first">
-        <form action="/UserCreation/MakUserInactive" method="post">
+        @using (Html.BeginForm("MakeUserInactive", "UserManagement", FormMethod.Post))
+        {
             <input type="text" name="userId" required>
             <button type="button" class="buttons"> Set inactive</button>
-        </form>
+        }
     </div>
     <div class="second">
         <table>
@@ -40,7 +41,6 @@
                     <td>@item.PhoneNumber</td>
                     <td>@item.Role</td>
                 </tr>
-
             }
         </table>
     </div>
