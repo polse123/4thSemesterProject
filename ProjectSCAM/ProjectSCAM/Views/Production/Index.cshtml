@@ -91,10 +91,28 @@
         </div>
         <div class="grid-item item3">
             <div id="batchQueue" class="batchQueueclass">
-                @using (Html.BeginForm("Update", "ProductionController", FormMethod.Post)) {
-
-                };
-
+                @using (Html.BeginForm("Update", "Production", FormMethod.Post)) {
+                    @Html.ValidationSummary(true)
+                    @Html.AntiForgeryToken()
+                    <fieldset>
+                        <legend>Machine</legend>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.Id)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.Id)
+                            @Html.ValidationMessageFor(model => model.Id)
+                        </div>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.Priority)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.Priority)
+                            @Html.ValidationMessageFor(model => model.Priority)
+                        </div>
+                        <input type="submit" value="Update priority" />
+                    </fieldset>
+                }
             </div>
         </div>
     </div>
