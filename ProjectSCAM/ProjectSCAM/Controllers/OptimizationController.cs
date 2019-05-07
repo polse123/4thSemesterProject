@@ -1,4 +1,5 @@
 ﻿using ProjectSCAM.Models;
+using ProjectSCAM.Models.Logic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,10 @@ namespace SCAMS.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            //int.TryParse(param, out int id);
+            BatchModel batch = Singleton.Instance.DBManager.RetrieveBatch(1);
+            IList<BatchModel> list = new List<BatchModel>() { batch };
+            return View(list);
         }
     }
 }
