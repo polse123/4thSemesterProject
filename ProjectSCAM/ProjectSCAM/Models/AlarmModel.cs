@@ -16,6 +16,16 @@ namespace ProjectSCAM.Models
         public string StopReason { get; }
         public string HandlerName { get; set; }
 
+        /// <summary>
+        /// Used for initializing alarms with data from the database.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="timestamp"></param>
+        /// <param name="stopReasonId"></param>
+        /// <param name="handledBy"></param>
+        /// <param name="batchId"></param>
+        /// <param name="stopReason"></param>
+        /// <param name="handlerName"></param>
         public AlarmModel(int id, string timestamp, int stopReasonId, int? handledBy, int batchId, string stopReason, string handlerName)
         {
             Id = id;

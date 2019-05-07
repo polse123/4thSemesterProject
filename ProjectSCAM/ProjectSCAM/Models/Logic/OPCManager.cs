@@ -19,6 +19,35 @@ namespace ProjectSCAM.Models.Logic {
             //OpcConnections.Add(ip2, new OpcClient(ip2));
 
         }
+        public void AddEventHandlers() {
+            foreach(OpcClient opc in OpcConnections.Values) {
+                opc.PropertyChanged += Opc_PropertyChanged;
+            }
+        }
+
+        private void Opc_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
+            if(e.PropertyName.Equals("StateCurrent")) {
+                OpcClient opc = sender as OpcClient;
+                //if successfully produced
+                if(opc.StateCurrent == 17) {
+                    Singleton.Instance.DBManager.RegisterBatch(opc.AcceptableProducts,opc.DefectProducts,
+                        opc.Start,DateTime.Now,DateTime.Now.AddYears(10),true,1,1,1,opc.ProductsPerMinute,
+                        3,);
+                }
+
+            }
+        }
+        private int GetMachineId(string ip) {
+            IList<MachineModel> machines = Singleton.Instance.DBManager.RetrieveMachines();
+            int i = 0;
+            foreach(MachineModel m in machines) {
+                if(m.Ip.Equals(ip)) {
+                    i = (int)m.Id;
+                }
+            }
+            return i;
+        }
+
         public bool HandleCommand(string ip, string command) {
             OpcClient opc;
             bool succeeded = OpcConnections.TryGetValue(ip,out opc);

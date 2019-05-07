@@ -9,6 +9,7 @@ using UnifiedAutomation.UaClient;
 
 namespace ProjectSCAM.Models {
     public class OpcClient : INotifyPropertyChanged {
+        public DateTime Start { get; set; }
         private bool isProcessRunning = false;
         private double processedProducts;
         private double defectProducts;
@@ -297,6 +298,7 @@ namespace ProjectSCAM.Models {
             float amountToProduce, float machineSpeed) {
             if (!isProcessRunning) {
                 isProcessRunning = true;
+                Start = DateTime.Now;
                 // collection of nodes to be written
                 WriteValueCollection nodesToWrite = new WriteValueCollection();
                 DataValue start = new DataValue();
