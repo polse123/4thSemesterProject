@@ -7,14 +7,14 @@ namespace ProjectSCAM.Models
 {
     public class CustomerModel
     {
-        public int CustomerId { get; }
+        public int Id { get; }
 
         public string CustomerName { get; }
 
-        public CustomerModel(int customerId, string customerName)
+        public CustomerModel(int customerId, string id)
         {
-            CustomerId = customerId;
-            CustomerName = customerName ?? throw new ArgumentNullException(nameof(customerName));
+            Id = customerId;
+            CustomerName = id ?? throw new ArgumentNullException(nameof(id));
         }
     }
 }

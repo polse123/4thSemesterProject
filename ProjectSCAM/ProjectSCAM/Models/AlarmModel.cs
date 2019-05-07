@@ -10,13 +10,13 @@ namespace ProjectSCAM.Models
         public int Id { get; }
         public string timestamp { get; }
         public int StopReasonId { get; }
-        public int HandledBy { get; set; }
+        public int? HandledBy { get; set; }
         public int BatchId { get; }
 
         public string StopReason { get; }
         public string HandlerName { get; set; }
 
-        public AlarmModel(int id, string timestamp, int stopReasonId, int handledBy, int batchId, string stopReason, string handlerName)
+        public AlarmModel(int id, string timestamp, int stopReasonId, int? handledBy, int batchId, string stopReason, string handlerName)
         {
             Id = id;
             this.timestamp = timestamp ?? throw new ArgumentNullException(nameof(timestamp));
