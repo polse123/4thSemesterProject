@@ -38,7 +38,10 @@ namespace ProjectSCAM.Models {
         public OpcClient(string ip) {
             Ip = ip;
             Connect();
-            CreateSubscription();
+            if(session.ConnectionStatus != ServerConnectionStatus.Disconnected) {
+                CreateSubscription();
+            }
+
         }
 
         //Connection to OPC
@@ -54,9 +57,10 @@ namespace ProjectSCAM.Models {
             } catch (Exception ex) {
 
             }
+            if(session.ConnectionStatus != ServerConnectionStatus.Disconnected) {
+                maintenanceTrigger = ReadMaintenanceTrigger();
+            }
 
-            batchId = ReadCurrentBatchId();
-            maintenanceTrigger = ReadMaintenanceTrigger();
         }
 
         public void CreateSubscription() {
@@ -405,30 +409,7 @@ namespace ProjectSCAM.Models {
             return (float)dv.Value;
         }
 
-        public float ReadCurrentBatchId() {
-            ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
-            nodesToRead.Add(new ReadValueId() {
-                NodeId = new NodeId("::Program:Cube.Status.Parameter[0].Value", 6),
-                AttributeId = Attributes.Value
-            });
-
-            List<DataValue> results = session.Read(nodesToRead);
-            DataValue dv = results[0];
-            return (float)dv.Value;
-        }
-
-        public float ReadProductAmountInBatch() {
-            ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
-            nodesToRead.Add(new ReadValueId() {
-                NodeId = new NodeId("::Program:Cube.Status.Parameter[1].Value", 6),
-                AttributeId = Attributes.Value
-            });
-
-            List<DataValue> results = session.Read(nodesToRead);
-            DataValue dv = results[0];
-            return (float)dv.Value;
-        }
-
+      
         public float ReadCurrentHumidity() {
             ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
             nodesToRead.Add(new ReadValueId() {

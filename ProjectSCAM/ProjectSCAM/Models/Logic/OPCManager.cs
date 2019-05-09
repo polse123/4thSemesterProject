@@ -11,27 +11,30 @@ namespace ProjectSCAM.Models.Logic {
         public OPCManager() {
             AlarmManager = new AlarmManager();
             OpcConnections = new Dictionary<string, OpcClient>();
-            InitConnections();
         }
 
-        public void InitConnections() {
-            string ip = "opc.tcp://127.0.0.1:4840";
-            string ip2 = "opc.tcp://10.112.254.69:4840";
-            OpcConnections.Add(ip, new OpcClient(ip));
-            OpcConnections.Add(ip2, new OpcClient(ip2));
-            AddEventHandlers();
-            //OpcConnections.Add(ip2, new OpcClient(ip2));
-
-        }
-        private void AddEventHandlers() {
-            foreach (OpcClient opc in OpcConnections.Values) {
-                opc.PropertyChanged += Opc_PropertyChanged;
+        public void InitConnection(string ip) {
+            //   string ip = "opc.tcp://127.0.0.1:4840";
+            //    string ip2 = "opc.tcp://10.112.254.69:4840";
+            System.Diagnostics.Debug.WriteLine(ip);
+            if(OpcConnections.ContainsKey(ip)) {
+                OpcClient c = new OpcClient(ip);
+                OpcConnections[ip] = c;
+            } else {
+                OpcClient c = new OpcClient(ip);
+                OpcConnections.Add(ip, c);
+                AddEventHandler(c);
             }
+
+        }
+        private void AddEventHandler(OpcClient c) {
+            //    c.PropertyChanged += Opc_PropertyChanged;
         }
 
         private void Opc_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
+            OpcClient opc = sender as OpcClient;
             if (e.PropertyName.Equals("StateCurrent")) {
-                OpcClient opc = sender as OpcClient;
+                
                 //if successfully produced
                 if (opc.StateCurrent == 17) {
                     System.Diagnostics.Debug.WriteLine((int)opc.AcceptableProducts);
@@ -41,8 +44,7 @@ namespace ProjectSCAM.Models.Logic {
                         3, GetMachineId(opc.Ip), lmao, lmao, lmao);
                 }
             }
-            if(e.PropertyName.Equals("StopReasonId")) {
-                OpcClient opc = sender as OpcClient;
+            if(e.PropertyName.Equals("StopReasonId") && opc.StateCurrent != 4) {
                 System.Diagnostics.Debug.WriteLine(opc.StopReasonId);
                 Singleton.Instance.DBManager.RegisterBatchAndAlarm((int)opc.AcceptableProducts, (int)opc.DefectProducts,
                         opc.Start.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.AddYears(10).ToString("MM/dd/yyyy"), true, 1, 1, 1,
