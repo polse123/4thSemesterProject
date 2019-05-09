@@ -19,6 +19,7 @@ namespace SCAMS.Controllers
             Session["userID"] = -2;
             Session["username"] = "";
             Session["login"] = false;
+            
             if (TempData["statusMessage"] != null)
             {
                 ViewBag.statusMessage = TempData["statusMessage"].ToString();
@@ -88,6 +89,12 @@ namespace SCAMS.Controllers
                 TempData["statusMessage"] = "Login failed";
                 return RedirectToAction("Index");
 
+        }
+        public JsonResult Usertype()
+        {
+                var x = System.Web.HttpContext.Current.Session["UserType"].ToString();
+            //System.Diagnostics.Debug.WriteLine(Json(x).ToString());
+                return Json(x); 
         }
     }
 }

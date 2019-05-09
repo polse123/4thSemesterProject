@@ -16,17 +16,19 @@ namespace ProjectSCAM.Models.Logic {
 
         public void InitConnections() {
             string ip = "opc.tcp://127.0.0.1:4840";
-            string ip2 = "opc.tcp://10.112.254.69:4840";
+            //string ip2 = "opc.tcp://10.112.254.69:4840";
             OpcConnections.Add(ip, new OpcClient(ip));
-            OpcConnections.Add(ip2, new OpcClient(ip2));
+            //OpcConnections.Add(ip2, new OpcClient(ip2));
             AddEventHandlers();
             //OpcConnections.Add(ip2, new OpcClient(ip2));
 
         }
-        private void AddEventHandlers() {
-            foreach (OpcClient opc in OpcConnections.Values) {
-                opc.PropertyChanged += Opc_PropertyChanged;
-            }
+        private void AddEventHandlers()
+        {
+            //foreach (OpcClient opc in OpcConnections.Values)
+            //{
+            //    opc.PropertyChanged += Opc_PropertyChanged;
+            //}
         }
 
         private void Opc_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
