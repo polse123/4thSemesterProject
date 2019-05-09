@@ -62,5 +62,10 @@ namespace ProjectSCAM.Models
         {
             return Singleton.Instance.DBManager.RetrieveBatch(id);
         }
+
+        public void getValues()
+        {
+            Values = Singleton.Instance.DBManager.RetrieveBatchValues(Id);
+        }
     }
 }

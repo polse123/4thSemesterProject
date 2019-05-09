@@ -14,6 +14,7 @@ namespace SCAMS.Controllers
         {
             ViewBag.temp = TempData["id"].ToString();
             BatchModel m = BatchModel.Read(int.Parse(TempData["id"].ToString()));
+            m.getValues();
             return View(m);
         }
     }
