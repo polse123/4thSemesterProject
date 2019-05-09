@@ -1,4 +1,5 @@
-﻿@{
+﻿@model  ProjectSCAM.Models.BatchModel
+@{
     ViewData["Title"] = "History";
 }
 
@@ -49,15 +50,17 @@
     <div class="grid-container">
         <div class="grid-item item1">
             History <span id="history" class="historyclass"></span>
+           
         </div>
         <div class="grid-item item2">
-            Batch ID: <span id="yeast" value="100" class="ingredientvalues"></span>&nbsp; &nbsp;
-            Accepted products: <span id="hops" value="100" class="ingredientvalues"></span>&nbsp; &nbsp;
-            Defect products: <span id="wheat" value="100" class="ingredientvalues"></span> <br>
-            Produced products: <span id="malt" value="100" class="ingredientvalues"></span>&nbsp; &nbsp;
-            Product type: <span id="barley" value="100" class="ingredientvalues"></span>&nbsp; &nbsp;
-            Speed: <span id="malt" value="100" class="ingredientvalues"></span>
-            <div id="curve_chart" style="width: 900px; height: 500px"></div>
+
+            Batch ID: <span id="yeast" value="100" class="ingredientvalues">@Html.DisplayFor(model => model.Id)</span>&nbsp; &nbsp;
+            Accepted products: <span id="hops" value="100" class="ingredientvalues">@Html.DisplayFor(model => model.AcceptableProducts)</span>&nbsp; &nbsp;
+            Defect products: <span id="wheat" value="100" class="ingredientvalues">@Html.DisplayFor(model => model.DefectProducts)</span> <br>
+            Produced products: <span id="malt" value="100" class="ingredientvalues">@Html.DisplayFor(model => model.ProducedProducts)</span>&nbsp; &nbsp;
+            Product type: <span id="barley" value="100" class="ingredientvalues">@Html.DisplayFor(model => model.RecipeName)</span>&nbsp; &nbsp;
+            Speed: <span id="malt" value="100" class="ingredientvalues">@Html.DisplayFor(model => model.Speed)</span>
+                   <div id="curve_chart" style="width: 900px; height: 500px"></div>
 
 
         </div>

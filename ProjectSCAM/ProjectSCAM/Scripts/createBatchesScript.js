@@ -100,3 +100,9 @@ function checkFields() {
         return false;
     }
 }
+function getHistory() {
+   var batchselect = document.getElementById("BatchId");
+   var selected = batchselect.value;
+    //$.get("/batch/HistoryButton", { id: selected} + id);
+    window.location.href = "/Batch/HistoryButton/" + selected;
+}

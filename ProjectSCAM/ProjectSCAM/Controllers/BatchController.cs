@@ -16,5 +16,26 @@ namespace SCAMS.Controllers
             IList<BatchModel> list = Singleton.Instance.DBManager.RetrieveBatches(false);
             return View(list);
         }
+        [HttpGet]
+        public ActionResult HistoryButton(string id)
+        {
+            // string id = Request["id"];
+            TempData["id"] = id;
+            return RedirectToAction("Index", "History");
+
+        }
+        public ActionResult BatchreportButton()
+        {
+
+            return RedirectToAction("Index");
+
+        }
+        public ActionResult RecallButton()
+        {
+
+            return RedirectToAction("Index");
+
+        }
     }
+   
 }

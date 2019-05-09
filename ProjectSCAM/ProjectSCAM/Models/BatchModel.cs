@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectSCAM.Models.Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -7,25 +8,26 @@ namespace ProjectSCAM.Models
 {
     public class BatchModel
     {
-        public int Id { get; }
-        public int AcceptableProducts { get; }
-        public int DefectProducts { get; }
-        public string TimestampStart { get; }
-        public string TimestampEnd { get; }
-        public string ExpirationDate { get; }
-        public bool Succeeded { get; }
-        public string Performance { get; }
-        public string Quality { get; }
-        public string Availability { get; }
-        public string Oee { get; }
-        public int Speed { get; }
-        public int BeerId { get; }
-        public int Machine { get; }
-        public int? SoldTo { get; }
-        public bool Recalled { get; }
+        public int Id { get; set; }
+        public int ProducedProducts { get; set; }
+        public int AcceptableProducts { get; set; }
+        public int DefectProducts { get; set; }
+        public string TimestampStart { get; set; }
+        public string TimestampEnd { get; set; }
+        public string ExpirationDate { get; set; }
+        public bool Succeeded { get; set; }
+        public string Performance { get; set; }
+        public string Quality { get; set; }
+        public string Availability { get; set; }
+        public string Oee { get; set;  }
+        public int Speed { get; set;  }
+        public int BeerId { get; set; }
+        public int Machine { get; set; }
+        public int? SoldTo { get; set; }
+        public bool Recalled { get; set; }
 
-        public string RecipeName { get; }
-        public string CustomerName { get; }
+        public string RecipeName { get; set; }
+        public string CustomerName { get; set; }
 
         public BatchValueCollection Values { get; set; }
 
@@ -52,7 +54,13 @@ namespace ProjectSCAM.Models
             Recalled = recalled;
             RecipeName = recipeName ?? throw new ArgumentNullException(nameof(recipeName));
             CustomerName = customerName;
+            ProducedProducts = AcceptableProducts + DefectProducts; 
             Values = new BatchValueCollection();
+
+        }
+        public static BatchModel Read(int id)
+        {
+            return Singleton.Instance.DBManager.RetrieveBatch(id);
         }
     }
 }

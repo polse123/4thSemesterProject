@@ -12,10 +12,18 @@
 <body>
     <div class="grid-container">
         <div class="grid-item item1">
-            <button type="button" id="historyButton" class="buttons"> History</button>
+            <input type="text" id="BatchId" class="BatchId">
             <br>
             <br>
-            <button type="button" id="batchReportButton" class="buttons"> Batch Report</button>
+            <button type="button" id="historyButton" onclick ="getHistory()" class="buttons" name="historyButton"> History</button>
+            <br>
+            <br>
+            <button type="button" id="batchReportButton" class="buttons" name="batchReportButton"> Batch Report</button>
+            <br>
+            <br>
+            <button type="button" id="recallButton" class="buttons" name="recallButton"> Recall </button>
+
+
         </div>
         <div class="grid-item item2">
             <div id="searchtable" class="searchclass">
@@ -53,7 +61,7 @@
             &nbsp;  <button type="button" id="searchButton" class="buttons" class="searchFieldClass"> Search</button>
         </div>
 
-    </div>
+        </div>
 
-</body>
+    </body>
 </html>
