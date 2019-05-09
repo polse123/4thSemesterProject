@@ -337,7 +337,7 @@ namespace ProjectSCAM.Models.Logic
         /// <param name="vibrationsValues"></param>
         /// <param name="alarmQuery"></param>
         /// <returns></returns>
-        public bool RegisterBatch(int acceptableProducts,
+        public KeyValuePair<bool, AlarmModel> RegisterBatch(int acceptableProducts,
             IList<KeyValuePair<string, double>> temperatureValues,
             IList<KeyValuePair<string, double>> humidityValues,
             IList<KeyValuePair<string, double>> vibrationValues,
@@ -361,6 +361,7 @@ namespace ProjectSCAM.Models.Logic
 
                     if (batchId != null)
                     {
+                        AlarmModel alarm = null;
 
                         // Register batch values
                         CONN.Open();
@@ -375,13 +376,34 @@ namespace ProjectSCAM.Models.Logic
                         // Register alarm
                         if (alarmQuery != null)
                         {
-                            alarmQuery.Append(batchId + ");");
-                            ExecuteQuery(alarmQuery.ToString());
+                            alarmQuery.Append(batchId + ") RETURNING alarmid;");
+                            CONN.Open();
+                            NpgsqlCommand a_command = new NpgsqlCommand(alarmQuery.ToString(), CONN);
+                            NpgsqlDataReader a_dr = a_command.ExecuteReader();
+                            int? alarmId = null;
+                            while (a_dr.Read())
+                            {
+                                alarmId = (int)a_dr[0];
+                            }
+                            CONN.Close();
+
+                            if (alarmId != null)
+                            {
+                                IList<AlarmModel> list = RetrieveAlarms(" WHERE alarmid = " + alarmId + ";");
+                                if (list.Count != 0)
+                                {
+                                    foreach (AlarmModel model in list)
+                                    {
+                                        alarm = model;
+                                        break;
+                                    }
+                                }
+                            }
                         }
 
-                        return true;
+                        return new KeyValuePair<bool, AlarmModel>(true, alarm);
                     }
-                    else return false;
+                    else return new KeyValuePair<bool, AlarmModel>(false, null);
                 }
                 catch (NpgsqlException ex)
                 {
@@ -405,7 +427,7 @@ namespace ProjectSCAM.Models.Logic
             string query = "SELECT Batches.batchid, Batches.acceptableproducts, Batches.defectproducts, " +
                 "Batches.timestampstart, Batches.timestampend, Batches.expirationdate, " +
                 "Batches.succeeded, Batches.performance, Batches.quality, Batches.availability, Batches.oee, " +
-                "Batches.speed, Batches.beerid, Batches.machine, Batches.soldto, " +
+                "Batches.speed, Batches.beerid, Batches.machine, Batches.soldto, Batches.recalled, " +
                 "Recipes.name, Customers.customername " +
                 "FROM Batches LEFT JOIN Recipes ON Batches.beerid = Recipes.beerid " +
                 "LEFT JOIN Customers ON Batches.soldto = Customers.customerid" +
@@ -428,8 +450,8 @@ namespace ProjectSCAM.Models.Logic
                             BatchModel batch = new BatchModel((int)dr[0], (int)dr[1], (int)dr[2],
                                 dr[3].ToString().Trim(), dr[4].ToString().Trim(), dr[5].ToString().Trim(),
                                 (bool)dr[6], dr[7].ToString().Trim(), dr[8].ToString().Trim(), dr[9].ToString().Trim(),
-                                dr[10].ToString().Trim(), (int)dr[11], (int)dr[12], (int)dr[13], (int)dr[14],
-                                dr[15].ToString().Trim(), dr[16].ToString().Trim());
+                                dr[10].ToString().Trim(), (int)dr[11], (int)dr[12], (int)dr[13], (int)dr[14], (bool)dr[15],
+                                dr[16].ToString().Trim(), dr[17].ToString().Trim());
                             list.Add(batch);
                         }
                         else
@@ -437,8 +459,8 @@ namespace ProjectSCAM.Models.Logic
                             BatchModel batch = new BatchModel((int)dr[0], (int)dr[1], (int)dr[2],
                                         dr[3].ToString().Trim(), dr[4].ToString().Trim(), dr[5].ToString().Trim(),
                                         (bool)dr[6], dr[7].ToString().Trim(), dr[8].ToString().Trim(), dr[9].ToString().Trim(),
-                                        dr[10].ToString().Trim(), (int)dr[11], (int)dr[12], (int)dr[13], null,
-                                        dr[15].ToString().Trim(), null);
+                                        dr[10].ToString().Trim(), (int)dr[11], (int)dr[12], (int)dr[13], null, (bool)dr[15],
+                                        dr[16].ToString().Trim(), null);
                             list.Add(batch);
                         }
                     }

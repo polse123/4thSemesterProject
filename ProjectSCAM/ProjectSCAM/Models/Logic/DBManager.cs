@@ -340,9 +340,11 @@ namespace ProjectSCAM.Models.Logic
                     timestampStart, timestampEnd, expirationDate, succeeded,
                     performance, quality, availability, speed, beerId, machine);
 
-                return exe.RegisterBatch(acceptableProducts,
+                KeyValuePair<bool, AlarmModel> result = exe.RegisterBatch(acceptableProducts,
                     temperatureValues, humidityValues,
                     vibrationsValues, query, null);
+
+                return result.Key;
             }
             else { return false; }
         }
@@ -368,7 +370,7 @@ namespace ProjectSCAM.Models.Logic
         /// <param name="alarmTimestamp"></param>
         /// <param name="stopReason"></param>
         /// <returns></returns>
-        public bool RegisterBatchAndAlarm(int acceptableProducts, int defectProducts,
+        public AlarmModel RegisterBatchAndAlarm(int acceptableProducts, int defectProducts,
             string timestampStart, string timestampEnd, string expirationDate, bool succeeded,
             double performance, double quality, double availability,
             int speed, int beerId, int machine,
@@ -394,11 +396,13 @@ namespace ProjectSCAM.Models.Logic
                 alarmQuery.Append("INSERT INTO Alarms(timestamp, stopreason, handledby, batch) " +
                 "VALUES('" + alarmTimestamp + "', " + stopReason + ", null, ");
 
-                return exe.RegisterBatch(acceptableProducts,
+                KeyValuePair<bool, AlarmModel> result = exe.RegisterBatch(acceptableProducts,
                     temperatureValues, humidityValues,
                     vibrationsValues, batchQuery, alarmQuery);
+
+                return result.Value;
             }
-            else { return false; }
+            else { return null; }
         }
 
         /// <summary>
@@ -651,7 +655,7 @@ namespace ProjectSCAM.Models.Logic
             }
 
             return String.Format(("INSERT INTO Batches VALUES({0}, {1}, '{2}', '{3}', '{4}'," +
-                "{5}, '{6}', '{7}', '{8}', '{9}', {10}, {11}, {12}) RETURNING batchid;"),
+                "{5}, '{6}', '{7}', '{8}', '{9}', {10}, {11}, {12}, null, false) RETURNING batchid;"),
                 acceptableProducts, defectProducts, timestampStart, timestampEnd, expirationDate,
                 succeeded, oeeStrings[0], oeeStrings[1], oeeStrings[2], oeeStrings[3], speed, beerId, machine);
         }
