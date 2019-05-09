@@ -337,7 +337,7 @@ namespace ProjectSCAM.Models.Logic
         /// <param name="vibrationsValues"></param>
         /// <param name="alarmQuery"></param>
         /// <returns></returns>
-        public bool RegisterBatch(int acceptableProducts,
+        public KeyValuePair<bool, AlarmModel> RegisterBatch(int acceptableProducts,
             IList<KeyValuePair<string, double>> temperatureValues,
             IList<KeyValuePair<string, double>> humidityValues,
             IList<KeyValuePair<string, double>> vibrationValues,
@@ -361,6 +361,7 @@ namespace ProjectSCAM.Models.Logic
 
                     if (batchId != null)
                     {
+                        AlarmModel alarm = null;
 
                         // Register batch values
                         CONN.Open();
@@ -375,13 +376,34 @@ namespace ProjectSCAM.Models.Logic
                         // Register alarm
                         if (alarmQuery != null)
                         {
-                            alarmQuery.Append(batchId + ");");
-                            ExecuteQuery(alarmQuery.ToString());
+                            alarmQuery.Append(batchId + ") RETURNING alarmid;");
+                            CONN.Open();
+                            NpgsqlCommand a_command = new NpgsqlCommand(alarmQuery.ToString(), CONN);
+                            NpgsqlDataReader a_dr = a_command.ExecuteReader();
+                            int? alarmId = null;
+                            while (a_dr.Read())
+                            {
+                                alarmId = (int)a_dr[0];
+                            }
+                            CONN.Close();
+
+                            if (alarmId != null)
+                            {
+                                IList<AlarmModel> list = RetrieveAlarms(" WHERE alarmid = " + alarmId + ";");
+                                if (list.Count != 0)
+                                {
+                                    foreach (AlarmModel model in list)
+                                    {
+                                        alarm = model;
+                                        break;
+                                    }
+                                }
+                            }
                         }
 
-                        return true;
+                        return new KeyValuePair<bool, AlarmModel>(true, alarm);
                     }
-                    else return false;
+                    else return new KeyValuePair<bool, AlarmModel>(false, null);
                 }
                 catch (NpgsqlException ex)
                 {
