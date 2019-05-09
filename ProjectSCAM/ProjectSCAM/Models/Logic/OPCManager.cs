@@ -20,7 +20,6 @@ namespace ProjectSCAM.Models.Logic {
             OpcConnections.Add(ip, new OpcClient(ip));
             OpcConnections.Add(ip2, new OpcClient(ip2));
             AddEventHandlers();
-            //OpcConnections.Add(ip2, new OpcClient(ip2));
 
         }
         private void AddEventHandlers() {
@@ -37,7 +36,7 @@ namespace ProjectSCAM.Models.Logic {
                     System.Diagnostics.Debug.WriteLine((int)opc.AcceptableProducts);
                     Singleton.Instance.DBManager.RegisterBatch((int)opc.AcceptableProducts, (int)opc.DefectProducts,
                         opc.Start.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.AddYears(10).ToString("MM/dd/yyyy"), true, 1, 1, 1,
-                        (int)opc.ProductsPerMinute,
+                        (int)opc.MachSpeed,
                         3, GetMachineId(opc.Ip), lmao, lmao, lmao);
                 }
             }
@@ -46,7 +45,7 @@ namespace ProjectSCAM.Models.Logic {
                 System.Diagnostics.Debug.WriteLine(opc.StopReasonId);
                 Singleton.Instance.DBManager.RegisterBatchAndAlarm((int)opc.AcceptableProducts, (int)opc.DefectProducts,
                         opc.Start.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.AddYears(10).ToString("MM/dd/yyyy"), true, 1, 1, 1,
-                        (int)opc.ProductsPerMinute,
+                        (int)opc.MachSpeed,
                         3, GetMachineId(opc.Ip), lmao, lmao, lmao,DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"),(int)opc.StopReasonId);
                 IList<AlarmModel> alarmies = Singleton.Instance.DBManager.RetrieveAlarms();
                 AlarmModel a = alarmies[alarmies.Count-1];
