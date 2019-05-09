@@ -347,6 +347,13 @@ namespace ProjectSCAM.Tests.Logic
             else Assert.IsTrue(false);
         }
 
+        [TestMethod]
+        public void SetBeerAsDefect()
+        {
+            bool success = dbManager.SetBeerAsDefect(3, 1);
+            Assert.IsTrue(success);
+        }
+
         /// <summary>
         /// RetrieveAlarms, RetrieveAlarm
         /// </summary>

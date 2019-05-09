@@ -1,0 +1,65 @@
+﻿@model ProjectSCAM.Models.BeerModel
+@{
+    ViewBag.Title = "Beers";
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<!DOCTYPE html>
+<html>
+<head>
+    @Styles.Render("~/Content/BatchStyleSheet.css")
+    @Styles.Render("~/Content/UserStyleSheet.css")
+    @Scripts.Render("~/Scripts/createBatchesScript.js")
+    @Styles.Render("~/Content/ProductionStyleSheet.css")
+    @Styles.Render("~/Content/dropdown.css")
+</head>
+<body>
+    <div class="grid-container">
+        <div class="grid-item item1">
+            <div id="sell" class="insetclass">
+                @using (Html.BeginForm("RegisterBeerAsdefect", "Tracking", new { batchId = ViewBag.BatchId }, FormMethod.Post))
+                {
+                    @Html.ValidationSummary(true)
+                    @Html.AntiForgeryToken()
+                    <fieldset>
+                        <legend>Register beer as defect</legend>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.ProductNumber)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.ProductNumber)
+                            @Html.ValidationMessageFor(model => model.BatchId)
+                        </div>
+                        <div class="editor-field">
+                            <span>@ViewBag.SetAsDefectMessage</span>
+                        </div>
+                        <input type="submit" value="Set beer as defect" />
+                    </fieldset>
+                }
+            </div>
+        </div>
+        <div class="grid-item item2">
+            <table class="searchtableclass" id="searchtableid">
+                <tr>
+                    <th>Batch Id</th>
+                </tr>
+                <tr>
+                    <td>@ViewBag.BatchId</td>
+                </tr>
+                <tr>
+                    <th>Beer Number</th>
+                    <th>Acceptable</th>
+                </tr>
+                @foreach (var item in ViewBag.Beers)
+                {
+                    <tr>
+                        <td>@item.ProductNumber</td>
+                        <td>@item.Acceptable</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</body>
+</html>

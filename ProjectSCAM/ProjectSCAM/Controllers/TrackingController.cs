@@ -59,5 +59,39 @@ namespace ProjectSCAM.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        public ActionResult Beers(TrackingModel model)
+        {
+            IList<BeerModel> beers;
+
+            if (TempData["batchId"] != null)
+            {
+                beers = Singleton.Instance.DBManager.RetrieveBeers((int)TempData["batchId"]);
+                ViewBag.batchId = TempData["batchid"];
+                TempData["batchId"] = null;
+            }
+            else
+            {
+                beers = Singleton.Instance.DBManager.RetrieveBeers(model.BatchId);
+                ViewBag.BatchId = model.BatchId;
+            }
+
+            if (beers != null)
+            {
+                ViewBag.Beers = beers;
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+        }
+
+        public ActionResult RegisterBeerAsDefect(BeerModel model)
+        {
+            Singleton.Instance.DBManager.SetBeerAsDefect(model.ProductNumber, model.BatchId);
+            TempData["batchid"] = model.BatchId;
+            return RedirectToAction("Beers");
+        }
     }
 }

@@ -567,6 +567,44 @@ namespace ProjectSCAM.Models.Logic
         }
 
         /// <summary>
+        /// Register a beer as defect.
+        /// </summary>
+        /// <param name="batchId"></param>
+        /// <param name="beerNumber"></param>
+        /// <returns></returns>
+        public bool SetBeerAsDefect(int productNumber, int batchId, int acceptableProducts, int defectProducts)
+        {
+            int newAcc = acceptableProducts - 1;
+            int newDef = defectProducts + 1;
+
+            string query = "UPDATE Beers SET acceptable = false FROM Batches WHERE acceptable = true" +
+                " AND productnumber = " + productNumber +
+                " AND belongingto = " + batchId +
+                " AND acceptableproducts = " + acceptableProducts +
+                " AND defectproducts = " + defectProducts + ";" +
+                " UPDATE Batches Set acceptableproducts = " + newAcc +
+                ", defectproducts = " + newDef + " WHERE batchid = " + batchId + ";";
+
+            return exe.ExecuteQuery(query);
+        }
+
+        /// <summary>
+        /// Register a beer as defect.
+        /// </summary>
+        /// <param name="batchId"></param>
+        /// <param name="beerNumber"></param>
+        /// <returns></returns>
+        public bool SetBeerAsDefect(int productNumber, int batchId)
+        {
+            BatchModel batch = RetrieveBatch(batchId);
+            if (batch != null)
+            {
+                return SetBeerAsDefect(productNumber, batchId, batch.AcceptableProducts, batch.DefectProducts);
+            }
+            else return false;
+        }
+
+        /// <summary>
         /// Retrieve all alarms.
         /// </summary>
         /// <returns></returns>

@@ -337,6 +337,7 @@
     <Content Include="Views\UserManagement\Index.cshtml" />
     <Content Include="Views\Overview\Index.cshtml" />
     <Content Include="Views\Tracking\Index.cshtml" />
+    <Content Include="Views\Tracking\Beers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

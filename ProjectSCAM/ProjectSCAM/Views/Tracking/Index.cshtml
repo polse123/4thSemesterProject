@@ -89,6 +89,28 @@
                     </fieldset>
                 }
             </div>
+            <br />
+            <div id="showBeers" class="insetclass">
+                @using (Html.BeginForm("Beers", "Tracking", FormMethod.Post))
+                {
+                    @Html.ValidationSummary(true)
+                    @Html.AntiForgeryToken()
+                    <fieldset>
+                        <legend>View Beers</legend>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.BatchId)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.BatchId)
+                            @Html.ValidationMessageFor(model => model.BatchId)
+                        </div>
+                        <div class="editor-field">
+                            <span>@ViewBag.BeersMessage</span>
+                        </div>
+                        <input type="submit" value="Show beers" />
+                    </fieldset>
+                }
+            </div>
         </div>
         <div class="grid-item item2">
             <table class="searchtableclass" id="searchtableid">
