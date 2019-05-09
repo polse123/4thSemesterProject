@@ -9,6 +9,7 @@ using UnifiedAutomation.UaClient;
 
 namespace ProjectSCAM.Models {
     public class OpcClient : INotifyPropertyChanged {
+        public DateTime Start { get; set; }
         private bool isProcessRunning = false;
         private double processedProducts;
         private double defectProducts;
@@ -31,11 +32,11 @@ namespace ProjectSCAM.Models {
 
         private Session session;
         public event PropertyChangedEventHandler PropertyChanged;
-        private string ip;
+        public string Ip { get; set; }
 
         //Constructor with OPC connect and CreateSubscription
         public OpcClient(string ip) {
-            this.ip = ip;
+            Ip = ip;
             Connect();
             CreateSubscription();
         }
@@ -46,7 +47,7 @@ namespace ProjectSCAM.Models {
             try {
                 //Connect to server with no security (simulator)
                 session.UseDnsNameAndPortFromDiscoveryUrl = true;
-                session.Connect(ip, SecuritySelection.None);
+                session.Connect(Ip, SecuritySelection.None);
 
                 //Connect to server with no security (machine)
                 //session.Connect("opc.tcp://10.112.254.165:4840", SecuritySelection.None);
@@ -136,27 +137,6 @@ namespace ProjectSCAM.Models {
             s.CreateMonitoredItems(monitoredItems);
             // create the actual subscription
             s.Create(new RequestSettings() { OperationTimeout = 10000 });
-        }
-        public void HandleCommand(string command) {
-            switch (command) {
-                case "start":
-                    StartMachine(10, 1, 1000, 60);
-                    break;
-                case "stop":
-                    StopMachine();
-                    break;
-                case "clear":
-                    ClearMachine();
-                    break;
-                case "abort":
-                    AbortMachine();
-                    break;
-                case "reset":
-                    ResetMachine();
-                    break;
-                default:
-                    throw new Exception("Invalid command");
-            }
         }
         private void OnDataChanged(Subscription s, DataChangedEventArgs e) {
             foreach (DataChange dc in e.DataChanges) {
@@ -318,6 +298,7 @@ namespace ProjectSCAM.Models {
             float amountToProduce, float machineSpeed) {
             if (!isProcessRunning) {
                 isProcessRunning = true;
+                Start = DateTime.Now;
                 // collection of nodes to be written
                 WriteValueCollection nodesToWrite = new WriteValueCollection();
                 DataValue start = new DataValue();

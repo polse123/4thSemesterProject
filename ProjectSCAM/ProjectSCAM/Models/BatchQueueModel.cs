@@ -1,5 +1,8 @@
-﻿using System;
+﻿using ProjectSCAM.Models.Logic;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -7,11 +10,21 @@ namespace ProjectSCAM.Models
 {
     public class BatchQueueModel
     {
-        public int Id { get; }
+        [Required]
+        [DefaultValue(1)]
+        public int Id { get; set;    }
+        [Required]
+        [DefaultValue(1)]
         public int Priority { get; set; }
-        public int Amount { get; }
-        public int Speed { get; }
-        public int BeerId { get; }
+        [Required]
+        [DefaultValue(1)]
+        public int Amount { get; set; }
+        [Required]
+        [DefaultValue(1)]
+        public int Speed { get; set; }
+        [Required]
+        [DefaultValue(1)]
+        public int BeerId { get; set; }
 
         public string RecipeName { get; }
 
@@ -23,6 +36,12 @@ namespace ProjectSCAM.Models
             Speed = speed;
             BeerId = beerId;
             RecipeName = recipeName ?? throw new ArgumentNullException(nameof(recipeName));
+        }
+        public BatchQueueModel() {
+
+        }
+        public void Update() {
+            Singleton.Instance.DBManager.EditPriority(Id, Priority);
         }
     }
 }

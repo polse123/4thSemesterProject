@@ -273,7 +273,7 @@ namespace ProjectSCAM.Models.Logic
         /// <returns></returns>
         public IList<BatchQueueModel> RetrieveFromBatchQueue()
         {
-            string append = " ORDER BY priority DESC;";
+            string append = " ORDER BY priority ASC;";
             return exe.RetrieveFromBatchQueue(append);
         }
 

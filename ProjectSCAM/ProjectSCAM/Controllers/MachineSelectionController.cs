@@ -39,7 +39,11 @@ namespace MvcMovie.Controllers {
             }
             TempData["statusMessage"] = s;
             return RedirectToAction("Index");
+        }
 
+        [HttpPost]
+        public void SetMachine() {
+            Session["SelectedMachine"] = Request["ip"];
         }
     }
 }

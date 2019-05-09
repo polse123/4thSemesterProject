@@ -11,61 +11,7 @@
     @Styles.Render("~/Content/UserStyleSheet.css")
     @Scripts.Render("~/Scripts/OverviewScript.js")
 
-
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-        google.charts.load('current', { 'packages': ['corechart'] });
-        google.charts.setOnLoadCallback(drawChart);
-
-        function drawChart() {
-            var data = google.visualization.arrayToDataTable([
-                ['Year', 'Sales', 'Expenses'],
-                ['2004', 1000, 400],
-                ['2005', 1170, 460],
-                ['2006', 660, 1120],
-                ['2007', 1030, 540]
-            ]);
-            var data1 = google.visualization.arrayToDataTable([
-                ['Year', 'Sales', 'Expenses'],
-                ['2004', 1000, 400],
-                ['2005', 1170, 460],
-                ['2006', 660, 1120],
-                ['2007', 1030, 540]
-            ]);
-            var data2 = google.visualization.arrayToDataTable([
-                ['Year', 'Sales', 'Expenses'],
-                ['2004', 1000, 400],
-                ['2005', 1170, 460],
-                ['2006', 660, 1120],
-                ['2007', 1030, 540]
-            ]);
-
-            var options = {
-                title: 'Temperature',
-                curveType: 'function',
-                legend: { position: 'bottom' }
-            };
-            var options1 = {
-                title: 'Humidity',
-                curveType: 'function',
-                legend: { position: 'bottom' }
-            };
-            var options2 = {
-                title: 'Vibration',
-                curveType: 'function',
-                legend: { position: 'bottom' }
-            };
-
-            var chart = new google.visualization.LineChart(document.getElementById('temp_chart'));
-            var chart1 = new google.visualization.LineChart(document.getElementById('humidity_chart'));
-            var chart2 = new google.visualization.LineChart(document.getElementById('vibration_chart'));
-
-            chart.draw(data, options);
-            chart1.draw(data1, options1);
-            chart2.draw(data2, options2);
-        }
-    </script>
-
+   
 </head>
 <body>
 
@@ -83,13 +29,9 @@
             </div>
         </div>
         <div class="grid-item item2">
-            <div id="livecharts" class="livechartsclass">
-                <div id="temp_chart" class="chartsclass"></div>
-                <div id="humidity_chart" class="chartsclass"></div>
-                <div id="vibration_chart" class="chartsclass"></div>
-
-            </div>
-
+            Temperature:  <p id="temp"></p>
+            Humidity:  <p id="humidity"></p>
+            Vibration:  <p id="vibration"></p>
         </div>
         <div class="grid-item item3">
             <div id="infofields" class="infofieldsclass">
@@ -107,25 +49,26 @@
             <div id="batchqueue" class="batchqueueclass">
 
                 <table class="batchtableclass" id="batchtable">
-                    <tr>
-                        <th>Number in queue:</th>
-                        <th>Amount:</th>
-                        <th>Speed:</th>
-                        <th>Type:</th>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>10</td>
-                        <td>100</td>
-                        <td>3</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>100</td>
-                        <td>200</td>
-                        <td>2</td>
-                    </tr>
-
+                    <thead>
+                        <tr>
+                            <th>ID:</th>
+                            <th>Priority:</th>
+                            <th>Amount:</th>
+                            <th>Speed:</th>
+                            <th>Type:</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ViewBag.BatchQueue) {
+                            <tr>
+                                <td>@item.Id</td>
+                                <td>@item.Priority</td>
+                                <td>@item.Amount</td>
+                                <td>@item.Speed</td>
+                                <td>@item.RecipeName</td>
+                            </tr>
+                        }
+                    </tbody>
                 </table>
                 <button input type="submit" onclick="refreshBQ()">Refresh</button>
             </div>
@@ -145,8 +88,6 @@
                 <button input type="submit" onclick="machineCommand('clear')" id="clear" class="buttons"> Clear</button> <br>
                 <button input type="submit" onclick="machineCommand('abort')" id="abort" class="buttons"> Abort</button> <br>
                 <button input type="submit" onclick="machineCommand('reset')" id="reset" class="buttons"> Reset</button>
-                <button input type="submit" onclick="me()" id="a" class="buttons"> me</button>
-                <button input type="submit" onclick="soren()" id="b" class="buttons"> Reset</button>
             </div>
         </div>
     </div>
@@ -155,16 +96,6 @@
 </body>
 </html>
 <script>
-    me();
-    function me() {
-        console.log("me");
-        $.post("/overview/SetSelectedMachine", { ip: "opc.tcp://127.0.0.1:4840"});
-    }
-    function soren() {
-        console.log("soren");
-        $.post("/overview/SetSelectedMachine", { ip: "opc.tcp://192.168.0.122:4840" });
-        console.log("worked");
-    }
     function contentLoaded() {
         $.ajax({
             type: 'POST',
@@ -184,6 +115,10 @@
                 $("#speed").text(100); // add speed node to monitored items in opc
                 $("#type").text(3); // add type node to monitored items in opc
                 $("#producing").text(data.AmountToProduce);
+            // temp/humidity/vibration
+                $("#temp").text(data.TempCurrent);
+                $("#humidity").text(data.HumidityCurrent);
+                $("#vibration").text(data.VibrationCurrent);
             // set value of machine element
                 $("#state").text(data.StateCurrent);
             },
@@ -196,7 +131,4 @@
         });
     };
     window.setInterval(contentLoaded, 100);
-
-
-
 </script>
