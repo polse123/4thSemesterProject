@@ -82,6 +82,7 @@ CREATE TABLE batches (
 	beerid INT NOT NULL,
 	machine INT NOT NULL,
 	soldto INT,
+	recalled BOOLEAN NOT NULL,
 	batchid SERIAL PRIMARY KEY,
 	FOREIGN KEY(beerid) REFERENCES recipes(beerid) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY(machine) REFERENCES machines(machineid) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -165,10 +166,10 @@ INSERT INTO customers(customername) VALUES('Jonas');
 INSERT INTO batchqueue VALUES(0, 10, 200, 600, 0);
 INSERT INTO batchqueue VALUES(1, 20, 200, 300, 1);
 
-INSERT INTO batches(acceptableproducts, defectproducts, timestampstart, timestampend, expirationdate, succeeded, performance, quality, availability, oee, speed, beerid, machine, soldto)
-	VALUES(180, 20, '03/03/2019 13:10:00.000', '03/03/2019 13:10:20.000', '03/09/2019', true, '0.5000000000', '0.6000000000', '0.7000000000', '0.2100000000', 600, 0, 1, 1);
-INSERT INTO batches(acceptableproducts, defectproducts, timestampstart, timestampend, expirationdate, succeeded, performance, quality, availability, oee, speed, beerid, machine)
-	VALUES(175, 25, '03/03/2019 13:12:00.000', '03/03/2019 13:13:00.000', '03/09/2019', true, '0.5000000000', '0.6000000000', '0.7000000000', '0.2100000000', 200, 3, 1);
+INSERT INTO batches(acceptableproducts, defectproducts, timestampstart, timestampend, expirationdate, succeeded, performance, quality, availability, oee, speed, beerid, machine, soldto, recalled)
+	VALUES(180, 20, '03/03/2019 13:10:00.000', '03/03/2019 13:10:20.000', '03/09/2019', true, '0.5000000000', '0.6000000000', '0.7000000000', '0.2100000000', 600, 0, 1, 1, false);
+INSERT INTO batches(acceptableproducts, defectproducts, timestampstart, timestampend, expirationdate, succeeded, performance, quality, availability, oee, speed, beerid, machine, soldto, recalled)
+	VALUES(175, 25, '03/03/2019 13:12:00.000', '03/03/2019 13:13:00.000', '03/09/2019', true, '0.5000000000', '0.6000000000', '0.7000000000', '0.2100000000', 200, 3, 1, null, false);
 
 INSERT INTO temperaturevalues VALUES(1.1, '03/03/2019 13:10:00.000', 1);
 INSERT INTO temperaturevalues VALUES(1.2, '03/03/2019 13:10:10.000', 1);
