@@ -534,6 +534,17 @@ namespace ProjectSCAM.Models.Logic
         }
 
         /// <summary>
+        /// Recall a batch
+        /// </summary>
+        /// <param name="batchId"></param>
+        /// <returns></returns>
+        public bool RecallBatch(int batchId)
+        {
+            string query = "UPDATE Batches SET recalled = true WHERE batchid = " + batchId + ";";
+            return exe.ExecuteQuery(query);
+        }
+
+        /// <summary>
         /// Retrieve temperature, humidity and vibration values for a specific batch.
         /// </summary>
         /// <param name="batchId"></param>

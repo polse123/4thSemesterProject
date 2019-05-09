@@ -392,9 +392,9 @@ namespace ProjectSCAM.Models.Logic
                                 IList<AlarmModel> list = RetrieveAlarms(" WHERE alarmid = " + alarmId + ";");
                                 if (list.Count != 0)
                                 {
-                                    foreach (AlarmModel model in list)
+                                    foreach (AlarmModel element in list)
                                     {
-                                        alarm = model;
+                                        alarm = element;
                                         break;
                                     }
                                 }

@@ -302,7 +302,14 @@ namespace ProjectSCAM.Tests.Logic
         [TestMethod]
         public void SetSale()
         {
-            bool success = dbManager.SetSale(0, 0);
+            bool success = dbManager.SetSale(1, 1);
+            Assert.IsTrue(success);
+        }
+
+        [TestMethod]
+        public void RecallBatch()
+        {
+            bool success = dbManager.RecallBatch(1);
             Assert.IsTrue(success);
         }
 
