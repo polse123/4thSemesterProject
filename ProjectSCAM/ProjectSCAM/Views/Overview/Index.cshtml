@@ -73,12 +73,9 @@
             </div>
         </div>
         <div class="grid-item item5">
-            <div id="maintenancebar" class="maintenancebarclass">
-                <p> Maintenance</p>
-                <div class="barclass ">
-                    <div class="level maintenance">50%</div>
-                </div>
-
+            <span>Maintenance:</span>
+            <div>
+                <span id="progress" class="progressbar"></span>%
             </div>
             <div id="buttons" class="buttonclass">
 
@@ -111,13 +108,14 @@
             // set value of batch elements
                 $("#produced").text(data.ProcessedProducts);
                 $("#failed").text(data.DefectProducts);
-                $("#speed").text(100); // add speed node to monitored items in opc
+                $("#speed").text(data.MachSpeed); // add speed node to monitored items in opc
                 $("#type").text(3); // add type node to monitored items in opc
                 $("#producing").text(data.AmountToProduce);
             // temp/humidity/vibration
                 $("#temp").text(data.TempCurrent);
                 $("#humidity").text(data.HumidityCurrent);
                 $("#vibration").text(data.VibrationCurrent);
+                $("#progress").text(data.MaintenanceCounter);
             // set value of machine element
                 $("#state").text(data.StateCurrent);
             },
