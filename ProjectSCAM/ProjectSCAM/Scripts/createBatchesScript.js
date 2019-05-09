@@ -106,3 +106,15 @@ function getHistory() {
     //$.get("/batch/HistoryButton", { id: selected} + id);
     window.location.href = "/Batch/HistoryButton/" + selected;
 }
+function getBatchReport() {
+    var batchselect = document.getElementById("BatchId");
+    var selected = batchselect.value;
+    //$.get("/batch/HistoryButton", { id: selected} + id);
+    window.location.href = "/Batch/BatchreportButton/" + selected;
+}
+function getRecall() {
+    var batchselect = document.getElementById("BatchId");
+    var selected = batchselect.value;
+    //$.get("/batch/HistoryButton", { id: selected} + id);
+    window.location.href = "/Batch/RecallButton/" + selected;
+}

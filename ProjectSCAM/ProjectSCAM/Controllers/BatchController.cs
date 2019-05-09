@@ -26,13 +26,13 @@ namespace SCAMS.Controllers
         }
         public ActionResult BatchreportButton()
         {
-
+            //missing code for batchreport
             return RedirectToAction("Index");
 
         }
         public ActionResult RecallButton()
         {
-
+            //missing code for recall
             return RedirectToAction("Index");
 
         }
