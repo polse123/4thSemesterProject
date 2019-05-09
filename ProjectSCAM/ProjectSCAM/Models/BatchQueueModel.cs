@@ -12,7 +12,7 @@ namespace ProjectSCAM.Models
     {
         [Required]
         [DefaultValue(1)]
-        public int Id { get; set;    }
+        public int Id { get; set; }
         [Required]
         [DefaultValue(1)]
         public int Priority { get; set; }
@@ -37,10 +37,12 @@ namespace ProjectSCAM.Models
             BeerId = beerId;
             RecipeName = recipeName ?? throw new ArgumentNullException(nameof(recipeName));
         }
-        public BatchQueueModel() {
+        public BatchQueueModel()
+        {
 
         }
-        public void Update() {
+        public void Update()
+        {
             Singleton.Instance.DBManager.EditPriority(Id, Priority);
         }
     }

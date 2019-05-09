@@ -212,6 +212,7 @@
     <Compile Include="Controllers\OptimizationController.cs" />
     <Compile Include="Controllers\OverviewController.cs" />
     <Compile Include="Controllers\ProductionController.cs" />
+    <Compile Include="Controllers\TrackingController.cs" />
     <Compile Include="Controllers\UserCreationController.cs" />
     <Compile Include="Controllers\UserManagementController.cs" />
     <Compile Include="Global.asax.cs">
@@ -334,6 +335,7 @@
     <Content Include="Views\UserCreation\Index.cshtml" />
     <Content Include="Views\UserManagement\Index.cshtml" />
     <Content Include="Views\Overview\Index.cshtml" />
+    <Content Include="Views\Tracking\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

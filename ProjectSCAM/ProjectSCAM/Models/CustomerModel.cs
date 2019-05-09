@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -7,14 +9,19 @@ namespace ProjectSCAM.Models
 {
     public class CustomerModel
     {
-        public int Id { get; }
+        [Required]
+        [DefaultValue(1)]
+        public int Id { get; set; }
+        [Required]
+        [DefaultValue("")]
+        public string CustomerName { get; set; }
 
-        public string CustomerName { get; }
-
-        public CustomerModel(int customerId, string id)
+        public CustomerModel(int customerId, string name)
         {
             Id = customerId;
-            CustomerName = id ?? throw new ArgumentNullException(nameof(id));
+            CustomerName = name ?? throw new ArgumentNullException(nameof(name));
         }
+
+        public CustomerModel() { }
     }
 }

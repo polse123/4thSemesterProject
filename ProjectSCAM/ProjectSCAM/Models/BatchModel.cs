@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -7,25 +9,60 @@ namespace ProjectSCAM.Models
 {
     public class BatchModel
     {
-        public int Id { get; }
-        public int AcceptableProducts { get; }
-        public int DefectProducts { get; }
-        public string TimestampStart { get; }
-        public string TimestampEnd { get; }
-        public string ExpirationDate { get; }
-        public bool Succeeded { get; }
-        public string Performance { get; }
-        public string Quality { get; }
-        public string Availability { get; }
-        public string Oee { get; }
-        public int Speed { get; }
-        public int BeerId { get; }
-        public int Machine { get; }
-        public int? SoldTo { get; }
-        public bool Recalled { get; }
+        [Required]
+        [DefaultValue(1)]
+        public int Id { get; set; }
+        [Required]
+        [DefaultValue(1)]
+        public int AcceptableProducts { get; set; }
+        [Required]
+        [DefaultValue(1)]
+        public int DefectProducts { get; set; }
+        [Required]
+        [DefaultValue("")]
+        public string TimestampStart { get; set; }
+        [Required]
+        [DefaultValue("")]
+        public string TimestampEnd { get; set; }
+        [Required]
+        [DefaultValue("")]
+        public string ExpirationDate { get; set; }
+        [Required]
+        [DefaultValue(true)]
+        public bool Succeeded { get; set; }
+        [Required]
+        [DefaultValue("1")]
+        public string Performance { get; set; }
+        [Required]
+        [DefaultValue("1")]
+        public string Quality { get; set; }
+        [Required]
+        [DefaultValue("1")]
+        public string Availability { get; set; }
+        [Required]
+        [DefaultValue("1")]
+        public string Oee { get; set; }
+        [Required]
+        [DefaultValue(100)]
+        public int Speed { get; set; }
+        [Required]
+        [DefaultValue(0)]
+        public int BeerId { get; set; }
+        [Required]
+        [DefaultValue(1)]
+        public int Machine { get; set; }
+        [Required]
+        public int? SoldTo { get; set; }
+        [Required]
+        [DefaultValue(false)]
+        public bool Recalled { get; set; }
 
-        public string RecipeName { get; }
-        public string CustomerName { get; }
+        [Required]
+        [DefaultValue("")]
+        public string RecipeName { get; set; }
+        [Required]
+        [DefaultValue("")]
+        public string CustomerName { get; set; }
 
         public BatchValueCollection Values { get; set; }
 
@@ -52,6 +89,11 @@ namespace ProjectSCAM.Models
             Recalled = recalled;
             RecipeName = recipeName ?? throw new ArgumentNullException(nameof(recipeName));
             CustomerName = customerName;
+            Values = new BatchValueCollection();
+        }
+
+        public BatchModel()
+        {
             Values = new BatchValueCollection();
         }
     }
