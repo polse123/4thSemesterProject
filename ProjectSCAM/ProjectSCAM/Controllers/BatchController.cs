@@ -20,6 +20,8 @@ namespace SCAMS.Controllers
         public ActionResult HistoryButton(string id)
         {
             // string id = Request["id"];
+
+            //Need to make sure that ID is set and not null.
             TempData["id"] = id;
             return RedirectToAction("Index", "History");
 
