@@ -405,7 +405,7 @@ namespace ProjectSCAM.Models.Logic
             string query = "SELECT Batches.batchid, Batches.acceptableproducts, Batches.defectproducts, " +
                 "Batches.timestampstart, Batches.timestampend, Batches.expirationdate, " +
                 "Batches.succeeded, Batches.performance, Batches.quality, Batches.availability, Batches.oee, " +
-                "Batches.speed, Batches.beerid, Batches.machine, Batches.soldto, " +
+                "Batches.speed, Batches.beerid, Batches.machine, Batches.soldto, Batches.recalled, " +
                 "Recipes.name, Customers.customername " +
                 "FROM Batches LEFT JOIN Recipes ON Batches.beerid = Recipes.beerid " +
                 "LEFT JOIN Customers ON Batches.soldto = Customers.customerid" +
@@ -428,8 +428,8 @@ namespace ProjectSCAM.Models.Logic
                             BatchModel batch = new BatchModel((int)dr[0], (int)dr[1], (int)dr[2],
                                 dr[3].ToString().Trim(), dr[4].ToString().Trim(), dr[5].ToString().Trim(),
                                 (bool)dr[6], dr[7].ToString().Trim(), dr[8].ToString().Trim(), dr[9].ToString().Trim(),
-                                dr[10].ToString().Trim(), (int)dr[11], (int)dr[12], (int)dr[13], (int)dr[14],
-                                dr[15].ToString().Trim(), dr[16].ToString().Trim());
+                                dr[10].ToString().Trim(), (int)dr[11], (int)dr[12], (int)dr[13], (int)dr[14], (bool)dr[15],
+                                dr[16].ToString().Trim(), dr[17].ToString().Trim());
                             list.Add(batch);
                         }
                         else
@@ -437,8 +437,8 @@ namespace ProjectSCAM.Models.Logic
                             BatchModel batch = new BatchModel((int)dr[0], (int)dr[1], (int)dr[2],
                                         dr[3].ToString().Trim(), dr[4].ToString().Trim(), dr[5].ToString().Trim(),
                                         (bool)dr[6], dr[7].ToString().Trim(), dr[8].ToString().Trim(), dr[9].ToString().Trim(),
-                                        dr[10].ToString().Trim(), (int)dr[11], (int)dr[12], (int)dr[13], null,
-                                        dr[15].ToString().Trim(), null);
+                                        dr[10].ToString().Trim(), (int)dr[11], (int)dr[12], (int)dr[13], null, (bool)dr[15],
+                                        dr[16].ToString().Trim(), null);
                             list.Add(batch);
                         }
                     }

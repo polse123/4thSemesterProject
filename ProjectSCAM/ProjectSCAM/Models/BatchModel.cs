@@ -22,6 +22,7 @@ namespace ProjectSCAM.Models
         public int BeerId { get; }
         public int Machine { get; }
         public int? SoldTo { get; }
+        public bool Recalled { get; }
 
         public string RecipeName { get; }
         public string CustomerName { get; }
@@ -31,7 +32,7 @@ namespace ProjectSCAM.Models
         public BatchModel(int id, int acceptableProducts, int defectProducts,
             string timestampStart, string timestampEnd, string expirationDate, bool succeeded,
             string performance, string quality, string availability, string oee,
-            int speed, int beerId, int machine, int? soldTo, string recipeName, string customerName)
+            int speed, int beerId, int machine, int? soldTo, bool recalled, string recipeName, string customerName)
         {
             Id = id;
             AcceptableProducts = acceptableProducts;
@@ -48,6 +49,7 @@ namespace ProjectSCAM.Models
             BeerId = beerId;
             Machine = machine;
             SoldTo = soldTo;
+            Recalled = recalled;
             RecipeName = recipeName ?? throw new ArgumentNullException(nameof(recipeName));
             CustomerName = customerName;
             Values = new BatchValueCollection();

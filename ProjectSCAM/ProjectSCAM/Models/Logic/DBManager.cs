@@ -651,7 +651,7 @@ namespace ProjectSCAM.Models.Logic
             }
 
             return String.Format(("INSERT INTO Batches VALUES({0}, {1}, '{2}', '{3}', '{4}'," +
-                "{5}, '{6}', '{7}', '{8}', '{9}', {10}, {11}, {12}) RETURNING batchid;"),
+                "{5}, '{6}', '{7}', '{8}', '{9}', {10}, {11}, {12}, null, false) RETURNING batchid;"),
                 acceptableProducts, defectProducts, timestampStart, timestampEnd, expirationDate,
                 succeeded, oeeStrings[0], oeeStrings[1], oeeStrings[2], oeeStrings[3], speed, beerId, machine);
         }
