@@ -7,19 +7,18 @@ using System.Web;
 
 namespace ProjectSCAM.Models
 {
-    public class CustomerModel
+    public class TrackingModel
     {
         [Required]
         [DefaultValue(1)]
-        public int Id { get; set; }
+        public int BatchId { get; set; }
+        [Required]
+        [DefaultValue(1)]
+        public int CustomerId { get; set; }
         [Required]
         [DefaultValue("")]
         public string CustomerName { get; set; }
 
-        public CustomerModel(int customerId, string name)
-        {
-            Id = customerId;
-            CustomerName = name ?? throw new ArgumentNullException(nameof(name));
-        }
+        public TrackingModel() { }
     }
 }

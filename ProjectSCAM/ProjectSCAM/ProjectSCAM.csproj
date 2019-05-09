@@ -238,6 +238,7 @@
     <Compile Include="Models\Logic\OpcClient.cs" />
     <Compile Include="Models\RecipeModel.cs" />
     <Compile Include="Models\Logic\Singleton.cs" />
+    <Compile Include="Models\TrackingModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\UserType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

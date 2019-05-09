@@ -1,8 +1,10 @@
-﻿@model ProjectSCAM.Models.BatchModel
+﻿@model ProjectSCAM.Models.TrackingModel
 @{
     ViewBag.Title = "Tracking";
 }
-
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,7 +17,7 @@
 <body>
     <div class="grid-container">
         <div class="grid-item item1">
-            <div id="insert" class="insetclass">
+            <div id="sell" class="insetclass">
                 @using (Html.BeginForm("Sell", "Tracking", FormMethod.Post))
                 {
                     @Html.ValidationSummary(true)
@@ -23,18 +25,18 @@
                     <fieldset>
                         <legend>Register sale</legend>
                         <div class="editor-label">
-                            @Html.LabelFor(model => model.Id)
+                            @Html.LabelFor(model => model.BatchId)
                         </div>
                         <div class="editor-field">
-                            @Html.TextBoxFor(model => model.Id)
-                            @Html.ValidationMessageFor(model => model.Id)
+                            @Html.TextBoxFor(model => model.BatchId)
+                            @Html.ValidationMessageFor(model => model.BatchId)
                         </div>
                         <div class="editor-label">
-                            @Html.LabelFor(model => model.SoldTo)
+                            @Html.LabelFor(model => model.CustomerId)
                         </div>
                         <div class="editor-field">
-                            @Html.TextBoxFor(model => model.SoldTo)
-                            @Html.ValidationMessageFor(model => model.SoldTo)
+                            @Html.TextBoxFor(model => model.CustomerId)
+                            @Html.ValidationMessageFor(model => model.CustomerId)
                         </div>
                         <div class="editor-field">
                             <span>@ViewBag.SellMessage</span>
@@ -42,8 +44,49 @@
                         <input type="submit" value="Register as sold" />
                     </fieldset>
                 }
-                @section Scripts {
-                    @Scripts.Render("~/bundles/jqueryval")
+            </div>
+            <br />
+            <div id="recall" class="insetclass">
+                @using (Html.BeginForm("Recall", "Tracking", FormMethod.Post))
+                {
+                    @Html.ValidationSummary(true)
+                    @Html.AntiForgeryToken()
+                    <fieldset>
+                        <legend>Register recall</legend>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.BatchId)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.BatchId)
+                            @Html.ValidationMessageFor(model => model.BatchId)
+                        </div>
+                        <div class="editor-field">
+                            <span>@ViewBag.RecallMessage</span>
+                        </div>
+                        <input type="submit" value="Register as recalled" />
+                    </fieldset>
+                }
+            </div>
+            <br />
+            <div id="createCustomer" class="insetclass">
+                @using (Html.BeginForm("CreateCustomer", "Tracking", FormMethod.Post))
+                {
+                    @Html.ValidationSummary(true)
+                    @Html.AntiForgeryToken()
+                    <fieldset>
+                        <legend>Register customer</legend>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.CustomerName)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.CustomerName)
+                            @Html.ValidationMessageFor(model => model.CustomerName)
+                        </div>
+                        <div class="editor-field">
+                            <span>@ViewBag.CreateMessage</span>
+                        </div>
+                        <input type="submit" value="Register a customer" />
+                    </fieldset>
                 }
             </div>
         </div>

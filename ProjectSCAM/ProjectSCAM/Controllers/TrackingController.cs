@@ -18,35 +18,23 @@ namespace ProjectSCAM.Controllers
             return View();
         }
 
-        public ActionResult Sell(BatchModel batch)
+        public ActionResult Sell(TrackingModel model)
         {
-            System.Diagnostics.Debug.WriteLine("Sell start");
-            if (batch.SoldTo != null)
+            bool success = Singleton.Instance.DBManager.SetSale(model.BatchId, model.CustomerId);
+            if (success)
             {
-                System.Diagnostics.Debug.WriteLine("Sell if");
-                bool success = Singleton.Instance.DBManager.SetSale(batch.Id, (int)batch.SoldTo);
-                if (success)
-                {
-                    System.Diagnostics.Debug.WriteLine("Sell success");
-                    ViewBag.SellMessage = "Success";
-                }
-                else
-                {
-                    System.Diagnostics.Debug.WriteLine("Sell error");
-                    ViewBag.SellMessage = "Error";
-                }
+                ViewBag.SellMessage = "Success";
             }
             else
             {
-                System.Diagnostics.Debug.WriteLine("Sell missing info");
-                ViewBag.SellMessage = "Missing Customer id";
+                ViewBag.SellMessage = "Error";
             }
             return RedirectToAction("Index");
         }
 
-        public ActionResult Recall(BatchModel batch)
+        public ActionResult Recall(TrackingModel model)
         {
-            bool success = Singleton.Instance.DBManager.RecallBatch(batch.Id);
+            bool success = Singleton.Instance.DBManager.RecallBatch(model.BatchId);
             if (success)
             {
                 ViewBag.RecallMessage = "Success";
@@ -58,16 +46,16 @@ namespace ProjectSCAM.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult CreateCustomer(CustomerModel customer)
+        public ActionResult CreateCustomer(TrackingModel model)
         {
-            bool success = Singleton.Instance.DBManager.RegisterCustomer(customer.CustomerName);
+            bool success = Singleton.Instance.DBManager.RegisterCustomer(model.CustomerName);
             if (success)
             {
-                ViewBag.RecallMessage = "Success";
+                ViewBag.CreateMessage = "Success";
             }
             else
             {
-                ViewBag.RecallMessage = "Error";
+                ViewBag.CreateMessage = "Error";
             }
             return RedirectToAction("Index");
         }
