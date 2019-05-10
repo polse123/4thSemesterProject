@@ -28,7 +28,7 @@ namespace ProjectSCAM.Models.Logic {
 
         }
         private void AddEventHandler(OpcClient c) {
-            //    c.PropertyChanged += Opc_PropertyChanged;
+                c.PropertyChanged += Opc_PropertyChanged;
         }
 
         private void Opc_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {

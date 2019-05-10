@@ -76,8 +76,15 @@
         <div class="grid-item item5">
             <span>Maintenance:</span>
             <div>
-                <span id="progress" class="progressbar"></span>%
+                <span id="progress" class="progress"></span>%
             </div>
+            <div class="progress">
+                <div id="progress-bar"class="progress-bar progress-bar-success" role="progressbar" 
+                     aria-valuemin="0" aria-valuemax="100" style="width:0%">
+
+                </div>
+            </div>
+
             <div id="buttons" class="buttonclass">
 
                 <button input type="submit" onclick="machineCommand('start')" id="start" class="buttons"> Start</button> <br>
@@ -99,7 +106,9 @@
             url: '@Url.Action("Message")',
             dataType: 'json',
             data: { id: '' },
+
             success: function (data) {
+
             // set value of ingredient elements
                 $("#yeast").text(data.Yeast);
                 $("#malt").text(data.Malt);
@@ -117,9 +126,13 @@
                 $("#humidity").text(data.HumidityCurrent);
                 $("#vibration").text(data.VibrationCurrent);
                 $("#progress").text(data.MaintenanceCounter);
+                $("#progress-bar").width(data.MaintenanceCounter + "%");
+               
+                    
             // set value of machine element
                 $("#state").text(data.StateCurrent);
             },
+            
             error: function (ex) {
                 var r = jQuery.parseJSON(response.responseText);
                 alert("Message: " + r.Message);
