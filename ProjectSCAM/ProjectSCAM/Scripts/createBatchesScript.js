@@ -102,9 +102,13 @@ function checkFields() {
 }
 function getHistory() {
    var batchselect = document.getElementById("BatchId");
-   var selected = batchselect.value;
+    var selected = batchselect.value;
+    //if (selected != null) {
+        window.location.href = "/Batch/HistoryButton/" + selected;
+    //}
+    //else { window.location.href = "/Batch/HistoryButton/" + "0";}
     //$.get("/batch/HistoryButton", { id: selected} + id);
-    window.location.href = "/Batch/HistoryButton/" + selected;
+    //window.location.href = "/Batch/HistoryButton/" + selected;
 }
 function getBatchReport() {
     var batchselect = document.getElementById("BatchId");
