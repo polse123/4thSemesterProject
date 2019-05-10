@@ -44,6 +44,7 @@ namespace MvcMovie.Controllers {
         [HttpPost]
         public void SetMachine() {
             Session["SelectedMachine"] = Request["ip"];
+            Singleton.Instance.opcManager.InitConnection(Session["SelectedMachine"].ToString());
         }
     }
 }

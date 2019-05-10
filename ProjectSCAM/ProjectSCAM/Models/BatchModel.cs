@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectSCAM.Models.Logic;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -66,6 +67,8 @@ namespace ProjectSCAM.Models
 
         public BatchValueCollection Values { get; set; }
 
+        public int ProducedProducts { get { return AcceptableProducts + DefectProducts; } }
+
         public BatchModel(int id, int acceptableProducts, int defectProducts,
             string timestampStart, string timestampEnd, string expirationDate, bool succeeded,
             string performance, string quality, string availability, string oee,
@@ -90,6 +93,16 @@ namespace ProjectSCAM.Models
             RecipeName = recipeName ?? throw new ArgumentNullException(nameof(recipeName));
             CustomerName = customerName;
             Values = new BatchValueCollection();
+
+        }
+        public static BatchModel Read(int id)
+        {
+            return Singleton.Instance.DBManager.RetrieveBatch(id);
+        }
+
+        public void getValues()
+        {
+            Values = Singleton.Instance.DBManager.RetrieveBatchValues(Id);
         }
 
         public BatchModel()

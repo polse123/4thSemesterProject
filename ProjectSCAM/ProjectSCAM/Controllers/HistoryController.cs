@@ -12,7 +12,15 @@ namespace SCAMS.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            ViewBag.temp = TempData["id"].ToString();
+            if (TempData["id"].ToString() == "0") { return View(); }
+            else
+            {
+                BatchModel m = BatchModel.Read(int.Parse(TempData["id"].ToString()));
+                m.getValues();
+                return View(m);
+
+            }
         }
     }
 }

@@ -9,11 +9,11 @@
 <html>
 <head>
     @Styles.Render("~/Content/dropdown.css")
+    @Styles.Render("~/Content/UserStyleSheet.css")
     @Scripts.Render("~/Scripts/MachineSelectionScript.js")
 </head>
 <body>
-    <div class="dropdown">
-        <select id="machineselect" onchange="setMachine()">
+        <select id="machineselect">
             <option selected="selected" value"">Select Machine</option>
             @foreach (var item in ViewBag.Machines) {
                 <option value="@item.Description">@item.Ip</option>
@@ -23,10 +23,10 @@
 
         </div>
         <div class="descriptionBox">
-            <span id="description">Please choose a machine</span>
+            <button input type="submit" onclick="setMachine()" id="start" class="buttons"> Start</button> <br>
+            <span id="description"></span>
 
         </div>
-    </div>
     <h2>
         Create a machine
     </h2>

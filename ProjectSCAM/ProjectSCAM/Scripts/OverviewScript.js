@@ -1,5 +1,6 @@
 ﻿function machineCommand(com) {
     $.post("/overview/machinecontrol", { command: com });
+    refreshBQ();
 };
 function refreshBQ() {
     $.get("/overview/refreshbq", function (data) {

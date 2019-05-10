@@ -15,7 +15,7 @@ namespace ProjectSCAM.Models {
         private double defectProducts;
         private double acceptableProducts;
         private double amountToProduce;
-        private double productsPerMinute;
+        private double machSpeed;
         private double stateCurrent;
         private double tempCurrent;
         private double humidityCurrent;
@@ -27,8 +27,10 @@ namespace ProjectSCAM.Models {
         private double malt;
         private double wheat;
         private double yeast;
+        //private double beerType;
         private double maintenanceTrigger = 0;
         private double maintenanceCounter;
+
 
         private Session session;
         public event PropertyChangedEventHandler PropertyChanged;
@@ -38,7 +40,10 @@ namespace ProjectSCAM.Models {
         public OpcClient(string ip) {
             Ip = ip;
             Connect();
-            CreateSubscription();
+            if(session.ConnectionStatus != ServerConnectionStatus.Disconnected) {
+                CreateSubscription();
+            }
+
         }
 
         //Connection to OPC
@@ -54,9 +59,10 @@ namespace ProjectSCAM.Models {
             } catch (Exception ex) {
 
             }
+            if(session.ConnectionStatus != ServerConnectionStatus.Disconnected) {
+                maintenanceTrigger = ReadMaintenanceTrigger();
+            }
 
-            batchId = ReadCurrentBatchId();
-            maintenanceTrigger = ReadMaintenanceTrigger();
         }
 
         public void CreateSubscription() {
@@ -66,7 +72,7 @@ namespace ProjectSCAM.Models {
             NodeId defectNode = new NodeId("::Program:Cube.Admin.ProdDefectiveCount", 6);
             NodeId acceptableNode = new NodeId("::Program:product.good", 6);
             NodeId amountToProduceNode = new NodeId("::Program:product.produce_amount", 6);
-            NodeId productsPerMinuteNode = new NodeId("::Program:Cube.Status.MachSpeed", 6);
+            NodeId machSpeedNode = new NodeId("::Program:Cube.Status.MachSpeed", 6);
             NodeId tempNode = new NodeId("::Program:Cube.Status.Parameter[3].Value", 6);
             NodeId humidityNode = new NodeId("::Program:Cube.Status.Parameter[2].Value", 6);
             NodeId vibrationNode = new NodeId("::Program:Cube.Status.Parameter[4].Value", 6);
@@ -88,7 +94,7 @@ namespace ProjectSCAM.Models {
             MonitoredItem miDefectNode = new DataMonitoredItem(defectNode);
             MonitoredItem miAcceptableNode = new DataMonitoredItem(acceptableNode);
             MonitoredItem miAmountToProduceNode = new DataMonitoredItem(amountToProduceNode);
-            MonitoredItem miProductsPerMinuteNode = new DataMonitoredItem(productsPerMinuteNode);
+            MonitoredItem miMachSpeedNode = new DataMonitoredItem(machSpeedNode);
             MonitoredItem miTempNode = new DataMonitoredItem(tempNode);
             MonitoredItem miHumidityNode = new DataMonitoredItem(humidityNode);
             MonitoredItem miVibrationNode = new DataMonitoredItem(vibrationNode);
@@ -111,7 +117,6 @@ namespace ProjectSCAM.Models {
             monitoredItems.Add(miDefectNode);
             monitoredItems.Add(miAcceptableNode);
             monitoredItems.Add(miAmountToProduceNode);
-            monitoredItems.Add(miProductsPerMinuteNode);
             monitoredItems.Add(miTempNode);
             monitoredItems.Add(miHumidityNode);
             monitoredItems.Add(miVibrationNode);
@@ -122,6 +127,7 @@ namespace ProjectSCAM.Models {
             monitoredItems.Add(miMaltNode);
             monitoredItems.Add(miWheatNode);
             monitoredItems.Add(miYeastNode);
+            monitoredItems.Add(miMachSpeedNode);
             monitoredItems.Add(miMaintenanceTriggerNode);
             monitoredItems.Add(miMaintenanceCounterNode);
 
@@ -167,7 +173,7 @@ namespace ProjectSCAM.Models {
                         break;
                     // products per minute
                     case "::Program:Cube.Status.MachSpeed":
-                        ProductsPerMinute = double.Parse(dc.Value.ToString());
+                        MachSpeed = double.Parse(dc.Value.ToString());
                         break;
                     //relative humidity
                     case "::Program:Cube.Status.Parameter[2].Value":
@@ -405,30 +411,7 @@ namespace ProjectSCAM.Models {
             return (float)dv.Value;
         }
 
-        public float ReadCurrentBatchId() {
-            ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
-            nodesToRead.Add(new ReadValueId() {
-                NodeId = new NodeId("::Program:Cube.Status.Parameter[0].Value", 6),
-                AttributeId = Attributes.Value
-            });
-
-            List<DataValue> results = session.Read(nodesToRead);
-            DataValue dv = results[0];
-            return (float)dv.Value;
-        }
-
-        public float ReadProductAmountInBatch() {
-            ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
-            nodesToRead.Add(new ReadValueId() {
-                NodeId = new NodeId("::Program:Cube.Status.Parameter[1].Value", 6),
-                AttributeId = Attributes.Value
-            });
-
-            List<DataValue> results = session.Read(nodesToRead);
-            DataValue dv = results[0];
-            return (float)dv.Value;
-        }
-
+      
         public float ReadCurrentHumidity() {
             ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
             nodesToRead.Add(new ReadValueId() {
@@ -542,14 +525,7 @@ namespace ProjectSCAM.Models {
             }
         }
 
-        public double ProductsPerMinute {
-            get { return productsPerMinute; }
-
-            set {
-                productsPerMinute = value;
-                OnPropertyChanged("ProductsPerMinute");
-            }
-        }
+ 
 
         public double StateCurrent {
             get { return stateCurrent; }
@@ -622,6 +598,13 @@ namespace ProjectSCAM.Models {
                 OnPropertyChanged("Malt");
             }
         }
+         public double MachSpeed {
+            get { return machSpeed; }
+            set {
+                machSpeed = value;
+                OnPropertyChanged("MachSpeed");
+            }
+        }
 
         public double Wheat {
             get { return wheat; }
@@ -652,7 +635,7 @@ namespace ProjectSCAM.Models {
                 if (maintenanceTrigger == 0) {
                     return maintenanceCounter;
                 } else {
-                    return maintenanceCounter / maintenanceTrigger * 100;
+                    return (int)(maintenanceCounter / maintenanceTrigger * 100);
                 }
             }
             set {

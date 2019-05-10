@@ -8,7 +8,7 @@
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/alarmPopup.css")
     @Scripts.Render("~/bundles/modernizr")
-    <script>
+    @*<script>
         function CheckPopup() {
             $.get("/alarm/Popup", function (data, status) {
                 var dat = JSON.parse(data);
@@ -37,7 +37,7 @@
             $.post("/alarm/handle", { command: "oof" });
         };
         setInterval(CheckPopup, 1000);
-    </script>
+    </script>*@
 
 </head>
 <body>
@@ -58,7 +58,7 @@
                     <li class="userLinks">@Html.ActionLink("Production", "Index", "Production")</li>
                     <li class="userLinks">@Html.ActionLink("Batches", "Index", "Batch")</li>
                     <li class="userLinks">@Html.ActionLink("Alarms", "Index", "Alarm")</li>
-                    <li class="userLinks">@Html.ActionLink("History", "Index", "History")</li>
+                  
                     <li class="userLinks">@Html.ActionLink("Optimization", "Index", "Optimization")</li>
                     <li class="userLinks">@Html.ActionLink("Tracking", "Index", "Tracking")</li>
                     <li class="adminLinks">@Html.ActionLink("User Creation", "Index", "UserCreation")</li>
