@@ -90,11 +90,12 @@ namespace SCAMS.Controllers
                 return RedirectToAction("Index");
 
         }
+        [HttpGet]
         public JsonResult Usertype()
         {
-                var x = System.Web.HttpContext.Current.Session["UserType"].ToString();
-            //System.Diagnostics.Debug.WriteLine(Json(x).ToString());
-                return Json(x); 
+            String x = System.Web.HttpContext.Current.Session["UserType"].ToString();
+        //    MachineModel model = new MachineModel() { Description = "10", Id = 1, Ip = "2" };
+            return Json(new { type = x}, JsonRequestBehavior.AllowGet);
         }
     }
 }

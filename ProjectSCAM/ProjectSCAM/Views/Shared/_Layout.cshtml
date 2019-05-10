@@ -7,14 +7,20 @@
     <title>@ViewBag.Title - SCAMS</title>
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/alarmPopup.css")
+    @Scripts.Render("~/Scripts/shared.js")
     @Scripts.Render("~/bundles/modernizr")
-    @*<script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script>
         function CheckPopup() {
+            console.log("outest");
             $.get("/alarm/Popup", function (data, status) {
+                console.log("out");
                 var dat = JSON.parse(data);
                 if (dat === true) {
+                    console.log("in");
                     $.get("/alarm/GetAlarm", function (data, status) {
                         var json = JSON.parse(data);
+                        console.log(json);
                         document.getElementById("modalAlarmId").textContent = json.Id;
                         document.getElementById("modalBatchId").textContent = json.BatchId;
                         document.getElementById("modalTimeStamp").textContent = json.Timestamp;
@@ -29,15 +35,27 @@
                     var element = document.querySelector(".modal");
                     element.style.display = "none";
                 };
-                }
+            }
             )
         };
         function handleAlarm() {
             console.log("oof");
             $.post("/alarm/handle", { command: "oof" });
         };
-        setInterval(CheckPopup, 1000);
-    </script>*@
+        function shouldEnableAlarms() {
+            var type = getUserType();
+            console.log(type);
+            if (getUserType() == 1) {
+                console.log("2");
+                setInterval(CheckPopup, 1000);
+            } else {
+                console.log("ahh");
+            }
+        }
+        var retrieveInterval;
+        clearInterval(retrieveInterval);
+        getUserType();
+    </script>
 
 </head>
 <body>

@@ -100,3 +100,23 @@ function checkFields() {
         return false;
     }
 }
+function batchSearch() {
+    console.log("entered");
+    $.ajax({
+        dataType: "json",
+        url: "/batch/getbatchesbymachine",
+        type: "GET",
+        data: {
+            machineId: document.getElementById("machineSearchField").value,
+            latest: document.getElementById("latestSearchField").value,
+            dateSearch: document.getElementById("dateSearchField").value,
+            productSearch: document.getElementById("productSearchField").value,
+            batchid: document.getElementById("idSearchField").value
+        },
+        success: function (response) {
+            console.log("in");
+            console.log(response);
+        }
+    });
+
+}

@@ -28,13 +28,12 @@ namespace ProjectSCAM.Models.Logic {
 
         }
         private void AddEventHandler(OpcClient c) {
-            //    c.PropertyChanged += Opc_PropertyChanged;
+                c.PropertyChanged += Opc_PropertyChanged;
         }
 
         private void Opc_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
             OpcClient opc = sender as OpcClient;
             if (e.PropertyName.Equals("StateCurrent")) {
-                
                 //if successfully produced
                 if (opc.StateCurrent == 17) {
                     System.Diagnostics.Debug.WriteLine((int)opc.AcceptableProducts);
@@ -45,7 +44,6 @@ namespace ProjectSCAM.Models.Logic {
                 }
             }
             if(e.PropertyName.Equals("StopReasonId") && opc.StateCurrent != 4) {
-                System.Diagnostics.Debug.WriteLine(opc.StopReasonId);
                 Singleton.Instance.DBManager.RegisterBatchAndAlarm((int)opc.AcceptableProducts, (int)opc.DefectProducts,
                         opc.Start.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.AddYears(10).ToString("MM/dd/yyyy"), true, 1, 1, 1,
                         (int)opc.MachSpeed,
@@ -53,7 +51,6 @@ namespace ProjectSCAM.Models.Logic {
                 IList<AlarmModel> alarmies = Singleton.Instance.DBManager.RetrieveAlarms();
                 AlarmModel a = alarmies[alarmies.Count-1];
                 a.MachineId = GetMachineId(opc.Ip);
-                System.Diagnostics.Debug.WriteLine(a.Id + a.MachineId + a.StopReason + a.StopReasonId);
                 AlarmManager.ActiveAlarms.Add(a);
 
 
