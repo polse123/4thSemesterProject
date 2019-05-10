@@ -456,7 +456,7 @@ namespace ProjectSCAM.Models.Logic
                 }
                 else { append.Append(" WHERE"); }
 
-                append.Append(" timestampEnd LIKE '" + month + "/" + "__" + "/" + year + "%'");
+                append.Append(" timestampEnd LIKE '" + month + "____" + year + "%'");
                 append.Append(ORDER_BY_TIMESTAMP_END_APPEND + ";");
                 return exe.RetrieveBatches(append.ToString());
             }
