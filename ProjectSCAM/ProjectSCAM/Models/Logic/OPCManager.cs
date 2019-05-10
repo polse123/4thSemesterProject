@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 
 namespace ProjectSCAM.Models.Logic
@@ -9,7 +10,8 @@ namespace ProjectSCAM.Models.Logic
     {
         public Dictionary<string, OpcClient> OpcConnections { get; set; }
         public AlarmManager AlarmManager { get; set; }
-        private IList<KeyValuePair<string, double>> lmao = new List<KeyValuePair<string, double>>();
+        //private IList<KeyValuePair<string, double>> lmao = new List<KeyValuePair<string, double>>();
+        private BatchValueCollection bvc = new BatchValueCollection();
         public OPCManager()
         {
             AlarmManager = new AlarmManager();
@@ -25,8 +27,8 @@ namespace ProjectSCAM.Models.Logic
             //OpcConnections.Add(ip2, new OpcClient(ip2));
             AddEventHandlers();
             //OpcConnections.Add(ip2, new OpcClient(ip2));
-
         }
+
         private void AddEventHandlers()
         {
             foreach (OpcClient opc in OpcConnections.Values)
@@ -43,30 +45,31 @@ namespace ProjectSCAM.Models.Logic
                 //if successfully produced
                 if (opc.StateCurrent == 17)
                 {
-                    System.Diagnostics.Debug.WriteLine((int)opc.AcceptableProducts);
-                    Singleton.Instance.DBManager.RegisterBatch((int)opc.AcceptableProducts, (int)opc.DefectProducts,
-                        opc.Start.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.AddYears(10).ToString("MM/dd/yyyy"), true, 1, 1, 1,
-                        (int)opc.ProductsPerMinute,
-                        3, GetMachineId(opc.Ip), lmao, lmao, lmao);
+                    new Thread(() =>
+                    {
+                        Thread.CurrentThread.IsBackground = true;
+                        System.Diagnostics.Debug.WriteLine((int)opc.AcceptableProducts);
+                        Singleton.Instance.DBManager.RegisterBatch((int)opc.AcceptableProducts, (int)opc.DefectProducts,
+                            opc.Start.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.AddYears(10).ToString("MM/dd/yyyy"), true, 1, 1, 1,
+                            (int)opc.ProductsPerMinute,
+                            3, GetMachineId(opc.Ip), bvc.TemperatureValues, bvc.HumidityValues, bvc.VibrationValues);
+                    }).Start();
                 }
             }
             if (e.PropertyName.Equals("StopReasonId"))
             {
                 OpcClient opc = sender as OpcClient;
                 System.Diagnostics.Debug.WriteLine(opc.StopReasonId);
-                Singleton.Instance.DBManager.RegisterBatchAndAlarm((int)opc.AcceptableProducts, (int)opc.DefectProducts,
-                        opc.Start.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.AddYears(10).ToString("MM/dd/yyyy"), true, 1, 1, 1,
-                        (int)opc.ProductsPerMinute,
-                        3, GetMachineId(opc.Ip), lmao, lmao, lmao, DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), (int)opc.StopReasonId);
-                IList<AlarmModel> alarmies = Singleton.Instance.DBManager.RetrieveAlarms();
-                AlarmModel a = alarmies[alarmies.Count - 1];
+                AlarmModel a = Singleton.Instance.DBManager.RegisterBatchAndAlarm((int)opc.AcceptableProducts, (int)opc.DefectProducts,
+                           opc.Start.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.AddYears(10).ToString("MM/dd/yyyy"), false, 1, 1, 1,
+                           (int)opc.ProductsPerMinute,
+                           3, GetMachineId(opc.Ip), bvc.TemperatureValues, bvc.HumidityValues, bvc.VibrationValues, DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), (int)opc.StopReasonId);
                 a.MachineId = GetMachineId(opc.Ip);
                 System.Diagnostics.Debug.WriteLine(a.Id + a.MachineId + a.StopReason + a.StopReasonId);
                 AlarmManager.ActiveAlarms.Add(a);
-
-
             }
         }
+
         private int GetMachineId(string ip)
         {
             IList<MachineModel> machines = Singleton.Instance.DBManager.RetrieveMachines();
