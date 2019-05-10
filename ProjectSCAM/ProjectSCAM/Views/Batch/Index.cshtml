@@ -26,8 +26,9 @@
                         <th>Acceptable products</th>
                         <th>Date/time</th>
                         <th>Succeeded</th>
-                        <th>OEE</th>
+                        <th>OEE </th>
                         <th>Recipe</th>
+                        <th>Machine ID</th>
                     </tr>
                     @foreach (var item in Model)
                     {
@@ -36,8 +37,9 @@
                             <td>@item.AcceptableProducts</td>
                             <td>@item.TimestampEnd</td>
                             <td>@item.Succeeded</td>
-                            <td>@item.Oee</td>
+                            <td>@item.Oee </td>
                             <td>@item.RecipeName</td>
+                            <td>@item.Machine</td>
                         </tr>
                     }
                 </table>
@@ -50,7 +52,7 @@
             &nbsp;  <input type="text" id="dateSearchField" title="To be decided" class="searchFieldClass" onblur="checkDateOfBatch()" placeholder="Date:" /><br><br>
             &nbsp;  <input type="text" id="machineSearchField" title="Search by machine ID which is a number" class="searchFieldClass" onblur="checkMachine()" placeholder="Machine:" /><br><br>
             &nbsp;  <input type="text" id="productSearchField" title="Search by beer type which is a number (0 for Pilsner, 1 for Wheat, 2 for IPA, 3 for Stout, 4 for Ale, 5 for Alcohol Free)" class="searchFieldClass" onblur="checkProductType()" placeholder="Product Type:" /><br><br>
-            &nbsp;  <button type="submit" id="searchButton" onclick="batchSearch()"class="buttons" class="searchFieldClass"> Search</button>
+            &nbsp;  <button type="submit" id="searchButton" onclick="batchSearch()" class="buttons" class="searchFieldClass"> Search</button>
         </div>
 
     </div>
