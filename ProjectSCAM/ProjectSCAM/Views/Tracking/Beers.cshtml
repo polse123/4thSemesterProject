@@ -17,7 +17,7 @@
 <body>
     <div class="grid-container">
         <div class="grid-item item1">
-            <div id="sell" class="insetclass">
+            <div id="setAsDefect" class="insetclass">
                 @using (Html.BeginForm("RegisterBeerAsdefect", "Tracking", new { batchId = ViewBag.BatchId }, FormMethod.Post))
                 {
                     @Html.ValidationSummary(true)
@@ -40,21 +40,23 @@
             </div>
         </div>
         <div class="grid-item item2">
-            <table class="searchtableclass" id="searchtableid">
+            <table class="searchtableclass" id="beerTable">
                 <tr>
-                    <th>Batch Id</th>
+                    <th>Batch ID</th>
                 </tr>
                 <tr>
                     <td>@ViewBag.BatchId</td>
                 </tr>
                 <tr>
-                    <th>Beer Number</th>
+                    <th>Product number</th>
+                    <th>Product ID</th>
                     <th>Acceptable</th>
                 </tr>
                 @foreach (var item in ViewBag.Beers)
                 {
                     <tr>
                         <td>@item.ProductNumber</td>
+                        <td>@item.ProductId</td>
                         <td>@item.Acceptable</td>
                     </tr>
                 }

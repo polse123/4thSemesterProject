@@ -21,11 +21,6 @@ namespace ProjectSCAM.Models.Logic
         /// </summary>
         private readonly int EXPIRATION_DATE_LENGTH = 10;
 
-        internal void RetrieveUser()
-        {
-            throw new NotImplementedException();
-        }
-
         /// <summary>
         /// Query appendage used when running queries on the Batches table.
         /// Used when only succeeded queries are wanted.
@@ -183,7 +178,7 @@ namespace ProjectSCAM.Models.Logic
         /// <returns></returns>
         public UserModel RetrieveUser(string username, string password, bool activeOnly)
         {
-            string append = " WHERE username = '" + username + "' AND password = '" + password + "'";
+            string append = String.Format(" WHERE username = '{0}' AND password = '{1}'", username, password);
             if (activeOnly)
             {
                 append = append + " AND isactive = true;";

@@ -4,6 +4,7 @@ using ProjectSCAM.Models.Logic;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace ProjectSCAM.Tests.Logic
 {
