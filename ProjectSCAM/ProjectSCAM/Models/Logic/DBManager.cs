@@ -436,6 +436,8 @@ namespace ProjectSCAM.Models.Logic
 
         /// <summary>
         /// Retrieve batches produced in a specific month and year.
+        /// Month needs to have a length of 1 or 2.
+        /// Year needs to have a length of 4.
         /// </summary>
         /// <param name="month"></param>
         /// <param name="year"></param>
@@ -454,7 +456,10 @@ namespace ProjectSCAM.Models.Logic
                 {
                     append.Append(SUCCEEDED_BATCHES_ONLY_APPEND + " AND");
                 }
-                else { append.Append(" WHERE"); }
+                else
+                {
+                    append.Append(" WHERE");
+                }
 
                 append.Append(" timestampEnd LIKE '" + month + "____" + year + "%'");
                 append.Append(ORDER_BY_TIMESTAMP_END_APPEND + ";");
