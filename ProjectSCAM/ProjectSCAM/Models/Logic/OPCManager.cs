@@ -43,7 +43,7 @@ namespace ProjectSCAM.Models.Logic {
                         3, GetMachineId(opc.Ip), lmao, lmao, lmao);
                 }
             }
-            if(e.PropertyName.Equals("StopReasonId") && opc.StateCurrent != 4) {
+            if(e.PropertyName.Equals("StopReasonId") && opc.StateCurrent != 4 && opc.StopReasonId != 0) {
                 Singleton.Instance.DBManager.RegisterBatchAndAlarm((int)opc.AcceptableProducts, (int)opc.DefectProducts,
                         opc.Start.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.AddYears(10).ToString("MM/dd/yyyy"), true, 1, 1, 1,
                         (int)opc.MachSpeed,

@@ -104,7 +104,7 @@ function batchSearch() {
     console.log("entered");
     $.ajax({
         dataType: "json",
-        url: "/batch/getbatchesbymachine",
+        url: "/batch/getbatchesbysearchparameter",
         type: "GET",
         data: {
             machineId: document.getElementById("machineSearchField").value,

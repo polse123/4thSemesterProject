@@ -29,8 +29,7 @@
                         <th>OEE</th>
                         <th>Recipe</th>
                     </tr>
-                    @foreach (var item in Model)
-                    {
+                    @foreach (var item in Model) {
                         <tr>
                             <td>@item.Id</td>
                             <td>@item.AcceptableProducts</td>
@@ -45,12 +44,32 @@
         </div>
         <div class="grid-item item3">
             &nbsp;   Search Batch:<br><br>
-            &nbsp;  <input type="text" id="idSearchField" title="Batch ID is a number of length 1-10 digits" class="searchFieldClass" onblur="checkBatchID()" placeholder="Batch ID:" /><br><br>
-            &nbsp;  <input type="text" id="latestSearchField" title="Search the latest x amount of batches (number)" class="searchFieldClass" onblur="checkLatestBatch()" placeholder="Latest:" /><br><br>
-            &nbsp;  <input type="text" id="dateSearchField" title="To be decided" class="searchFieldClass" onblur="checkDateOfBatch()" placeholder="Date:" /><br><br>
-            &nbsp;  <input type="text" id="machineSearchField" title="Search by machine ID which is a number" class="searchFieldClass" onblur="checkMachine()" placeholder="Machine:" /><br><br>
-            &nbsp;  <input type="text" id="productSearchField" title="Search by beer type which is a number (0 for Pilsner, 1 for Wheat, 2 for IPA, 3 for Stout, 4 for Ale, 5 for Alcohol Free)" class="searchFieldClass" onblur="checkProductType()" placeholder="Product Type:" /><br><br>
-            &nbsp;  <button type="submit" id="searchButton" onclick="batchSearch()"class="buttons" class="searchFieldClass"> Search</button>
+            <form action="/batch/getbatchesbyid" method="get">
+                <input type="text" name="id" id="idSearchField" title="Batch ID is a number of length 1-10 digits" class="searchFieldClass" onblur="checkBatchID()" placeholder="Batch ID:" />
+                <input type="submit" value="Search by batch id" />
+            </form>
+            &nbsp;
+            
+        <form action="/batch/getbatchesbylatest">
+            <input type="text" name="latest" title="Search the latest x amount of batches (number)" class="searchFieldClass" onblur="checkLatestBatch()" placeholder="Latest:" />
+            <input type="submit" value="Search by latest" />
+        </form>
+            
+            &nbsp;
+            <form action="/batch/getbatchesbydate">
+                <input type="text" name="date" id="dateSearchField" title="To be decided" class="searchFieldClass" onblur="checkDateOfBatch()" placeholder="Date:" />
+                <input type="submit" value="Search by date" />
+            </form>
+            &nbsp;
+            <form action="/batch/search">
+                <input type="text" id="machineSearchField" title="Search by machine ID which is a number" class="searchFieldClass" onblur="checkMachine()" placeholder="Machine:" />
+                <input type="submit" value="Search by machine id" />
+            </form>
+            &nbsp;
+            <form action="/batch/search">
+                <input type="text" id="productSearchField" title="Search by beer type which is a number (0 for Pilsner, 1 for Wheat, 2 for IPA, 3 for Stout, 4 for Ale, 5 for Alcohol Free)" class="searchFieldClass" onblur="checkProductType()" placeholder="Product Type:" />
+                <input type="submit" value="Search by beer type" />
+            </form>
         </div>
 
     </div>
