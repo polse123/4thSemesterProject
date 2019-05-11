@@ -324,8 +324,8 @@ namespace ProjectSCAM.Models.Logic
             IList<KeyValuePair<string, double>> vibrationsValues)
         {
             if (acceptableProducts >= 0 && defectProducts >= 0 &&
-                timestampStart.Length == TIMESTAMP_LENGTH &&
-                timestampEnd.Length == TIMESTAMP_LENGTH &&
+                IsTimestampAllowed(timestampStart) &&
+                IsTimestampAllowed(timestampEnd) &&
                 expirationDate.Length == EXPIRATION_DATE_LENGTH &&
                 performance >= 0 && performance <= 1 &&
                 quality >= 0 && quality <= 1 &&
@@ -341,7 +341,10 @@ namespace ProjectSCAM.Models.Logic
 
                 return result.Key;
             }
-            else { return false; }
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -375,13 +378,13 @@ namespace ProjectSCAM.Models.Logic
             string alarmTimestamp, int stopReason)
         {
             if (acceptableProducts >= 0 && defectProducts >= 0 &&
-            timestampStart.Length == TIMESTAMP_LENGTH &&
-            timestampEnd.Length == TIMESTAMP_LENGTH &&
+            IsTimestampAllowed(timestampStart) &&
+            IsTimestampAllowed(timestampEnd) &&
             expirationDate.Length == EXPIRATION_DATE_LENGTH &&
             performance >= 0 && performance <= 1 &&
             quality >= 0 && quality <= 1 &&
             availability >= 0 && availability <= 1 &&
-                alarmTimestamp.Length == TIMESTAMP_LENGTH)
+            alarmTimestamp.Length == TIMESTAMP_LENGTH)
             {
                 string batchQuery = MakeInsertIntoBatchesQuery(acceptableProducts, defectProducts,
                     timestampStart, timestampEnd, expirationDate, succeeded,
@@ -397,7 +400,10 @@ namespace ProjectSCAM.Models.Logic
 
                 return result.Value;
             }
-            else { return null; }
+            else
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -707,6 +713,33 @@ namespace ProjectSCAM.Models.Logic
                 "{5}, '{6}', '{7}', '{8}', '{9}', {10}, {11}, {12}, null, false) RETURNING batchid;"),
                 acceptableProducts, defectProducts, timestampStart, timestampEnd, expirationDate,
                 succeeded, oeeStrings[0], oeeStrings[1], oeeStrings[2], oeeStrings[3], speed, beerId, machine);
+        }
+
+        private bool IsTimestampAllowed(string timestamp)
+        {
+            if (timestamp.Length == TIMESTAMP_LENGTH)
+            {
+                try
+                {
+                    int.TryParse(timestamp.Substring(6, 4), out int year);
+                    if (year >= 2019)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
