@@ -383,20 +383,24 @@ namespace ProjectSCAM.Models.Logic
             expirationDate.Length == EXPIRATION_DATE_LENGTH &&
             performance >= 0 && performance <= 1 &&
             quality >= 0 && quality <= 1 &&
-            availability >= 0 && availability <= 1 &&
-            alarmTimestamp.Length == TIMESTAMP_LENGTH)
+            availability >= 0 && availability <= 1)
             {
                 string batchQuery = MakeInsertIntoBatchesQuery(acceptableProducts, defectProducts,
-                    timestampStart, timestampEnd, expirationDate, succeeded,
-                    performance, quality, availability, speed, beerId, machine);
+                timestampStart, timestampEnd, expirationDate, succeeded,
+                performance, quality, availability, speed, beerId, machine);
 
-                StringBuilder alarmQuery = new StringBuilder();
-                alarmQuery.Append("INSERT INTO Alarms(timestamp, stopreason, handledby, batch) " +
-                "VALUES('" + alarmTimestamp + "', " + stopReason + ", null, ");
+                StringBuilder alarmQuery = null;
+
+                if (IsTimestampAllowed(alarmTimestamp))
+                {
+                    alarmQuery = new StringBuilder();
+                    alarmQuery.Append("INSERT INTO Alarms(timestamp, stopreason, handledby, batch) " +
+                    "VALUES('" + alarmTimestamp + "', " + stopReason + ", null, ");
+                }
 
                 KeyValuePair<bool, AlarmModel> result = exe.RegisterBatch(acceptableProducts,
-                    temperatureValues, humidityValues,
-                    vibrationsValues, batchQuery, alarmQuery);
+                temperatureValues, humidityValues,
+                vibrationsValues, batchQuery, alarmQuery);
 
                 return result.Value;
             }
