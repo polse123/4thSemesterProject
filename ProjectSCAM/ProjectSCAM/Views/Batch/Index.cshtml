@@ -63,13 +63,13 @@
                 <input type="submit" value="Search by date" />
             </form>
             &nbsp;
-            <form action="/batch/search">
-                <input type="text" id="machineSearchField" title="Search by machine ID which is a number" class="searchFieldClass" onblur="checkMachine()" placeholder="Machine:" />
+            <form action="/batch/getbatchesbymachine">
+                <input type="text" name="machineId" id="machineSearchField" title="Search by machine ID which is a number" class="searchFieldClass" onblur="checkMachine()" placeholder="Machine:" />
                 <input type="submit" value="Search by machine id" />
             </form>
             &nbsp;
-            <form action="/batch/search">
-                <input type="text" id="productSearchField" title="Search by beer type which is a number (0 for Pilsner, 1 for Wheat, 2 for IPA, 3 for Stout, 4 for Ale, 5 for Alcohol Free)" class="searchFieldClass" onblur="checkProductType()" placeholder="Product Type:" />
+            <form action="/batch/getbatchesbyrecipe">
+                <input type="text" name="recipe" id="productSearchField" title="Search by beer type which is a number (0 for Pilsner, 1 for Wheat, 2 for IPA, 3 for Stout, 4 for Ale, 5 for Alcohol Free)" class="searchFieldClass" onblur="checkProductType()" placeholder="Product Type:" />
                 <input type="submit" value="Search by beer type" />
             </form>
         </div>
