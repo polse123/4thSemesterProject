@@ -26,8 +26,9 @@
                         <th>Acceptable products</th>
                         <th>Date/time</th>
                         <th>Succeeded</th>
-                        <th>OEE</th>
+                        <th>OEE </th>
                         <th>Recipe</th>
+                        <th>Machine ID</th>
                     </tr>
                     @foreach (var item in Model) {
                         <tr>
@@ -35,8 +36,9 @@
                             <td>@item.AcceptableProducts</td>
                             <td>@item.TimestampEnd</td>
                             <td>@item.Succeeded</td>
-                            <td>@item.Oee</td>
+                            <td>@item.Oee </td>
                             <td>@item.RecipeName</td>
+                            <td>@item.Machine</td>
                         </tr>
                     }
                 </table>
