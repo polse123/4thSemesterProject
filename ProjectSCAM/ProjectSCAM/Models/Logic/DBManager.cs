@@ -13,11 +13,6 @@ namespace ProjectSCAM.Models.Logic
         private QueryExecuter exe;
 
         /// <summary>
-        /// Sanitizer for queries.
-        /// </summary>
-        private DBSecurity security;
-
-        /// <summary>
         /// Query appendage used when running queries on the Batches table.
         /// Used when only succeeded queries are wanted.
         /// </summary>
@@ -28,6 +23,61 @@ namespace ProjectSCAM.Models.Logic
         /// Used when batches should be ordered by timestamp with the newest first.
         /// </summary>
         private readonly string ORDER_BY_TIMESTAMP_END_APPEND = " ORDER BY timestampend DESC";
+
+        /// <summary>
+        /// The length of a timestamp.
+        /// </summary>
+        private readonly int TIMESTAMP_LENGTH = 23;
+
+        /// <summary>
+        /// The length of an expiration date timestamp.
+        /// </summary>
+        private readonly int EXPIRATION_DATE_LENGTH = 10;
+
+        /// <summary>
+        /// The minimum year allowed in timestamps.
+        /// </summary>
+        private readonly int MINIMUM_YEAR = 2019;
+
+        /// <summary>
+        /// Chars illegal in input strings.
+        /// </summary>
+        private readonly char[] ILLEGAL_CHARS = new char[] { '@', '.', ',', ':', ';', '\'', '-', '_', '/', '\\' };
+
+        /// <summary>
+        /// Chars allowed in timestamps.
+        /// </summary>
+        private readonly char[] LEGAL_FOR_TIMESTAMPS = new char[] { '/', '-', ':', '.' };
+
+        /// <summary>
+        /// Chars allowed in expiration dates.
+        /// </summary>
+        private readonly char[] LEGAL_FOR_EXPIRATION_DATES = new char[] { '/', '-' };
+
+        /// <summary>
+        /// Chars allowed for names.
+        /// </summary>
+        private readonly char[] LEGAL_FOR_NAMES = new char[] { '-' };
+
+        /// <summary>
+        /// Chars allowed for email adresses.
+        /// </summary>
+        private readonly char[] LEGAL_FOR_EMAILS = new char[] { '@', '.' };
+
+        /// <summary>
+        /// Chars allowed for ip's.
+        /// </summary>
+        private readonly char[] LEGAL_FOR_IPS = new char[] { '.' };
+
+        /// <summary>
+        /// Chars allowed for text.
+        /// </summary>
+        private readonly char[] LEGAL_FOR_TEXT = new char[] { '.', ',', '-' };
+
+        /// <summary>
+        /// Very illegal string.
+        /// </summary>
+        private readonly string VERY_ILLEGAL = "--";
 
         /// <summary>
         /// Constructor for the DBManager.
@@ -41,7 +91,6 @@ namespace ProjectSCAM.Models.Logic
         public DBManager(string server, string port, string userid, string password, string database)
         {
             exe = new QueryExecuter(server, port, userid, password, database);
-            security = new DBSecurity();
         }
 
         /// <summary>
@@ -83,8 +132,7 @@ namespace ProjectSCAM.Models.Logic
         public bool RegisterMachine(string ipAddress, string description)
         {
             // Security
-            //if (security.CheckIp(ipAddress) && security.CheckText(description))
-            if (true)
+            if (CheckIp(ipAddress) && CheckText(description))
             {
                 string query = "INSERT INTO Machines(ipaddress, description)" +
                     "VALUES('" + ipAddress + "', '" + description + "');";
@@ -120,26 +168,25 @@ namespace ProjectSCAM.Models.Logic
             string lastName, string email, string phoneNumber, int userType)
         {
             // Security
-            /*
-            if (!security.CheckInputs(new string[] { username, password }))
+            if (!CheckInputs(new string[] { username, password }))
             {
                 return false;
             }
 
-            if (!security.CheckName(firstName) && !security.CheckName(lastName))
+            if (!CheckName(firstName) && !CheckName(lastName))
             {
                 return false;
             }
 
-            if (!security.CheckEmail(email))
+            if (!CheckEmail(email))
             {
                 return false;
             }
 
-            if (!security.CheckNumber(phoneNumber))
+            if (!CheckNumber(phoneNumber))
             {
                 return false;
-            }*/
+            }
 
             string query = "INSERT INTO Users(username, password, firstname, " +
                 "lastname, email, phonenumber, isactive, usertype) " +
@@ -204,8 +251,7 @@ namespace ProjectSCAM.Models.Logic
         public UserModel RetrieveUser(string username, string password, bool activeOnly)
         {
             // Security
-            //if (security.CheckInputs(new string[] { username, password }))
-            if (true)
+            if (CheckInputs(new string[] { username, password }))
             {
                 string append = String.Format(" WHERE username = '{0}' AND password = '{1}'", username, password);
 
@@ -250,8 +296,7 @@ namespace ProjectSCAM.Models.Logic
         public bool RegisterCustomer(string customerName)
         {
             // Security
-            //if (security.CheckName(customerName))
-            if (true)
+            if (CheckName(customerName))
             {
                 string query = "INSERT INTO Customers(customername) VALUES('" + customerName + "');";
                 return exe.ExecuteQuery(query);
@@ -278,8 +323,7 @@ namespace ProjectSCAM.Models.Logic
         public bool EditCustomerName(int customerId, string newName)
         {
             // Security
-            //if (security.CheckName(newName))
-            if (true)
+            if (CheckName(newName))
             {
                 string query = "UPDATE Customers SET customername = '" + newName +
                 "' WHERE customerid = " + customerId + ";";
@@ -369,22 +413,16 @@ namespace ProjectSCAM.Models.Logic
             IList<KeyValuePair<string, double>> vibrationsValues)
         {
             // Security
-            /*if (acceptableProducts >= 0 && defectProducts >= 0 &&
-                security.CheckTimestamp(timestampStart) &&
-                security.CheckTimestamp(timestampEnd) &&
-                security.CheckExpirationDate(expirationDate) &&
-                performance >= 0 && performance <= 1 &&
-                quality >= 0 && quality <= 1 &&
-                availability >= 0 && availability <= 1)*/
             if (acceptableProducts >= 0 && defectProducts >= 0 &&
                 CheckTimestamp(timestampStart) &&
                 CheckTimestamp(timestampEnd) &&
+                CheckExpirationDate(expirationDate) &&
                 performance >= 0 && performance <= 1 &&
                 quality >= 0 && quality <= 1 &&
                 availability >= 0 && availability <= 1)
             {
                 // Security
-                //security.RemoveBadBatchValues(new IList<KeyValuePair<string, double>>[] { temperatureValues, humidityValues, vibrationsValues });
+                RemoveBadBatchValues(new IList<KeyValuePair<string, double>>[] { temperatureValues, humidityValues, vibrationsValues });
 
                 string query = MakeInsertIntoBatchesQuery(acceptableProducts, defectProducts,
                     timestampStart, timestampEnd, expirationDate, succeeded,
@@ -432,22 +470,16 @@ namespace ProjectSCAM.Models.Logic
             string alarmTimestamp, int stopReason)
         {
             // Security
-            /*if (acceptableProducts >= 0 && defectProducts >= 0 &&
-                security.CheckTimestamp(timestampStart) &&
-                security.CheckTimestamp(timestampEnd) &&
-                security.CheckExpirationDate(expirationDate) &&
-                performance >= 0 && performance <= 1 &&
-                quality >= 0 && quality <= 1 &&
-                availability >= 0 && availability <= 1)*/
             if (acceptableProducts >= 0 && defectProducts >= 0 &&
                 CheckTimestamp(timestampStart) &&
                 CheckTimestamp(timestampEnd) &&
+                CheckExpirationDate(expirationDate) &&
                 performance >= 0 && performance <= 1 &&
                 quality >= 0 && quality <= 1 &&
                 availability >= 0 && availability <= 1)
             {
                 // Security
-                //security.RemoveBadBatchValues(new IList<KeyValuePair<string, double>>[] { temperatureValues, humidityValues, vibrationsValues });
+                RemoveBadBatchValues(new IList<KeyValuePair<string, double>>[] { temperatureValues, humidityValues, vibrationsValues });
 
                 string batchQuery = MakeInsertIntoBatchesQuery(acceptableProducts, defectProducts,
                 timestampStart, timestampEnd, expirationDate, succeeded,
@@ -456,8 +488,7 @@ namespace ProjectSCAM.Models.Logic
                 StringBuilder alarmQuery = null;
 
                 // Security
-                //if (security.CheckTimestamp(alarmTimestamp))
-                if (true)
+                if (CheckTimestamp(alarmTimestamp))
                 {
                     alarmQuery = new StringBuilder();
                     alarmQuery.Append("INSERT INTO Alarms(timestamp, stopreason, handledby, batch) " +
@@ -532,10 +563,10 @@ namespace ProjectSCAM.Models.Logic
             }
 
             // Security
-            //if (security.CheckMonthAndYear(month, year))
-            if (true)
+            if (CheckMonthAndYear(month, year))
             {
                 StringBuilder append = new StringBuilder();
+
                 if (succeededOnly)
                 {
                     append.Append(SUCCEEDED_BATCHES_ONLY_APPEND + " AND");
@@ -547,6 +578,7 @@ namespace ProjectSCAM.Models.Logic
 
                 append.Append(" timestampEnd LIKE '" + month + "____" + year + "%'");
                 append.Append(ORDER_BY_TIMESTAMP_END_APPEND + ";");
+
                 return exe.RetrieveBatches(append.ToString());
             }
             else return null;
@@ -561,12 +593,15 @@ namespace ProjectSCAM.Models.Logic
         public IList<BatchModel> RetrieveBatchesByMachine(int machine, bool succeededOnly)
         {
             StringBuilder append = new StringBuilder();
+
             if (succeededOnly)
             {
                 append.Append(SUCCEEDED_BATCHES_ONLY_APPEND + " AND");
             }
             else { append.Append(" WHERE"); }
+
             append.Append(" machine = " + machine + ORDER_BY_TIMESTAMP_END_APPEND + ";");
+
             return exe.RetrieveBatches(append.ToString());
         }
 
@@ -579,12 +614,15 @@ namespace ProjectSCAM.Models.Logic
         public IList<BatchModel> RetrieveBatchesByRecipe(int beerId, bool succeededOnly)
         {
             StringBuilder append = new StringBuilder();
+
             if (succeededOnly)
             {
                 append.Append(SUCCEEDED_BATCHES_ONLY_APPEND + " AND");
             }
             else { append.Append(" WHERE"); }
+
             append.Append(" Batches.beerid = " + beerId + ";");
+
             return exe.RetrieveBatches(append.ToString());
         }
 
@@ -596,11 +634,14 @@ namespace ProjectSCAM.Models.Logic
         public BatchModel RetrieveBatch(int batchId)
         {
             string append = " WHERE batchid = " + batchId + ";";
+
             IList<BatchModel> list = exe.RetrieveBatches(append);
+
             if (list.Count == 1)
             {
                 return list.First();
             }
+
             else return null;
         }
 
@@ -614,6 +655,7 @@ namespace ProjectSCAM.Models.Logic
         {
             string query = "UPDATE Batches SET soldto = " + customerId +
                 " WHERE batchid = " + batchId + ";";
+
             return exe.ExecuteQuery(query);
         }
 
@@ -625,6 +667,7 @@ namespace ProjectSCAM.Models.Logic
         public bool RecallBatch(int batchId)
         {
             string query = "UPDATE Batches SET recalled = true WHERE batchid = " + batchId + ";";
+
             return exe.ExecuteQuery(query);
         }
 
@@ -636,6 +679,7 @@ namespace ProjectSCAM.Models.Logic
         public BatchValueCollection RetrieveBatchValues(int batchId)
         {
             string append = " WHERE belongingto = " + batchId + ";";
+
             return exe.RetrieveBatchValues(append);
         }
 
@@ -647,6 +691,7 @@ namespace ProjectSCAM.Models.Logic
         public IList<BeerModel> RetrieveBeers(int batchId)
         {
             string append = " WHERE belongingto = " + batchId + ";";
+
             return exe.RetrieveBeers(append);
         }
 
@@ -681,6 +726,7 @@ namespace ProjectSCAM.Models.Logic
         public bool SetBeerAsDefect(int productNumber, int batchId)
         {
             BatchModel batch = RetrieveBatch(batchId);
+
             if (batch != null)
             {
                 return SetBeerAsDefect(productNumber, batchId, batch.AcceptableProducts, batch.DefectProducts);
@@ -695,6 +741,7 @@ namespace ProjectSCAM.Models.Logic
         public IList<AlarmModel> RetrieveAlarms()
         {
             string append = " ORDER BY timestamp ASC;";
+
             return exe.RetrieveAlarms(append);
         }
 
@@ -707,6 +754,7 @@ namespace ProjectSCAM.Models.Logic
         public IList<AlarmModel> RetrieveAlarms(int amount)
         {
             string append = " ORDER BY timestamp ASC LIMIT " + amount + ";";
+
             return exe.RetrieveAlarms(append);
         }
 
@@ -717,6 +765,7 @@ namespace ProjectSCAM.Models.Logic
         public IList<AlarmModel> RetrieveUnhandledAlarms()
         {
             string append = " WHERE actionrequired AND handledby IS NULL ORDER BY timestamp ASC;";
+
             return exe.RetrieveAlarms(append);
         }
 
@@ -728,7 +777,9 @@ namespace ProjectSCAM.Models.Logic
         public AlarmModel RetrieveAlarm(int alarmId)
         {
             string append = " WHERE alarmid = " + alarmId + ";";
+
             IList<AlarmModel> list = exe.RetrieveAlarms(append);
+
             if (list.Count == 1)
             {
                 return list.First();
@@ -746,6 +797,7 @@ namespace ProjectSCAM.Models.Logic
         {
             string query = "UPDATE Alarms SET handledby = " + userId +
                 " WHERE alarmid = " + alarmId + ";";
+
             return exe.ExecuteQuery(query);
         }
 
@@ -793,14 +845,57 @@ namespace ProjectSCAM.Models.Logic
                 succeeded, oeeStrings[0], oeeStrings[1], oeeStrings[2], oeeStrings[3], speed, beerId, machine);
         }
 
-        private bool CheckTimestamp(string input)
+        public bool CheckInput(string input)
         {
-            if (input.Length == 23)
+            if (input.Contains(VERY_ILLEGAL))
             {
+                return false;
+            }
+            foreach (char c in ILLEGAL_CHARS)
+            {
+                if (input.Contains(c))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public bool CheckInputs(string[] inputs)
+        {
+            foreach (string input in inputs)
+            {
+                bool result = CheckInput(input);
+                if (!result)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public bool CheckTimestamp(string input)
+        {
+            if (input.Contains(VERY_ILLEGAL))
+            {
+                return false;
+            }
+            if (input.Length == TIMESTAMP_LENGTH)
+            {
+                foreach (char c in ILLEGAL_CHARS)
+                {
+                    if (!LEGAL_FOR_TIMESTAMPS.Contains(c))
+                    {
+                        if (input.Contains(c))
+                        {
+                            return false;
+                        }
+                    }
+                }
                 try
                 {
                     int.TryParse(input.Substring(6, 4), out int year);
-                    if (year >= 2019)
+                    if (year >= MINIMUM_YEAR)
                     {
                         return true;
                     }
@@ -817,6 +912,188 @@ namespace ProjectSCAM.Models.Logic
             else
             {
                 return false;
+            }
+        }
+
+        public bool CheckExpirationDate(string input)
+        {
+            if (input.Contains(VERY_ILLEGAL))
+            {
+                return false;
+            }
+            if (input.Length == EXPIRATION_DATE_LENGTH)
+            {
+                foreach (char c in ILLEGAL_CHARS)
+                {
+                    if (!LEGAL_FOR_TIMESTAMPS.Contains(c))
+                    {
+                        if (input.Contains(c))
+                        {
+                            return false;
+                        }
+                    }
+                }
+                try
+                {
+                    int.TryParse(input.Substring(6, 4), out int year);
+                    if (year >= MINIMUM_YEAR)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool CheckName(string input)
+        {
+            if (input.Contains(VERY_ILLEGAL))
+            {
+                return false;
+            }
+            foreach (char c in ILLEGAL_CHARS)
+            {
+                if (input.Contains(c))
+                {
+                    if (!LEGAL_FOR_NAMES.Contains(c))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        public bool CheckEmail(string input)
+        {
+            if (input.Contains(VERY_ILLEGAL))
+            {
+                return false;
+            }
+            foreach (char c in ILLEGAL_CHARS)
+            {
+                if (input.Contains(c))
+                {
+                    if (!LEGAL_FOR_EMAILS.Contains(c))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        public bool CheckNumber(string input)
+        {
+            if (input.Contains(VERY_ILLEGAL))
+            {
+                return false;
+            }
+
+            char[] chars = input.ToArray();
+
+            foreach (char c in chars)
+            {
+                if (!char.IsDigit(c))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public bool CheckIp(string input)
+        {
+            if (input.Contains(VERY_ILLEGAL))
+            {
+                return false;
+            }
+            foreach (char c in ILLEGAL_CHARS)
+            {
+                if (input.Contains(c))
+                {
+                    if (!LEGAL_FOR_IPS.Contains(c))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        public bool CheckText(string input)
+        {
+            if (input.Contains(VERY_ILLEGAL))
+            {
+                return false;
+            }
+            foreach (char c in ILLEGAL_CHARS)
+            {
+                if (input.Contains(c))
+                {
+                    if (!LEGAL_FOR_TEXT.Contains(c))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        public bool CheckMonthAndYear(string month, string year)
+        {
+            if (month.Contains(VERY_ILLEGAL) || year.Contains(VERY_ILLEGAL))
+            {
+                return false;
+            }
+
+            char[] monthC = month.ToArray();
+            char[] yearC = year.ToArray();
+
+            foreach (char[] chars in new char[][] { monthC, yearC })
+            {
+                foreach (char c in chars)
+                {
+                    if (!char.IsDigit(c))
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            if (month.Length == 2 && year.Length == 4)
+            {
+                return true;
+            }
+            else return false;
+        }
+
+        /// <summary>
+        /// Removes batch values where the timestamp contains illegal chars.
+        /// </summary>
+        /// <param name="values"></param>
+        public void RemoveBadBatchValues(IList<KeyValuePair<string, double>>[] values)
+        {
+            foreach (IList<KeyValuePair<string, double>> list in values)
+            {
+                foreach (KeyValuePair<string, double> pair in list)
+                {
+                    if (!CheckTimestamp(pair.Key))
+                    {
+                        list.Remove(pair);
+                    }
+                }
             }
         }
     }

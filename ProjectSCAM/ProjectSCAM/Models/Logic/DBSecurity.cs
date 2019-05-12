@@ -30,7 +30,7 @@ namespace ProjectSCAM.Models.Logic
         /// <summary>
         /// Chars allowed in timestamps.
         /// </summary>
-        private readonly char[] LEGAL_FOR_TIMESTAMPS = new char[] { '/', '-', ':' };
+        private readonly char[] LEGAL_FOR_TIMESTAMPS = new char[] { '/', '-', ':', '.' };
 
         /// <summary>
         /// Chars allowed in expiration dates.
@@ -85,14 +85,14 @@ namespace ProjectSCAM.Models.Logic
 
         public bool CheckInputs(string[] inputs)
         {
-            /*foreach (string input in inputs)
+            foreach (string input in inputs)
             {
                 bool result = CheckInput(input);
                 if (!result)
                 {
                     return false;
                 }
-            }*/
+            }
             return true;
         }
 
