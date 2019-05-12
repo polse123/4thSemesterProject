@@ -377,6 +377,8 @@ namespace ProjectSCAM.Models.Logic
                 quality >= 0 && quality <= 1 &&
                 availability >= 0 && availability <= 1)*/
             if (acceptableProducts >= 0 && defectProducts >= 0 &&
+                CheckTimestamp(timestampStart) &&
+                CheckTimestamp(timestampEnd) &&
                 performance >= 0 && performance <= 1 &&
                 quality >= 0 && quality <= 1 &&
                 availability >= 0 && availability <= 1)
@@ -438,6 +440,8 @@ namespace ProjectSCAM.Models.Logic
                 quality >= 0 && quality <= 1 &&
                 availability >= 0 && availability <= 1)*/
             if (acceptableProducts >= 0 && defectProducts >= 0 &&
+                CheckTimestamp(timestampStart) &&
+                CheckTimestamp(timestampEnd) &&
                 performance >= 0 && performance <= 1 &&
                 quality >= 0 && quality <= 1 &&
                 availability >= 0 && availability <= 1)
@@ -787,6 +791,33 @@ namespace ProjectSCAM.Models.Logic
                 "{5}, '{6}', '{7}', '{8}', '{9}', {10}, {11}, {12}, null, false) RETURNING batchid;"),
                 acceptableProducts, defectProducts, timestampStart, timestampEnd, expirationDate,
                 succeeded, oeeStrings[0], oeeStrings[1], oeeStrings[2], oeeStrings[3], speed, beerId, machine);
+        }
+
+        private bool CheckTimestamp(string input)
+        {
+            if (input.Length == 23)
+            {
+                try
+                {
+                    int.TryParse(input.Substring(6, 4), out int year);
+                    if (year >= 2019)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
