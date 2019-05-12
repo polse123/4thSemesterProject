@@ -85,14 +85,14 @@ namespace ProjectSCAM.Models.Logic
 
         public bool CheckInputs(string[] inputs)
         {
-            foreach (string input in inputs)
+            /*foreach (string input in inputs)
             {
                 bool result = CheckInput(input);
                 if (!result)
                 {
                     return false;
                 }
-            }
+            }*/
             return true;
         }
 
