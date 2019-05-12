@@ -13,13 +13,9 @@ namespace ProjectSCAM.Models.Logic
         private QueryExecuter exe;
 
         /// <summary>
-        /// The length of a timestamp.
+        /// Sanitizer for queries.
         /// </summary>
-        private readonly int TIMESTAMP_LENGTH = 23;
-        /// <summary>
-        /// the length of an expiration date timestamp.
-        /// </summary>
-        private readonly int EXPIRATION_DATE_LENGTH = 10;
+        private DBSecurity security;
 
         /// <summary>
         /// Query appendage used when running queries on the Batches table.
@@ -45,6 +41,7 @@ namespace ProjectSCAM.Models.Logic
         public DBManager(string server, string port, string userid, string password, string database)
         {
             exe = new QueryExecuter(server, port, userid, password, database);
+            security = new DBSecurity();
         }
 
         /// <summary>
@@ -85,10 +82,14 @@ namespace ProjectSCAM.Models.Logic
         /// <returns></returns>
         public bool RegisterMachine(string ipAddress, string description)
         {
-            string query = "INSERT INTO Machines(ipaddress, description)" +
-                "VALUES('" + ipAddress + "', '" + description + "');";
+            if (security.CheckIp(ipAddress) && security.CheckText(description))
+            {
+                string query = "INSERT INTO Machines(ipaddress, description)" +
+                    "VALUES('" + ipAddress + "', '" + description + "');";
 
-            return exe.ExecuteQuery(query);
+                return exe.ExecuteQuery(query);
+            }
+            else return false;
         }
 
         /// <summary>
@@ -116,6 +117,26 @@ namespace ProjectSCAM.Models.Logic
         public bool RegisterUser(string username, string password, string firstName,
             string lastName, string email, string phoneNumber, int userType)
         {
+            if (!security.CheckInputs(new string[] { username, password }))
+            {
+                return false;
+            }
+
+            if (!security.CheckName(firstName) && !security.CheckName(lastName))
+            {
+                return false;
+            }
+
+            if (!security.CheckEmail(email))
+            {
+                return false;
+            }
+
+            if (!security.CheckNumber(phoneNumber))
+            {
+                return false;
+            }
+
             string query = "INSERT INTO Users(username, password, firstname, " +
                 "lastname, email, phonenumber, isactive, usertype) " +
                 "VALUES('" + username + "', '" + password + "', '" + firstName + "', '" +
@@ -178,21 +199,24 @@ namespace ProjectSCAM.Models.Logic
         /// <returns></returns>
         public UserModel RetrieveUser(string username, string password, bool activeOnly)
         {
-            string append = String.Format(" WHERE username = '{0}' AND password = '{1}'", username, password);
-            if (activeOnly)
+            if (security.CheckInputs(new string[] { username, password }))
             {
-                append = append + " AND isactive = true;";
-            }
-            else
-            {
-                append = append + ";";
-            }
-            IList<UserModel> users = exe.RetrieveUsers(append);
-            if (users != null)
-            {
-                if (users.Count != 0)
+                string append = String.Format(" WHERE username = '{0}' AND password = '{1}'", username, password);
+                if (activeOnly)
                 {
-                    return users.First();
+                    append = append + " AND isactive = true;";
+                }
+                else
+                {
+                    append = append + ";";
+                }
+                IList<UserModel> users = exe.RetrieveUsers(append);
+                if (users != null)
+                {
+                    if (users.Count != 0)
+                    {
+                        return users.First();
+                    }
                 }
             }
             return null;
@@ -216,8 +240,12 @@ namespace ProjectSCAM.Models.Logic
         /// <returns></returns>
         public bool RegisterCustomer(string customerName)
         {
-            string query = "INSERT INTO Customers(customername) VALUES('" + customerName + "');";
-            return exe.ExecuteQuery(query);
+            if (security.CheckName(customerName))
+            {
+                string query = "INSERT INTO Customers(customername) VALUES('" + customerName + "');";
+                return exe.ExecuteQuery(query);
+            }
+            else return false;
         }
 
         /// <summary>
@@ -238,9 +266,13 @@ namespace ProjectSCAM.Models.Logic
         /// <returns></returns>
         public bool EditCustomerName(int customerId, string newName)
         {
-            string query = "UPDATE Customers SET customername = '" + newName +
+            if (security.CheckName(newName))
+            {
+                string query = "UPDATE Customers SET customername = '" + newName +
                 "' WHERE customerid = " + customerId + ";";
-            return exe.ExecuteQuery(query);
+                return exe.ExecuteQuery(query);
+            }
+            else return false;
         }
 
         /// <summary>
@@ -324,20 +356,21 @@ namespace ProjectSCAM.Models.Logic
             IList<KeyValuePair<string, double>> vibrationsValues)
         {
             if (acceptableProducts >= 0 && defectProducts >= 0 &&
-                IsTimestampAllowed(timestampStart) &&
-                IsTimestampAllowed(timestampEnd) &&
-                expirationDate.Length == EXPIRATION_DATE_LENGTH &&
+                security.CheckTimestamp(timestampStart) &&
+                security.CheckTimestamp(timestampEnd) &&
+                security.CheckExpirationDate(expirationDate) &&
                 performance >= 0 && performance <= 1 &&
                 quality >= 0 && quality <= 1 &&
                 availability >= 0 && availability <= 1)
             {
+                security.RemoveBadBatchValues(new IList<KeyValuePair<string, double>>[] { temperatureValues, humidityValues, vibrationsValues });
+
                 string query = MakeInsertIntoBatchesQuery(acceptableProducts, defectProducts,
                     timestampStart, timestampEnd, expirationDate, succeeded,
                     performance, quality, availability, speed, beerId, machine);
 
                 KeyValuePair<bool, AlarmModel> result = exe.RegisterBatch(acceptableProducts,
-                    temperatureValues, humidityValues,
-                    vibrationsValues, query, null);
+                    temperatureValues, humidityValues, vibrationsValues, query, null);
 
                 return result.Key;
             }
@@ -378,20 +411,22 @@ namespace ProjectSCAM.Models.Logic
             string alarmTimestamp, int stopReason)
         {
             if (acceptableProducts >= 0 && defectProducts >= 0 &&
-            IsTimestampAllowed(timestampStart) &&
-            IsTimestampAllowed(timestampEnd) &&
-            expirationDate.Length == EXPIRATION_DATE_LENGTH &&
-            performance >= 0 && performance <= 1 &&
-            quality >= 0 && quality <= 1 &&
-            availability >= 0 && availability <= 1)
+                security.CheckTimestamp(timestampStart) &&
+                security.CheckTimestamp(timestampEnd) &&
+                security.CheckExpirationDate(expirationDate) &&
+                performance >= 0 && performance <= 1 &&
+                quality >= 0 && quality <= 1 &&
+                availability >= 0 && availability <= 1)
             {
+                security.RemoveBadBatchValues(new IList<KeyValuePair<string, double>>[] { temperatureValues, humidityValues, vibrationsValues });
+
                 string batchQuery = MakeInsertIntoBatchesQuery(acceptableProducts, defectProducts,
                 timestampStart, timestampEnd, expirationDate, succeeded,
                 performance, quality, availability, speed, beerId, machine);
 
                 StringBuilder alarmQuery = null;
 
-                if (IsTimestampAllowed(alarmTimestamp))
+                if (security.CheckTimestamp(alarmTimestamp))
                 {
                     alarmQuery = new StringBuilder();
                     alarmQuery.Append("INSERT INTO Alarms(timestamp, stopreason, handledby, batch) " +
@@ -399,8 +434,7 @@ namespace ProjectSCAM.Models.Logic
                 }
 
                 KeyValuePair<bool, AlarmModel> result = exe.RegisterBatch(acceptableProducts,
-                temperatureValues, humidityValues,
-                vibrationsValues, batchQuery, alarmQuery);
+                temperatureValues, humidityValues, vibrationsValues, batchQuery, alarmQuery);
 
                 return result.Value;
             }
@@ -459,7 +493,8 @@ namespace ProjectSCAM.Models.Logic
             {
                 month = "0" + month;
             }
-            if (month.Length == 2 && year.Length == 4)
+
+            if (security.CheckMonthAndYear(month, year))
             {
                 StringBuilder append = new StringBuilder();
                 if (succeededOnly)
@@ -475,7 +510,7 @@ namespace ProjectSCAM.Models.Logic
                 append.Append(ORDER_BY_TIMESTAMP_END_APPEND + ";");
                 return exe.RetrieveBatches(append.ToString());
             }
-            else throw new Exception();
+            else return null;
         }
 
         /// <summary>
@@ -717,33 +752,6 @@ namespace ProjectSCAM.Models.Logic
                 "{5}, '{6}', '{7}', '{8}', '{9}', {10}, {11}, {12}, null, false) RETURNING batchid;"),
                 acceptableProducts, defectProducts, timestampStart, timestampEnd, expirationDate,
                 succeeded, oeeStrings[0], oeeStrings[1], oeeStrings[2], oeeStrings[3], speed, beerId, machine);
-        }
-
-        private bool IsTimestampAllowed(string timestamp)
-        {
-            if (timestamp.Length == TIMESTAMP_LENGTH)
-            {
-                try
-                {
-                    int.TryParse(timestamp.Substring(6, 4), out int year);
-                    if (year >= 2019)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-                catch (Exception)
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                return false;
-            }
         }
     }
 }

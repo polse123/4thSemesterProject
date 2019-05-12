@@ -26,11 +26,6 @@ namespace ProjectSCAM.Models.Logic
         private readonly string[] VALUE_TABLES = { "TemperatureValues", "HumidityValues", "VibrationValues" };
 
         /// <summary>
-        /// Sanitizer for queries.
-        /// </summary>
-        public QuerySanitizer Sanitizer { get; }
-
-        /// <summary>
         /// Constructor for the QueryExecuter.
         /// A new connection is initialized.
         /// </summary>
@@ -43,7 +38,6 @@ namespace ProjectSCAM.Models.Logic
         {
             InitConnection(server, port, userid, password, database);
             CONN_LOCK = new object();
-            Sanitizer = new QuerySanitizer();
         }
 
         /// <summary>
