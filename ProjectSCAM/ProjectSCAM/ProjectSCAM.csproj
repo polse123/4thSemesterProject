@@ -228,6 +228,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Logic\AlarmManager.cs" />
     <Compile Include="Models\Logic\DBManager.cs" />
+    <Compile Include="Models\Logic\OEE.cs" />
     <Compile Include="Models\Logic\OPCManager.cs" />
     <Compile Include="Models\Logic\QueryExecuter.cs" />
     <Compile Include="Models\LoginModel.cs" />

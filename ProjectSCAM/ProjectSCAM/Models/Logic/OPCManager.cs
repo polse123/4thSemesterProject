@@ -55,7 +55,7 @@ namespace ProjectSCAM.Models.Logic {
                         3, GetMachineId(opc.Ip), lmao, lmao, lmao,DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"),(int)opc.StopReasonId);
                 alarm.MachineId = GetMachineId(opc.Ip);
                 AlarmManager.ActiveAlarms.Add(alarm);
-
+                opc.ResetMachine();
 
             }
         }

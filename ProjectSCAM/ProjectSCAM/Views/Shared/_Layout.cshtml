@@ -12,22 +12,17 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
     <script>
         function CheckPopup() {
-            console.log("outest");
             $.get("/alarm/Popup", function (data, status) {
                 console.log("out");
                 var dat = JSON.parse(data);
                 if (dat === true) {
-                    console.log("in");
                     $.get("/alarm/GetAlarm", function (data, status) {
                         var json = JSON.parse(data);
-                        console.log(json);
                         document.getElementById("modalAlarmId").textContent = json.Id;
                         document.getElementById("modalBatchId").textContent = json.BatchId;
                         document.getElementById("modalTimeStamp").textContent = json.Timestamp;
                         document.getElementById("modalMachineId").textContent = json.MachineId;
                         document.getElementById("modalStopReason").textContent = json.StopReason;
-
-
                     });
                     var element = document.querySelector(".modal");
                     element.style.display = "inline";
@@ -39,7 +34,6 @@
             )
         };
         function handleAlarm() {
-            console.log("oof");
             $.post("/alarm/handle", { command: "oof" });
         };
         function shouldEnableAlarms() {

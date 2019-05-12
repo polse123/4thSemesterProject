@@ -19,7 +19,6 @@ namespace SCAMS.Controllers
         }
         [HttpGet]
         public string Popup() {
-            System.Diagnostics.Debug.WriteLine("fired");
             bool shouldPopup = Singleton.Instance.opcManager.AlarmManager.ActiveAlarms.Count > 0;
             if(shouldPopup) {
                 System.Diagnostics.Debug.WriteLine(Singleton.Instance.opcManager.AlarmManager.ActiveAlarms[0].Id);
@@ -28,13 +27,12 @@ namespace SCAMS.Controllers
         }
         [HttpGet]
         public string GetAlarm() {
-            System.Diagnostics.Debug.WriteLine("firedxxx");
             AlarmModel alarm = Singleton.Instance.opcManager.AlarmManager.ActiveAlarms[0];
             return JsonConvert.SerializeObject(alarm, Formatting.None);
         }
         [HttpPost]
         public void Handle() {
-            Singleton.Instance.opcManager.AlarmManager.ActiveAlarms.RemoveAt(0);
+            System.Diagnostics.Debug.WriteLine(Singleton.Instance.opcManager.AlarmManager.ActiveAlarms[0].Handle(int.Parse(Session["userID"].ToString())));
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectSCAM.Models.Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -18,6 +19,9 @@ namespace ProjectSCAM.Models
         public bool ActionRequired { get; }
         public string HandlerName { get; set; }
 
+        //used for handling the alarm
+        private OpcClient opc;
+
         public AlarmModel(int id, string timestamp, int stopReasonId, int? handledBy, int batchId, bool actionRequired, string stopReason, string handlerName)
         {
             Id = id;
@@ -31,6 +35,58 @@ namespace ProjectSCAM.Models
         }
         public AlarmModel() {
 
+        }
+        private void LoadOpc()
+        {
+            if (opc == null)
+            {
+                MachineModel m;
+                foreach (MachineModel machine in Singleton.Instance.DBManager.RetrieveMachines())
+                {
+                    if (machine.Id == MachineId)
+                    {
+                        m = machine;
+                        opc = Singleton.Instance.opcManager.GetOpcConnection(m.Ip);
+                    }
+                }
+            }
+        }
+        private void UpdateHandler(int userid)
+        {
+            Singleton.Instance.DBManager.SetAlarmHandler(userid,Id);
+        }
+        public bool Handle(int userid)
+        {
+            LoadOpc();
+            if (StopReasonId == 10)
+            {
+                if(opc.Barley > 30000 && opc.Wheat > 30000 && opc.Yeast > 30000 && opc.Malt > 30000 && opc.Hops > 30000)
+                {
+                    Singleton.Instance.DBManager.SetAlarmHandler(userid, Id);
+                    Singleton.Instance.opcManager.AlarmManager.ActiveAlarms.Remove(this);
+                    return true;
+                } else
+                {
+                    return false;
+                }
+            } else if(StopReasonId == 12)
+            {
+                if (opc.MaintenanceCounter == 1)
+                {
+                    Singleton.Instance.DBManager.SetAlarmHandler(userid, Id);
+                    Singleton.Instance.opcManager.AlarmManager.ActiveAlarms.Remove(this);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            } else
+            {
+                Singleton.Instance.DBManager.SetAlarmHandler(userid, Id);
+                Singleton.Instance.opcManager.AlarmManager.ActiveAlarms.Remove(this);
+                return true;
+            }
         }
     }
 }
