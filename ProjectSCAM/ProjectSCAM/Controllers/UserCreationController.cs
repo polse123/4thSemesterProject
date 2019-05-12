@@ -22,13 +22,7 @@ namespace SCAMS.Controllers
             {
                 ViewBag.statusMessage = "";
             }
-            IList<UserType> userTypes = Singleton.Instance.DBManager.RetrieveUserTypes();
-            List<SelectListItem> list = new List<SelectListItem>();
-            foreach (UserType type in userTypes)
-            {
-                list.Add(new SelectListItem { Text = type.Role, Value = type.Id.ToString() });
-            }
-            ViewBag.UserTypes = list;
+            ViewBag.UserTypes = Singleton.Instance.DBManager.RetrieveUserTypes();
             return View();
         }
 

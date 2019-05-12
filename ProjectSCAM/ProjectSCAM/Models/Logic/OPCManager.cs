@@ -33,25 +33,28 @@ namespace ProjectSCAM.Models.Logic {
 
         private void Opc_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
             OpcClient opc = sender as OpcClient;
+            // triggers when machine state changes
             if (e.PropertyName.Equals("StateCurrent")) {
-                //if successfully produced
+                //proceed if batch was completed successfully
                 if (opc.StateCurrent == 17) {
-                    System.Diagnostics.Debug.WriteLine((int)opc.AcceptableProducts);
+                    DateTime end = DateTime.Now;
+                    OEE oee = new OEE((int)opc.AcceptableProducts, (int)opc.DefectProducts, opc.Start, end, opc.Recipe);
+
                     Singleton.Instance.DBManager.RegisterBatch((int)opc.AcceptableProducts, (int)opc.DefectProducts,
-                        opc.Start.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.AddYears(10).ToString("MM/dd/yyyy"), true, 1, 1, 1,
+                        opc.Start.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.AddYears(10).ToString("MM/dd/yyyy"), true,
+                        oee.CalculatePerformance(), oee.CalculateQuality(), oee.CalculateAvailability(),
                         (int)opc.MachSpeed,
                         3, GetMachineId(opc.Ip), lmao, lmao, lmao);
+                    opc.ClearValues();
                 }
             }
-            if(e.PropertyName.Equals("StopReasonId") && opc.StateCurrent != 4 && opc.StopReasonId != 0) {
-                Singleton.Instance.DBManager.RegisterBatchAndAlarm((int)opc.AcceptableProducts, (int)opc.DefectProducts,
-                        opc.Start.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.AddYears(10).ToString("MM/dd/yyyy"), true, 1, 1, 1,
+            if(e.PropertyName.Equals("StopReasonId") && opc.StateCurrent != 4 && opc.StopReasonId != 0 && opc.AmountToProduce != 0) {
+                AlarmModel alarm = Singleton.Instance.DBManager.RegisterBatchAndAlarm((int)opc.AcceptableProducts, (int)opc.DefectProducts,
+                        opc.Start.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.AddYears(10).ToString("MM/dd/yyyy"), false, 1, 1, 1,
                         (int)opc.MachSpeed,
                         3, GetMachineId(opc.Ip), lmao, lmao, lmao,DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"),(int)opc.StopReasonId);
-                IList<AlarmModel> alarmies = Singleton.Instance.DBManager.RetrieveAlarms();
-                AlarmModel a = alarmies[alarmies.Count-1];
-                a.MachineId = GetMachineId(opc.Ip);
-                AlarmManager.ActiveAlarms.Add(a);
+                alarm.MachineId = GetMachineId(opc.Ip);
+                AlarmManager.ActiveAlarms.Add(alarm);
 
 
             }

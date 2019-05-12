@@ -23,7 +23,7 @@
         <span id="description">Please create new user</span>
 
     </div>
-    
+
     @using (Html.BeginForm("RegisterUser", "UserCreation", FormMethod.Post))
     {
 
@@ -84,9 +84,7 @@
                 @Html.LabelFor(model => model.UserType)
             </div>
             <div class="editor-field">
-                @Html.DropDownListFor(model => model.UserType, new List<SelectListItem>()
-    { new SelectListItem{Text = "Admin", Value = "0" }, new SelectListItem{Text = "Production Manager", Value = "1"}})
-                @Html.ValidationMessageFor(model => model.PhoneNumber)
+                @Html.DropDownListFor(model => model.UserType, new SelectList(ViewBag.UserTypes, "Id", "Role"))
             </div>
             <span>@ViewBag.statusMessage</span>
             <input type="submit" value="Register User" />

@@ -35,6 +35,7 @@ namespace ProjectSCAM.Models {
         private Session session;
         public event PropertyChangedEventHandler PropertyChanged;
         public string Ip { get; set; }
+        public int Recipe { get; set; }
 
         //Constructor with OPC connect and CreateSubscription
         public OpcClient(string ip) {
@@ -224,6 +225,21 @@ namespace ProjectSCAM.Models {
                 }
             }
         }
+        public void ClearValues()
+        {
+            ProcessedProducts = 0;
+            DefectProducts = 0;
+            AcceptableProducts = 0;
+            AmountToProduce = 0;
+            MachSpeed = 0;
+            StateCurrent = 0;
+            TempCurrent = 0;
+            HumidityCurrent = 0;
+            VibrationCurrent = 0;
+            StopReasonId = 0;
+            BatchId = 0;
+            
+        }
 
         public void Disconnect() {
             session.Disconnect();
@@ -305,6 +321,7 @@ namespace ProjectSCAM.Models {
             if (!isProcessRunning) {
                 isProcessRunning = true;
                 Start = DateTime.Now;
+                Recipe = (int)productType;
                 // collection of nodes to be written
                 WriteValueCollection nodesToWrite = new WriteValueCollection();
                 DataValue start = new DataValue();
