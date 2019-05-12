@@ -845,7 +845,7 @@ namespace ProjectSCAM.Models.Logic
                 succeeded, oeeStrings[0], oeeStrings[1], oeeStrings[2], oeeStrings[3], speed, beerId, machine);
         }
 
-        public bool CheckInput(string input)
+        private bool CheckInput(string input)
         {
             if (input.Contains(VERY_ILLEGAL))
             {
@@ -861,7 +861,7 @@ namespace ProjectSCAM.Models.Logic
             return true;
         }
 
-        public bool CheckInputs(string[] inputs)
+        private bool CheckInputs(string[] inputs)
         {
             foreach (string input in inputs)
             {
@@ -874,7 +874,7 @@ namespace ProjectSCAM.Models.Logic
             return true;
         }
 
-        public bool CheckTimestamp(string input)
+        private bool CheckTimestamp(string input)
         {
             if (input.Contains(VERY_ILLEGAL))
             {
@@ -915,7 +915,7 @@ namespace ProjectSCAM.Models.Logic
             }
         }
 
-        public bool CheckExpirationDate(string input)
+        private bool CheckExpirationDate(string input)
         {
             if (input.Contains(VERY_ILLEGAL))
             {
@@ -956,7 +956,7 @@ namespace ProjectSCAM.Models.Logic
             }
         }
 
-        public bool CheckName(string input)
+        private bool CheckName(string input)
         {
             if (input.Contains(VERY_ILLEGAL))
             {
@@ -975,7 +975,7 @@ namespace ProjectSCAM.Models.Logic
             return true;
         }
 
-        public bool CheckEmail(string input)
+        private bool CheckEmail(string input)
         {
             if (input.Contains(VERY_ILLEGAL))
             {
@@ -994,7 +994,7 @@ namespace ProjectSCAM.Models.Logic
             return true;
         }
 
-        public bool CheckNumber(string input)
+        private bool CheckNumber(string input)
         {
             if (input.Contains(VERY_ILLEGAL))
             {
@@ -1013,7 +1013,7 @@ namespace ProjectSCAM.Models.Logic
             return true;
         }
 
-        public bool CheckIp(string input)
+        private bool CheckIp(string input)
         {
             if (input.Contains(VERY_ILLEGAL))
             {
@@ -1032,7 +1032,7 @@ namespace ProjectSCAM.Models.Logic
             return true;
         }
 
-        public bool CheckText(string input)
+        private bool CheckText(string input)
         {
             if (input.Contains(VERY_ILLEGAL))
             {
@@ -1051,7 +1051,7 @@ namespace ProjectSCAM.Models.Logic
             return true;
         }
 
-        public bool CheckMonthAndYear(string month, string year)
+        private bool CheckMonthAndYear(string month, string year)
         {
             if (month.Contains(VERY_ILLEGAL) || year.Contains(VERY_ILLEGAL))
             {
@@ -1083,7 +1083,7 @@ namespace ProjectSCAM.Models.Logic
         /// Removes batch values where the timestamp contains illegal chars.
         /// </summary>
         /// <param name="values"></param>
-        public void RemoveBadBatchValues(IList<KeyValuePair<string, double>>[] values)
+        private void RemoveBadBatchValues(IList<KeyValuePair<string, double>>[] values)
         {
             foreach (IList<KeyValuePair<string, double>> list in values)
             {
