@@ -111,7 +111,38 @@ namespace ProjectSCAM.Models.Logic
                 }
                 catch (NpgsqlException ex)
                 {
-                    throw ex;
+                    return null;
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            }
+            return list;
+        }
+
+
+        public IList<StopReasonModel> RetrieveStopReasons(string append)
+        {
+            string query = "SELECT * FROM StopReasons" + append;
+            List<StopReasonModel> list = new List<StopReasonModel>();
+
+            lock (CONN_LOCK)
+            {
+                try
+                {
+                    conn.Open();
+                    NpgsqlCommand command = new NpgsqlCommand(query, conn);
+                    NpgsqlDataReader dr = command.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        StopReasonModel reason = new StopReasonModel((int)dr[0], (bool)dr[1], dr[2].ToString().Trim());
+                        list.Add(reason);
+                    }
+                }
+                catch (NpgsqlException ex)
+                {
+                    return null;
                 }
                 finally
                 {
@@ -148,7 +179,7 @@ namespace ProjectSCAM.Models.Logic
                 }
                 catch (NpgsqlException ex)
                 {
-                    throw ex;
+                    return null;
                 }
                 finally
                 {
@@ -185,7 +216,7 @@ namespace ProjectSCAM.Models.Logic
                 }
                 catch (NpgsqlException ex)
                 {
-                    throw ex;
+                    return null;
                 }
                 finally
                 {
@@ -227,7 +258,7 @@ namespace ProjectSCAM.Models.Logic
                 }
                 catch (NpgsqlException ex)
                 {
-                    throw ex;
+                    return null;
                 }
                 finally
                 {
@@ -264,7 +295,7 @@ namespace ProjectSCAM.Models.Logic
                 }
                 catch (NpgsqlException ex)
                 {
-                    throw ex;
+                    return null;
                 }
                 finally
                 {
@@ -305,7 +336,7 @@ namespace ProjectSCAM.Models.Logic
                 }
                 catch (NpgsqlException ex)
                 {
-                    throw ex;
+                    return null;
                 }
                 finally
                 {
@@ -324,6 +355,7 @@ namespace ProjectSCAM.Models.Logic
         public bool RemoveFromBatchQueue(string append)
         {
             string query = "DELETE FROM BatchQueue" + append;
+
             return ExecuteQuery(query);
         }
 
@@ -407,7 +439,7 @@ namespace ProjectSCAM.Models.Logic
                 }
                 catch (NpgsqlException ex)
                 {
-                    throw ex;
+                    return new KeyValuePair<bool, AlarmModel>(false, null);
                 }
                 finally
                 {
@@ -467,7 +499,7 @@ namespace ProjectSCAM.Models.Logic
                 }
                 catch (NpgsqlException ex)
                 {
-                    throw ex;
+                    return null;
                 }
                 finally
                 {
@@ -525,7 +557,7 @@ namespace ProjectSCAM.Models.Logic
                 }
                 catch (NpgsqlException ex)
                 {
-                    throw ex;
+                    return null;
                 }
                 finally
                 {
@@ -563,7 +595,7 @@ namespace ProjectSCAM.Models.Logic
                 }
                 catch (NpgsqlException ex)
                 {
-                    throw ex;
+                    return null;
                 }
                 finally
                 {
@@ -615,7 +647,7 @@ namespace ProjectSCAM.Models.Logic
                 }
                 catch (NpgsqlException ex)
                 {
-                    throw ex;
+                    return null;
                 }
                 finally
                 {

@@ -110,7 +110,19 @@ namespace ProjectSCAM.Models.Logic
         public IList<UserType> RetrieveUserTypes()
         {
             string append = ";";
+
             return exe.RetrieveUserTypes(append);
+        }
+
+        /// <summary>
+        /// Retrieve all stop reasons.
+        /// </summary>
+        /// <returns></returns>
+        public IList<StopReasonModel> RetrieveStopReasons()
+        {
+            string append = ";";
+
+            return exe.RetrieveStopReasons(append);
         }
 
         /// <summary>
@@ -120,6 +132,7 @@ namespace ProjectSCAM.Models.Logic
         public IList<RecipeModel> RetrieveRecipes()
         {
             string append = ";";
+
             return exe.RetrieveRecipes(append);
         }
 
