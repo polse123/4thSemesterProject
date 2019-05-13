@@ -27,21 +27,21 @@
 
         <div class="grid-item item2">
             <div id="alarmInfoFields" class="alarmInfofieldsclass">
-
                 Show alarms by machine:
-                <p id="show"></p>
                 <form action="/alarm/getalarmsbymachine" method="get">
-                    <select id="machineselect">
+                    <select id="machineselect" name="machineId" >
                         <option selected="selected" value"">Select Machine</option>
                         @foreach (var item in ViewBag.Machines) {
                             <option value="@item.Id">@item.Ip</option>
                         }
                     </select>
+                    <input type="submit" value="Search by machine"/>
                 </form>
                 &nbsp;
                 Show alarms by date:
                 <form action="/alarm/getalarmsbydate" method="get">
                     <input type="text" name="date" />
+                    <input type="submit" value="Search by date" />
                 </form>
                 &nbsp;
                 Show alarms by 

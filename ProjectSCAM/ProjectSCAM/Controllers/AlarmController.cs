@@ -15,8 +15,9 @@ namespace SCAMS.Controllers
         public ActionResult Index()
         {
             ViewBag.Machines = Singleton.Instance.DBManager.RetrieveMachines();
+            System.Diagnostics.Debug.WriteLine(Singleton.Instance.DBManager.RetrieveMachines()[0].Id);
             if (TempData["alarms"] != null) {
-                IList<AlarmModel> list = (IList<AlarmModel>)TempData["batches"];
+                IList<AlarmModel> list = (IList<AlarmModel>)TempData["alarms"];
                 TempData["alarms"] = null;
                 return View(list);
             } else {
@@ -43,19 +44,32 @@ namespace SCAMS.Controllers
         }
         [HttpGet]
         public ActionResult GetAlarmsByMachine(string machineId) {
+            System.Diagnostics.Debug.WriteLine(machineId + "out");
             IList<AlarmModel> list = new List<AlarmModel>();
             int intMachineId;
             bool add = int.TryParse(machineId, out intMachineId);
             if (add) {
-               // list = Singleton.Instance.DBManager.RetrieveAlarms() 
+                System.Diagnostics.Debug.WriteLine("in");
+                System.Diagnostics.Debug.WriteLine(intMachineId);
+                list = Singleton.Instance.DBManager.RetrieveAlarmsByMachine(intMachineId);
             } 
 
             TempData["alarms"] = list;
             return RedirectToAction("Index");
         }
-        //[HttpGet]
-        //public ActionResult GetAlarmsByType(string type) {
+        [HttpGet]
+        public ActionResult GetAlarmsByDate(string date) {
+            IList<AlarmModel> list = new List<AlarmModel>();
+            if (date.Length == 7) {
+                string month = date.Substring(0, 2);
+                string year = date.Substring(3, 4);
+                System.Diagnostics.Debug.WriteLine(month + " - " + year);
+                TempData["alarms"] = Singleton.Instance.DBManager.RetrieveAlarmsByMonth(month, year);
+            } else {
+                TempData["alarms"] = list;
+            }
 
-        //}
+            return RedirectToAction("Index");
+        }
     }
 }
