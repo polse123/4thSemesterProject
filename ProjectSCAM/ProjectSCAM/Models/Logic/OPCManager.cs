@@ -35,8 +35,6 @@ namespace ProjectSCAM.Models.Logic
                 AddEventHandler(c);
             }
         }
-
-        }
         private void AddEventHandler(OpcClient c) {
                 c.PropertyChanged += Opc_PropertyChanged;
         }

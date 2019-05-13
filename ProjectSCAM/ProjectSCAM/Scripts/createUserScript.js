@@ -19,9 +19,6 @@ function checkUsername() {
 
 }
 function checkPassword() {
-
-
-
     var password = document.getElementById("passwordField").value;
     var regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
 
@@ -120,7 +117,7 @@ function checkEmail() {
 
     var email = document.getElementById("emailField").value;
     var regex = /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9]+[a-zA-Z0-9.-]+[a-zA-Z0-9]+.[a-z]{0,4}$/;
-    
+
 
     if (regex.test(email)) {
         document.getElementById("emailField").style.color = "green";

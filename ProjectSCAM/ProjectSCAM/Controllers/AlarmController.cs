@@ -14,6 +14,7 @@ namespace SCAMS.Controllers
     {
         public ActionResult Index()
         {
+            ViewBag.Machines = Singleton.Instance.DBManager.RetrieveMachines();
             if (TempData["alarms"] != null) {
                 IList<AlarmModel> list = (IList<AlarmModel>)TempData["batches"];
                 TempData["alarms"] = null;
@@ -22,9 +23,6 @@ namespace SCAMS.Controllers
                 IList<AlarmModel> list = Singleton.Instance.DBManager.RetrieveAlarms();
                 return View(list);
             }
-            IList<AlarmModel> alarms = Singleton.Instance.DBManager.RetrieveAlarms();
-            ViewBag.Machines = Singleton.Instance.DBManager.RetrieveMachines();
-            return View(alarms);
         }
         [HttpGet]
         public string Popup() {
@@ -55,9 +53,9 @@ namespace SCAMS.Controllers
             TempData["alarms"] = list;
             return RedirectToAction("Index");
         }
-        [HttpGet]
-        public ActionResult GetAlarmsByType(string type) {
+        //[HttpGet]
+        //public ActionResult GetAlarmsByType(string type) {
 
-        }
+        //}
     }
 }
