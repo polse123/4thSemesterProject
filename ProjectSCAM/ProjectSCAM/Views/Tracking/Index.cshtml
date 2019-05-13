@@ -1,0 +1,155 @@
+﻿@model ProjectSCAM.Models.TrackingModel
+@{
+    ViewBag.Title = "Tracking";
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<!DOCTYPE html>
+<html>
+<head>
+    @Styles.Render("~/Content/BatchStyleSheet.css")
+    @Styles.Render("~/Content/UserStyleSheet.css")
+    @Scripts.Render("~/Scripts/createBatchesScript.js")
+    @Styles.Render("~/Content/ProductionStyleSheet.css")
+    @Styles.Render("~/Content/dropdown.css")
+</head>
+<body>
+    <div class="grid-container">
+        <div class="grid-item item1">
+            <div id="sell" class="insetclass">
+                @using (Html.BeginForm("Sell", "Tracking", FormMethod.Post))
+                {
+                    @Html.ValidationSummary(true)
+                    @Html.AntiForgeryToken()
+                    <fieldset>
+                        <legend>Register sale</legend>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.BatchId)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.BatchId)
+                            @Html.ValidationMessageFor(model => model.BatchId)
+                        </div>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.CustomerId)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.CustomerId)
+                            @Html.ValidationMessageFor(model => model.CustomerId)
+                        </div>
+                        <div class="editor-field">
+                            <span>@ViewBag.SellMessage</span>
+                        </div>
+                        <input type="submit" value="Register as sold" />
+                    </fieldset>
+                }
+            </div>
+            <br />
+            <div id="recall" class="insetclass">
+                @using (Html.BeginForm("Recall", "Tracking", FormMethod.Post))
+                {
+                    @Html.ValidationSummary(true)
+                    @Html.AntiForgeryToken()
+                    <fieldset>
+                        <legend>Register recall</legend>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.BatchId)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.BatchId)
+                            @Html.ValidationMessageFor(model => model.BatchId)
+                        </div>
+                        <div class="editor-field">
+                            <span>@ViewBag.RecallMessage</span>
+                        </div>
+                        <input type="submit" value="Register as recalled" />
+                    </fieldset>
+                }
+            </div>
+            <br />
+            <div id="createCustomer" class="insetclass">
+                @using (Html.BeginForm("CreateCustomer", "Tracking", FormMethod.Post))
+                {
+                    @Html.ValidationSummary(true)
+                    @Html.AntiForgeryToken()
+                    <fieldset>
+                        <legend>Register customer</legend>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.CustomerName)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.CustomerName)
+                            @Html.ValidationMessageFor(model => model.CustomerName)
+                        </div>
+                        <div class="editor-field">
+                            <span>@ViewBag.CreateMessage</span>
+                        </div>
+                        <input type="submit" value="Register a customer" />
+                    </fieldset>
+                }
+            </div>
+            <br />
+            <div id="showBeers" class="insetclass">
+                @using (Html.BeginForm("Beers", "Tracking", FormMethod.Post))
+                {
+                    @Html.ValidationSummary(true)
+                    @Html.AntiForgeryToken()
+                    <fieldset>
+                        <legend>View Beers</legend>
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.BatchId)
+                        </div>
+                        <div class="editor-field">
+                            @Html.TextBoxFor(model => model.BatchId)
+                            @Html.ValidationMessageFor(model => model.BatchId)
+                        </div>
+                        <div class="editor-field">
+                            <span>@ViewBag.BeersMessage</span>
+                        </div>
+                        <input type="submit" value="Show beers" />
+                    </fieldset>
+                }
+            </div>
+        </div>
+        <div class="grid-item item2">
+            <table class="searchtableclass" id="batchTable">
+                <tr>
+                    <th>Batch ID</th>
+                    <th>Acceptable products</th>
+                    <th>Date/time</th>
+                    <th>Recipe</th>
+                    <th>Sold to</th>
+                    <th>Recalled</th>
+                </tr>
+                @foreach (var item in ViewBag.Batches)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.AcceptableProducts</td>
+                        <td>@item.TimestampEnd</td>
+                        <td>@item.RecipeName</td>
+                        <td>@item.SoldTo</td>
+                        <td>@item.Recalled</td>
+                    </tr>
+                }
+            </table>
+        </div>
+        <div class="grid-item item3">
+            <table class="searchtableclass" id="customerTable">
+                <tr>
+                    <th>Customer ID</th>
+                    <th>Customer name</th>
+                </tr>
+                @foreach (var item in ViewBag.Customers)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.CustomerName</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</body>
+</html>

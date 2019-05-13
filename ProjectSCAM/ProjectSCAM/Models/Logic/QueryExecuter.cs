@@ -10,7 +10,7 @@ namespace ProjectSCAM.Models.Logic
         /// <summary>
         /// The connection to the db.
         /// </summary>
-        private readonly NpgsqlConnection CONN;
+        private NpgsqlConnection conn;
 
         /// <summary>
         /// Lock for the connection.
@@ -18,7 +18,7 @@ namespace ProjectSCAM.Models.Logic
         private readonly object CONN_LOCK;
 
         /// <summary>
-        /// string array with the names of the three batch values tables.
+        /// string array that holds the names of the three batch values tables.
         /// Index 0 holds the name of the temperature table.
         /// Index 1 holds the name of the humidity table.
         /// Index 2 holds the name of the vibration table.
@@ -36,7 +36,7 @@ namespace ProjectSCAM.Models.Logic
         /// <param name="database"></param>
         public QueryExecuter(string server, string port, string userid, string password, string database)
         {
-            CONN = InitConnection(server, port, userid, password, database);
+            InitConnection(server, port, userid, password, database);
             CONN_LOCK = new object();
         }
 
@@ -48,14 +48,14 @@ namespace ProjectSCAM.Models.Logic
         /// <param name="userid"></param>
         /// <param name="password"></param>
         /// <param name="database"></param>
-        private NpgsqlConnection InitConnection(string server, string port, string userid, string password, string database)
+        private void InitConnection(string server, string port, string userid, string password, string database)
         {
             // PostgeSQL-style connection string
             string connString = String.Format("Server={0};Port={1};" +
                 "User Id={2};Password={3};Database={4};",
                 server, port, userid, password, database);
             // Making connection with Npgsql provider
-            return new NpgsqlConnection(connString);
+            conn = new NpgsqlConnection(connString);
         }
 
         /// <summary>
@@ -69,8 +69,8 @@ namespace ProjectSCAM.Models.Logic
             {
                 try
                 {
-                    CONN.Open();
-                    NpgsqlCommand command = new NpgsqlCommand(query, CONN);
+                    conn.Open();
+                    NpgsqlCommand command = new NpgsqlCommand(query, conn);
                     command.ExecuteNonQuery();
                     return true;
                 }
@@ -80,7 +80,7 @@ namespace ProjectSCAM.Models.Logic
                 }
                 finally
                 {
-                    CONN.Close();
+                    conn.Close();
                 }
             }
         }
@@ -100,8 +100,8 @@ namespace ProjectSCAM.Models.Logic
             {
                 try
                 {
-                    CONN.Open();
-                    NpgsqlCommand command = new NpgsqlCommand(query, CONN);
+                    conn.Open();
+                    NpgsqlCommand command = new NpgsqlCommand(query, conn);
                     NpgsqlDataReader dr = command.ExecuteReader();
                     while (dr.Read())
                     {
@@ -111,11 +111,42 @@ namespace ProjectSCAM.Models.Logic
                 }
                 catch (NpgsqlException ex)
                 {
-                    throw ex;
+                    return null;
                 }
                 finally
                 {
-                    CONN.Close();
+                    conn.Close();
+                }
+            }
+            return list;
+        }
+
+
+        public IList<StopReasonModel> RetrieveStopReasons(string append)
+        {
+            string query = "SELECT * FROM StopReasons" + append;
+            List<StopReasonModel> list = new List<StopReasonModel>();
+
+            lock (CONN_LOCK)
+            {
+                try
+                {
+                    conn.Open();
+                    NpgsqlCommand command = new NpgsqlCommand(query, conn);
+                    NpgsqlDataReader dr = command.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        StopReasonModel reason = new StopReasonModel((int)dr[0], (bool)dr[1], dr[2].ToString().Trim());
+                        list.Add(reason);
+                    }
+                }
+                catch (NpgsqlException ex)
+                {
+                    return null;
+                }
+                finally
+                {
+                    conn.Close();
                 }
             }
             return list;
@@ -136,8 +167,8 @@ namespace ProjectSCAM.Models.Logic
             {
                 try
                 {
-                    CONN.Open();
-                    NpgsqlCommand command = new NpgsqlCommand(query, CONN);
+                    conn.Open();
+                    NpgsqlCommand command = new NpgsqlCommand(query, conn);
                     NpgsqlDataReader dr = command.ExecuteReader();
                     while (dr.Read())
                     {
@@ -148,11 +179,11 @@ namespace ProjectSCAM.Models.Logic
                 }
                 catch (NpgsqlException ex)
                 {
-                    throw ex;
+                    return null;
                 }
                 finally
                 {
-                    CONN.Close();
+                    conn.Close();
                 }
             }
             return list;
@@ -173,8 +204,8 @@ namespace ProjectSCAM.Models.Logic
             {
                 try
                 {
-                    CONN.Open();
-                    NpgsqlCommand command = new NpgsqlCommand(query, CONN);
+                    conn.Open();
+                    NpgsqlCommand command = new NpgsqlCommand(query, conn);
                     NpgsqlDataReader dr = command.ExecuteReader();
                     while (dr.Read())
                     {
@@ -185,11 +216,11 @@ namespace ProjectSCAM.Models.Logic
                 }
                 catch (NpgsqlException ex)
                 {
-                    throw ex;
+                    return null;
                 }
                 finally
                 {
-                    CONN.Close();
+                    conn.Close();
                 }
             }
             return list;
@@ -214,8 +245,8 @@ namespace ProjectSCAM.Models.Logic
             {
                 try
                 {
-                    CONN.Open();
-                    NpgsqlCommand command = new NpgsqlCommand(query, CONN);
+                    conn.Open();
+                    NpgsqlCommand command = new NpgsqlCommand(query, conn);
                     NpgsqlDataReader dr = command.ExecuteReader();
                     while (dr.Read())
                     {
@@ -227,11 +258,11 @@ namespace ProjectSCAM.Models.Logic
                 }
                 catch (NpgsqlException ex)
                 {
-                    throw ex;
+                    return null;
                 }
                 finally
                 {
-                    CONN.Close();
+                    conn.Close();
                 }
             }
             return list;
@@ -253,8 +284,8 @@ namespace ProjectSCAM.Models.Logic
             {
                 try
                 {
-                    CONN.Open();
-                    NpgsqlCommand command = new NpgsqlCommand(query, CONN);
+                    conn.Open();
+                    NpgsqlCommand command = new NpgsqlCommand(query, conn);
                     NpgsqlDataReader dr = command.ExecuteReader();
                     while (dr.Read())
                     {
@@ -264,11 +295,11 @@ namespace ProjectSCAM.Models.Logic
                 }
                 catch (NpgsqlException ex)
                 {
-                    throw ex;
+                    return null;
                 }
                 finally
                 {
-                    CONN.Close();
+                    conn.Close();
                 }
             }
             return list;
@@ -293,8 +324,8 @@ namespace ProjectSCAM.Models.Logic
             {
                 try
                 {
-                    CONN.Open();
-                    NpgsqlCommand command = new NpgsqlCommand(query, CONN);
+                    conn.Open();
+                    NpgsqlCommand command = new NpgsqlCommand(query, conn);
                     NpgsqlDataReader dr = command.ExecuteReader();
                     while (dr.Read())
                     {
@@ -305,11 +336,11 @@ namespace ProjectSCAM.Models.Logic
                 }
                 catch (NpgsqlException ex)
                 {
-                    throw ex;
+                    return null;
                 }
                 finally
                 {
-                    CONN.Close();
+                    conn.Close();
                 }
             }
             return list;
@@ -324,6 +355,7 @@ namespace ProjectSCAM.Models.Logic
         public bool RemoveFromBatchQueue(string append)
         {
             string query = "DELETE FROM BatchQueue" + append;
+
             return ExecuteQuery(query);
         }
 
@@ -350,51 +382,51 @@ namespace ProjectSCAM.Models.Logic
                 try
                 {
                     // Register batch
-                    CONN.Open();
-                    NpgsqlCommand command = new NpgsqlCommand(batchQuery, CONN);
+                    conn.Open();
+                    NpgsqlCommand command = new NpgsqlCommand(batchQuery, conn);
                     NpgsqlDataReader dr = command.ExecuteReader();
                     while (dr.Read())
                     {
                         batchId = (int)dr[0];
                     }
-                    CONN.Close();
+                    conn.Close();
 
                     if (batchId != null)
                     {
                         AlarmModel alarm = null;
 
                         // Register batch values
-                        CONN.Open();
+                        conn.Open();
                         RegisterBatchValues((int)batchId, temperatureValues, humidityValues, vibrationValues);
-                        CONN.Close();
+                        conn.Close();
 
                         // Register beers
-                        CONN.Open();
+                        conn.Open();
                         RegisterBeers((int)batchId, acceptableProducts);
-                        CONN.Close();
+                        conn.Close();
 
                         // Register alarm
                         if (alarmQuery != null)
                         {
                             alarmQuery.Append(batchId + ") RETURNING alarmid;");
-                            CONN.Open();
-                            NpgsqlCommand a_command = new NpgsqlCommand(alarmQuery.ToString(), CONN);
+                            conn.Open();
+                            NpgsqlCommand a_command = new NpgsqlCommand(alarmQuery.ToString(), conn);
                             NpgsqlDataReader a_dr = a_command.ExecuteReader();
                             int? alarmId = null;
                             while (a_dr.Read())
                             {
                                 alarmId = (int)a_dr[0];
                             }
-                            CONN.Close();
+                            conn.Close();
 
                             if (alarmId != null)
                             {
                                 IList<AlarmModel> list = RetrieveAlarms(" WHERE alarmid = " + alarmId + ";");
                                 if (list.Count != 0)
                                 {
-                                    foreach (AlarmModel model in list)
+                                    foreach (AlarmModel element in list)
                                     {
-                                        alarm = model;
+                                        alarm = element;
                                         break;
                                     }
                                 }
@@ -407,11 +439,11 @@ namespace ProjectSCAM.Models.Logic
                 }
                 catch (NpgsqlException ex)
                 {
-                    throw ex;
+                    return new KeyValuePair<bool, AlarmModel>(false, null);
                 }
                 finally
                 {
-                    CONN.Close();
+                    conn.Close();
                 }
             }
         }
@@ -439,8 +471,8 @@ namespace ProjectSCAM.Models.Logic
             {
                 try
                 {
-                    CONN.Open();
-                    NpgsqlCommand command = new NpgsqlCommand(query, CONN);
+                    conn.Open();
+                    NpgsqlCommand command = new NpgsqlCommand(query, conn);
                     NpgsqlDataReader dr = command.ExecuteReader();
                     while (dr.Read())
                     {
@@ -467,11 +499,11 @@ namespace ProjectSCAM.Models.Logic
                 }
                 catch (NpgsqlException ex)
                 {
-                    throw ex;
+                    return null;
                 }
                 finally
                 {
-                    CONN.Close();
+                    conn.Close();
                 }
             }
             return list;
@@ -500,8 +532,8 @@ namespace ProjectSCAM.Models.Logic
                 {
                     for (int i = 0; i < 3; i++)
                     {
-                        CONN.Open();
-                        NpgsqlCommand command = new NpgsqlCommand(queries[i], CONN);
+                        conn.Open();
+                        NpgsqlCommand command = new NpgsqlCommand(queries[i], conn);
                         NpgsqlDataReader dr = command.ExecuteReader();
                         while (dr.Read())
                         {
@@ -520,16 +552,16 @@ namespace ProjectSCAM.Models.Logic
                                 values.VibrationValues.Add(value);
                             }
                         }
-                        CONN.Close();
+                        conn.Close();
                     }
                 }
                 catch (NpgsqlException ex)
                 {
-                    throw ex;
+                    return null;
                 }
                 finally
                 {
-                    CONN.Close();
+                    conn.Close();
                 }
             }
             return values;
@@ -552,8 +584,8 @@ namespace ProjectSCAM.Models.Logic
                 // dr[3] might have type DBNull. In this case, an InvalidCastException will be thrown.
                 try
                 {
-                    CONN.Open();
-                    NpgsqlCommand command = new NpgsqlCommand(query, CONN);
+                    conn.Open();
+                    NpgsqlCommand command = new NpgsqlCommand(query, conn);
                     NpgsqlDataReader dr = command.ExecuteReader();
                     while (dr.Read())
                     {
@@ -563,11 +595,11 @@ namespace ProjectSCAM.Models.Logic
                 }
                 catch (NpgsqlException ex)
                 {
-                    throw ex;
+                    return null;
                 }
                 finally
                 {
-                    CONN.Close();
+                    conn.Close();
                 }
             }
             return list;
@@ -584,7 +616,7 @@ namespace ProjectSCAM.Models.Logic
             string query = "SELECT Alarms.alarmid, Alarms.timestamp, Alarms.stopreason, Alarms.handledby, " +
                 "Alarms.batch, StopReasons.actionrequired, StopReasons.stopdescription, Users.firstname, Users.lastname " +
                 "FROM Alarms LEFT JOIN StopReasons ON Alarms.stopreason = StopReasons.stopid " +
-                "LEFT JOIN Users on Alarms.handledby = Users.userid" + append;
+                "LEFT JOIN Users ON Alarms.handledby = Users.userid" + append;
 
             List<AlarmModel> list = new List<AlarmModel>();
 
@@ -592,8 +624,8 @@ namespace ProjectSCAM.Models.Logic
             {
                 try
                 {
-                    CONN.Open();
-                    NpgsqlCommand command = new NpgsqlCommand(query, CONN);
+                    conn.Open();
+                    NpgsqlCommand command = new NpgsqlCommand(query, conn);
                     NpgsqlDataReader dr = command.ExecuteReader();
                     while (dr.Read())
                     {
@@ -615,11 +647,11 @@ namespace ProjectSCAM.Models.Logic
                 }
                 catch (NpgsqlException ex)
                 {
-                    throw ex;
+                    return null;
                 }
                 finally
                 {
-                    CONN.Close();
+                    conn.Close();
                 }
             }
             return list;
@@ -639,7 +671,7 @@ namespace ProjectSCAM.Models.Logic
             {
                 try
                 {
-                    NpgsqlCommand command = new NpgsqlCommand(queries[i], CONN);
+                    NpgsqlCommand command = new NpgsqlCommand(queries[i], conn);
                     command.ExecuteNonQuery();
                     if (firstExecution)
                     {

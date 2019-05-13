@@ -1,38 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 
-namespace ProjectSCAM.Models.Logic {
-    public class OPCManager {
+namespace ProjectSCAM.Models.Logic
+{
+    public class OPCManager
+    {
         public Dictionary<string, OpcClient> OpcConnections { get; set; }
         public AlarmManager AlarmManager { get; set; }
-        private IList<KeyValuePair<string, double>> lmao = new List<KeyValuePair<string, double>>();
-        public OPCManager() {
+        private BatchValueCollection bvc = new BatchValueCollection();
+
+        public OPCManager()
+        {
             AlarmManager = new AlarmManager();
             OpcConnections = new Dictionary<string, OpcClient>();
         }
 
-        public void InitConnection(string ip) {
-            //   string ip = "opc.tcp://127.0.0.1:4840";
-            //    string ip2 = "opc.tcp://10.112.254.69:4840";
+        public void InitConnection(string ip)
+        {
+            //string ip = "opc.tcp://127.0.0.1:4840";
+            //string ip2 = "opc.tcp://10.112.254.69:4840";
             System.Diagnostics.Debug.WriteLine(ip);
-            if(OpcConnections.ContainsKey(ip)) {
+            if (OpcConnections.ContainsKey(ip))
+            {
                 OpcClient c = new OpcClient(ip);
                 OpcConnections[ip] = c;
-            } else {
-                OpcClient c = new OpcClient(ip);
-                Singleton.Instance.DBManager.RetrieveAlarms();
-                OpcConnections.Add(ip, c);
-           //     AddEventHandler(c);
             }
+            else
+            {
+                OpcClient c = new OpcClient(ip);
+                OpcConnections.Add(ip, c);
+                AddEventHandler(c);
+            }
+        }
 
         }
         private void AddEventHandler(OpcClient c) {
                 c.PropertyChanged += Opc_PropertyChanged;
         }
 
-        private void Opc_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
+        private void Opc_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
             OpcClient opc = sender as OpcClient;
             // triggers when machine state changes
             if (e.PropertyName.Equals("StateCurrent")) {
@@ -45,7 +55,7 @@ namespace ProjectSCAM.Models.Logic {
                         opc.Start.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.AddYears(10).ToString("MM/dd/yyyy"), true,
                         oee.CalculatePerformance(), oee.CalculateQuality(), oee.CalculateAvailability(),
                         (int)opc.MachSpeed,
-                        3, GetMachineId(opc.Ip), lmao, lmao, lmao);
+                        3, GetMachineId(opc.Ip), bvc.TemperatureValues, bvc.HumidityValues, bvc.VibrationValues);
                     opc.ClearValues();
                 }
             }
@@ -53,31 +63,39 @@ namespace ProjectSCAM.Models.Logic {
                 AlarmModel alarm = Singleton.Instance.DBManager.RegisterBatchAndAlarm((int)opc.AcceptableProducts, (int)opc.DefectProducts,
                         opc.Start.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.AddYears(10).ToString("MM/dd/yyyy"), false, 1, 1, 1,
                         (int)opc.MachSpeed,
-                        3, GetMachineId(opc.Ip), lmao, lmao, lmao,DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"),(int)opc.StopReasonId);
+                        3, GetMachineId(opc.Ip), bvc.TemperatureValues, bvc.HumidityValues, bvc.VibrationValues,DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"),(int)opc.StopReasonId);
                 alarm.MachineId = GetMachineId(opc.Ip);
                 AlarmManager.ActiveAlarms.Add(alarm);
                 opc.ResetMachine();
 
             }
         }
-        private int GetMachineId(string ip) {
+
+        private int GetMachineId(string ip)
+        {
             IList<MachineModel> machines = Singleton.Instance.DBManager.RetrieveMachines();
             int i = 0;
-            foreach (MachineModel m in machines) {
-                if (m.Ip.Equals(ip)) {
+            foreach (MachineModel m in machines)
+            {
+                if (m.Ip.Equals(ip))
+                {
                     i = (int)m.Id;
                 }
             }
             return i;
         }
 
-        public bool HandleCommand(string ip, string command) {
+        public bool HandleCommand(string ip, string command)
+        {
             OpcClient opc;
             bool succeeded = OpcConnections.TryGetValue(ip, out opc);
-            if (succeeded) {
-                switch (command) {
+            if (succeeded)
+            {
+                switch (command)
+                {
                     case "start":
-                        if (Singleton.Instance.DBManager.RetrieveFromBatchQueue().Count > 0 && opc.StateCurrent == 4) {
+                        if (Singleton.Instance.DBManager.RetrieveFromBatchQueue().Count > 0 && opc.StateCurrent == 4)
+                        {
                             BatchQueueModel bqm = Singleton.Instance.DBManager.RetrieveFromBatchQueue()[0];
                             Singleton.Instance.DBManager.RemoveFromBatchQueue(bqm.Id);
                             opc.StartMachine(10, bqm.BeerId, bqm.Amount, bqm.Speed);
@@ -101,7 +119,9 @@ namespace ProjectSCAM.Models.Logic {
             }
             return succeeded;
         }
-        public OpcClient GetOpcConnection(string ip) {
+
+        public OpcClient GetOpcConnection(string ip)
+        {
             OpcClient opc;
             OpcConnections.TryGetValue(ip, out opc);
             return opc;

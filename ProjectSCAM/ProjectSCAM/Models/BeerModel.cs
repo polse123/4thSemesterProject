@@ -7,9 +7,17 @@ namespace ProjectSCAM.Models
 {
     public class BeerModel
     {
-        public int ProductNumber { get; }
-        public bool Acceptable { get; }
-        public int BatchId { get; }
+        public int ProductNumber { get; set; }
+        public bool Acceptable { get; set; }
+        public int BatchId { get; set; }
+
+        public string ProductId
+        {
+            get
+            {
+                return BatchId.ToString() + "-" + ProductNumber.ToString();
+            }
+        }
 
         public BeerModel(int productNumber, bool acceptable, int batchId)
         {
@@ -18,9 +26,6 @@ namespace ProjectSCAM.Models
             BatchId = batchId;
         }
 
-        public string ProductId()
-        {
-            return BatchId.ToString() + "-" + ProductNumber.ToString();
-        }
+        public BeerModel() { }
     }
 }

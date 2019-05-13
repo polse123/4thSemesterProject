@@ -7,8 +7,10 @@ using System.Windows.Markup;
 using UnifiedAutomation.UaBase;
 using UnifiedAutomation.UaClient;
 
-namespace ProjectSCAM.Models {
-    public class OpcClient : INotifyPropertyChanged {
+namespace ProjectSCAM.Models
+{
+    public class OpcClient : INotifyPropertyChanged
+    {
         public DateTime Start { get; set; }
         private bool isProcessRunning = false;
         private double processedProducts;
@@ -31,42 +33,49 @@ namespace ProjectSCAM.Models {
         private double maintenanceTrigger = 0;
         private double maintenanceCounter;
 
-
         private Session session;
         public event PropertyChangedEventHandler PropertyChanged;
         public string Ip { get; set; }
         public int Recipe { get; set; }
 
         //Constructor with OPC connect and CreateSubscription
-        public OpcClient(string ip) {
+        public OpcClient(string ip)
+        {
             Ip = ip;
             Connect();
-            if(session.ConnectionStatus != ServerConnectionStatus.Disconnected) {
+            if (session.ConnectionStatus != ServerConnectionStatus.Disconnected)
+            {
                 CreateSubscription();
             }
 
         }
 
         //Connection to OPC
-        public void Connect() {
+        public void Connect()
+        {
             session = new Session();
-            try {
+            try
+            {
                 //Connect to server with no security (simulator)
                 session.UseDnsNameAndPortFromDiscoveryUrl = true;
                 session.Connect(Ip, SecuritySelection.None);
 
                 //Connect to server with no security (machine)
                 //session.Connect("opc.tcp://10.112.254.165:4840", SecuritySelection.None);
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
 
             }
-            if(session.ConnectionStatus != ServerConnectionStatus.Disconnected) {
+            if (session.ConnectionStatus != ServerConnectionStatus.Disconnected)
+            {
                 maintenanceTrigger = ReadMaintenanceTrigger();
             }
 
         }
 
-        public void CreateSubscription() {
+        public void CreateSubscription()
+        {
             Subscription s;
             NodeId amountNode = new NodeId("::Program:Cube.Admin.ProdProcessedCount", 6);
             NodeId stateNode = new NodeId("::Program:Cube.Status.StateCurrent", 6);
@@ -145,9 +154,12 @@ namespace ProjectSCAM.Models {
             // create the actual subscription
             s.Create(new RequestSettings() { OperationTimeout = 10000 });
         }
-        private void OnDataChanged(Subscription s, DataChangedEventArgs e) {
-            foreach (DataChange dc in e.DataChanges) {
-                switch (dc.MonitoredItem.NodeId.Identifier.ToString()) {
+        private void OnDataChanged(Subscription s, DataChangedEventArgs e)
+        {
+            foreach (DataChange dc in e.DataChanges)
+            {
+                switch (dc.MonitoredItem.NodeId.Identifier.ToString())
+                {
                     // current state
                     case "::Program:Cube.Status.StateCurrent":
                         StateCurrent = double.Parse(dc.Value.ToString());
@@ -241,12 +253,15 @@ namespace ProjectSCAM.Models {
             
         }
 
-        public void Disconnect() {
+        public void Disconnect()
+        {
             session.Disconnect();
         }
 
-        public void ResetMachine() {
-            if (!isProcessRunning) {
+        public void ResetMachine()
+        {
+            if (!isProcessRunning)
+            {
                 isProcessRunning = true;
                 // collection of nodes to be written
                 WriteValueCollection nodesToWrite = new WriteValueCollection();
@@ -262,8 +277,10 @@ namespace ProjectSCAM.Models {
             }
         }
 
-        public void StopMachine() {
-            if (!isProcessRunning) {
+        public void StopMachine()
+        {
+            if (!isProcessRunning)
+            {
                 isProcessRunning = true;
                 // collection of nodes to be written
                 WriteValueCollection nodesToWrite = new WriteValueCollection();
@@ -280,8 +297,10 @@ namespace ProjectSCAM.Models {
             }
         }
 
-        public void AbortMachine() {
-            if (!isProcessRunning) {
+        public void AbortMachine()
+        {
+            if (!isProcessRunning)
+            {
                 isProcessRunning = true;
                 // collection of nodes to be written
                 WriteValueCollection nodesToWrite = new WriteValueCollection();
@@ -298,8 +317,10 @@ namespace ProjectSCAM.Models {
             }
         }
 
-        public void ClearMachine() {
-            if (!isProcessRunning) {
+        public void ClearMachine()
+        {
+            if (!isProcessRunning)
+            {
                 isProcessRunning = true;
                 // collection of nodes to be written
                 WriteValueCollection nodesToWrite = new WriteValueCollection();
@@ -317,8 +338,10 @@ namespace ProjectSCAM.Models {
         }
 
         public void StartMachine(float batchId, float productType,
-            float amountToProduce, float machineSpeed) {
-            if (!isProcessRunning) {
+            float amountToProduce, float machineSpeed)
+        {
+            if (!isProcessRunning)
+            {
                 isProcessRunning = true;
                 Start = DateTime.Now;
                 Recipe = (int)productType;
@@ -354,8 +377,10 @@ namespace ProjectSCAM.Models {
         }
 
         //Write to OPC
-        private WriteValue CreateWriteValue(string nodeId, ushort namespaceIndex, uint attributeId, DataValue val) {
-            return new WriteValue() {
+        private WriteValue CreateWriteValue(string nodeId, ushort namespaceIndex, uint attributeId, DataValue val)
+        {
+            return new WriteValue()
+            {
                 NodeId = new NodeId(nodeId, namespaceIndex),
                 AttributeId = attributeId,
                 Value = val
@@ -363,25 +388,31 @@ namespace ProjectSCAM.Models {
         }
 
         //Creates a OPC data value object
-        private DataValue CreateDataValue(float f) {
-            return new DataValue() {
+        private DataValue CreateDataValue(float f)
+        {
+            return new DataValue()
+            {
                 Value = f
             };
         }
 
         //Writes a WriteValueCollection to the session
-        public void Write(WriteValueCollection nodesToWrite) {
+        public void Write(WriteValueCollection nodesToWrite)
+        {
             session.Write(nodesToWrite);
         }
 
         //TODO skal fjernes herfra og ned (read metoder)
-        private void StatusUpdateHandler(Session s, ServerConnectionStatusUpdateEventArgs e) {
+        private void StatusUpdateHandler(Session s, ServerConnectionStatusUpdateEventArgs e)
+        {
             Console.WriteLine("succ");
         }
 
-        public Int32 ReadStateCurrent() {
+        public Int32 ReadStateCurrent()
+        {
             ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
-            nodesToRead.Add(new ReadValueId() {
+            nodesToRead.Add(new ReadValueId()
+            {
                 NodeId = new NodeId("::Program:Cube.Status.StateCurrent", 6),
                 AttributeId = Attributes.Value
             });
@@ -391,9 +422,11 @@ namespace ProjectSCAM.Models {
         }
 
 
-        public int readDataTypes() {
+        public int readDataTypes()
+        {
             ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
-            nodesToRead.Add(new ReadValueId() {
+            nodesToRead.Add(new ReadValueId()
+            {
                 NodeId = new NodeId("::Program:Cube.Command.Parameter[0].Value", 6),
                 AttributeId = Attributes.Value
             });
@@ -404,9 +437,11 @@ namespace ProjectSCAM.Models {
             return (int)result[0].Value;
         }
 
-        public float ReadCurrentMachineSpeed() {
+        public float ReadCurrentMachineSpeed()
+        {
             ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
-            nodesToRead.Add(new ReadValueId() {
+            nodesToRead.Add(new ReadValueId()
+            {
                 NodeId = new NodeId("::Program:Cube.Status.CurMachSpeed", 6),
                 AttributeId = Attributes.Value
             });
@@ -416,9 +451,11 @@ namespace ProjectSCAM.Models {
             return (float)dv.Value;
         }
 
-        public float ReadMachineSpeed() {
+        public float ReadMachineSpeed()
+        {
             ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
-            nodesToRead.Add(new ReadValueId() {
+            nodesToRead.Add(new ReadValueId()
+            {
                 NodeId = new NodeId("::Program:Cube.Status.MachSpeed", 6),
                 AttributeId = Attributes.Value
             });
@@ -428,10 +465,12 @@ namespace ProjectSCAM.Models {
             return (float)dv.Value;
         }
 
-      
-        public float ReadCurrentHumidity() {
+
+        public float ReadCurrentHumidity()
+        {
             ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
-            nodesToRead.Add(new ReadValueId() {
+            nodesToRead.Add(new ReadValueId()
+            {
                 NodeId = new NodeId("::Program:Cube.Status.Parameter[2].Value", 6),
                 AttributeId = Attributes.Value
             });
@@ -441,9 +480,11 @@ namespace ProjectSCAM.Models {
             return (float)dv.Value;
         }
 
-        public float ReadCurrentTemperature() {
+        public float ReadCurrentTemperature()
+        {
             ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
-            nodesToRead.Add(new ReadValueId() {
+            nodesToRead.Add(new ReadValueId()
+            {
                 NodeId = new NodeId("::Program:Cube.Status.Parameter[3].Value", 6),
                 AttributeId = Attributes.Value
             });
@@ -453,9 +494,11 @@ namespace ProjectSCAM.Models {
             return (float)dv.Value;
         }
 
-        public float ReadCurrentVibration() {
+        public float ReadCurrentVibration()
+        {
             ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
-            nodesToRead.Add(new ReadValueId() {
+            nodesToRead.Add(new ReadValueId()
+            {
                 NodeId = new NodeId("::Program:Cube.Status.Parameter[4].Value", 6),
                 AttributeId = Attributes.Value
             });
@@ -465,9 +508,11 @@ namespace ProjectSCAM.Models {
             return (float)dv.Value;
         }
 
-        public Int32 ReadCurrentProductsProcessed() {
+        public Int32 ReadCurrentProductsProcessed()
+        {
             ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
-            nodesToRead.Add(new ReadValueId() {
+            nodesToRead.Add(new ReadValueId()
+            {
                 NodeId = new NodeId("::Program:Cube.Admin.ProdProcessedCount", 6),
                 AttributeId = Attributes.Value
             });
@@ -477,9 +522,11 @@ namespace ProjectSCAM.Models {
             return (int)dv.Value;
         }
 
-        public Int32 ReadDefectProducts() {
+        public Int32 ReadDefectProducts()
+        {
             ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
-            nodesToRead.Add(new ReadValueId() {
+            nodesToRead.Add(new ReadValueId()
+            {
                 NodeId = new NodeId("::Program:Cube.Admin.ProdDefectiveCount", 6),
                 AttributeId = Attributes.Value
             });
@@ -489,9 +536,11 @@ namespace ProjectSCAM.Models {
             return (int)dv.Value;
         }
 
-        public UInt16 ReadMaintenanceTrigger() {
+        public UInt16 ReadMaintenanceTrigger()
+        {
             ReadValueIdCollection nodesToRead = new ReadValueIdCollection();
-            nodesToRead.Add(new ReadValueId() {
+            nodesToRead.Add(new ReadValueId()
+            {
                 NodeId = new NodeId("::Program:Maintenance.Trigger", 6),
                 AttributeId = Attributes.Value
             });
@@ -502,160 +551,202 @@ namespace ProjectSCAM.Models {
         }
 
 
-        protected void OnPropertyChanged(string name) {
+        protected void OnPropertyChanged(string name)
+        {
             PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null) {
+            if (handler != null)
+            {
                 handler(this, new PropertyChangedEventArgs(name));
             }
         }
 
-        public double ProcessedProducts {
+        public double ProcessedProducts
+        {
             get { return processedProducts; }
-            set {
+            set
+            {
                 processedProducts = value;
                 OnPropertyChanged("ProcessedProducts");
             }
         }
 
-        public double AcceptableProducts {
+        public double AcceptableProducts
+        {
             get { return acceptableProducts; }
-            set {
+            set
+            {
                 acceptableProducts = value;
                 OnPropertyChanged("AcceptableProducts");
             }
         }
 
-        public double DefectProducts {
+        public double DefectProducts
+        {
             get { return defectProducts; }
-            set {
+            set
+            {
                 defectProducts = value;
                 OnPropertyChanged("DefectProducts");
             }
         }
 
-        public double AmountToProduce {
+        public double AmountToProduce
+        {
             get { return amountToProduce; }
 
-            set {
+            set
+            {
                 amountToProduce = value;
                 OnPropertyChanged("AmountToProduce");
             }
         }
 
- 
 
-        public double StateCurrent {
+
+        public double StateCurrent
+        {
             get { return stateCurrent; }
-            set {
+            set
+            {
                 stateCurrent = value;
                 OnPropertyChanged("StateCurrent");
             }
         }
 
-        public double TempCurrent {
+        public double TempCurrent
+        {
             get { return tempCurrent; }
-            set {
+            set
+            {
                 tempCurrent = value;
                 OnPropertyChanged("TempCurrent");
             }
         }
 
-        public double HumidityCurrent {
+        public double HumidityCurrent
+        {
             get { return humidityCurrent; }
-            set {
+            set
+            {
                 humidityCurrent = value;
                 OnPropertyChanged("HumidityCurrent");
             }
         }
 
-        public double VibrationCurrent {
+        public double VibrationCurrent
+        {
             get { return vibrationCurrent; }
-            set {
+            set
+            {
                 vibrationCurrent = value;
                 OnPropertyChanged("VibrationCurrent");
             }
         }
 
-        public double BatchId {
+        public double BatchId
+        {
             get { return batchId; }
-            set {
+            set
+            {
                 stopReasonId = value;
                 OnPropertyChanged("BatchId");
             }
         }
 
-        public double StopReasonId {
+        public double StopReasonId
+        {
             get { return stopReasonId; }
-            set {
+            set
+            {
                 stopReasonId = value;
                 OnPropertyChanged("StopReasonId");
             }
         }
 
-        public double Barley {
+        public double Barley
+        {
             get { return barley; }
-            set {
+            set
+            {
                 barley = value;
                 OnPropertyChanged("Barley");
             }
         }
 
-        public double Hops {
+        public double Hops
+        {
             get { return hops; }
-            set {
+            set
+            {
                 hops = value;
                 OnPropertyChanged("Hops");
             }
         }
 
-        public double Malt {
+        public double Malt
+        {
             get { return malt; }
-            set {
+            set
+            {
                 malt = value;
                 OnPropertyChanged("Malt");
             }
         }
-         public double MachSpeed {
+        public double MachSpeed
+        {
             get { return machSpeed; }
-            set {
+            set
+            {
                 machSpeed = value;
                 OnPropertyChanged("MachSpeed");
             }
         }
 
-        public double Wheat {
+        public double Wheat
+        {
             get { return wheat; }
-            set {
+            set
+            {
                 wheat = value;
                 OnPropertyChanged("Wheat");
             }
         }
 
-        public double Yeast {
+        public double Yeast
+        {
             get { return yeast; }
-            set {
+            set
+            {
                 yeast = value;
                 OnPropertyChanged("Yeast");
             }
         }
 
-        public double MaintenanceTrigger {
+        public double MaintenanceTrigger
+        {
             get { return maintenanceTrigger; }
-            set {
+            set
+            {
                 maintenanceTrigger = value;
                 OnPropertyChanged("MaintenanceTrigger");
             }
         }
 
-        public double MaintenanceCounter {
-            get {
-                if (maintenanceTrigger == 0) {
+        public double MaintenanceCounter
+        {
+            get
+            {
+                if (maintenanceTrigger == 0)
+                {
                     return maintenanceCounter;
-                } else {
+                }
+                else
+                {
                     return (int)(maintenanceCounter / maintenanceTrigger * 100);
                 }
             }
-            set {
+            set
+            {
                 maintenanceCounter = value;
                 OnPropertyChanged("MaintenanceCounter");
             }

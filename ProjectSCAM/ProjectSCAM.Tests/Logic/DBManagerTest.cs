@@ -4,6 +4,7 @@ using ProjectSCAM.Models.Logic;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace ProjectSCAM.Tests.Logic
 {
@@ -51,6 +52,21 @@ namespace ProjectSCAM.Tests.Logic
             if (list.Count != 0)
             {
                 foreach (UserType element in list)
+                {
+                    Assert.IsNotNull(element);
+                }
+            }
+            else Assert.IsTrue(false);
+        }
+
+        [TestMethod]
+        public void RetrieveStopReasons()
+        {
+            IList<StopReasonModel> list = dbManager.RetrieveStopReasons();
+            Assert.IsNotNull(list);
+            if (list.Count != 0)
+            {
+                foreach (StopReasonModel element in list)
                 {
                     Assert.IsNotNull(element);
                 }
@@ -302,7 +318,14 @@ namespace ProjectSCAM.Tests.Logic
         [TestMethod]
         public void SetSale()
         {
-            bool success = dbManager.SetSale(0, 0);
+            bool success = dbManager.SetSale(1, 1);
+            Assert.IsTrue(success);
+        }
+
+        [TestMethod]
+        public void RecallBatch()
+        {
+            bool success = dbManager.RecallBatch(1);
             Assert.IsTrue(success);
         }
 
@@ -340,6 +363,13 @@ namespace ProjectSCAM.Tests.Logic
             else Assert.IsTrue(false);
         }
 
+        [TestMethod]
+        public void SetBeerAsDefect()
+        {
+            bool success = dbManager.SetBeerAsDefect(3, 1);
+            Assert.IsTrue(success);
+        }
+
         /// <summary>
         /// RetrieveAlarms, RetrieveAlarm
         /// </summary>
@@ -349,8 +379,12 @@ namespace ProjectSCAM.Tests.Logic
             IList<AlarmModel> list1 = dbManager.RetrieveAlarms();
             IList<AlarmModel> list2 = dbManager.RetrieveAlarms(2);
             IList<AlarmModel> list3 = dbManager.RetrieveUnhandledAlarms();
+            IList<AlarmModel> list4 = dbManager.RetrieveUnhandledAlarms(1);
+            IList<AlarmModel> list5 = dbManager.RetrieveAlarmsByMachine(1);
+            IList<AlarmModel> list6 = dbManager.RetrieveAlarmsByMonth("3", "2019");
+            IList<AlarmModel> list7 = dbManager.RetrieveAlarmsByStopReason(10);
 
-            IList<AlarmModel>[] alarms = { list1, list2, list3 };
+            IList<AlarmModel>[] alarms = { list1, list2, list3, list4, list5, list6, list7 };
 
             int? alarmId = null;
 
