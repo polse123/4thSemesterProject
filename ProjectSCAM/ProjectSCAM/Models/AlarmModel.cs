@@ -71,7 +71,7 @@ namespace ProjectSCAM.Models
                 }
             } else if(StopReasonId == 12)
             {
-                if (opc.MaintenanceCounter == 1)
+                if (opc.MaintenanceCounter <= (opc.MaintenanceTrigger * 0.8))
                 {
                     Singleton.Instance.DBManager.SetAlarmHandler(userid, Id);
                     Singleton.Instance.opcManager.AlarmManager.ActiveAlarms.Remove(this);

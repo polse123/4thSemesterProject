@@ -14,7 +14,16 @@ namespace SCAMS.Controllers
     {
         public ActionResult Index()
         {
+            if (TempData["alarms"] != null) {
+                IList<AlarmModel> list = (IList<AlarmModel>)TempData["batches"];
+                TempData["alarms"] = null;
+                return View(list);
+            } else {
+                IList<AlarmModel> list = Singleton.Instance.DBManager.RetrieveAlarms();
+                return View(list);
+            }
             IList<AlarmModel> alarms = Singleton.Instance.DBManager.RetrieveAlarms();
+            ViewBag.Machines = Singleton.Instance.DBManager.RetrieveMachines();
             return View(alarms);
         }
         [HttpGet]
@@ -32,7 +41,23 @@ namespace SCAMS.Controllers
         }
         [HttpPost]
         public void Handle() {
-            System.Diagnostics.Debug.WriteLine(Singleton.Instance.opcManager.AlarmManager.ActiveAlarms[0].Handle(int.Parse(Session["userID"].ToString())));
+            Singleton.Instance.opcManager.AlarmManager.ActiveAlarms[0].Handle(int.Parse(Session["userID"].ToString()));
+        }
+        [HttpGet]
+        public ActionResult GetAlarmsByMachine(string machineId) {
+            IList<AlarmModel> list = new List<AlarmModel>();
+            int intMachineId;
+            bool add = int.TryParse(machineId, out intMachineId);
+            if (add) {
+               // list = Singleton.Instance.DBManager.RetrieveAlarms() 
+            } 
+
+            TempData["alarms"] = list;
+            return RedirectToAction("Index");
+        }
+        [HttpGet]
+        public ActionResult GetAlarmsByType(string type) {
+
         }
     }
 }

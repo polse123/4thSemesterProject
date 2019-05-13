@@ -28,44 +28,28 @@
         <div class="grid-item item2">
             <div id="alarmInfoFields" class="alarmInfofieldsclass">
 
-                Show:  <p id="show"></p>
-                <div class="dropdownAlarms">
-                    <button class="dropbtnAlarms" id="alarmsMachineSelect">Machine</button>
-                    <div class="dropdownAlarmsMachine-content">
-                        <input type="checkbox" name="machine1" value="machine" id="machine1">Machine 1 <br>
-                        <input type="checkbox" name="machine2" value="machine" id="machine2">Machine 2 <br>
-                        <input type="checkbox" name="machine3" value="machine" id="machine3">Machine 3 <br>
-                    </div>
-                </div> <br>
-                <div class="dropdownAlarms">
-                    <button class="dropbtnAlarms" id="alarmsMachineSelect">&nbsp;&nbsp;&nbsp;Type&nbsp;&nbsp;&nbsp;</button>
-                    <div class="dropdownAlarmsMachine-content">
-
-                        <input type="checkbox" name="type1" value="type" id="type1">Type 1 <br>
-                        <input type="checkbox" name="type2" value="type" id="type2">Type 2 <br>
-                        <input type="checkbox" name="type3" value="type" id="type3">Type 3 <br>
-                    </div>
-                </div> <br>
-                <div class="dropdownAlarms">
-                    &nbsp;&nbsp;&nbsp;<button class="dropbtnAlarms" id="alarmsMachineSelect">&nbsp;&nbsp;Month&nbsp;&nbsp;</button>
-                    <div class="dropdownAlarmsMachine-content">
-                        <input type="checkbox" name="month1" value="month" id="month1">Month 1 <br>
-                        <input type="checkbox" name="month2" value="month" id="month2">Month 2 <br>
-                        <input type="checkbox" name="month3" value="month" id="month3">Month 3 <br>
-                    </div>
-                </div> &nbsp; &nbsp;
-                <div class="dropdownAlarms">
-                    <button class="dropbtnAlarms" id="alarmsMachineSelect">&nbsp;&nbsp;&nbsp;Year&nbsp;&nbsp;&nbsp;</button>
-                    <div class="dropdownAlarmsMachine-content">
-
-                        <input type="checkbox" name="year1" value="year" id="year1">Year 1 <br>
-                        <input type="checkbox" name="year2" value="year" id="year2">Year 2 <br>
-                        <input type="checkbox" name="year3" value="year" id="year3">Year 3 <br>
-                    </div>
-                </div> <br> <br>
+                Show alarms by machine:
+                <p id="show"></p>
+                <form action="/alarm/getalarmsbymachine" method="get">
+                    <select id="machineselect">
+                        <option selected="selected" value"">Select Machine</option>
+                        @foreach (var item in ViewBag.Machines) {
+                            <option value="@item.Id">@item.Ip</option>
+                        }
+                    </select>
+                </form>
+                &nbsp;
+                Show alarms by date:
+                <form action="/alarm/getalarmsbydate" method="get">
+                    <input type="text" name="date" />
+                </form>
+                &nbsp;
+                Show alarms by 
+                <form action="/alarm/getalarmsbydate" method="get"></form>
                 <form>
                     <input type="checkbox" name="unhandledButton" value="unhandled" id="unhandledButton">Unhandled
                 </form>
+                &nbsp;
             </div>
         </div>
         <div class="grid-item item3">

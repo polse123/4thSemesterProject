@@ -22,8 +22,9 @@ namespace ProjectSCAM.Models.Logic {
                 OpcConnections[ip] = c;
             } else {
                 OpcClient c = new OpcClient(ip);
+                Singleton.Instance.DBManager.RetrieveAlarms();
                 OpcConnections.Add(ip, c);
-                AddEventHandler(c);
+           //     AddEventHandler(c);
             }
 
         }
@@ -48,7 +49,7 @@ namespace ProjectSCAM.Models.Logic {
                     opc.ClearValues();
                 }
             }
-            if(e.PropertyName.Equals("StopReasonId") && opc.StateCurrent != 4 && opc.StopReasonId != 0 && opc.AmountToProduce != 0) {
+            if(e.PropertyName.Equals("StopReasonId") && AlarmManager.ActiveAlarms.Count == 0 && opc.StateCurrent != 4 && opc.StopReasonId != 0 && opc.AmountToProduce != 0) {
                 AlarmModel alarm = Singleton.Instance.DBManager.RegisterBatchAndAlarm((int)opc.AcceptableProducts, (int)opc.DefectProducts,
                         opc.Start.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.AddYears(10).ToString("MM/dd/yyyy"), false, 1, 1, 1,
                         (int)opc.MachSpeed,
