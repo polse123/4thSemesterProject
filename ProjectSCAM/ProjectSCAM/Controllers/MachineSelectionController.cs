@@ -6,16 +6,22 @@ using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
 
-namespace MvcMovie.Controllers {
+namespace MvcMovie.Controllers
+{
     [AuthorizeUser(Type = "1")]
-    public class MachineSelectionController : Controller {
+    public class MachineSelectionController : Controller
+    {
         // 
         // GET: /MachineSelection/ 
 
-        public ActionResult Index() {
-            if (TempData["statusMessage"] != null) {
+        public ActionResult Index()
+        {
+            if (TempData["statusMessage"] != null)
+            {
                 ViewBag.statusMessage = TempData["statusMessage"].ToString();
-            } else {
+            }
+            else
+            {
                 ViewBag.statusMessage = "";
             }
 
@@ -25,16 +31,23 @@ namespace MvcMovie.Controllers {
             return View();
         }
         [HttpPost]
-        public ActionResult Create(MachineModel m) {
+        public ActionResult Create(MachineModel m)
+        {
             string s = "";
-            foreach (ModelState modelState in ViewData.ModelState.Values) {
-                foreach (ModelError error in modelState.Errors) {
+            foreach (ModelState modelState in ViewData.ModelState.Values)
+            {
+                foreach (ModelError error in modelState.Errors)
+                {
                     s += error.ErrorMessage;
                 }
             }
-            if (ModelState.IsValid) {
+            if (ModelState.IsValid)
+            {
+                // NEEDS UPDATING
+                /*
                 Singleton.Instance.DBManager.RegisterMachine(m.Ip, m.Description);
                 TempData["statusMessage"] = "Machine registered";
+                */
                 return RedirectToAction("Index");
             }
             TempData["statusMessage"] = s;
@@ -42,7 +55,8 @@ namespace MvcMovie.Controllers {
         }
 
         [HttpPost]
-        public void SetMachine() {
+        public void SetMachine()
+        {
             Session["SelectedMachine"] = Request["ip"];
             Singleton.Instance.opcManager.InitConnection(Session["SelectedMachine"].ToString());
         }

@@ -18,71 +18,71 @@ namespace ProjectSCAM.Models
         [Required]
         public string Description { get; set; }
 
-        public KeyValuePair<string, int> AmountNode { get; set; }
+        public int NameSpaceIndex { get; set; }
 
-        public KeyValuePair<string, int> StateNode { get; set; }
+        public string AmountNode { get; set; }
 
-        public KeyValuePair<string, int> DefectNode { get; set; }
+        public string StateNode { get; set; }
 
-        public KeyValuePair<string, int> AcceptableNode { get; set; }
+        public string DefectNode { get; set; }
 
-        public KeyValuePair<string, int> AmountToProduceNode { get; set; }
+        public string AcceptableNode { get; set; }
 
-        public KeyValuePair<string, int> MachSpeedNode { get; set; }
+        public string AmountToProduceNode { get; set; }
 
-        public KeyValuePair<string, int> TemperatureNode { get; set; }
+        public string MachSpeedNode { get; set; }
 
-        public KeyValuePair<string, int> HumidityNode { get; set; }
+        public string TemperatureNode { get; set; }
 
-        public KeyValuePair<string, int> VibrationNode { get; set; }
+        public string HumidityNode { get; set; }
 
-        public KeyValuePair<string, int> StopreasonNode { get; set; }
+        public string VibrationNode { get; set; }
 
-        public KeyValuePair<string, int> BatchIdNode { get; set; }
+        public string StopreasonNode { get; set; }
 
-        public KeyValuePair<string, int> BarleyNode { get; set; }
+        public string BatchIdNode { get; set; }
 
-        public KeyValuePair<string, int> HopsNode { get; set; }
+        public string BarleyNode { get; set; }
 
-        public KeyValuePair<string, int> MaltNode { get; set; }
+        public string HopsNode { get; set; }
 
-        public KeyValuePair<string, int> WheatNode { get; set; }
+        public string MaltNode { get; set; }
 
-        public KeyValuePair<string, int> YeastNode { get; set; }
+        public string WheatNode { get; set; }
 
-        public KeyValuePair<string, int> MaintenanceTriggerNode { get; set; }
+        public string YeastNode { get; set; }
 
-        public KeyValuePair<string, int> MaintenanceCounterNode { get; set; }
+        public string MaintenanceTriggerNode { get; set; }
 
-        public MachineModel(int id, string ip, string description,
-            KeyValuePair<string, int> amountNode, KeyValuePair<string, int> stateNode, KeyValuePair<string, int> defectNode,
-            KeyValuePair<string, int> acceptableNode, KeyValuePair<string, int> amountToProduceNode, KeyValuePair<string, int> machSpeedNode,
-            KeyValuePair<string, int> temperatureNode, KeyValuePair<string, int> humidityNode, KeyValuePair<string, int> vibrationNode,
-            KeyValuePair<string, int> stopreasonNode, KeyValuePair<string, int> batchIdNode, KeyValuePair<string, int> barleyNode,
-            KeyValuePair<string, int> hopsNode, KeyValuePair<string, int> maltNode, KeyValuePair<string, int> wheatNode,
-            KeyValuePair<string, int> yeastNode, KeyValuePair<string, int> maintenanceTriggerNode, KeyValuePair<string, int> maintenanceCounterNode)
+        public string MaintenanceCounterNode { get; set; }
+
+        public MachineModel(int? id, string ip, string description, int nameSpaceIndex,
+            string amountNode, string stateNode, string defectNode, string acceptableNode, string amountToProduceNode, string machSpeedNode,
+            string temperatureNode, string humidityNode, string vibrationNode, string stopreasonNode, string batchIdNode, string barleyNode,
+            string hopsNode, string maltNode, string wheatNode, string yeastNode, string maintenanceTriggerNode, string maintenanceCounterNode)
         {
-            Id = id;
+            Id = id ?? throw new ArgumentNullException(nameof(id));
             Ip = ip ?? throw new ArgumentNullException(nameof(ip));
-            Description = description;
-            AmountNode = amountNode;
-            StateNode = stateNode;
-            DefectNode = defectNode;
-            AcceptableNode = acceptableNode;
-            AmountToProduceNode = amountToProduceNode;
-            MachSpeedNode = machSpeedNode;
-            TemperatureNode = temperatureNode;
-            HumidityNode = humidityNode;
-            VibrationNode = vibrationNode;
-            StopreasonNode = stopreasonNode;
-            BatchIdNode = batchIdNode;
-            BarleyNode = barleyNode;
-            HopsNode = hopsNode;
-            MaltNode = maltNode;
-            WheatNode = wheatNode;
-            YeastNode = yeastNode;
-            MaintenanceTriggerNode = maintenanceTriggerNode;
-            MaintenanceCounterNode = maintenanceCounterNode;
+            Description = description ?? throw new ArgumentNullException(nameof(description));
+            NameSpaceIndex = nameSpaceIndex;
+            AmountNode = amountNode ?? throw new ArgumentNullException(nameof(amountNode));
+            StateNode = stateNode ?? throw new ArgumentNullException(nameof(stateNode));
+            DefectNode = defectNode ?? throw new ArgumentNullException(nameof(defectNode));
+            AcceptableNode = acceptableNode ?? throw new ArgumentNullException(nameof(acceptableNode));
+            AmountToProduceNode = amountToProduceNode ?? throw new ArgumentNullException(nameof(amountToProduceNode));
+            MachSpeedNode = machSpeedNode ?? throw new ArgumentNullException(nameof(machSpeedNode));
+            TemperatureNode = temperatureNode ?? throw new ArgumentNullException(nameof(temperatureNode));
+            HumidityNode = humidityNode ?? throw new ArgumentNullException(nameof(humidityNode));
+            VibrationNode = vibrationNode ?? throw new ArgumentNullException(nameof(vibrationNode));
+            StopreasonNode = stopreasonNode ?? throw new ArgumentNullException(nameof(stopreasonNode));
+            BatchIdNode = batchIdNode ?? throw new ArgumentNullException(nameof(batchIdNode));
+            BarleyNode = barleyNode ?? throw new ArgumentNullException(nameof(barleyNode));
+            HopsNode = hopsNode ?? throw new ArgumentNullException(nameof(hopsNode));
+            MaltNode = maltNode ?? throw new ArgumentNullException(nameof(maltNode));
+            WheatNode = wheatNode ?? throw new ArgumentNullException(nameof(wheatNode));
+            YeastNode = yeastNode ?? throw new ArgumentNullException(nameof(yeastNode));
+            MaintenanceTriggerNode = maintenanceTriggerNode ?? throw new ArgumentNullException(nameof(maintenanceTriggerNode));
+            MaintenanceCounterNode = maintenanceCounterNode ?? throw new ArgumentNullException(nameof(maintenanceCounterNode));
         }
 
         public MachineModel() { }

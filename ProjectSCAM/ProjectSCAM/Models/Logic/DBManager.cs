@@ -152,15 +152,21 @@ namespace ProjectSCAM.Models.Logic
         /// <param name="ipAddress"></param>
         /// <param name="description"></param>
         /// <returns></returns>
-        public bool RegisterMachine(string ipAddress, string description)
+        public bool RegisterMachine(string ipAddress, string description, int nameSpaceIndex,
+            string amountNode, string stateNode, string defectNode, string acceptableNode, string amountToProduceNode, string machSpeedNode,
+            string temperatureNode, string humidityNode, string vibrationNode, string stopreasonNode, string batchIdNode, string barleyNode,
+            string hopsNode, string maltNode, string wheatNode, string yeastNode, string maintenanceTriggerNode, string maintenanceCounterNode)
         {
             // Security
             if (CheckIp(ipAddress) && CheckText(description))
             {
                 string query = "INSERT INTO Machines(ipaddress, description)" +
-                    "VALUES('" + ipAddress + "', '" + description + "');";
+                    "VALUES('" + ipAddress + "', '" + description + "') RETURNING machineid;";
 
-                return exe.ExecuteQuery(query);
+                return exe.RegisterMachine(query, nameSpaceIndex, amountNode, stateNode, defectNode,
+                    acceptableNode, amountToProduceNode, machSpeedNode, temperatureNode, humidityNode,
+                    vibrationNode, stopreasonNode, batchIdNode, barleyNode, hopsNode, maltNode,
+                    wheatNode, yeastNode, maintenanceTriggerNode, maintenanceCounterNode);
             }
             else return false;
         }
