@@ -1,4 +1,5 @@
-﻿using ProjectSCAM.Models;
+﻿using Newtonsoft.Json;
+using ProjectSCAM.Models;
 using ProjectSCAM.Models.Logic;
 using System;
 using System.Collections.Generic;
@@ -11,12 +12,42 @@ namespace SCAMS.Controllers
     [AuthorizeUser(Type = "1")]
     public class OptimizationController : Controller
     {
+
         public ActionResult Index()
         {
-            //int.TryParse(param, out int id);
-            BatchModel batch = Singleton.Instance.DBManager.RetrieveBatch(1);
-            IList<BatchModel> list = new List<BatchModel>() { batch };
-            return View(list);
+
+             if (TempData["batches"] != null)
+            {
+                IList<BatchModel> SortedList = (IList<BatchModel>)TempData["batches"];
+                TempData["batches"] = null;
+
+                ViewBag.DataPoints = JsonConvert.SerializeObject(SortedList.OrderBy(o => o.Speed), Formatting.None);
+                return View();
+            }
+            else
+            {
+                List<BatchModel> SortedList = Singleton.Instance.DBManager.RetrieveBatches(true).OrderBy(o => o.Speed).ToList();
+                ViewBag.DataPoints = JsonConvert.SerializeObject(SortedList, Formatting.None);
+
+                return View();
+            }
+
         }
+        [HttpGet]
+        public ActionResult GetBatchesByRecipe(string recipe)
+        {
+            IList<BatchModel> list = new List<BatchModel>();
+            int intProductType;
+            bool add = int.TryParse(recipe, out intProductType);
+            if (add)
+            {
+                list = Singleton.Instance.DBManager.RetrieveBatchesByRecipe(intProductType, true);
+            }
+
+            TempData["batches"] = list;
+            return RedirectToAction("Index");
+        }
+
     }
 }
+

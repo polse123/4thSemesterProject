@@ -1,79 +1,107 @@
-﻿@{
+﻿
+@{
     ViewData["Title"] = "Optimization";
 }
 
 @model IList<ProjectSCAM.Models.BatchModel>
-
+@Styles.Render("~/Content/optimization.css")
+@Styles.Render("~/Content/UserStyleSheet.css")
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-    @Styles.Render("~/Content/optimization.css")
-    @Styles.Render("~/Content/UserStyleSheet.css")
-    @Styles.Render("~/Content/HistoryStyleSheet.css")
-
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-        google.charts.load('current', { 'packages': ['corechart'] });
-        google.charts.setOnLoadCallback(drawChart);
-
-        function drawChart() {
-            var data = google.visualization.arrayToDataTable([
-                ['Year', 'Pilsner', 'wheat'],
-                ['90%', 10, 25],
-                ['10%', 15, 46],
-                ['20%', 17, 87],
-                ['30%', 21, 88],
-                ['40%', 35, 76],
-                ['50%', 65, 60],
-                ['60%', 55, 40],
-                ['70%', 44, 30],
-                ['80%', 31, 16],
-                ['90%', 19, 9],
-                ['100%', 5, -10]
-            ]);
-
-            var options = {
-                title: 'Optimization',
-                curveType: 'function',
-                legend: { position: 'bottom' }
-
-            };
-
-            var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-
-            chart.draw(data, options);
-        }
-    </script>
 </head>
 <body>
-    <div class="grid-container">
-        <div class="grid-item item2">
-            <div id="searchtable" class="searchclass">
-
-                <table class="searchtableclass" id="searchtableid">
-                    <tr>
-                        <th> Batch ID </th>
-                        <th> Performance </th>
-                        <th> Quality </th>
-                        <th> Availability </th>
-                        <th> OEE </th>
-                    </tr>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>@item.Id</td>
-                            <td>@item.Performance</td>
-                            <td>@item.Quality</td>
-                            <td>@item.Availability</td>
-                            <td>@item.Oee</td>
-                        </tr>
-                    }
-                </table>
-            </div>
-        </div>
-        <div id="curve_chart" style="width: 900px; height: 500px"></div>
+    <div>
+        <br>
+        <br>
     </div>
+    <table class="batchtableclass" id="batchtable">
+        <tbody>
+            <tr>
+                <form action="/optimization/getbatchesbyrecipe" method="get">
+                    <input type="hidden" name="recipe" value="0" />
+                    <input type="submit" value="Pilsner" />
+                </form>
+                <form action="/optimization/getbatchesbyrecipe" method="get">
+                    <input type="hidden" name="recipe" value="1" />
+                    <input type="submit" value="Wheat" />
+                </form>
+                <form action="/optimization/getbatchesbyrecipe" method="get">
+                    <input type="hidden" name="recipe" value="2" />
+                    <input type="submit" value="IPA" />
+                </form>
+                <form action="/optimization/getbatchesbyrecipe" method="get">
+                    <input type="hidden" name="recipe" value="3" />
+                    <input type="submit" value="Stout" />
+                </form>
+                <form action="/optimization/getbatchesbyrecipe" method="get">
+                    <input type="hidden" name="recipe" value="4" />
+                    <input type="submit" value="Ale" />
+                </form>
+                <form action="/optimization/getbatchesbyrecipe" method="get">
+                    <input type="hidden" name="recipe" value="5" />
+                    <input type="submit" value="Alcohol Free" />
+                </form>
+            </tr>
+        </tbody>
+        </table>
+
+
+        <div id="chartContainer" style="height: 370px; width: 100%;"></div>
 </body>
 </html>
+
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script>
+    var result;
+    
+    function drawChart() {
+
+        result = @Html.Raw(ViewBag.Datapoints);
+        var dataPoints = [];
+
+        for (var i = 0; i < result.length; i++) {
+            dataPoints.push({ x: result[i].Speed, y: result[i].Oee*100.0 });
+         
+
+        }
+
+        var chart = new CanvasJS.Chart("chartContainer", {
+            animationEnabled: true,
+            title: {
+                text: "Overall Equipment Effectiveness"
+            },
+            axisX: {
+                title: "SPEED in products per minute",
+                titleFontColor: "#4F81BC",
+                minimum: -10,
+                maximum: 800
+            },
+            axisY: {
+                title: "OEE %",
+                titleFontColor: "#4F81BC",
+                minimum: -10.0,
+                maximum: 100.0,
+                suffix: ""
+            },
+            data: [{
+                indexLabelFontColor: "darkSlateGray",
+                name: "views",
+                type: "line",
+                xValueFormatString: "speed: #,##0.0''",
+                yValueFormatString: "oee: #,##0.0'%'",
+                dataPoints: dataPoints,
+            }]
+        });
+        chart.render();
+    }
+    drawChart();
+</script>
+
+<script>
+    function DrawFromChosenBeer(rec) {
+        $.get("/optimization/GetBatchesByRecipe", { recipe: rec });
+        console.log(rec);
+
+    }
+</script>
