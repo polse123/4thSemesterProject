@@ -95,8 +95,11 @@ namespace ProjectSCAM.Tests.Logic
         [TestMethod]
         public void RegisterMachine()
         {
+            /*
             bool success = dbManager.RegisterMachine("Test Data", "This is test data");
             Assert.IsTrue(success);
+            */
+            Assert.IsTrue(false);
         }
 
         [TestMethod]
