@@ -60,6 +60,21 @@ namespace ProjectSCAM.Tests.Logic
         }
 
         [TestMethod]
+        public void RetrieveStopReasons()
+        {
+            IList<StopReasonModel> list = dbManager.RetrieveStopReasons();
+            Assert.IsNotNull(list);
+            if (list.Count != 0)
+            {
+                foreach (StopReasonModel element in list)
+                {
+                    Assert.IsNotNull(element);
+                }
+            }
+            else Assert.IsTrue(false);
+        }
+
+        [TestMethod]
         public void RetrieveRecipes()
         {
             IList<RecipeModel> list = dbManager.RetrieveRecipes();
@@ -364,8 +379,12 @@ namespace ProjectSCAM.Tests.Logic
             IList<AlarmModel> list1 = dbManager.RetrieveAlarms();
             IList<AlarmModel> list2 = dbManager.RetrieveAlarms(2);
             IList<AlarmModel> list3 = dbManager.RetrieveUnhandledAlarms();
+            IList<AlarmModel> list4 = dbManager.RetrieveUnhandledAlarms(1);
+            IList<AlarmModel> list5 = dbManager.RetrieveAlarmsByMachine(1);
+            IList<AlarmModel> list6 = dbManager.RetrieveAlarmsByMonth("3", "2019");
+            IList<AlarmModel> list7 = dbManager.RetrieveAlarmsByStopReason(10);
 
-            IList<AlarmModel>[] alarms = { list1, list2, list3 };
+            IList<AlarmModel>[] alarms = { list1, list2, list3, list4, list5, list6, list7 };
 
             int? alarmId = null;
 

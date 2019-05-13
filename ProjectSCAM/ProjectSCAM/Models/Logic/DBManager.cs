@@ -25,6 +25,16 @@ namespace ProjectSCAM.Models.Logic
         private readonly string ORDER_BY_TIMESTAMP_END_APPEND = " ORDER BY timestampend DESC";
 
         /// <summary>
+        /// Query appendage used when retrieving alarms that occured on a specific machine.
+        /// </summary>
+        private readonly string LEFT_JOIN_ALARMS_ON_BATCHES_APPEND = " LEFT JOIN Batches ON Alarms.batch = Batches.batchid";
+
+        /// <summary>
+        /// Query appendage used when retrieving alarms that require handling.
+        /// </summary>
+        private readonly string ACTION_REQUIRED_APPENDAGE = " actionrequired AND handledby IS NULL ORDER BY timestamp ASC";
+
+        /// <summary>
         /// The length of a timestamp.
         /// </summary>
         private readonly int TIMESTAMP_LENGTH = 23;
@@ -589,7 +599,7 @@ namespace ProjectSCAM.Models.Logic
                     append.Append(" WHERE");
                 }
 
-                append.Append(" timestampEnd LIKE '" + month + "____" + year + "%'");
+                append.Append(" timestampend LIKE '" + month + "____" + year + "%'");
                 append.Append(ORDER_BY_TIMESTAMP_END_APPEND + ";");
 
                 return exe.RetrieveBatches(append.ToString());
@@ -777,9 +787,70 @@ namespace ProjectSCAM.Models.Logic
         /// <returns></returns>
         public IList<AlarmModel> RetrieveUnhandledAlarms()
         {
-            string append = " WHERE actionrequired AND handledby IS NULL ORDER BY timestamp ASC;";
+            string append = " WHERE" + ACTION_REQUIRED_APPENDAGE + ";";
 
-            return exe.RetrieveAlarms(append);
+            return exe.RetrieveAlarms(append.ToString());
+        }
+
+        /// <summary>
+        /// Retrieve alarms that require handling.
+        /// </summary>
+        /// <returns></returns>
+        public IList<AlarmModel> RetrieveUnhandledAlarms(int machineId)
+        {
+            string append = LEFT_JOIN_ALARMS_ON_BATCHES_APPEND + " WHERE Batches.machine = " + machineId + " AND" + ACTION_REQUIRED_APPENDAGE + ";";
+
+            return exe.RetrieveAlarms(append.ToString());
+        }
+
+        /// <summary>
+        /// Retrieve alarms that occured on a specific machine.
+        /// </summary>
+        /// <param name="machineId"></param>
+        /// <returns></returns>
+        public IList<AlarmModel> RetrieveAlarmsByMachine(int machineId)
+        {
+            string append = LEFT_JOIN_ALARMS_ON_BATCHES_APPEND + " WHERE Batches.machine = " + machineId + ";";
+
+            return exe.RetrieveAlarms(append.ToString());
+        }
+
+        /// <summary>
+        /// Retrieve alarms by month and year.
+        /// </summary>
+        /// <param name="month"></param>
+        /// <param name="year"></param>
+        /// <returns></returns>
+        public IList<AlarmModel> RetrieveAlarmsByMonth(string month, string year)
+        {
+            if (month.Length == 1)
+            {
+                month = "0" + month;
+            }
+
+            // Security
+            if (CheckMonthAndYear(month, year))
+            {
+                StringBuilder append = new StringBuilder();
+                append.Append(LEFT_JOIN_ALARMS_ON_BATCHES_APPEND);
+                append.Append(" WHERE timestampend LIKE '" + month + "____" + year + "%'");
+                append.Append(ORDER_BY_TIMESTAMP_END_APPEND + ";");
+
+                return exe.RetrieveAlarms(append.ToString());
+            }
+            else return null;
+        }
+
+        /// <summary>
+        /// Retrieve alarms by stop reason.
+        /// </summary>
+        /// <param name="stopReason"></param>
+        /// <returns></returns>
+        public IList<AlarmModel> RetrieveAlarmsByStopReason(int stopReason)
+        {
+            string append = " WHERE StopReasons.stopid = " + stopReason + ";";
+
+            return exe.RetrieveAlarms(append.ToString());
         }
 
         /// <summary>

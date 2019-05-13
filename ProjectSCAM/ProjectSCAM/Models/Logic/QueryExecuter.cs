@@ -616,7 +616,7 @@ namespace ProjectSCAM.Models.Logic
             string query = "SELECT Alarms.alarmid, Alarms.timestamp, Alarms.stopreason, Alarms.handledby, " +
                 "Alarms.batch, StopReasons.actionrequired, StopReasons.stopdescription, Users.firstname, Users.lastname " +
                 "FROM Alarms LEFT JOIN StopReasons ON Alarms.stopreason = StopReasons.stopid " +
-                "LEFT JOIN Users on Alarms.handledby = Users.userid" + append;
+                "LEFT JOIN Users ON Alarms.handledby = Users.userid" + append;
 
             List<AlarmModel> list = new List<AlarmModel>();
 
