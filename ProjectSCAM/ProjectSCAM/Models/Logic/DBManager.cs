@@ -151,6 +151,25 @@ namespace ProjectSCAM.Models.Logic
         /// </summary>
         /// <param name="ipAddress"></param>
         /// <param name="description"></param>
+        /// <param name="nameSpaceIndex"></param>
+        /// <param name="amountNode"></param>
+        /// <param name="stateNode"></param>
+        /// <param name="defectNode"></param>
+        /// <param name="acceptableNode"></param>
+        /// <param name="amountToProduceNode"></param>
+        /// <param name="machSpeedNode"></param>
+        /// <param name="temperatureNode"></param>
+        /// <param name="humidityNode"></param>
+        /// <param name="vibrationNode"></param>
+        /// <param name="stopreasonNode"></param>
+        /// <param name="batchIdNode"></param>
+        /// <param name="barleyNode"></param>
+        /// <param name="hopsNode"></param>
+        /// <param name="maltNode"></param>
+        /// <param name="wheatNode"></param>
+        /// <param name="yeastNode"></param>
+        /// <param name="maintenanceTriggerNode"></param>
+        /// <param name="maintenanceCounterNode"></param>
         /// <returns></returns>
         public bool RegisterMachine(string ipAddress, string description, int nameSpaceIndex,
             string amountNode, string stateNode, string defectNode, string acceptableNode, string amountToProduceNode, string machSpeedNode,
@@ -160,13 +179,19 @@ namespace ProjectSCAM.Models.Logic
             // Security
             if (CheckIp(ipAddress) && CheckText(description))
             {
-                string query = "INSERT INTO Machines(ipaddress, description)" +
-                    "VALUES('" + ipAddress + "', '" + description + "') RETURNING machineid;";
+                string query = string.Format("INSERT INTO Machines(ipaddress, description, namespaceindex, " +
+                    "amounturl, stateurl, defecturl, acceptableurl, amounttoproduceurl, machspeedurl, " +
+                    "temperatureurl, humidityurl, vibrationurl, stopreasonurl, batchidurl, barleyurl, " +
+                    "hopsurl, malturl, wheaturl, yeasturl, maintenancetriggerurl, maintenancecounterurl) " +
+                    "VALUES('{0}', '{1}', {2}, {3}, {4}, {5}, {6}, {7}, {8}, " +
+                    "{9}, {10}, {11}, {12}, {13}, {14}, {15}, {16}, {17}, " +
+                    "{18}, {19}, {20}) RETURNING machineid;",
+                    ipAddress, description, nameSpaceIndex,
+                    amountNode, stateNode, defectNode, acceptableNode, amountToProduceNode, machSpeedNode,
+                    temperatureNode, humidityNode, vibrationNode, stopreasonNode, batchIdNode, barleyNode,
+                    hopsNode, maltNode, wheatNode, yeastNode, maintenanceTriggerNode, maintenanceCounterNode);
 
-                return exe.RegisterMachine(query, nameSpaceIndex, amountNode, stateNode, defectNode,
-                    acceptableNode, amountToProduceNode, machSpeedNode, temperatureNode, humidityNode,
-                    vibrationNode, stopreasonNode, batchIdNode, barleyNode, hopsNode, maltNode,
-                    wheatNode, yeastNode, maintenanceTriggerNode, maintenanceCounterNode);
+                return exe.ExecuteQuery(query);
             }
             else return false;
         }
@@ -179,6 +204,49 @@ namespace ProjectSCAM.Models.Logic
         {
             string append = ";";
             return exe.RetrieveMachines(append);
+        }
+
+        /// <summary>
+        /// Edit the info of a specific machine.
+        /// </summary>
+        /// <param name="machineId"></param>
+        /// <param name="ipAddress"></param>
+        /// <param name="description"></param>
+        /// <param name="nameSpaceIndex"></param>
+        /// <param name="amountNode"></param>
+        /// <param name="stateNode"></param>
+        /// <param name="defectNode"></param>
+        /// <param name="acceptableNode"></param>
+        /// <param name="amountToProduceNode"></param>
+        /// <param name="machSpeedNode"></param>
+        /// <param name="temperatureNode"></param>
+        /// <param name="humidityNode"></param>
+        /// <param name="vibrationNode"></param>
+        /// <param name="stopreasonNode"></param>
+        /// <param name="batchIdNode"></param>
+        /// <param name="barleyNode"></param>
+        /// <param name="hopsNode"></param>
+        /// <param name="maltNode"></param>
+        /// <param name="wheatNode"></param>
+        /// <param name="yeastNode"></param>
+        /// <param name="maintenanceTriggerNode"></param>
+        /// <param name="maintenanceCounterNode"></param>
+        /// <returns></returns>
+        public bool EditMachine(int machineId, string ipAddress, string description, int nameSpaceIndex,
+            string amountNode, string stateNode, string defectNode, string acceptableNode, string amountToProduceNode, string machSpeedNode,
+            string temperatureNode, string humidityNode, string vibrationNode, string stopreasonNode, string batchIdNode, string barleyNode,
+            string hopsNode, string maltNode, string wheatNode, string yeastNode, string maintenanceTriggerNode, string maintenanceCounterNode)
+        {
+            string query = string.Format("UPDATE Machines SET ipaddress = '{0}', description = '{1}', namespaceindex = {2}, " +
+                "amounturl = {3}, stateurl = {4}, defecturl = {5}, acceptableurl = {6}, amounttoproduceurl = {7}, machspeedurl = {8}, " +
+                "temperatureurl = {9}, humidityurl = {10}, vibrationurl = {11}, stopreasonurl = {12}, batchidurl = {13}, barleyurl = {14}, " +
+                "hopsurl = {15}, malturl = {16}, wheaturl = {17}, yeasturl = {18}, maintenancetriggerurl = {19}, maintenancecounterurl = {20} " +
+                "WHERE machineid = {21};", ipAddress, description, nameSpaceIndex,
+                amountNode, stateNode, defectNode, acceptableNode, amountToProduceNode, machSpeedNode,
+                temperatureNode, humidityNode, vibrationNode, stopreasonNode, batchIdNode, barleyNode,
+                hopsNode, maltNode, wheatNode, yeastNode, maintenanceTriggerNode, maintenanceCounterNode);
+
+            return exe.ExecuteQuery(query);
         }
 
         /// <summary>
