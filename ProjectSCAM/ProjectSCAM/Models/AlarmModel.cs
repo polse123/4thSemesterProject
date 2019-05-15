@@ -43,6 +43,7 @@ namespace ProjectSCAM.Models
                 MachineModel m;
                 foreach (MachineModel machine in Singleton.Instance.DBManager.RetrieveMachines())
                 {
+                    System.Diagnostics.Debug.WriteLine(machine.Id+"x");
                     if (machine.Id == MachineId)
                     {
                         m = machine;

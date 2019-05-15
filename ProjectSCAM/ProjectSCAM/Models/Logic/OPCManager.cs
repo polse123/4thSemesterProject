@@ -50,14 +50,14 @@ namespace ProjectSCAM.Models.Logic
                 if (opc.StateCurrent == 17) {
                     DateTime end = DateTime.Now;
                     OEE oee = new OEE((int)opc.AcceptableProducts, (int)opc.DefectProducts, opc.Start, end, opc.Recipe);
-
+                    System.Diagnostics.Debug.WriteLine(opc.Start);
                     Singleton.Instance.DBManager.RegisterBatch((int)opc.AcceptableProducts, (int)opc.DefectProducts,
                         opc.Start.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.AddYears(10).ToString("MM/dd/yyyy"), true,
                         oee.CalculatePerformance(), oee.CalculateQuality(), oee.CalculateAvailability(),
                         (int)opc.MachSpeed,
                         3, GetMachineId(opc.Ip), opc.BatchValues.TemperatureValues, opc.BatchValues.HumidityValues, opc.BatchValues.VibrationValues);
-                    opc.ClearValues();
                     opc.Producing = false;
+                    System.Diagnostics.Debug.WriteLine("awoo");
                 }
             }
             if(opc.Producing && e.PropertyName.Equals("StopReasonId") && AlarmManager.ActiveAlarms.Count == 0 && opc.StateCurrent != 4 && opc.StopReasonId != 0 && opc.AmountToProduce != 0) {
@@ -67,7 +67,6 @@ namespace ProjectSCAM.Models.Logic
                         3, GetMachineId(opc.Ip), opc.BatchValues.TemperatureValues, opc.BatchValues.HumidityValues, opc.BatchValues.VibrationValues,DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"),(int)opc.StopReasonId);
                 alarm.MachineId = GetMachineId(opc.Ip);
                 AlarmManager.ActiveAlarms.Add(alarm);
-                opc.ClearValues();
                 opc.ResetMachine();
                 opc.Producing = false;
 

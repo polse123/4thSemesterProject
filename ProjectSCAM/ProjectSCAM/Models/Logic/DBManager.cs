@@ -510,6 +510,7 @@ namespace ProjectSCAM.Models.Logic
             IList<KeyValuePair<string, double>> vibrationsValues)
         {
             // Security
+
             if (acceptableProducts >= 0 && defectProducts >= 0 &&
                 CheckTimestamp(timestampStart) &&
                 CheckTimestamp(timestampEnd) &&
