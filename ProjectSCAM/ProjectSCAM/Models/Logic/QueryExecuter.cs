@@ -617,9 +617,11 @@ namespace ProjectSCAM.Models.Logic
         public IList<AlarmModel> RetrieveAlarms(string append)
         {
             string query = "SELECT Alarms.alarmid, Alarms.timestamp, Alarms.stopreason, Alarms.handledby, " +
-                "Alarms.batch, StopReasons.actionrequired, StopReasons.stopdescription, Users.firstname, Users.lastname " +
+                "Alarms.batch, StopReasons.actionrequired, StopReasons.stopdescription, Users.firstname, " +
+                "Users.lastname, Batches.machine " +
                 "FROM Alarms LEFT JOIN StopReasons ON Alarms.stopreason = StopReasons.stopid " +
-                "LEFT JOIN Users ON Alarms.handledby = Users.userid" + append;
+                "LEFT JOIN Users ON Alarms.handledby = Users.userid " +
+                "LEFT JOIN Batches ON Alarms.batch = Batches.batchid" + append;
 
             List<AlarmModel> list = new List<AlarmModel>();
 
@@ -636,21 +638,21 @@ namespace ProjectSCAM.Models.Logic
                         if (!Convert.IsDBNull(dr[3]))
                         {
                             AlarmModel alarm = new AlarmModel((int)dr[0], dr[1].ToString().Trim(), (int)dr[2],
-                              (int)dr[3], (int)dr[4], (bool)dr[5], dr[6].ToString().Trim(),
+                              (int)dr[3], (int)dr[4], (int)dr[9], (bool)dr[5], dr[6].ToString().Trim(),
                                 dr[7].ToString().Trim() + " " + dr[8].ToString().Trim());
                             list.Add(alarm);
                         }
                         else
                         {
                             AlarmModel alarm = new AlarmModel((int)dr[0], dr[1].ToString().Trim(), (int)dr[2],
-                               null, (int)dr[4], (bool)dr[5], dr[6].ToString().Trim(), null);
+                               null, (int)dr[4], (int)dr[9], (bool)dr[5], dr[6].ToString().Trim(), null);
                             list.Add(alarm);
                         }
                     }
                 }
                 catch (NpgsqlException ex)
                 {
-                    return null;
+                    throw ex;
                 }
                 finally
                 {
