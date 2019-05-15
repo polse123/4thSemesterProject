@@ -995,7 +995,12 @@ namespace ProjectSCAM.Models.Logic
             double performance, double quality, double availability,
             int speed, int beerId, int machine)
         {
-            double oee = performance * quality * availability;
+            double oee = 0;
+
+            if (performance == 0 || quality == 0 || availability == 0)
+            {
+                oee = performance * quality * availability;
+            }
 
             string perf = performance.ToString();
             string qual = quality.ToString();
