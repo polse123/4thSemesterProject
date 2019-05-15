@@ -18,7 +18,6 @@ namespace ProjectSCAM.Models.Logic {
         /// <param name="productType"></param> Type of product.
         /// <param name="aProduct"></param> Amount of acceptable products produced
         /// <param name="dProduct"></param> Amount of defect products produced.
-        /// <param name="timeUsed"></param> Time spent in the different machine states.
         /// <param name="tData"></param> Temperature over production time.
         /// <param name="hData"></param> Humidity over production time.
         public void GenerateFile(float batchID, float productType, int aProduct,
