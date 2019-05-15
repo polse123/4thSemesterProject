@@ -39,7 +39,26 @@ CREATE TABLE recipes (
 CREATE TABLE machines (
 	machineid SERIAL PRIMARY KEY,
 	ipaddress VARCHAR(40) NOT NULL UNIQUE,
-	description VARCHAR(256)
+	description VARCHAR(256),
+	namespaceindex INT NOT NULL,
+	amounturl VARCHAR(64) NOT NULL,
+	stateurl VARCHAR(64) NOT NULL,
+	defecturl VARCHAR(64) NOT NULL,
+	acceptableurl VARCHAR(64) NOT NULL,
+	amounttoproduceurl VARCHAR(64) NOT NULL,
+	machspeedurl VARCHAR(64) NOT NULL,
+	temperatureurl VARCHAR(64) NOT NULL,
+	humidityurl VARCHAR(64) NOT NULL,
+	vibrationurl VARCHAR(64) NOT NULL,
+	stopreasonurl VARCHAR(64) NOT NULL,
+	batchidurl VARCHAR(64) NOT NULL,
+	barleyurl VARCHAR(64) NOT NULL,
+	hopsurl VARCHAR(64) NOT NULL,
+	malturl VARCHAR(64) NOT NULL,
+	wheaturl VARCHAR(64) NOT NULL,
+	yeasturl VARCHAR(64) NOT NULL,
+	maintenancetriggerurl VARCHAR(64) NOT NULL,
+	maintenancecounterurl VARCHAR(64) NOT NULL
 );
 
 CREATE TABLE users (
@@ -134,57 +153,6 @@ CREATE TABLE alarms (
 	FOREIGN KEY(batch) REFERENCES batches(batchid) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE nodes (
-	nodeid INT NOT NULL,
-	url CHAR(64) NOT NULL,
-	machine INT NOT NULL,
-	PRIMARY KEY(nodeid, machine),
-	UNIQUE(url, machine),
-	FOREIGN KEY(machine) REFERENCES machines(machineid) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
-CREATE TABLE nodesets (
-	machine INT PRIMARY KEY NOT NULL,
-	namespaceindex INT NOT NULL,
-	amount INT NOT NULL,
-	state INT NOT NULL,
-	defect INT NOT NULL,
-	acceptable INT NOT NULL,
-	amounttoproduce INT NOT NULL,
-	machspeed INT NOT NULL,
-	temperature INT NOT NULL,
-	humidity INT NOT NULL,
-	vibration INT NOT NULL,
-	stopreason INT NOT NULL,
-	batchid INT NOT NULL,
-	barley INT NOT NULL,
-	hops INT NOT NULL,
-	malt INT NOT NULL,
-	wheat INT NOT NULL,
-	yeast INT NOT NULL,
-	maintenancetrigger INT NOT NULL,
-	maintenancecounter INT NOT NULL,
-	FOREIGN KEY(machine) REFERENCES machines(machineid) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY(amount, machine) REFERENCES nodes(nodeid, machine) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY(state, machine) REFERENCES nodes(nodeid, machine) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY(defect, machine) REFERENCES nodes(nodeid, machine) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY(acceptable, machine) REFERENCES nodes(nodeid, machine) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY(amounttoproduce, machine) REFERENCES nodes(nodeid, machine) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY(machspeed, machine) REFERENCES nodes(nodeid, machine) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY(temperature, machine) REFERENCES nodes(nodeid, machine) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY(humidity, machine) REFERENCES nodes(nodeid, machine) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY(vibration, machine) REFERENCES nodes(nodeid, machine) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY(stopreason, machine) REFERENCES nodes(nodeid, machine) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY(batchid, machine) REFERENCES nodes(nodeid, machine) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY(barley, machine) REFERENCES nodes(nodeid, machine) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY(hops, machine) REFERENCES nodes(nodeid, machine) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY(malt, machine) REFERENCES nodes(nodeid, machine) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY(wheat, machine) REFERENCES nodes(nodeid, machine) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY(yeast, machine) REFERENCES nodes(nodeid, machine) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY(maintenanceTrigger, machine) REFERENCES nodes(nodeid, machine) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY(maintenanceCounter, machine) REFERENCES nodes(nodeid, machine) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
 INSERT INTO usertypes VALUES(0, 'Admin');
 INSERT INTO usertypes VALUES(1, 'Production Manager');
 
@@ -203,53 +171,48 @@ INSERT INTO recipes VALUES(5, 125, 'Alcohol Free', 1, 1, 4, 5, 0);
 
 /* Machine data */
 
-INSERT INTO machines(ipaddress, description) VALUES('opc.tcp://10.112.254.69:4840', 'A physical simulation');
-INSERT INTO machines(ipaddress, description) VALUES('opc.tcp://127.0.0.1:4840', 'A virtual simulation');
-
-INSERT INTO nodes VALUES(1, '::Program:Cube.Admin.ProdProcessedCount', 1);
-INSERT INTO nodes VALUES(2, '::Program:Cube.Status.StateCurrent', 1);
-INSERT INTO nodes VALUES(3, '::Program:Cube.Admin.ProdDefectiveCount', 1);
-INSERT INTO nodes VALUES(4, '::Program:product.good', 1);
-INSERT INTO nodes VALUES(5, '::Program:product.produce_amount', 1);
-INSERT INTO nodes VALUES(6, '::Program:Cube.Status.MachSpeed', 1);
-INSERT INTO nodes VALUES(7, '::Program:Cube.Status.Parameter[3].Value', 1);
-INSERT INTO nodes VALUES(8, '::Program:Cube.Status.Parameter[2].Value', 1);
-INSERT INTO nodes VALUES(9, '::Program:Cube.Status.Parameter[4].Value', 1);
-INSERT INTO nodes VALUES(10, '::Program:Cube.Admin.StopReason.ID', 1);
-INSERT INTO nodes VALUES(11, '::Program:Cube.Status.Parameter[0].Value', 1);
-INSERT INTO nodes VALUES(12, '::Program:Inventory.Barley', 1);
-INSERT INTO nodes VALUES(13, '::Program:Inventory.Hops', 1);
-INSERT INTO nodes VALUES(14, '::Program:Inventory.Malt', 1);
-INSERT INTO nodes VALUES(15, '::Program:Inventory.Wheat', 1);
-INSERT INTO nodes VALUES(16, '::Program:Inventory.Yeast', 1);
-INSERT INTO nodes VALUES(17, '::Program:Maintenance.Trigger', 1);
-INSERT INTO nodes VALUES(18, '::Program:Maintenance.Counter', 1);
-
-INSERT INTO nodes VALUES(1, '::Program:Cube.Admin.ProdProcessedCount', 2);
-INSERT INTO nodes VALUES(2, '::Program:Cube.Status.StateCurrent', 2);
-INSERT INTO nodes VALUES(3, '::Program:Cube.Admin.ProdDefectiveCount', 2);
-INSERT INTO nodes VALUES(4, '::Program:product.good', 2);
-INSERT INTO nodes VALUES(5, '::Program:product.produce_amount', 2);
-INSERT INTO nodes VALUES(6, '::Program:Cube.Status.MachSpeed', 2);
-INSERT INTO nodes VALUES(7, '::Program:Cube.Status.Parameter[3].Value', 2);
-INSERT INTO nodes VALUES(8, '::Program:Cube.Status.Parameter[2].Value', 2);
-INSERT INTO nodes VALUES(9, '::Program:Cube.Status.Parameter[4].Value', 2);
-INSERT INTO nodes VALUES(10, '::Program:Cube.Admin.StopReason.ID', 2);
-INSERT INTO nodes VALUES(11, '::Program:Cube.Status.Parameter[0].Value', 2);
-INSERT INTO nodes VALUES(12, '::Program:Inventory.Barley', 2);
-INSERT INTO nodes VALUES(13, '::Program:Inventory.Hops', 2);
-INSERT INTO nodes VALUES(14, '::Program:Inventory.Malt', 2);
-INSERT INTO nodes VALUES(15, '::Program:Inventory.Wheat', 2);
-INSERT INTO nodes VALUES(16, '::Program:Inventory.Yeast', 2);
-INSERT INTO nodes VALUES(17, '::Program:Maintenance.Trigger', 2);
-INSERT INTO nodes VALUES(18, '::Program:Maintenance.Counter', 2);
-
-INSERT INTO nodesets VALUES(1, 6, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18);
-INSERT INTO nodesets VALUES(2, 6, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18);
+INSERT INTO machines(ipaddress, description, namespaceindex,
+	amounturl, stateurl, defecturl, acceptableurl, amounttoproduceurl, machspeedurl,
+	temperatureurl, humidityurl, vibrationurl, stopreasonurl, batchidurl, barleyurl,
+	hopsurl, malturl, wheaturl, yeasturl, maintenancetriggerurl, maintenancecounterurl
+	)
+	VALUES('opc.tcp://10.112.254.69:4840', 'A physical simulation', 6,
+	'::Program:Cube.Admin.ProdProcessedCount', '::Program:Cube.Status.StateCurrent', '::Program:Cube.Admin.ProdDefectiveCount',
+	'::Program:product.good', '::Program:product.produce_amount', '::Program:Cube.Status.MachSpeed',
+	'::Program:Cube.Status.Parameter[3].Value', '::Program:Cube.Status.Parameter[2].Value', '::Program:Cube.Status.Parameter[4].Value',
+	'::Program:Cube.Admin.StopReason.ID', '::Program:Cube.Status.Parameter[0].Value', '::Program:Inventory.Barley',
+	'::Program:Inventory.Hops', '::Program:Inventory.Malt', '::Program:Inventory.Wheat',
+	'::Program:Inventory.Yeast', '::Program:Maintenance.Trigger', '::Program:Maintenance.Counter'
+);
+INSERT INTO machines(ipaddress, description, namespaceindex,
+	amounturl, stateurl, defecturl, acceptableurl, amounttoproduceurl, machspeedurl,
+	temperatureurl, humidityurl, vibrationurl, stopreasonurl, batchidurl, barleyurl,
+	hopsurl, malturl, wheaturl, yeasturl, maintenancetriggerurl, maintenancecounterurl
+	)
+	VALUES('opc.tcp://127.0.0.1:4840', 'A virtual simulation', 6,
+	'::Program:Cube.Admin.ProdProcessedCount', '::Program:Cube.Status.StateCurrent', '::Program:Cube.Admin.ProdDefectiveCount',
+	'::Program:product.good', '::Program:product.produce_amount', '::Program:Cube.Status.MachSpeed',
+	'::Program:Cube.Status.Parameter[3].Value', '::Program:Cube.Status.Parameter[2].Value', '::Program:Cube.Status.Parameter[4].Value',
+	'::Program:Cube.Admin.StopReason.ID', '::Program:Cube.Status.Parameter[0].Value', '::Program:Inventory.Barley',
+	'::Program:Inventory.Hops', '::Program:Inventory.Malt', '::Program:Inventory.Wheat',
+	'::Program:Inventory.Yeast', '::Program:Maintenance.Trigger', '::Program:Maintenance.Counter'
+);
 
 /* Test data */
 
-INSERT INTO machines(ipaddress, description) VALUES('test', null);
+INSERT INTO machines(ipaddress, description, namespaceindex,
+	amounturl, stateurl, defecturl, acceptableurl, amounttoproduceurl, machspeedurl,
+	temperatureurl, humidityurl, vibrationurl, stopreasonurl, batchidurl, barleyurl,
+	hopsurl, malturl, wheaturl, yeasturl, maintenancetriggerurl, maintenancecounterurl
+	)
+	VALUES('Test', null, 6,
+	'::Program:Cube.Admin.ProdProcessedCount', '::Program:Cube.Status.StateCurrent', '::Program:Cube.Admin.ProdDefectiveCount',
+	'::Program:product.good', '::Program:product.produce_amount', '::Program:Cube.Status.MachSpeed',
+	'::Program:Cube.Status.Parameter[3].Value', '::Program:Cube.Status.Parameter[2].Value', '::Program:Cube.Status.Parameter[4].Value',
+	'::Program:Cube.Admin.StopReason.ID', '::Program:Cube.Status.Parameter[0].Value', '::Program:Inventory.Barley',
+	'::Program:Inventory.Hops', '::Program:Inventory.Malt', '::Program:Inventory.Wheat',
+	'::Program:Inventory.Yeast', '::Program:Maintenance.Trigger', '::Program:Maintenance.Counter'
+);
 
 INSERT INTO users(username, password, firstname, lastname, email, phonenumber, isactive, usertype)
 	VALUES('admin', 'password', 'Super', 'Admin', 'admin@scam.com', null, true, 0);

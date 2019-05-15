@@ -189,83 +189,6 @@ namespace ProjectSCAM.Models.Logic
             return list;
         }
 
-        public bool RegisterMachine(string machineQuery, int nameSpaceIndex,
-            string amountNode, string stateNode, string defectNode, string acceptableNode, string amountToProduceNode, string machSpeedNode,
-            string temperatureNode, string humidityNode, string vibrationNode, string stopreasonNode, string batchIdNode, string barleyNode,
-            string hopsNode, string maltNode, string wheatNode, string yeastNode, string maintenanceTriggerNode, string maintenanceCounterNode)
-        {
-            int? machineId = null;
-
-            lock (CONN_LOCK)
-            {
-                try
-                {
-                    // Register machine
-                    conn.Open();
-                    NpgsqlCommand command = new NpgsqlCommand(machineQuery, conn);
-                    NpgsqlDataReader dr = command.ExecuteReader();
-                    while (dr.Read())
-                    {
-                        machineId = (int)dr[0];
-                    }
-                    conn.Close();
-
-                    if (machineId != null)
-                    {
-                        // Register nodes
-                        string[] nodeArray = new string[]
-                            {amountNode, stateNode, defectNode, acceptableNode, amountToProduceNode, machSpeedNode,
-                            temperatureNode, humidityNode, vibrationNode, stopreasonNode, batchIdNode, barleyNode,
-                            hopsNode, maltNode, wheatNode, yeastNode, maintenanceTriggerNode, maintenanceCounterNode};
-
-                        StringBuilder nodeQuery = new StringBuilder();
-
-                        for (int i = 0; i < nodeArray.Length; i++)
-                        {
-                            int nodeID = i + 1;
-                            nodeQuery.Append("INSERT INTO Nodes VALUES(" + nodeID + ",'" + nodeArray[i] + "', " + machineId + ");");
-                        }
-
-                        try
-                        {
-                            conn.Open();
-                            NpgsqlCommand nodeCommand = new NpgsqlCommand(nodeQuery.ToString(), conn);
-                            nodeCommand.ExecuteNonQuery();
-                            conn.Close();
-                        }
-                        catch (Exception ex)
-                        {
-                            return false;
-                        }
-
-                        // Register node set
-                        string nodeSetQuery = string.Format("INSERT INTO NodeSet Values({0}, {1}, {2}, {3}, {4}, " +
-                            "{5}, {6}, {7}, {8}, {9}, {10}, {11}, {12}, {13}, {14}, {15}, {16}, {17}, {18}, {19});",
-                            machineId, nameSpaceIndex, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18);
-
-                        try
-                        {
-                            conn.Open();
-                            NpgsqlCommand nodeSetCommand = new NpgsqlCommand(nodeSetQuery, conn);
-                            nodeSetCommand.ExecuteNonQuery();
-                            conn.Close();
-                        }
-                        catch (Exception ex)
-                        {
-                            return false;
-                        }
-
-                        return true;
-                    }
-                    else return false;
-                }
-                catch (Exception ex)
-                {
-                    return false;
-                }
-            }
-        }
-
         /// <summary>
         /// Retrieves machines from the db.
         /// The query append should start with " " or ";".
@@ -274,28 +197,7 @@ namespace ProjectSCAM.Models.Logic
         /// <returns></returns>
         public IList<MachineModel> RetrieveMachines(string append)
         {
-            string query = "SELECT machineid, ipaddress, description, namespaceindex, " +
-                "url1, url2, url3, url4, url5, url6, url7, url8, url9, url10, url11, url12, url13, url14, url15, url16, url17, url18 " +
-                "FROM Machines INNER JOIN NodeSets ON Machines.machineid = NodeSets.machine " +
-                "INNER JOIN(SELECT url AS url1, machine AS mach FROM Nodes INNER JOIN Machines ON Nodes.machine = Machines.machineid WHERE Nodes.nodeid = 1) AS table1 ON machineid = table1.mach " +
-                "INNER JOIN(SELECT url AS url2, machine as mach FROM Nodes INNER JOIN Machines ON Nodes.machine = Machines.machineid WHERE Nodes.nodeid = 2) AS table2 ON machineid = table2.mach " +
-                "INNER JOIN(SELECT url AS url3, machine as mach FROM Nodes INNER JOIN Machines ON Nodes.machine = Machines.machineid WHERE Nodes.nodeid = 3) AS table3 ON machineid = table3.mach " +
-                "INNER JOIN(SELECT url AS url4, machine as mach FROM Nodes INNER JOIN Machines ON Nodes.machine = Machines.machineid WHERE Nodes.nodeid = 4) AS table4 ON machineid = table4.mach " +
-                "INNER JOIN(SELECT url AS url5, machine AS mach FROM Nodes INNER JOIN Machines ON Nodes.machine = Machines.machineid WHERE Nodes.nodeid = 5) AS table5 ON machineid = table5.mach " +
-                "INNER JOIN(SELECT url AS url6, machine as mach FROM Nodes INNER JOIN Machines ON Nodes.machine = Machines.machineid WHERE Nodes.nodeid = 6) AS table6 ON machineid = table6.mach " +
-                "INNER JOIN(SELECT url AS url7, machine as mach FROM Nodes INNER JOIN Machines ON Nodes.machine = Machines.machineid WHERE Nodes.nodeid = 7) AS table7 ON machineid = table7.mach " +
-                "INNER JOIN(SELECT url AS url8, machine as mach FROM Nodes INNER JOIN Machines ON Nodes.machine = Machines.machineid WHERE Nodes.nodeid = 8) AS table8 ON machineid = table8.mach " +
-                "INNER JOIN(SELECT url AS url9, machine AS mach FROM Nodes INNER JOIN Machines ON Nodes.machine = Machines.machineid WHERE Nodes.nodeid = 9) AS table9 ON machineid = table9.mach " +
-                "INNER JOIN(SELECT url AS url10, machine as mach FROM Nodes INNER JOIN Machines ON Nodes.machine = Machines.machineid WHERE Nodes.nodeid = 10) AS table10 ON machineid = table10.mach " +
-                "INNER JOIN(SELECT url AS url11, machine as mach FROM Nodes INNER JOIN Machines ON Nodes.machine = Machines.machineid WHERE Nodes.nodeid = 11) AS table11 ON machineid = table11.mach " +
-                "INNER JOIN(SELECT url AS url12, machine as mach FROM Nodes INNER JOIN Machines ON Nodes.machine = Machines.machineid WHERE Nodes.nodeid = 12) AS table12 ON machineid = table12.mach " +
-                "INNER JOIN(SELECT url AS url13, machine as mach FROM Nodes INNER JOIN Machines ON Nodes.machine = Machines.machineid WHERE Nodes.nodeid = 13) AS table13 ON machineid = table13.mach " +
-                "INNER JOIN(SELECT url AS url14, machine as mach FROM Nodes INNER JOIN Machines ON Nodes.machine = Machines.machineid WHERE Nodes.nodeid = 14) AS table14 ON machineid = table14.mach " +
-                "INNER JOIN(SELECT url AS url15, machine AS mach FROM Nodes INNER JOIN Machines ON Nodes.machine = Machines.machineid WHERE Nodes.nodeid = 15) AS table15 ON machineid = table15.mach " +
-                "INNER JOIN(SELECT url AS url16, machine as mach FROM Nodes INNER JOIN Machines ON Nodes.machine = Machines.machineid WHERE Nodes.nodeid = 16) AS table16 ON machineid = table16.mach " +
-                "INNER JOIN(SELECT url AS url17, machine as mach FROM Nodes INNER JOIN Machines ON Nodes.machine = Machines.machineid WHERE Nodes.nodeid = 17) AS table17 ON machineid = table17.mach " +
-                "INNER JOIN(SELECT url AS url18, machine as mach FROM Nodes INNER JOIN Machines ON Nodes.machine = Machines.machineid WHERE Nodes.nodeid = 18) AS table18 ON machineid = table18.mach" +
-                append;
+            string query = "SELECT * FROM Machines " + append;
 
             List<MachineModel> list = new List<MachineModel>();
 
