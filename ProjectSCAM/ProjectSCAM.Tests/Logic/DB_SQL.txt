@@ -1,4 +1,6 @@
-﻿DROP TABLE IF EXISTS alarms;
+﻿DROP TABLE IF EXISTS NodeSets;
+DROP TABLE IF EXISTS Nodes;
+DROP TABLE IF EXISTS alarms;
 DROP TABLE IF EXISTS beers;
 DROP TABLE IF EXISTS vibrationvalues;
 DROP TABLE IF EXISTS humidityvalues;
@@ -132,6 +134,57 @@ CREATE TABLE alarms (
 	FOREIGN KEY(batch) REFERENCES batches(batchid) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE TABLE nodes (
+	nodeid INT NOT NULL,
+	url CHAR(64) NOT NULL,
+	machine INT NOT NULL,
+	PRIMARY KEY(nodeid, machine),
+	UNIQUE(url, machine),
+	FOREIGN KEY(machine) REFERENCES machines(machineid) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE nodesets (
+	machine INT PRIMARY KEY NOT NULL,
+	namespaceindex INT NOT NULL,
+	amount INT NOT NULL,
+	state INT NOT NULL,
+	defect INT NOT NULL,
+	acceptable INT NOT NULL,
+	amounttoproduce INT NOT NULL,
+	machspeed INT NOT NULL,
+	temperature INT NOT NULL,
+	humidity INT NOT NULL,
+	vibration INT NOT NULL,
+	stopreason INT NOT NULL,
+	batchid INT NOT NULL,
+	barley INT NOT NULL,
+	hops INT NOT NULL,
+	malt INT NOT NULL,
+	wheat INT NOT NULL,
+	yeast INT NOT NULL,
+	maintenancetrigger INT NOT NULL,
+	maintenancecounter INT NOT NULL,
+	FOREIGN KEY(machine) REFERENCES machines(machineid) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY(amount, machine) REFERENCES nodes(nodeid, machine) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY(state, machine) REFERENCES nodes(nodeid, machine) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY(defect, machine) REFERENCES nodes(nodeid, machine) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY(acceptable, machine) REFERENCES nodes(nodeid, machine) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY(amounttoproduce, machine) REFERENCES nodes(nodeid, machine) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY(machspeed, machine) REFERENCES nodes(nodeid, machine) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY(temperature, machine) REFERENCES nodes(nodeid, machine) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY(humidity, machine) REFERENCES nodes(nodeid, machine) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY(vibration, machine) REFERENCES nodes(nodeid, machine) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY(stopreason, machine) REFERENCES nodes(nodeid, machine) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY(batchid, machine) REFERENCES nodes(nodeid, machine) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY(barley, machine) REFERENCES nodes(nodeid, machine) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY(hops, machine) REFERENCES nodes(nodeid, machine) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY(malt, machine) REFERENCES nodes(nodeid, machine) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY(wheat, machine) REFERENCES nodes(nodeid, machine) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY(yeast, machine) REFERENCES nodes(nodeid, machine) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY(maintenanceTrigger, machine) REFERENCES nodes(nodeid, machine) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY(maintenanceCounter, machine) REFERENCES nodes(nodeid, machine) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 INSERT INTO usertypes VALUES(0, 'Admin');
 INSERT INTO usertypes VALUES(1, 'Production Manager');
 
@@ -148,10 +201,54 @@ INSERT INTO recipes VALUES(3, 200, 'Stout', 3, 4, 6, 1, 2);
 INSERT INTO recipes VALUES(4, 100, 'Ale', 4, 6, 2, 2, 8);
 INSERT INTO recipes VALUES(5, 125, 'Alcohol Free', 1, 1, 4, 5, 0);
 
-/* Test data */
+/* Machine data */
 
 INSERT INTO machines(ipaddress, description) VALUES('opc.tcp://10.112.254.69:4840', 'A physical simulation');
 INSERT INTO machines(ipaddress, description) VALUES('opc.tcp://127.0.0.1:4840', 'A virtual simulation');
+
+INSERT INTO nodes VALUES(1, '::Program:Cube.Admin.ProdProcessedCount', 1);
+INSERT INTO nodes VALUES(2, '::Program:Cube.Status.StateCurrent', 1);
+INSERT INTO nodes VALUES(3, '::Program:Cube.Admin.ProdDefectiveCount', 1);
+INSERT INTO nodes VALUES(4, '::Program:product.good', 1);
+INSERT INTO nodes VALUES(5, '::Program:product.produce_amount', 1);
+INSERT INTO nodes VALUES(6, '::Program:Cube.Status.MachSpeed', 1);
+INSERT INTO nodes VALUES(7, '::Program:Cube.Status.Parameter[3].Value', 1);
+INSERT INTO nodes VALUES(8, '::Program:Cube.Status.Parameter[2].Value', 1);
+INSERT INTO nodes VALUES(9, '::Program:Cube.Status.Parameter[4].Value', 1);
+INSERT INTO nodes VALUES(10, '::Program:Cube.Admin.StopReason.ID', 1);
+INSERT INTO nodes VALUES(11, '::Program:Cube.Status.Parameter[0].Value', 1);
+INSERT INTO nodes VALUES(12, '::Program:Inventory.Barley', 1);
+INSERT INTO nodes VALUES(13, '::Program:Inventory.Hops', 1);
+INSERT INTO nodes VALUES(14, '::Program:Inventory.Malt', 1);
+INSERT INTO nodes VALUES(15, '::Program:Inventory.Wheat', 1);
+INSERT INTO nodes VALUES(16, '::Program:Inventory.Yeast', 1);
+INSERT INTO nodes VALUES(17, '::Program:Maintenance.Trigger', 1);
+INSERT INTO nodes VALUES(18, '::Program:Maintenance.Counter', 1);
+
+INSERT INTO nodes VALUES(1, '::Program:Cube.Admin.ProdProcessedCount', 2);
+INSERT INTO nodes VALUES(2, '::Program:Cube.Status.StateCurrent', 2);
+INSERT INTO nodes VALUES(3, '::Program:Cube.Admin.ProdDefectiveCount', 2);
+INSERT INTO nodes VALUES(4, '::Program:product.good', 2);
+INSERT INTO nodes VALUES(5, '::Program:product.produce_amount', 2);
+INSERT INTO nodes VALUES(6, '::Program:Cube.Status.MachSpeed', 2);
+INSERT INTO nodes VALUES(7, '::Program:Cube.Status.Parameter[3].Value', 2);
+INSERT INTO nodes VALUES(8, '::Program:Cube.Status.Parameter[2].Value', 2);
+INSERT INTO nodes VALUES(9, '::Program:Cube.Status.Parameter[4].Value', 2);
+INSERT INTO nodes VALUES(10, '::Program:Cube.Admin.StopReason.ID', 2);
+INSERT INTO nodes VALUES(11, '::Program:Cube.Status.Parameter[0].Value', 2);
+INSERT INTO nodes VALUES(12, '::Program:Inventory.Barley', 2);
+INSERT INTO nodes VALUES(13, '::Program:Inventory.Hops', 2);
+INSERT INTO nodes VALUES(14, '::Program:Inventory.Malt', 2);
+INSERT INTO nodes VALUES(15, '::Program:Inventory.Wheat', 2);
+INSERT INTO nodes VALUES(16, '::Program:Inventory.Yeast', 2);
+INSERT INTO nodes VALUES(17, '::Program:Maintenance.Trigger', 2);
+INSERT INTO nodes VALUES(18, '::Program:Maintenance.Counter', 2);
+
+INSERT INTO nodesets VALUES(1, 6, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18);
+INSERT INTO nodesets VALUES(2, 6, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18);
+
+/* Test data */
+
 INSERT INTO machines(ipaddress, description) VALUES('test', null);
 
 INSERT INTO users(username, password, firstname, lastname, email, phonenumber, isactive, usertype)
