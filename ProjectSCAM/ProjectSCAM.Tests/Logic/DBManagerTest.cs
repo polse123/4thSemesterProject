@@ -89,6 +89,14 @@ namespace ProjectSCAM.Tests.Logic
             else Assert.IsTrue(false);
         }
 
+        [TestMethod]
+        public void RetrieveMaxSpeed()
+        {
+            int speed = dbManager.RetrieveMaxSpeed(0);
+            bool succes = speed == 600;
+            Assert.IsTrue(succes);
+        }
+
         /// <summary>
         /// Only works once after the DB has been reset.
         /// </summary>

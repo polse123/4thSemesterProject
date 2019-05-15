@@ -152,6 +152,18 @@ namespace ProjectSCAM.Models.Logic
         }
 
         /// <summary>
+        /// Retrieve the maximum speed for a specific recipe.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public int RetrieveMaxSpeed(int id)
+        {
+            string append = " WHERE beerid = " + id + ";";
+
+            return exe.RetrieveMaxSpeed(append);
+        }
+
+        /// <summary>
         /// Insert a machine into the db.
         /// </summary>
         /// <param name="ipAddress"></param>
