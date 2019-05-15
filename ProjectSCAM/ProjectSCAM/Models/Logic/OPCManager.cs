@@ -57,7 +57,6 @@ namespace ProjectSCAM.Models.Logic
                         (int)opc.MachSpeed,
                         3, GetMachineId(opc.Ip), opc.BatchValues.TemperatureValues, opc.BatchValues.HumidityValues, opc.BatchValues.VibrationValues);
                     opc.Producing = false;
-                    System.Diagnostics.Debug.WriteLine("awoo");
                 }
             }
             if(opc.Producing && e.PropertyName.Equals("StopReasonId") && AlarmManager.ActiveAlarms.Count == 0 && opc.StateCurrent != 4 && opc.StopReasonId != 0 && opc.AmountToProduce != 0) {
