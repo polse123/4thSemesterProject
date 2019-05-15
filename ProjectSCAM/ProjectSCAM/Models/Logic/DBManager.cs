@@ -147,6 +147,18 @@ namespace ProjectSCAM.Models.Logic
         }
 
         /// <summary>
+        /// Retrieve the maximum speed for a specific recipe.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public int RetrieveMaxSpeed(int id)
+        {
+            string append = " WHERE beerid = " + id + ";";
+
+            return exe.RetrieveMaxSpeed(append);
+        }
+
+        /// <summary>
         /// Insert a machine into the db.
         /// </summary>
         /// <param name="ipAddress"></param>
@@ -990,10 +1002,12 @@ namespace ProjectSCAM.Models.Logic
             double performance, double quality, double availability,
             int speed, int beerId, int machine)
         {
-            double oee = 0;
+            double oee;
 
             if (performance == 0 || quality == 0 || availability == 0)
             {
+                oee = 0;
+            } else {
                 oee = performance * quality * availability;
             }
 

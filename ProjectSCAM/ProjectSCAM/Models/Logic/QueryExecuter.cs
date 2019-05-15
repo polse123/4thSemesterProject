@@ -190,6 +190,42 @@ namespace ProjectSCAM.Models.Logic
         }
 
         /// <summary>
+        /// Retrieves the maximum speed for a specific recipe.
+        /// </summary>
+        /// <param name="append"></param>
+        /// <returns></returns>
+        public int RetrieveMaxSpeed(string append)
+        {
+            string query = "SELECT maxspeed FROM Recipes" + append;
+
+            int speed = 0;
+
+            lock (CONN_LOCK)
+            {
+                try
+                {
+                    conn.Open();
+                    NpgsqlCommand command = new NpgsqlCommand(query, conn);
+                    NpgsqlDataReader dr = command.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        speed = (int)dr[0];
+                        break;
+                    }
+                }
+                catch (NpgsqlException ex)
+                {
+                    return 0;
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            }
+            return speed;
+        }
+
+        /// <summary>
         /// Retrieves machines from the db.
         /// The query append should start with " " or ";".
         /// </summary>

@@ -49,7 +49,7 @@ namespace ProjectSCAM.Models.Logic
                 //proceed if batch was completed successfully
                 if (opc.StateCurrent == 17) {
                     DateTime end = DateTime.Now;
-                    OEE oee = new OEE((int)opc.AcceptableProducts, (int)opc.DefectProducts, opc.Start, end, opc.Recipe);
+                    OEE oee = new OEE((int)opc.AcceptableProducts, (int)opc.DefectProducts, opc.Start, end, Singleton.Instance.DBManager.RetrieveMaxSpeed(opc.Recipe));
                     System.Diagnostics.Debug.WriteLine(opc.Start);
                     Singleton.Instance.DBManager.RegisterBatch((int)opc.AcceptableProducts, (int)opc.DefectProducts,
                         opc.Start.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.AddYears(10).ToString("MM/dd/yyyy"), true,
