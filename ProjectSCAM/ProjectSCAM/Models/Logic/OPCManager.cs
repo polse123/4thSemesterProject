@@ -23,16 +23,14 @@ namespace ProjectSCAM.Models.Logic
             foreach(AlarmModel alarm in Singleton.Instance.DBManager.RetrieveUnhandledAlarms(GetMachineId(ip))) {
                 AlarmManager.ActiveAlarms.Add(alarm);
             }
-            System.Diagnostics.Debug.WriteLine(ip);
+            OpcClient c = new OpcClient(ip,GetMachine(ip));
             if (OpcConnections.ContainsKey(ip))
             {
-                OpcClient c = new OpcClient(ip);
                 OpcConnections[ip] = c;
                 AddEventHandler(c);
             }
             else
             {
-                OpcClient c = new OpcClient(ip);
                 OpcConnections.Add(ip, c);
                 AddEventHandler(c);
             }
@@ -70,6 +68,15 @@ namespace ProjectSCAM.Models.Logic
                 opc.Producing = false;
 
             }
+        }
+        private MachineModel GetMachine(string ip) {
+            MachineModel machine = new MachineModel();
+            foreach (MachineModel m in Singleton.Instance.DBManager.RetrieveMachines()) {
+                if (m.Ip.Equals(ip)) {
+                    machine = m;
+                }
+            }
+            return machine;
         }
 
         private int GetMachineId(string ip)
