@@ -238,13 +238,13 @@ namespace ProjectSCAM.Models.Logic
             string hopsNode, string maltNode, string wheatNode, string yeastNode, string maintenanceTriggerNode, string maintenanceCounterNode)
         {
             string query = string.Format("UPDATE Machines SET ipaddress = '{0}', description = '{1}', namespaceindex = {2}, " +
-                "amounturl = {3}, stateurl = {4}, defecturl = {5}, acceptableurl = {6}, amounttoproduceurl = {7}, machspeedurl = {8}, " +
-                "temperatureurl = {9}, humidityurl = {10}, vibrationurl = {11}, stopreasonurl = {12}, batchidurl = {13}, barleyurl = {14}, " +
-                "hopsurl = {15}, malturl = {16}, wheaturl = {17}, yeasturl = {18}, maintenancetriggerurl = {19}, maintenancecounterurl = {20} " +
+                "amounturl = '{3}', stateurl = '{4}', defecturl = '{5}', acceptableurl = '{6}', amounttoproduceurl = '{7}', machspeedurl = '{8}', " +
+                "temperatureurl = '{9}', humidityurl = '{10}', vibrationurl = '{11}', stopreasonurl = '{12}', batchidurl = '{13}', barleyurl = '{14}', " +
+                "hopsurl = '{15}', malturl = '{16}', wheaturl = '{17}', yeasturl = '{18}', maintenancetriggerurl = '{19}', maintenancecounterurl = '{20}' " +
                 "WHERE machineid = {21};", ipAddress, description, nameSpaceIndex,
                 amountNode, stateNode, defectNode, acceptableNode, amountToProduceNode, machSpeedNode,
                 temperatureNode, humidityNode, vibrationNode, stopreasonNode, batchIdNode, barleyNode,
-                hopsNode, maltNode, wheatNode, yeastNode, maintenanceTriggerNode, maintenanceCounterNode);
+                hopsNode, maltNode, wheatNode, yeastNode, maintenanceTriggerNode, maintenanceCounterNode, machineId);
 
             return exe.ExecuteQuery(query);
         }
