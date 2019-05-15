@@ -85,6 +85,11 @@ namespace ProjectSCAM.Models.Logic
         private readonly char[] LEGAL_FOR_TEXT = new char[] { '.', ',', '-' };
 
         /// <summary>
+        /// Chars allowed for node url's.
+        /// </summary>
+        private readonly char[] LEGAL_FOR_NODE_URLS = new char[] { ':', '.', '_', '[', ']' };
+
+        /// <summary>
         /// Very illegal string.
         /// </summary>
         private readonly string VERY_ILLEGAL = "--";
@@ -177,7 +182,10 @@ namespace ProjectSCAM.Models.Logic
             string hopsNode, string maltNode, string wheatNode, string yeastNode, string maintenanceTriggerNode, string maintenanceCounterNode)
         {
             // Security
-            if (CheckIp(ipAddress) && CheckText(description))
+            if (CheckIp(ipAddress) && CheckText(description) && CheckNodeUrls(new string[]
+            {amountNode, stateNode, defectNode, acceptableNode, amountToProduceNode, machSpeedNode,
+            temperatureNode, humidityNode, vibrationNode, stopreasonNode, batchIdNode, barleyNode,
+            hopsNode, maltNode, wheatNode, yeastNode, maintenanceTriggerNode, maintenanceCounterNode}))
             {
                 string query = string.Format("INSERT INTO Machines(ipaddress, description, namespaceindex, " +
                     "amounturl, stateurl, defecturl, acceptableurl, amounttoproduceurl, machspeedurl, " +
@@ -237,16 +245,23 @@ namespace ProjectSCAM.Models.Logic
             string temperatureNode, string humidityNode, string vibrationNode, string stopreasonNode, string batchIdNode, string barleyNode,
             string hopsNode, string maltNode, string wheatNode, string yeastNode, string maintenanceTriggerNode, string maintenanceCounterNode)
         {
-            string query = string.Format("UPDATE Machines SET ipaddress = '{0}', description = '{1}', namespaceindex = {2}, " +
-                "amounturl = {3}, stateurl = {4}, defecturl = {5}, acceptableurl = {6}, amounttoproduceurl = {7}, machspeedurl = {8}, " +
-                "temperatureurl = {9}, humidityurl = {10}, vibrationurl = {11}, stopreasonurl = {12}, batchidurl = {13}, barleyurl = {14}, " +
-                "hopsurl = {15}, malturl = {16}, wheaturl = {17}, yeasturl = {18}, maintenancetriggerurl = {19}, maintenancecounterurl = {20} " +
+            if (CheckIp(ipAddress) && CheckText(description) && CheckNodeUrls(new string[]
+            {amountNode, stateNode, defectNode, acceptableNode, amountToProduceNode, machSpeedNode,
+            temperatureNode, humidityNode, vibrationNode, stopreasonNode, batchIdNode, barleyNode,
+            hopsNode, maltNode, wheatNode, yeastNode, maintenanceTriggerNode, maintenanceCounterNode}))
+            {
+                string query = string.Format("UPDATE Machines SET ipaddress = '{0}', description = '{1}', namespaceindex = {2}, " +
+                "amounturl = '{3}', stateurl = '{4}', defecturl = '{5}', acceptableurl = '{6}', amounttoproduceurl = '{7}', machspeedurl = '{8}', " +
+                "temperatureurl = '{9}', humidityurl = '{10}', vibrationurl = '{11}', stopreasonurl = '{12}', batchidurl = '{13}', barleyurl = '{14}', " +
+                "hopsurl = '{15}', malturl = '{16}', wheaturl = '{17}', yeasturl = '{18}', maintenancetriggerurl = '{19}', maintenancecounterurl = '{20}' " +
                 "WHERE machineid = {21};", ipAddress, description, nameSpaceIndex,
                 amountNode, stateNode, defectNode, acceptableNode, amountToProduceNode, machSpeedNode,
                 temperatureNode, humidityNode, vibrationNode, stopreasonNode, batchIdNode, barleyNode,
-                hopsNode, maltNode, wheatNode, yeastNode, maintenanceTriggerNode, maintenanceCounterNode);
+                hopsNode, maltNode, wheatNode, yeastNode, maintenanceTriggerNode, maintenanceCounterNode, machineId);
 
-            return exe.ExecuteQuery(query);
+                return exe.ExecuteQuery(query);
+            }
+            else return false;
         }
 
         /// <summary>
@@ -981,7 +996,12 @@ namespace ProjectSCAM.Models.Logic
             double performance, double quality, double availability,
             int speed, int beerId, int machine)
         {
-            double oee = performance * quality * availability;
+            double oee = 0;
+
+            if (performance == 0 || quality == 0 || availability == 0)
+            {
+                oee = performance * quality * availability;
+            }
 
             string perf = performance.ToString();
             string qual = quality.ToString();
@@ -1002,6 +1022,24 @@ namespace ProjectSCAM.Models.Logic
                 "{5}, '{6}', '{7}', '{8}', '{9}', {10}, {11}, {12}, null, false) RETURNING batchid;"),
                 acceptableProducts, defectProducts, timestampStart, timestampEnd, expirationDate,
                 succeeded, oeeStrings[0], oeeStrings[1], oeeStrings[2], oeeStrings[3], speed, beerId, machine);
+        }
+
+        /// <summary>
+        /// Removes batch values where the timestamp contains illegal chars.
+        /// </summary>
+        /// <param name="values"></param>
+        private void RemoveBadBatchValues(IList<KeyValuePair<string, double>>[] values)
+        {
+            foreach (IList<KeyValuePair<string, double>> list in values)
+            {
+                foreach (KeyValuePair<string, double> pair in list)
+                {
+                    if (!CheckTimestamp(pair.Key))
+                    {
+                        list.Remove(pair);
+                    }
+                }
+            }
         }
 
         private bool CheckInput(string input)
@@ -1238,22 +1276,26 @@ namespace ProjectSCAM.Models.Logic
             else return false;
         }
 
-        /// <summary>
-        /// Removes batch values where the timestamp contains illegal chars.
-        /// </summary>
-        /// <param name="values"></param>
-        private void RemoveBadBatchValues(IList<KeyValuePair<string, double>>[] values)
+        private bool CheckNodeUrls(string[] inputs)
         {
-            foreach (IList<KeyValuePair<string, double>> list in values)
+            foreach (string input in inputs)
             {
-                foreach (KeyValuePair<string, double> pair in list)
+                if (input.Contains(VERY_ILLEGAL))
                 {
-                    if (!CheckTimestamp(pair.Key))
+                    return false;
+                }
+                foreach (char c in ILLEGAL_CHARS)
+                {
+                    if (input.Contains(c))
                     {
-                        list.Remove(pair);
+                        if (!LEGAL_FOR_NODE_URLS.Contains(c))
+                        {
+                            return false;
+                        }
                     }
                 }
             }
+            return true;
         }
     }
 }
