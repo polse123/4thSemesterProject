@@ -99,6 +99,9 @@ namespace ProjectSCAM.Models
         {
             return Singleton.Instance.DBManager.RetrieveBatch(id);
         }
+        public void CreateBatchReport() {
+            Singleton.Instance.CreateBatchReport(Id, BeerId, AcceptableProducts, DefectProducts, Values);
+        }
 
         public void getValues()
         {

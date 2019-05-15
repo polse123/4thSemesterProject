@@ -29,25 +29,27 @@
             <div id="alarmInfoFields" class="alarmInfofieldsclass">
                 Show alarms by machine:
                 <form action="/alarm/getalarmsbymachine" method="get">
-                    <select id="machineselect" name="machineId" >
+                    <select id="machineselect" name="machineId">
                         <option selected="selected" value"">Select Machine</option>
                         @foreach (var item in ViewBag.Machines) {
                             <option value="@item.Id">@item.Ip</option>
                         }
                     </select>
-                    <input type="submit" value="Search by machine"/>
+                    <input type="submit" value="Search by machine" />
                 </form>
                 &nbsp;
+                <br />
                 Show alarms by date:
                 <form action="/alarm/getalarmsbydate" method="get">
                     <input type="text" name="date" />
                     <input type="submit" value="Search by date" />
                 </form>
                 &nbsp;
-                Show alarms by 
-                <form action="/alarm/getalarmsbydate" method="get"></form>
+                <br />
+                Show unhandled alarms
+                <form action="/alarm/getalarmsbyunhandled" method="get"></form>
                 <form>
-                    <input type="checkbox" name="unhandledButton" value="unhandled" id="unhandledButton">Unhandled
+                    <input type="submit" value="Show unhandled alarms" />
                 </form>
                 &nbsp;
             </div>

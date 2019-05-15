@@ -20,13 +20,15 @@ namespace ProjectSCAM.Models.Logic
 
         public void InitConnection(string ip)
         {
-            //string ip = "opc.tcp://127.0.0.1:4840";
-            //string ip2 = "opc.tcp://10.112.254.69:4840";
+            foreach(AlarmModel alarm in Singleton.Instance.DBManager.RetrieveUnhandledAlarms(GetMachineId(ip))) {
+                AlarmManager.ActiveAlarms.Add(alarm);
+            }
             System.Diagnostics.Debug.WriteLine(ip);
             if (OpcConnections.ContainsKey(ip))
             {
                 OpcClient c = new OpcClient(ip);
                 OpcConnections[ip] = c;
+                AddEventHandler(c);
             }
             else
             {
@@ -53,18 +55,21 @@ namespace ProjectSCAM.Models.Logic
                         opc.Start.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.AddYears(10).ToString("MM/dd/yyyy"), true,
                         oee.CalculatePerformance(), oee.CalculateQuality(), oee.CalculateAvailability(),
                         (int)opc.MachSpeed,
-                        3, GetMachineId(opc.Ip), bvc.TemperatureValues, bvc.HumidityValues, bvc.VibrationValues);
+                        3, GetMachineId(opc.Ip), opc.BatchValues.TemperatureValues, opc.BatchValues.HumidityValues, opc.BatchValues.VibrationValues);
                     opc.ClearValues();
+                    opc.Producing = false;
                 }
             }
-            if(e.PropertyName.Equals("StopReasonId") && AlarmManager.ActiveAlarms.Count == 0 && opc.StateCurrent != 4 && opc.StopReasonId != 0 && opc.AmountToProduce != 0) {
+            if(opc.Producing && e.PropertyName.Equals("StopReasonId") && AlarmManager.ActiveAlarms.Count == 0 && opc.StateCurrent != 4 && opc.StopReasonId != 0 && opc.AmountToProduce != 0) {
                 AlarmModel alarm = Singleton.Instance.DBManager.RegisterBatchAndAlarm((int)opc.AcceptableProducts, (int)opc.DefectProducts,
                         opc.Start.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.AddYears(10).ToString("MM/dd/yyyy"), false, 1, 1, 1,
                         (int)opc.MachSpeed,
-                        3, GetMachineId(opc.Ip), bvc.TemperatureValues, bvc.HumidityValues, bvc.VibrationValues,DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"),(int)opc.StopReasonId);
+                        3, GetMachineId(opc.Ip), opc.BatchValues.TemperatureValues, opc.BatchValues.HumidityValues, opc.BatchValues.VibrationValues,DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"),(int)opc.StopReasonId);
                 alarm.MachineId = GetMachineId(opc.Ip);
                 AlarmManager.ActiveAlarms.Add(alarm);
+                opc.ClearValues();
                 opc.ResetMachine();
+                opc.Producing = false;
 
             }
         }

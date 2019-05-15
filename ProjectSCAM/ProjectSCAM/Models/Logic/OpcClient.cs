@@ -32,16 +32,20 @@ namespace ProjectSCAM.Models
         //private double beerType;
         private double maintenanceTrigger = 0;
         private double maintenanceCounter;
+        public bool Producing { get; set; }
 
         private Session session;
         public event PropertyChangedEventHandler PropertyChanged;
         public string Ip { get; set; }
         public int Recipe { get; set; }
+        public BatchValueCollection BatchValues;
 
         //Constructor with OPC connect and CreateSubscription
         public OpcClient(string ip)
         {
+            BatchValues = new BatchValueCollection();
             Ip = ip;
+            Producing = false;
             Connect();
             if (session.ConnectionStatus != ServerConnectionStatus.Disconnected)
             {
@@ -171,6 +175,8 @@ namespace ProjectSCAM.Models
                     //  temperature
                     case "::Program:Cube.Status.Parameter[3].Value":
                         TempCurrent = double.Parse((dc.Value.WrappedValue.ToFloat().ToString()));
+                        BatchValues.TemperatureValues.Add(new KeyValuePair<string, double>
+                            (DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), TempCurrent));
                         break;
                     // defect products processed
                     case "::Program:Cube.Admin.ProdDefectiveCount":
@@ -191,10 +197,14 @@ namespace ProjectSCAM.Models
                     //relative humidity
                     case "::Program:Cube.Status.Parameter[2].Value":
                         HumidityCurrent = double.Parse((dc.Value.WrappedValue.ToFloat().ToString()));
+                        BatchValues.HumidityValues.Add(new KeyValuePair<string, double>
+                            (DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), HumidityCurrent));
                         break;
                     //vibration
                     case "::Program:Cube.Status.Parameter[4].Value":
                         VibrationCurrent = double.Parse((dc.Value.WrappedValue.ToFloat().ToString()));
+                        BatchValues.VibrationValues.Add(new KeyValuePair<string, double>
+                            (DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), VibrationCurrent));
                         break;
                     //stop reason id  StopReasonId
                     case "::Program:Cube.Admin.StopReason.ID":
@@ -250,6 +260,7 @@ namespace ProjectSCAM.Models
             VibrationCurrent = 0;
             StopReasonId = 0;
             BatchId = 0;
+            BatchValues = new BatchValueCollection();
             
         }
 
@@ -342,6 +353,7 @@ namespace ProjectSCAM.Models
         {
             if (!isProcessRunning)
             {
+                Producing = true;
                 isProcessRunning = true;
                 Start = DateTime.Now;
                 Recipe = (int)productType;

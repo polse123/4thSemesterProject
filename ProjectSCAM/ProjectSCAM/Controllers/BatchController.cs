@@ -124,11 +124,19 @@ namespace SCAMS.Controllers
             //TempData["id"] = id;
             return RedirectToAction("Index", "History");
         }
+        [HttpPost]
+        public void CreateBatchReport(string id) {
+            System.Diagnostics.Debug.WriteLine(id);
+            int intId;
+            
+            bool create = int.TryParse(id, out intId);
+            if(create) {
 
-        public ActionResult BatchreportButton()
-        {
-            //missing code for batchreport
-            return RedirectToAction("Index");
+                BatchModel m = Singleton.Instance.DBManager.RetrieveBatch(intId);
+                m.Values = Singleton.Instance.DBManager.RetrieveBatchValues(intId);
+                m.CreateBatchReport();
+            }
+           
         }
 
         public ActionResult RecallButton()
