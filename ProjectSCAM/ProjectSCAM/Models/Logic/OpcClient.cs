@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectSCAM.Models.Logic;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
@@ -355,6 +356,13 @@ namespace ProjectSCAM.Models
         {
             if (!isProcessRunning)
             {
+                float speed;
+                float recipeMaxSpeed = Singleton.Instance.DBManager.RetrieveMaxSpeed((int)productType);
+                if(machineSpeed > recipeMaxSpeed) {
+                    speed = recipeMaxSpeed;
+                } else {
+                    speed = machineSpeed;
+                }
                 Producing = true;
                 isProcessRunning = true;
                 Start = DateTime.Now;
@@ -380,7 +388,7 @@ namespace ProjectSCAM.Models
                     Attributes.Value, CreateDataValue(amountToProduce)));
                 // machine speed
                 nodesToWrite.Add(CreateWriteValue("::Program:Cube.Command.MachSpeed", 6,
-                    Attributes.Value, CreateDataValue(machineSpeed)));
+                    Attributes.Value, CreateDataValue(speed)));
                 nodesToWrite.Add(CreateWriteValue("::Program:Cube.Command.CntrlCmd", 6, Attributes.Value, start));
                 nodesToWrite.Add(CreateWriteValue("::Program:Cube.Command.CmdChangeRequest", 6, Attributes.Value,
                     changeRequest));

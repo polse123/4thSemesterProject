@@ -107,6 +107,7 @@ namespace ProjectSCAM.Models.Logic
                             BatchQueueModel bqm = Singleton.Instance.DBManager.RetrieveFromBatchQueue()[0];
                             Singleton.Instance.DBManager.RemoveFromBatchQueue(bqm.Id);
                             opc.StartMachine(10, bqm.BeerId, bqm.Amount, bqm.Speed);
+                            
                         }
                         break;
                     case "stop":
