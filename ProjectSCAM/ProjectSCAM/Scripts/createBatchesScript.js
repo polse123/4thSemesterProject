@@ -113,9 +113,7 @@ function getHistory() {
 function createBatchReport() {
     var batchselect = document.getElementById("BatchId");
     var selected = batchselect.value;
-    console.log(selected);
     $.post("/batch/createbatchreport", { id: selected });
-   // $.post("/batch/createbatchreport", { id: selected});
 }
 function getRecall() {
     var batchselect = document.getElementById("BatchId");

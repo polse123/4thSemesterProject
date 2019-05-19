@@ -231,7 +231,7 @@
     <Compile Include="Models\AuthorizeUserAttribute.cs" />
     <Compile Include="Models\BatchModel.cs" />
     <Compile Include="Models\BatchQueueModel.cs" />
-    <Compile Include="Models\Logic\BatchReportGenerator.cs" />
+    <Compile Include="Models\Logic\BatchReportServiceProvider.cs" />
     <Compile Include="Models\Logic\BatchValueCollection.cs" />
     <Compile Include="Models\BeerModel.cs" />
     <Compile Include="Models\CustomerModel.cs" />
