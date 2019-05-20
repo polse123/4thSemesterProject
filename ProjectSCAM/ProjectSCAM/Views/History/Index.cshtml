@@ -1,81 +1,109 @@
-﻿@model  ProjectSCAM.Models.BatchModel
-@{
+﻿@{
     ViewData["Title"] = "History";
 }
 
+@model IList<ProjectSCAM.Models.BatchModel>
+
+@Styles.Render("~/Content/optimization.css")
+@Styles.Render("~/Content/UserStyleSheet.css")
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-
-    @Styles.Render("~/Content/HistoryStyleSheet.css")
-    @Styles.Render("~/Content/UserStyleSheet.css")
-
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-        google.charts.load('current', { 'packages': ['corechart'] });
-        google.charts.setOnLoadCallback(drawChart);
-
-        function drawChart() {
-            var data = google.visualization.arrayToDataTable([
-                ['Year', 'Pilsner', 'wheat'],
-                ['90%', 10, 25],
-                ['10%', 15, 46],
-                ['20%', 17, 87],
-                ['30%', 21, 88],
-                ['40%', 35, 76],
-                ['50%', 65, 60],
-                ['60%', 55, 40],
-                ['70%', 44, 30],
-                ['80%', 31, 16],
-                ['90%', 19, 9],
-                ['100%', 5, -10]
-            ]);
-
-            var options = {
-                title: 'Optimization',
-                curveType: 'function',
-                legend: { position: 'bottom' }
-
-            };
-
-            var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-
-            chart.draw(data, options);
-        }
-    </script>
-
 </head>
 <body>
-
-    <div class="grid-container">
-        <div class="grid-item item1">
-            History <span id="history" class="historyclass"></span>
-           
-        </div>
-        <div class="grid-item item2">
-
-            Batch ID: <span id="yeast" value="100" class="ingredientvalues">@Html.DisplayFor(model => model.Id)</span>&nbsp; &nbsp;
-            Accepted products: <span id="hops" value="100" class="ingredientvalues">@Html.DisplayFor(model => model.AcceptableProducts)</span>&nbsp; &nbsp;
-            Defect products: <span id="wheat" value="100" class="ingredientvalues">@Html.DisplayFor(model => model.DefectProducts)</span> <br>
-            Produced products: <span id="malt" value="100" class="ingredientvalues">@Html.DisplayFor(model => model.ProducedProducts)</span>&nbsp; &nbsp;
-            Product type: <span id="barley" value="100" class="ingredientvalues">@Html.DisplayFor(model => model.RecipeName)</span>&nbsp; &nbsp;
-            Speed: <span id="malt" value="100" class="ingredientvalues">@Html.DisplayFor(model => model.Speed)</span>
-                   <div id="curve_chart" style="width: 900px; height: 500px"></div>
-
-
-        </div>
-        <div class="grid-item item3">
-           
-            <button type="button" id="tempButton" class="buttons"> Temperature</button> <br> <br>
-            <button type="button" id="vibrationButton" class="buttons"> Vibration</button> <br> <br>
-            <button type="button" id="humidityButton" class="buttons"> Humidity</button>
-        </div>
+    <div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
     </div>
+    <table class="batchtableclass" id="batchtable">
+        <tbody>
+            <tr>
+                <form action="/history/getbatchesbyid" method="get">
+                    <input type="hidden" name="id" value="1" />
+                    <input type="submit" value="batch 1" />
+                </form>
+            </tr>
+        </tbody>
+    </table>
 
 
-
-
-
-
+    <div id="chartContainer" style="height: 370px; width: 100%;"></div>
 </body>
 </html>
+
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script>
+    var result;
+
+    function drawChartForTemperature() {
+        console.log("lol");
+        result = @Html.Raw(ViewBag.Datapoints);
+        var dataPoints = [];
+        console.log(result);
+        var min = 0;
+        var max = 0;
+
+
+        for (var i = 0; i < result.Values.TemperatureValues.length; i++) {
+            dataPoints.push({ x: new Date(result.Values.TemperatureValues[i].Key), y: result.Values.TemperatureValues[i].Value });
+            console.log(result.Values.TemperatureValues[i].Key);
+            console.log(result.Values.TemperatureValues[i].Value);
+            
+            if (min > result.Values.TemperatureValues[i].Value) {
+                min = i;
+            }
+            if (max < result.Values.TemperatureValues[i].Value) {
+                max = i;
+            }
+        }
+      
+            var chart = new CanvasJS.Chart("chartContainer", {
+                animationEnabled: true,
+                title: {
+                    text: "Number of iPhones Sold in Different Quarters"
+                },
+                axisX: {
+                    minimum: new Date(result.TimestampStart),
+                    maximum: new Date(result.TimestampEnd),
+                },
+                axisY: {
+                    minimum: result.Values.TemperatureValues[min].Value,
+                    maximum: result.Values.TemperatureValues[max].Value,
+                    title: "Number of Sales",
+                    titleFontColor: "#4F81BC",
+                    suffix: " C"
+                },
+                data: [{
+                    indexLabelFontColor: "darkSlateGray",
+                    name: "views",
+                    type: "area",
+                    yValueFormatString: "#,##0.0 C",
+                    dataPoints: dataPoints,
+                }]
+            });
+            chart.render();
+
+    }
+
+    drawChartForTemperature();
+</script>
+<script>
+    function stringToDate(_date, _format, _delimiter) {
+        var formatLowerCase = _format.toLowerCase();
+        var formatItems = formatLowerCase.split(_delimiter);
+        var dateItems = _date.split(_delimiter);
+        var monthIndex = formatItems.indexOf("mm");
+        var dayIndex = formatItems.indexOf("dd");
+        var yearIndex = formatItems.indexOf("yyyy");
+        var month = parseInt(dateItems[monthIndex]);
+        month -= 1;
+        var formatedDate = new Date(dateItems[yearIndex], month, dateItems[dayIndex]);
+        return formatedDate;
+    }
+</script>
+

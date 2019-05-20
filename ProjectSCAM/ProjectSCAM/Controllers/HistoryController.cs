@@ -1,5 +1,8 @@
-﻿using ProjectSCAM.Models;
+﻿using Newtonsoft.Json;
+using ProjectSCAM.Models;
+using ProjectSCAM.Models.Logic;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,15 +15,37 @@ namespace SCAMS.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.temp = TempData["id"].ToString();
-            if (TempData["id"].ToString() == "0") { return View(); }
+
+            if (TempData["batch"] != null)
+            {
+                BatchModel SortedList = (BatchModel)TempData["batch"];
+                TempData["batch"] = null;
+                
+                return View();
+            }
             else
             {
-                BatchModel m = BatchModel.Read(int.Parse(TempData["id"].ToString()));
-                m.getValues();
-                return View(m);
+                BatchModel array = Singleton.Instance.DBManager.RetrieveBatch(1);
+                array.Values = Singleton.Instance.DBManager.RetrieveBatchValues(array.Id);
 
+            ViewBag.DataPoints = JsonConvert.SerializeObject(array, Formatting.None);
+            return View();
+            
+        }}
+
+        [HttpGet]
+        public ActionResult GetBatchesById(string id)
+        {
+            BatchModel batch = new BatchModel();
+            int intProductId;
+            bool add = int.TryParse(id, out intProductId);
+            if (add)
+            {
+                batch = Singleton.Instance.DBManager.RetrieveBatch(intProductId);
             }
+
+            TempData["batch"] = batch;
+            return RedirectToAction("Index");
         }
     }
 }
