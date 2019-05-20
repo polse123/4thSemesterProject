@@ -104,7 +104,7 @@ namespace ProjectSCAM.Models
             ServiceSingleton.Instance.CreateBatchReport(Id, BeerId, AcceptableProducts, DefectProducts, Values);
         }
 
-        public void getValues()
+        public void GetValues()
         {
             Values = ServiceSingleton.Instance.DBService.RetrieveBatchValues(Id);
         }
