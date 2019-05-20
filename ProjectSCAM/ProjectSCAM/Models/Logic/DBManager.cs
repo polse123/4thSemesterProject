@@ -25,11 +25,6 @@ namespace ProjectSCAM.Models.Logic
         private readonly string ORDER_BY_TIMESTAMP_END_APPEND = " ORDER BY timestampend DESC";
 
         /// <summary>
-        /// Query appendage used when retrieving alarms that occured on a specific machine.
-        /// </summary>
-        private readonly string LEFT_JOIN_ALARMS_ON_BATCHES_APPEND = " LEFT JOIN Batches ON Alarms.batch = Batches.batchid";
-
-        /// <summary>
         /// Query appendage used when retrieving alarms that require handling.
         /// </summary>
         private readonly string ACTION_REQUIRED_APPENDAGE = " actionrequired AND handledby IS NULL ORDER BY timestamp ASC";
@@ -83,6 +78,11 @@ namespace ProjectSCAM.Models.Logic
         /// Chars allowed for text.
         /// </summary>
         private readonly char[] LEGAL_FOR_TEXT = new char[] { '.', ',', '-' };
+
+        /// <summary>
+        /// Chars allowed for node url's.
+        /// </summary>
+        private readonly char[] LEGAL_FOR_NODE_URLS = new char[] { ':', '.', '_', '[', ']' };
 
         /// <summary>
         /// Very illegal string.
@@ -147,18 +147,64 @@ namespace ProjectSCAM.Models.Logic
         }
 
         /// <summary>
+        /// Retrieve the maximum speed for a specific recipe.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public int RetrieveMaxSpeed(int id)
+        {
+            string append = " WHERE beerid = " + id + ";";
+
+            return exe.RetrieveMaxSpeed(append);
+        }
+
+        /// <summary>
         /// Insert a machine into the db.
         /// </summary>
         /// <param name="ipAddress"></param>
         /// <param name="description"></param>
+        /// <param name="nameSpaceIndex"></param>
+        /// <param name="amountNode"></param>
+        /// <param name="stateNode"></param>
+        /// <param name="defectNode"></param>
+        /// <param name="acceptableNode"></param>
+        /// <param name="amountToProduceNode"></param>
+        /// <param name="machSpeedNode"></param>
+        /// <param name="temperatureNode"></param>
+        /// <param name="humidityNode"></param>
+        /// <param name="vibrationNode"></param>
+        /// <param name="stopreasonNode"></param>
+        /// <param name="batchIdNode"></param>
+        /// <param name="barleyNode"></param>
+        /// <param name="hopsNode"></param>
+        /// <param name="maltNode"></param>
+        /// <param name="wheatNode"></param>
+        /// <param name="yeastNode"></param>
+        /// <param name="maintenanceTriggerNode"></param>
+        /// <param name="maintenanceCounterNode"></param>
         /// <returns></returns>
-        public bool RegisterMachine(string ipAddress, string description)
+        public bool RegisterMachine(string ipAddress, string description, int nameSpaceIndex,
+            string amountNode, string stateNode, string defectNode, string acceptableNode, string amountToProduceNode, string machSpeedNode,
+            string temperatureNode, string humidityNode, string vibrationNode, string stopreasonNode, string batchIdNode, string barleyNode,
+            string hopsNode, string maltNode, string wheatNode, string yeastNode, string maintenanceTriggerNode, string maintenanceCounterNode)
         {
             // Security
-            if (CheckIp(ipAddress) && CheckText(description))
+            if (CheckIp(ipAddress) && CheckText(description) && CheckNodeUrls(new string[]
+            {amountNode, stateNode, defectNode, acceptableNode, amountToProduceNode, machSpeedNode,
+            temperatureNode, humidityNode, vibrationNode, stopreasonNode, batchIdNode, barleyNode,
+            hopsNode, maltNode, wheatNode, yeastNode, maintenanceTriggerNode, maintenanceCounterNode}))
             {
-                string query = "INSERT INTO Machines(ipaddress, description)" +
-                    "VALUES('" + ipAddress + "', '" + description + "');";
+                string query = string.Format("INSERT INTO Machines(ipaddress, description, namespaceindex, " +
+                    "amounturl, stateurl, defecturl, acceptableurl, amounttoproduceurl, machspeedurl, " +
+                    "temperatureurl, humidityurl, vibrationurl, stopreasonurl, batchidurl, barleyurl, " +
+                    "hopsurl, malturl, wheaturl, yeasturl, maintenancetriggerurl, maintenancecounterurl) " +
+                    "VALUES('{0}', '{1}', {2}, {3}, {4}, {5}, {6}, {7}, {8}, " +
+                    "{9}, {10}, {11}, {12}, {13}, {14}, {15}, {16}, {17}, " +
+                    "{18}, {19}, {20}) RETURNING machineid;",
+                    ipAddress, description, nameSpaceIndex,
+                    amountNode, stateNode, defectNode, acceptableNode, amountToProduceNode, machSpeedNode,
+                    temperatureNode, humidityNode, vibrationNode, stopreasonNode, batchIdNode, barleyNode,
+                    hopsNode, maltNode, wheatNode, yeastNode, maintenanceTriggerNode, maintenanceCounterNode);
 
                 return exe.ExecuteQuery(query);
             }
@@ -173,6 +219,56 @@ namespace ProjectSCAM.Models.Logic
         {
             string append = ";";
             return exe.RetrieveMachines(append);
+        }
+
+        /// <summary>
+        /// Edit the info of a specific machine.
+        /// </summary>
+        /// <param name="machineId"></param>
+        /// <param name="ipAddress"></param>
+        /// <param name="description"></param>
+        /// <param name="nameSpaceIndex"></param>
+        /// <param name="amountNode"></param>
+        /// <param name="stateNode"></param>
+        /// <param name="defectNode"></param>
+        /// <param name="acceptableNode"></param>
+        /// <param name="amountToProduceNode"></param>
+        /// <param name="machSpeedNode"></param>
+        /// <param name="temperatureNode"></param>
+        /// <param name="humidityNode"></param>
+        /// <param name="vibrationNode"></param>
+        /// <param name="stopreasonNode"></param>
+        /// <param name="batchIdNode"></param>
+        /// <param name="barleyNode"></param>
+        /// <param name="hopsNode"></param>
+        /// <param name="maltNode"></param>
+        /// <param name="wheatNode"></param>
+        /// <param name="yeastNode"></param>
+        /// <param name="maintenanceTriggerNode"></param>
+        /// <param name="maintenanceCounterNode"></param>
+        /// <returns></returns>
+        public bool EditMachine(int machineId, string ipAddress, string description, int nameSpaceIndex,
+            string amountNode, string stateNode, string defectNode, string acceptableNode, string amountToProduceNode, string machSpeedNode,
+            string temperatureNode, string humidityNode, string vibrationNode, string stopreasonNode, string batchIdNode, string barleyNode,
+            string hopsNode, string maltNode, string wheatNode, string yeastNode, string maintenanceTriggerNode, string maintenanceCounterNode)
+        {
+            if (CheckIp(ipAddress) && CheckText(description) && CheckNodeUrls(new string[]
+            {amountNode, stateNode, defectNode, acceptableNode, amountToProduceNode, machSpeedNode,
+            temperatureNode, humidityNode, vibrationNode, stopreasonNode, batchIdNode, barleyNode,
+            hopsNode, maltNode, wheatNode, yeastNode, maintenanceTriggerNode, maintenanceCounterNode}))
+            {
+                string query = string.Format("UPDATE Machines SET ipaddress = '{0}', description = '{1}', namespaceindex = {2}, " +
+                "amounturl = '{3}', stateurl = '{4}', defecturl = '{5}', acceptableurl = '{6}', amounttoproduceurl = '{7}', machspeedurl = '{8}', " +
+                "temperatureurl = '{9}', humidityurl = '{10}', vibrationurl = '{11}', stopreasonurl = '{12}', batchidurl = '{13}', barleyurl = '{14}', " +
+                "hopsurl = '{15}', malturl = '{16}', wheaturl = '{17}', yeasturl = '{18}', maintenancetriggerurl = '{19}', maintenancecounterurl = '{20}' " +
+                "WHERE machineid = {21};", ipAddress, description, nameSpaceIndex,
+                amountNode, stateNode, defectNode, acceptableNode, amountToProduceNode, machSpeedNode,
+                temperatureNode, humidityNode, vibrationNode, stopreasonNode, batchIdNode, barleyNode,
+                hopsNode, maltNode, wheatNode, yeastNode, maintenanceTriggerNode, maintenanceCounterNode, machineId);
+
+                return exe.ExecuteQuery(query);
+            }
+            else return false;
         }
 
         /// <summary>
@@ -436,6 +532,7 @@ namespace ProjectSCAM.Models.Logic
             IList<KeyValuePair<string, double>> vibrationsValues)
         {
             // Security
+
             if (acceptableProducts >= 0 && defectProducts >= 0 &&
                 CheckTimestamp(timestampStart) &&
                 CheckTimestamp(timestampEnd) &&
@@ -798,7 +895,7 @@ namespace ProjectSCAM.Models.Logic
         /// <returns></returns>
         public IList<AlarmModel> RetrieveUnhandledAlarms(int machineId)
         {
-            string append = LEFT_JOIN_ALARMS_ON_BATCHES_APPEND + " WHERE Batches.machine = " + machineId + " AND" + ACTION_REQUIRED_APPENDAGE + ";";
+            string append = " WHERE Batches.machine = " + machineId + " AND" + ACTION_REQUIRED_APPENDAGE + ";";
 
             return exe.RetrieveAlarms(append.ToString());
         }
@@ -810,7 +907,7 @@ namespace ProjectSCAM.Models.Logic
         /// <returns></returns>
         public IList<AlarmModel> RetrieveAlarmsByMachine(int machineId)
         {
-            string append = LEFT_JOIN_ALARMS_ON_BATCHES_APPEND + " WHERE Batches.machine = " + machineId + ";";
+            string append = " WHERE Batches.machine = " + machineId + ";";
 
             return exe.RetrieveAlarms(append.ToString());
         }
@@ -832,7 +929,6 @@ namespace ProjectSCAM.Models.Logic
             if (CheckMonthAndYear(month, year))
             {
                 StringBuilder append = new StringBuilder();
-                append.Append(LEFT_JOIN_ALARMS_ON_BATCHES_APPEND);
                 append.Append(" WHERE timestampend LIKE '" + month + "____" + year + "%'");
                 append.Append(ORDER_BY_TIMESTAMP_END_APPEND + ";");
 
@@ -906,7 +1002,14 @@ namespace ProjectSCAM.Models.Logic
             double performance, double quality, double availability,
             int speed, int beerId, int machine)
         {
-            double oee = performance * quality * availability;
+            double oee;
+
+            if (performance == 0 || quality == 0 || availability == 0)
+            {
+                oee = 0;
+            } else {
+                oee = performance * quality * availability;
+            }
 
             string perf = performance.ToString();
             string qual = quality.ToString();
@@ -927,6 +1030,24 @@ namespace ProjectSCAM.Models.Logic
                 "{5}, '{6}', '{7}', '{8}', '{9}', {10}, {11}, {12}, null, false) RETURNING batchid;"),
                 acceptableProducts, defectProducts, timestampStart, timestampEnd, expirationDate,
                 succeeded, oeeStrings[0], oeeStrings[1], oeeStrings[2], oeeStrings[3], speed, beerId, machine);
+        }
+
+        /// <summary>
+        /// Removes batch values where the timestamp contains illegal chars.
+        /// </summary>
+        /// <param name="values"></param>
+        private void RemoveBadBatchValues(IList<KeyValuePair<string, double>>[] values)
+        {
+            foreach (IList<KeyValuePair<string, double>> list in values)
+            {
+                foreach (KeyValuePair<string, double> pair in list)
+                {
+                    if (!CheckTimestamp(pair.Key))
+                    {
+                        list.Remove(pair);
+                    }
+                }
+            }
         }
 
         private bool CheckInput(string input)
@@ -1163,22 +1284,26 @@ namespace ProjectSCAM.Models.Logic
             else return false;
         }
 
-        /// <summary>
-        /// Removes batch values where the timestamp contains illegal chars.
-        /// </summary>
-        /// <param name="values"></param>
-        private void RemoveBadBatchValues(IList<KeyValuePair<string, double>>[] values)
+        private bool CheckNodeUrls(string[] inputs)
         {
-            foreach (IList<KeyValuePair<string, double>> list in values)
+            foreach (string input in inputs)
             {
-                foreach (KeyValuePair<string, double> pair in list)
+                if (input.Contains(VERY_ILLEGAL))
                 {
-                    if (!CheckTimestamp(pair.Key))
+                    return false;
+                }
+                foreach (char c in ILLEGAL_CHARS)
+                {
+                    if (input.Contains(c))
                     {
-                        list.Remove(pair);
+                        if (!LEGAL_FOR_NODE_URLS.Contains(c))
+                        {
+                            return false;
+                        }
                     }
                 }
             }
+            return true;
         }
     }
 }

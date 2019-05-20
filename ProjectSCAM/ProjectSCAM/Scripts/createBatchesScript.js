@@ -110,11 +110,10 @@ function getHistory() {
     //$.get("/batch/HistoryButton", { id: selected} + id);
     //window.location.href = "/Batch/HistoryButton/" + selected;
 }
-function getBatchReport() {
+function createBatchReport() {
     var batchselect = document.getElementById("BatchId");
     var selected = batchselect.value;
-    //$.get("/batch/HistoryButton", { id: selected} + id);
-    window.location.href = "/Batch/BatchreportButton/" + selected;
+    $.post("/batch/createbatchreport", { id: selected });
 }
 function getRecall() {
     var batchselect = document.getElementById("BatchId");
@@ -122,7 +121,7 @@ function getRecall() {
     //$.get("/batch/HistoryButton", { id: selected} + id);
     window.location.href = "/Batch/RecallButton/" + selected;
 }
-}
+
 function batchSearch() {
     console.log("entered");
     $.ajax({
@@ -137,8 +136,6 @@ function batchSearch() {
             batchid: document.getElementById("idSearchField").value
         },
         success: function (response) {
-            console.log("in");
-            console.log(response);
         }
     });
 

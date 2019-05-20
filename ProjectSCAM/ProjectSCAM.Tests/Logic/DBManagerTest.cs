@@ -89,13 +89,22 @@ namespace ProjectSCAM.Tests.Logic
             else Assert.IsTrue(false);
         }
 
+        [TestMethod]
+        public void RetrieveMaxSpeed()
+        {
+            int speed = dbManager.RetrieveMaxSpeed(0);
+            bool succes = speed == 600;
+            Assert.IsTrue(succes);
+        }
+
         /// <summary>
         /// Only works once after the DB has been reset.
         /// </summary>
         [TestMethod]
         public void RegisterMachine()
         {
-            bool success = dbManager.RegisterMachine("Test Data", "This is test data");
+            bool success = dbManager.RegisterMachine("Test Data", "This is test data", 6,
+                "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18");
             Assert.IsTrue(success);
         }
 
@@ -112,6 +121,14 @@ namespace ProjectSCAM.Tests.Logic
                 }
             }
             else Assert.IsTrue(false);
+        }
+
+        [TestMethod]
+        public void EditMachine()
+        {
+            bool success = dbManager.EditMachine(3, "Test Data Edit", "This is edited test data", 6,
+                "1e", "2e", "3e", "4e", "5e", "6e", "7e", "8e", "9e", "10e", "11e", "12e", "13e", "14e", "15e", "16e", "17e", "18e");
+            Assert.IsTrue(success);
         }
 
         /// <summary>

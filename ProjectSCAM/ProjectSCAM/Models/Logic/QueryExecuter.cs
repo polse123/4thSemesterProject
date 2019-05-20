@@ -190,6 +190,42 @@ namespace ProjectSCAM.Models.Logic
         }
 
         /// <summary>
+        /// Retrieves the maximum speed for a specific recipe.
+        /// </summary>
+        /// <param name="append"></param>
+        /// <returns></returns>
+        public int RetrieveMaxSpeed(string append)
+        {
+            string query = "SELECT maxspeed FROM Recipes" + append;
+
+            int speed = 0;
+
+            lock (CONN_LOCK)
+            {
+                try
+                {
+                    conn.Open();
+                    NpgsqlCommand command = new NpgsqlCommand(query, conn);
+                    NpgsqlDataReader dr = command.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        speed = (int)dr[0];
+                        break;
+                    }
+                }
+                catch (NpgsqlException ex)
+                {
+                    return 0;
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            }
+            return speed;
+        }
+
+        /// <summary>
         /// Retrieves machines from the db.
         /// The query append should start with " " or ";".
         /// </summary>
@@ -197,7 +233,8 @@ namespace ProjectSCAM.Models.Logic
         /// <returns></returns>
         public IList<MachineModel> RetrieveMachines(string append)
         {
-            string query = "SELECT * FROM Machines" + append;
+            string query = "SELECT * FROM Machines " + append;
+
             List<MachineModel> list = new List<MachineModel>();
 
             lock (CONN_LOCK)
@@ -209,8 +246,10 @@ namespace ProjectSCAM.Models.Logic
                     NpgsqlDataReader dr = command.ExecuteReader();
                     while (dr.Read())
                     {
-                        MachineModel machine = new MachineModel((int)dr[0],
-                            dr[1].ToString().Trim(), dr[2].ToString().Trim());
+                        MachineModel machine = new MachineModel((int)dr[0], dr[1].ToString().Trim(), dr[2].ToString().Trim(), (int)dr[3],
+                            dr[4].ToString().Trim(), dr[5].ToString().Trim(), dr[6].ToString().Trim(), dr[7].ToString().Trim(), dr[8].ToString().Trim(), dr[9].ToString().Trim(),
+                            dr[10].ToString().Trim(), dr[11].ToString().Trim(), dr[12].ToString().Trim(), dr[13].ToString().Trim(), dr[14].ToString().Trim(), dr[15].ToString().Trim(),
+                            dr[16].ToString().Trim(), dr[17].ToString().Trim(), dr[18].ToString().Trim(), dr[19].ToString().Trim(), dr[20].ToString().Trim(), dr[21].ToString().Trim());
                         list.Add(machine);
                     }
                 }
@@ -614,9 +653,11 @@ namespace ProjectSCAM.Models.Logic
         public IList<AlarmModel> RetrieveAlarms(string append)
         {
             string query = "SELECT Alarms.alarmid, Alarms.timestamp, Alarms.stopreason, Alarms.handledby, " +
-                "Alarms.batch, StopReasons.actionrequired, StopReasons.stopdescription, Users.firstname, Users.lastname " +
+                "Alarms.batch, StopReasons.actionrequired, StopReasons.stopdescription, Users.firstname, " +
+                "Users.lastname, Batches.machine " +
                 "FROM Alarms LEFT JOIN StopReasons ON Alarms.stopreason = StopReasons.stopid " +
-                "LEFT JOIN Users ON Alarms.handledby = Users.userid" + append;
+                "LEFT JOIN Users ON Alarms.handledby = Users.userid " +
+                "LEFT JOIN Batches ON Alarms.batch = Batches.batchid" + append;
 
             List<AlarmModel> list = new List<AlarmModel>();
 
@@ -633,21 +674,21 @@ namespace ProjectSCAM.Models.Logic
                         if (!Convert.IsDBNull(dr[3]))
                         {
                             AlarmModel alarm = new AlarmModel((int)dr[0], dr[1].ToString().Trim(), (int)dr[2],
-                              (int)dr[3], (int)dr[4], (bool)dr[5], dr[6].ToString().Trim(),
+                              (int)dr[3], (int)dr[4], (int)dr[9], (bool)dr[5], dr[6].ToString().Trim(),
                                 dr[7].ToString().Trim() + " " + dr[8].ToString().Trim());
                             list.Add(alarm);
                         }
                         else
                         {
                             AlarmModel alarm = new AlarmModel((int)dr[0], dr[1].ToString().Trim(), (int)dr[2],
-                               null, (int)dr[4], (bool)dr[5], dr[6].ToString().Trim(), null);
+                               null, (int)dr[4], (int)dr[9], (bool)dr[5], dr[6].ToString().Trim(), null);
                             list.Add(alarm);
                         }
                     }
                 }
                 catch (NpgsqlException ex)
                 {
-                    return null;
+                    throw ex;
                 }
                 finally
                 {

@@ -20,17 +20,17 @@ namespace ProjectSCAM.Models.Logic
 
         public void InitConnection(string ip)
         {
-            //string ip = "opc.tcp://127.0.0.1:4840";
-            //string ip2 = "opc.tcp://10.112.254.69:4840";
-            System.Diagnostics.Debug.WriteLine(ip);
+            foreach(AlarmModel alarm in Singleton.Instance.DBManager.RetrieveUnhandledAlarms(GetMachineId(ip))) {
+                AlarmManager.ActiveAlarms.Add(alarm);
+            }
+            OpcClient c = new OpcClient(ip,GetMachine(ip));
             if (OpcConnections.ContainsKey(ip))
             {
-                OpcClient c = new OpcClient(ip);
                 OpcConnections[ip] = c;
+                AddEventHandler(c);
             }
             else
             {
-                OpcClient c = new OpcClient(ip);
                 OpcConnections.Add(ip, c);
                 AddEventHandler(c);
             }
@@ -47,26 +47,36 @@ namespace ProjectSCAM.Models.Logic
                 //proceed if batch was completed successfully
                 if (opc.StateCurrent == 17) {
                     DateTime end = DateTime.Now;
-                    OEE oee = new OEE((int)opc.AcceptableProducts, (int)opc.DefectProducts, opc.Start, end, opc.Recipe);
-
+                    OEE oee = new OEE((int)opc.AcceptableProducts, (int)opc.DefectProducts, opc.Start, end, Singleton.Instance.DBManager.RetrieveMaxSpeed(opc.Recipe));
+                    System.Diagnostics.Debug.WriteLine(opc.Start);
                     Singleton.Instance.DBManager.RegisterBatch((int)opc.AcceptableProducts, (int)opc.DefectProducts,
                         opc.Start.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.AddYears(10).ToString("MM/dd/yyyy"), true,
                         oee.CalculatePerformance(), oee.CalculateQuality(), oee.CalculateAvailability(),
                         (int)opc.MachSpeed,
-                        3, GetMachineId(opc.Ip), bvc.TemperatureValues, bvc.HumidityValues, bvc.VibrationValues);
-                    opc.ClearValues();
+                        3, GetMachineId(opc.Ip), opc.BatchValues.TemperatureValues, opc.BatchValues.HumidityValues, opc.BatchValues.VibrationValues);
+                    opc.Producing = false;
                 }
             }
-            if(e.PropertyName.Equals("StopReasonId") && AlarmManager.ActiveAlarms.Count == 0 && opc.StateCurrent != 4 && opc.StopReasonId != 0 && opc.AmountToProduce != 0) {
+            if(opc.Producing && e.PropertyName.Equals("StopReasonId") && AlarmManager.ActiveAlarms.Count == 0 && opc.StateCurrent != 4 && opc.StopReasonId != 0 && opc.AmountToProduce != 0) {
                 AlarmModel alarm = Singleton.Instance.DBManager.RegisterBatchAndAlarm((int)opc.AcceptableProducts, (int)opc.DefectProducts,
                         opc.Start.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.AddYears(10).ToString("MM/dd/yyyy"), false, 1, 1, 1,
                         (int)opc.MachSpeed,
-                        3, GetMachineId(opc.Ip), bvc.TemperatureValues, bvc.HumidityValues, bvc.VibrationValues,DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"),(int)opc.StopReasonId);
+                        3, GetMachineId(opc.Ip), opc.BatchValues.TemperatureValues, opc.BatchValues.HumidityValues, opc.BatchValues.VibrationValues,DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"),(int)opc.StopReasonId);
                 alarm.MachineId = GetMachineId(opc.Ip);
                 AlarmManager.ActiveAlarms.Add(alarm);
                 opc.ResetMachine();
+                opc.Producing = false;
 
             }
+        }
+        private MachineModel GetMachine(string ip) {
+            MachineModel machine = new MachineModel();
+            foreach (MachineModel m in Singleton.Instance.DBManager.RetrieveMachines()) {
+                if (m.Ip.Equals(ip)) {
+                    machine = m;
+                }
+            }
+            return machine;
         }
 
         private int GetMachineId(string ip)
@@ -97,6 +107,7 @@ namespace ProjectSCAM.Models.Logic
                             BatchQueueModel bqm = Singleton.Instance.DBManager.RetrieveFromBatchQueue()[0];
                             Singleton.Instance.DBManager.RemoveFromBatchQueue(bqm.Id);
                             opc.StartMachine(10, bqm.BeerId, bqm.Amount, bqm.Speed);
+                            
                         }
                         break;
                     case "stop":

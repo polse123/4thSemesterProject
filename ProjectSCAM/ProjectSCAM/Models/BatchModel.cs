@@ -49,6 +49,7 @@ namespace ProjectSCAM.Models
         [Required]
         [DefaultValue(0)]
         public int BeerId { get; set; }
+
         [Required]
         [DefaultValue(1)]
         public int Machine { get; set; }
@@ -98,6 +99,9 @@ namespace ProjectSCAM.Models
         public static BatchModel Read(int id)
         {
             return Singleton.Instance.DBManager.RetrieveBatch(id);
+        }
+        public void CreateBatchReport() {
+            Singleton.Instance.CreateBatchReport(Id, BeerId, AcceptableProducts, DefectProducts, Values);
         }
 
         public void getValues()

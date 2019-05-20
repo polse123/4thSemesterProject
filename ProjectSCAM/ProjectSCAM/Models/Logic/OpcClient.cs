@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectSCAM.Models.Logic;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
@@ -32,16 +33,22 @@ namespace ProjectSCAM.Models
         //private double beerType;
         private double maintenanceTrigger = 0;
         private double maintenanceCounter;
+        public bool Producing { get; set; }
 
         private Session session;
         public event PropertyChangedEventHandler PropertyChanged;
         public string Ip { get; set; }
         public int Recipe { get; set; }
+        public BatchValueCollection BatchValues;
+        public MachineModel Machine { get; set; }
 
         //Constructor with OPC connect and CreateSubscription
-        public OpcClient(string ip)
+        public OpcClient(string ip,MachineModel m)
         {
+            Machine = m;
+            BatchValues = new BatchValueCollection();
             Ip = ip;
+            Producing = false;
             Connect();
             if (session.ConnectionStatus != ServerConnectionStatus.Disconnected)
             {
@@ -77,24 +84,24 @@ namespace ProjectSCAM.Models
         public void CreateSubscription()
         {
             Subscription s;
-            NodeId amountNode = new NodeId("::Program:Cube.Admin.ProdProcessedCount", 6);
-            NodeId stateNode = new NodeId("::Program:Cube.Status.StateCurrent", 6);
-            NodeId defectNode = new NodeId("::Program:Cube.Admin.ProdDefectiveCount", 6);
-            NodeId acceptableNode = new NodeId("::Program:product.good", 6);
-            NodeId amountToProduceNode = new NodeId("::Program:product.produce_amount", 6);
-            NodeId machSpeedNode = new NodeId("::Program:Cube.Status.MachSpeed", 6);
-            NodeId tempNode = new NodeId("::Program:Cube.Status.Parameter[3].Value", 6);
-            NodeId humidityNode = new NodeId("::Program:Cube.Status.Parameter[2].Value", 6);
-            NodeId vibrationNode = new NodeId("::Program:Cube.Status.Parameter[4].Value", 6);
-            NodeId stopReasonNode = new NodeId("::Program:Cube.Admin.StopReason.ID", 6);
-            NodeId bacthIdNode = new NodeId("::Program:Cube.Status.Parameter[0].Value", 6);
-            NodeId barleyNode = new NodeId("::Program:Inventory.Barley", 6);
-            NodeId hopsNode = new NodeId("::Program:Inventory.Hops", 6);
-            NodeId maltNode = new NodeId("::Program:Inventory.Malt", 6);
-            NodeId wheatNode = new NodeId("::Program:Inventory.Wheat", 6);
-            NodeId yeastNode = new NodeId("::Program:Inventory.Yeast", 6);
-            NodeId maintenanceTriggerNode = new NodeId("::Program:Maintenance.Trigger", 6);
-            NodeId maintenanceCounterNode = new NodeId("::Program:Maintenance.Counter", 6);
+            NodeId amountNode = new NodeId(Machine.AmountNode, (ushort)Machine.NameSpaceIndex);
+            NodeId stateNode = new NodeId(Machine.StateNode, (ushort)Machine.NameSpaceIndex);
+            NodeId defectNode = new NodeId(Machine.DefectNode, (ushort)Machine.NameSpaceIndex);
+            NodeId acceptableNode = new NodeId(Machine.AcceptableNode, (ushort)Machine.NameSpaceIndex);
+            NodeId amountToProduceNode = new NodeId(Machine.AmountToProduceNode, (ushort)Machine.NameSpaceIndex);
+            NodeId machSpeedNode = new NodeId(Machine.MachSpeedNode, (ushort)Machine.NameSpaceIndex);
+            NodeId tempNode = new NodeId(Machine.TemperatureNode, (ushort)Machine.NameSpaceIndex);
+            NodeId humidityNode = new NodeId(Machine.HumidityNode, (ushort)Machine.NameSpaceIndex);
+            NodeId vibrationNode = new NodeId(Machine.VibrationNode, (ushort)Machine.NameSpaceIndex);
+            NodeId stopReasonNode = new NodeId(Machine.StopreasonNode, (ushort)Machine.NameSpaceIndex);
+            NodeId bacthIdNode = new NodeId(Machine.BatchIdNode, (ushort)Machine.NameSpaceIndex);
+            NodeId barleyNode = new NodeId(Machine.BarleyNode, (ushort)Machine.NameSpaceIndex);
+            NodeId hopsNode = new NodeId(Machine.HopsNode, (ushort)Machine.NameSpaceIndex);
+            NodeId maltNode = new NodeId(Machine.MaltNode, (ushort)Machine.NameSpaceIndex);
+            NodeId wheatNode = new NodeId(Machine.WheatNode, (ushort)Machine.NameSpaceIndex);
+            NodeId yeastNode = new NodeId(Machine.YeastNode, (ushort)Machine.NameSpaceIndex);
+            NodeId maintenanceTriggerNode = new NodeId(Machine.MaintenanceTriggerNode, (ushort)Machine.NameSpaceIndex);
+            NodeId maintenanceCounterNode = new NodeId(Machine.MaintenanceCounterNode, (ushort)Machine.NameSpaceIndex);
 
             // list of monitored items
             List<MonitoredItem> monitoredItems = new List<MonitoredItem>();
@@ -171,6 +178,8 @@ namespace ProjectSCAM.Models
                     //  temperature
                     case "::Program:Cube.Status.Parameter[3].Value":
                         TempCurrent = double.Parse((dc.Value.WrappedValue.ToFloat().ToString()));
+                        BatchValues.TemperatureValues.Add(new KeyValuePair<string, double>
+                            (DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), TempCurrent));
                         break;
                     // defect products processed
                     case "::Program:Cube.Admin.ProdDefectiveCount":
@@ -191,10 +200,14 @@ namespace ProjectSCAM.Models
                     //relative humidity
                     case "::Program:Cube.Status.Parameter[2].Value":
                         HumidityCurrent = double.Parse((dc.Value.WrappedValue.ToFloat().ToString()));
+                        BatchValues.HumidityValues.Add(new KeyValuePair<string, double>
+                            (DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), HumidityCurrent));
                         break;
                     //vibration
                     case "::Program:Cube.Status.Parameter[4].Value":
                         VibrationCurrent = double.Parse((dc.Value.WrappedValue.ToFloat().ToString()));
+                        BatchValues.VibrationValues.Add(new KeyValuePair<string, double>
+                            (DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), VibrationCurrent));
                         break;
                     //stop reason id  StopReasonId
                     case "::Program:Cube.Admin.StopReason.ID":
@@ -250,6 +263,7 @@ namespace ProjectSCAM.Models
             VibrationCurrent = 0;
             StopReasonId = 0;
             BatchId = 0;
+            BatchValues = new BatchValueCollection();
             
         }
 
@@ -342,6 +356,14 @@ namespace ProjectSCAM.Models
         {
             if (!isProcessRunning)
             {
+                float speed;
+                float recipeMaxSpeed = Singleton.Instance.DBManager.RetrieveMaxSpeed((int)productType);
+                if(machineSpeed > recipeMaxSpeed) {
+                    speed = recipeMaxSpeed;
+                } else {
+                    speed = machineSpeed;
+                }
+                Producing = true;
                 isProcessRunning = true;
                 Start = DateTime.Now;
                 Recipe = (int)productType;
@@ -366,7 +388,7 @@ namespace ProjectSCAM.Models
                     Attributes.Value, CreateDataValue(amountToProduce)));
                 // machine speed
                 nodesToWrite.Add(CreateWriteValue("::Program:Cube.Command.MachSpeed", 6,
-                    Attributes.Value, CreateDataValue(machineSpeed)));
+                    Attributes.Value, CreateDataValue(speed)));
                 nodesToWrite.Add(CreateWriteValue("::Program:Cube.Command.CntrlCmd", 6, Attributes.Value, start));
                 nodesToWrite.Add(CreateWriteValue("::Program:Cube.Command.CmdChangeRequest", 6, Attributes.Value,
                     changeRequest));

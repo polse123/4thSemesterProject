@@ -1,4 +1,6 @@
-﻿DROP TABLE IF EXISTS alarms;
+﻿DROP TABLE IF EXISTS NodeSets;
+DROP TABLE IF EXISTS Nodes;
+DROP TABLE IF EXISTS alarms;
 DROP TABLE IF EXISTS beers;
 DROP TABLE IF EXISTS vibrationvalues;
 DROP TABLE IF EXISTS humidityvalues;
@@ -37,7 +39,26 @@ CREATE TABLE recipes (
 CREATE TABLE machines (
 	machineid SERIAL PRIMARY KEY,
 	ipaddress VARCHAR(40) NOT NULL UNIQUE,
-	description VARCHAR(256)
+	description VARCHAR(256),
+	namespaceindex INT NOT NULL,
+	amounturl VARCHAR(64) NOT NULL,
+	stateurl VARCHAR(64) NOT NULL,
+	defecturl VARCHAR(64) NOT NULL,
+	acceptableurl VARCHAR(64) NOT NULL,
+	amounttoproduceurl VARCHAR(64) NOT NULL,
+	machspeedurl VARCHAR(64) NOT NULL,
+	temperatureurl VARCHAR(64) NOT NULL,
+	humidityurl VARCHAR(64) NOT NULL,
+	vibrationurl VARCHAR(64) NOT NULL,
+	stopreasonurl VARCHAR(64) NOT NULL,
+	batchidurl VARCHAR(64) NOT NULL,
+	barleyurl VARCHAR(64) NOT NULL,
+	hopsurl VARCHAR(64) NOT NULL,
+	malturl VARCHAR(64) NOT NULL,
+	wheaturl VARCHAR(64) NOT NULL,
+	yeasturl VARCHAR(64) NOT NULL,
+	maintenancetriggerurl VARCHAR(64) NOT NULL,
+	maintenancecounterurl VARCHAR(64) NOT NULL
 );
 
 CREATE TABLE users (
@@ -132,6 +153,8 @@ CREATE TABLE alarms (
 	FOREIGN KEY(batch) REFERENCES batches(batchid) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+/* Base data */
+
 INSERT INTO usertypes VALUES(0, 'Admin');
 INSERT INTO usertypes VALUES(1, 'Production Manager');
 
@@ -148,16 +171,55 @@ INSERT INTO recipes VALUES(3, 200, 'Stout', 3, 4, 6, 1, 2);
 INSERT INTO recipes VALUES(4, 100, 'Ale', 4, 6, 2, 2, 8);
 INSERT INTO recipes VALUES(5, 125, 'Alcohol Free', 1, 1, 4, 5, 0);
 
-/* Test data */
+/* Start data */
 
-INSERT INTO machines(ipaddress, description) VALUES('opc.tcp://10.112.254.69:4840', 'A physical simulation');
-INSERT INTO machines(ipaddress, description) VALUES('opc.tcp://127.0.0.1:4840', 'A virtual simulation');
-INSERT INTO machines(ipaddress, description) VALUES('test', null);
+INSERT INTO machines(ipaddress, description, namespaceindex,
+	amounturl, stateurl, defecturl, acceptableurl, amounttoproduceurl, machspeedurl,
+	temperatureurl, humidityurl, vibrationurl, stopreasonurl, batchidurl, barleyurl,
+	hopsurl, malturl, wheaturl, yeasturl, maintenancetriggerurl, maintenancecounterurl
+	)
+	VALUES('opc.tcp://10.112.254.69:4840', 'A physical simulation', 6,
+	'::Program:Cube.Admin.ProdProcessedCount', '::Program:Cube.Status.StateCurrent',
+	'::Program:Cube.Admin.ProdDefectiveCount', '::Program:product.good',
+	'::Program:product.produce_amount', '::Program:Cube.Status.MachSpeed',
+	'::Program:Cube.Status.Parameter[3].Value', '::Program:Cube.Status.Parameter[2].Value',
+	'::Program:Cube.Status.Parameter[4].Value', '::Program:Cube.Admin.StopReason.ID',
+	'::Program:Cube.Status.Parameter[0].Value', '::Program:Inventory.Barley',
+	'::Program:Inventory.Hops', '::Program:Inventory.Malt',
+	'::Program:Inventory.Wheat', '::Program:Inventory.Yeast',
+	'::Program:Maintenance.Trigger', '::Program:Maintenance.Counter'
+);
+INSERT INTO machines(ipaddress, description, namespaceindex,
+	amounturl, stateurl, defecturl, acceptableurl, amounttoproduceurl, machspeedurl,
+	temperatureurl, humidityurl, vibrationurl, stopreasonurl, batchidurl, barleyurl,
+	hopsurl, malturl, wheaturl, yeasturl, maintenancetriggerurl, maintenancecounterurl
+	)
+	VALUES('opc.tcp://127.0.0.1:4840', 'A virtual simulation', 6,
+	'::Program:Cube.Admin.ProdProcessedCount', '::Program:Cube.Status.StateCurrent',
+	'::Program:Cube.Admin.ProdDefectiveCount', '::Program:product.good',
+	'::Program:product.produce_amount', '::Program:Cube.Status.MachSpeed',
+	'::Program:Cube.Status.Parameter[3].Value', '::Program:Cube.Status.Parameter[2].Value',
+	'::Program:Cube.Status.Parameter[4].Value', '::Program:Cube.Admin.StopReason.ID',
+	'::Program:Cube.Status.Parameter[0].Value', '::Program:Inventory.Barley',
+	'::Program:Inventory.Hops', '::Program:Inventory.Malt',
+	'::Program:Inventory.Wheat', '::Program:Inventory.Yeast',
+	'::Program:Maintenance.Trigger', '::Program:Maintenance.Counter'
+);
 
 INSERT INTO users(username, password, firstname, lastname, email, phonenumber, isactive, usertype)
 	VALUES('admin', 'password', 'Super', 'Admin', 'admin@scam.com', null, true, 0);
 INSERT INTO users(username, password, firstname, lastname, email, phonenumber, isactive, usertype)
-	VALUES('user', 'password', 'That', 'Guy', 'user@scam.com', '00000000', true, 1);
+	VALUES('user', 'password', 'Production', 'Manager', 'user@scam.com', null, true, 1);
+
+/*
+
+timestamp example: '15/02/2019 10:52:12.500' CHAR(23)
+expiration date example: '15/08/2019' CHAR(10)
+
+*/
+
+/* Test data */
+
 INSERT INTO users(username, password, firstname, lastname, email, phonenumber, isactive, usertype)
 	VALUES('username', 'password', 'Test', 'User', 'test@scam.com', '11111111', true, 1);
 
@@ -200,16 +262,7 @@ INSERT INTO beers VALUES(9, true, 2);
 INSERT INTO beers VALUES(10, true, 2);
 
 INSERT INTO alarms(timestamp, stopreason, handledby, batch)
-	VALUES('03/03/2019 13:10:00.000', 10, null, 1);
-INSERT INTO alarms(timestamp, stopreason, handledby, batch)
 	VALUES('03/03/2019 13:11:00.000', 10, 2, 1);
 INSERT INTO alarms(timestamp, stopreason, handledby, batch)
 	VALUES('03/03/2019 13:12:00.000', 12, null, 1);
-
-/*
-
-timestamp example: '15/02/2019 10:52:12.500' CHAR(23)
-expiration date example: '15/08/2019' CHAR(10)
-
-*/
 

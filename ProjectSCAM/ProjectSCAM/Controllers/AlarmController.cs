@@ -7,13 +7,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
-namespace SCAMS.Controllers
-{
+namespace SCAMS.Controllers {
     [AuthorizeUser(Type = "1")]
-    public class AlarmController : Controller
-    {
-        public ActionResult Index()
-        {
+    public class AlarmController : Controller {
+        public ActionResult Index() {
             ViewBag.Machines = Singleton.Instance.DBManager.RetrieveMachines();
             System.Diagnostics.Debug.WriteLine(Singleton.Instance.DBManager.RetrieveMachines()[0].Id);
             if (TempData["alarms"] != null) {
@@ -28,10 +25,10 @@ namespace SCAMS.Controllers
         [HttpGet]
         public string Popup() {
             bool shouldPopup = Singleton.Instance.opcManager.AlarmManager.ActiveAlarms.Count > 0;
-            if(shouldPopup) {
+            if (shouldPopup) {
                 System.Diagnostics.Debug.WriteLine(Singleton.Instance.opcManager.AlarmManager.ActiveAlarms[0].Id);
             }
-            return JsonConvert.SerializeObject(shouldPopup,Formatting.None);
+            return JsonConvert.SerializeObject(shouldPopup, Formatting.None);
         }
         [HttpGet]
         public string GetAlarm() {
@@ -52,7 +49,7 @@ namespace SCAMS.Controllers
                 System.Diagnostics.Debug.WriteLine("in");
                 System.Diagnostics.Debug.WriteLine(intMachineId);
                 list = Singleton.Instance.DBManager.RetrieveAlarmsByMachine(intMachineId);
-            } 
+            }
 
             TempData["alarms"] = list;
             return RedirectToAction("Index");
@@ -68,6 +65,13 @@ namespace SCAMS.Controllers
             } else {
                 TempData["alarms"] = list;
             }
+
+            return RedirectToAction("Index");
+        }
+        [HttpGet]
+        public ActionResult GetAlarmsByUnhandled() {
+
+            TempData["alarms"] = Singleton.Instance.DBManager.RetrieveUnhandledAlarms();
 
             return RedirectToAction("Index");
         }

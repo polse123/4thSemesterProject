@@ -22,18 +22,20 @@ namespace ProjectSCAM.Models
         //used for handling the alarm
         private OpcClient opc;
 
-        public AlarmModel(int id, string timestamp, int stopReasonId, int? handledBy, int batchId, bool actionRequired, string stopReason, string handlerName)
+        public AlarmModel(int id, string timestamp, int stopReasonId, int? handledBy, int batchId, int machineId, bool actionRequired, string stopReason, string handlerName)
         {
             Id = id;
             Timestamp = timestamp ?? throw new ArgumentNullException(nameof(timestamp));
             StopReasonId = stopReasonId;
             HandledBy = handledBy;
             BatchId = batchId;
+            MachineId = machineId;
             ActionRequired = actionRequired;
             StopReason = stopReason ?? throw new ArgumentNullException(nameof(stopReason));
             HandlerName = handlerName;
         }
-        public AlarmModel() {
+        public AlarmModel()
+        {
 
         }
         private void LoadOpc()
@@ -43,6 +45,7 @@ namespace ProjectSCAM.Models
                 MachineModel m;
                 foreach (MachineModel machine in Singleton.Instance.DBManager.RetrieveMachines())
                 {
+                    System.Diagnostics.Debug.WriteLine(machine.Id + "x");
                     if (machine.Id == MachineId)
                     {
                         m = machine;
@@ -53,23 +56,25 @@ namespace ProjectSCAM.Models
         }
         private void UpdateHandler(int userid)
         {
-            Singleton.Instance.DBManager.SetAlarmHandler(userid,Id);
+            Singleton.Instance.DBManager.SetAlarmHandler(userid, Id);
         }
         public bool Handle(int userid)
         {
             LoadOpc();
             if (StopReasonId == 10)
             {
-                if(opc.Barley > 30000 && opc.Wheat > 30000 && opc.Yeast > 30000 && opc.Malt > 30000 && opc.Hops > 30000)
+                if (opc.Barley > 30000 && opc.Wheat > 30000 && opc.Yeast > 30000 && opc.Malt > 30000 && opc.Hops > 30000)
                 {
                     Singleton.Instance.DBManager.SetAlarmHandler(userid, Id);
                     Singleton.Instance.opcManager.AlarmManager.ActiveAlarms.Remove(this);
                     return true;
-                } else
+                }
+                else
                 {
                     return false;
                 }
-            } else if(StopReasonId == 12)
+            }
+            else if (StopReasonId == 12)
             {
                 if (opc.MaintenanceCounter <= (opc.MaintenanceTrigger * 0.8))
                 {
@@ -81,7 +86,8 @@ namespace ProjectSCAM.Models
                 {
                     return false;
                 }
-            } else
+            }
+            else
             {
                 Singleton.Instance.DBManager.SetAlarmHandler(userid, Id);
                 Singleton.Instance.opcManager.AlarmManager.ActiveAlarms.Remove(this);
