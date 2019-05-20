@@ -8,7 +8,7 @@ using System.Linq;
 using System.Web;
 
 namespace ProjectSCAM.Models.Logic {
-    public class BatchReportGenerator {
+    public class BatchReportServiceProvider {
         private ExcelPackage ep;
 
         /// <summary>
