@@ -21,15 +21,13 @@
         <br>
     </div>
     <table class="batchtableclass" id="batchtable">
-        <tbody>
-            <tr>
-                
-            </tr>
-        </tbody>
+        <tbody></tbody>
     </table>
 
 
-    <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+    <div id="temperatureChartContainer" style="height: 270px; width: 100%;"></div>
+    <div id="humidityChartContainer" style="height: 270px; width: 100%;"></div>
+    <div id="vibrationChartContainer" style="height: 270px; width: 100%;"></div>
 </body>
 </html>
 
@@ -38,7 +36,6 @@
     var result;
 
     function drawChartForTemperature() {
-        console.log("lol");
         result = @Html.Raw(ViewBag.Datapoints);
         var dataPoints = [];
         console.log(result);
@@ -48,8 +45,6 @@
 
         for (var i = 0; i < result.Values.TemperatureValues.length; i++) {
             dataPoints.push({ x: new Date(result.Values.TemperatureValues[i].Key), y: result.Values.TemperatureValues[i].Value });
-            console.log(result.Values.TemperatureValues[i].Key);
-            console.log(result.Values.TemperatureValues[i].Value);
             
             if (result.Values.TemperatureValues[min].Value > result.Values.TemperatureValues[i].Value) {
                 min = i;
@@ -57,11 +52,9 @@
             if (result.Values.TemperatureValues[max].Value < result.Values.TemperatureValues[i].Value) {
                 max = i;
             }
-            console.log("min: "+min);
-            console.log("max: "+max);
         }
       
-        var chart = new CanvasJS.Chart("chartContainer", {
+        var chart = new CanvasJS.Chart("temperatureChartContainer", {
             animationEnabled: true,
             title: {
                 text: "Temperature Values"
@@ -73,7 +66,7 @@
                 axisY: {
                     minimum: result.Values.TemperatureValues[min].Value-1,
                     maximum: result.Values.TemperatureValues[max].Value+1,
-                    title: "Number of Sales",
+                    title: "Temperature",
                     titleFontColor: "#4F81BC",
                     suffix: " C"
                 },
@@ -89,6 +82,107 @@
 
     }
     drawChartForTemperature();
+</script>
+<script>
+    var result;
+
+    function drawChartForHumidity() {
+        result = @Html.Raw(ViewBag.Datapoints);
+        var dataPoints = [];
+        console.log(result);
+        var min = 0;
+        var max = 0;
+
+
+        for (var i = 0; i < result.Values.HumidityValues.length; i++) {
+            dataPoints.push({ x: new Date(result.Values.HumidityValues[i].Key), y: result.Values.HumidityValues[i].Value });
+            
+            if (result.Values.HumidityValues[min].Value > result.Values.HumidityValues[i].Value) {
+                min = i;
+            }
+            if (result.Values.HumidityValues[max].Value < result.Values.HumidityValues[i].Value) {
+                max = i;
+            }
+        }
+
+        var chart = new CanvasJS.Chart("humidityChartContainer", {
+            animationEnabled: true,
+            title: {
+                text: "Humidity Measurements"
+            },
+            axisX: {
+                minimum: new Date(result.Values.HumidityValues[0].Key),
+                    maximum: new Date(result.TimestampEnd),
+                },
+                axisY: {
+                    minimum: result.Values.HumidityValues[min].Value-1,
+                    maximum: result.Values.HumidityValues[max].Value+1,
+                    title: "Humidity",
+                    titleFontColor: "#4F81BC",
+                    suffix: " C"
+                },
+                data: [{
+                    indexLabelFontColor: "darkSlateGray",
+                    name: "views",
+                    type: "line",
+                    yValueFormatString: "#,##0.0 ",
+                    dataPoints: dataPoints,
+                }]
+            });
+            chart.render();
+
+    }
+    drawChartForHumidity();
+</script>
+<script>
+    var result;
+
+    function drawChartForVibration() {
+        result = @Html.Raw(ViewBag.Datapoints);
+        var dataPoints = [];
+        var min = 0;
+        var max = 0;
+        
+
+        for (var i = 0; i < result.Values.VibrationValues.length; i++) {
+            dataPoints.push({ x: new Date(result.Values.VibrationValues[i].Key), y: result.Values.VibrationValues[i].Value });
+            
+            if (result.Values.VibrationValues[min].Value > result.Values.VibrationValues[i].Value) {
+                min = i;
+            }
+            if (result.Values.VibrationValues[max].Value < result.Values.VibrationValues[i].Value) {
+                max = i;
+            }
+        }
+      
+        var chart = new CanvasJS.Chart("vibrationChartContainer", {
+            animationEnabled: true,
+            title: {
+                text: "Vibration Measurements"
+            },
+            axisX: {
+                minimum: new Date(result.Values.VibrationValues[0].Key),
+                    maximum: new Date(result.TimestampEnd),
+                },
+                axisY: {
+                    minimum: result.Values.VibrationValues[min].Value-1,
+                    maximum: result.Values.VibrationValues[max].Value+1,
+                    title: "Vibration",
+                    titleFontColor: "#4F81BC",
+                    suffix: " C"
+                },
+                data: [{
+                    indexLabelFontColor: "darkSlateGray",
+                    name: "views",
+                    type: "line",
+                    yValueFormatString: "#,##0.0 ",
+                    dataPoints: dataPoints,
+                }]
+            });
+            chart.render();
+
+    }
+    drawChartForVibration();
 </script>
 
 

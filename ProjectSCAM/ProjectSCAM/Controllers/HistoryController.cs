@@ -32,8 +32,8 @@ namespace SCAMS.Controllers
                 {
                     i = int.Parse(TempData["id"].ToString());
                 }
-                BatchModel array = ServiceSingleton.Instance.DBManager.RetrieveBatch(i);
-                array.Values = ServiceSingleton.Instance.DBManager.RetrieveBatchValues(array.Id);
+                BatchModel array = ServiceSingleton.Instance.DBService.RetrieveBatch(i);
+                array.Values = ServiceSingleton.Instance.DBService.RetrieveBatchValues(array.Id);
 
             ViewBag.DataPoints = JsonConvert.SerializeObject(array, Formatting.None);
             return View();
