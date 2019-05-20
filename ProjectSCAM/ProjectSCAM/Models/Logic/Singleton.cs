@@ -12,8 +12,8 @@ namespace ProjectSCAM.Models.Logic {
         private static readonly Singleton instance = new Singleton();
 
         // server, port, user id, password, database
-        private readonly string[] DB_INFO = {"balarama.db.elephantsql.com",
-            "5432", "ppcrexqw", "HL8HORvW5RUPUlBUcf_PIcZWxjlOoc1F", "ppcrexqw"};
+        private readonly string[] DB_INFO = {"tek-mmmi-db0a.tek.c.sdu.dk",
+            "5432", "si3_2018_group_23", "ear70.doling", "si3_2018_group_23_db"};
 
         // Explicit static constructor to tell C# compiler
         // not to mark type as beforefieldinit
