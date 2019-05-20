@@ -6,9 +6,9 @@ using System.Web;
 
 namespace ProjectSCAM.Models.Logic {
     public sealed class ServiceSingleton {
-        public DBServiceProvider DBManager { get; set; }
-        public OPCServiceProvider opcManager { get; set; }
-        public BatchReportServiceProvider BatchReportGenerator { get; set; }
+        public DBServiceProvider DBService { get; set; }
+        public OPCServiceProvider OPCService { get; set; }
+        public BatchReportServiceProvider BatchReportService { get; set; }
         private static readonly ServiceSingleton instance = new ServiceSingleton();
 
         // server, port, user id, password, database
@@ -23,12 +23,12 @@ namespace ProjectSCAM.Models.Logic {
 
         private ServiceSingleton()
         {
-            DBManager = new DBServiceProvider(DB_INFO[0], DB_INFO[1], DB_INFO[2], DB_INFO[3], DB_INFO[4]);
-            opcManager = new OPCServiceProvider();
-            BatchReportGenerator = new BatchReportServiceProvider();
+            DBService = new DBServiceProvider(DB_INFO[0], DB_INFO[1], DB_INFO[2], DB_INFO[3], DB_INFO[4]);
+            OPCService = new OPCServiceProvider();
+            BatchReportService = new BatchReportServiceProvider();
         }
         public  void CreateBatchReport(float batchId,float productType, int aProduct, int dProduct, BatchValueCollection bv) {
-            BatchReportGenerator.GenerateFile(batchId, productType, aProduct, dProduct, bv);
+            BatchReportService.GenerateFile(batchId, productType, aProduct, dProduct, bv);
         }
 
         public static ServiceSingleton Instance

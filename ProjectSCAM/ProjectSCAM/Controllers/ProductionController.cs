@@ -17,8 +17,8 @@ namespace SCAMS.Controllers
             } else {
                 ViewBag.statusMessage = "";
             }
-            IList<RecipeModel> r = ServiceSingleton.Instance.DBManager.RetrieveRecipes();
-            IList<BatchQueueModel> batchqueue = ServiceSingleton.Instance.DBManager.RetrieveFromBatchQueue();
+            IList<RecipeModel> r = ServiceSingleton.Instance.DBService.RetrieveRecipes();
+            IList<BatchQueueModel> batchqueue = ServiceSingleton.Instance.DBService.RetrieveFromBatchQueue();
             ViewBag.recipes = r;
             ViewBag.batchqueue = batchqueue;
             return View();
@@ -32,7 +32,7 @@ namespace SCAMS.Controllers
                 }
             }
             if (ModelState.IsValid) {
-                ServiceSingleton.Instance.DBManager.RegisterIntoBatchQueue(bqm.Id,bqm.Priority,bqm.Amount,bqm.Speed,bqm.BeerId);
+                ServiceSingleton.Instance.DBService.RegisterIntoBatchQueue(bqm.Id,bqm.Priority,bqm.Amount,bqm.Speed,bqm.BeerId);
                 TempData["statusMessage"] = "Batch inserted";
                 return RedirectToAction("Index");
             } else {

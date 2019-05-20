@@ -25,8 +25,8 @@ namespace SCAMS.Controllers
             }
             else
             {
-                BatchModel array = ServiceSingleton.Instance.DBManager.RetrieveBatch(1);
-                array.Values = ServiceSingleton.Instance.DBManager.RetrieveBatchValues(array.Id);
+                BatchModel array = ServiceSingleton.Instance.DBService.RetrieveBatch(1);
+                array.Values = ServiceSingleton.Instance.DBService.RetrieveBatchValues(array.Id);
 
             ViewBag.DataPoints = JsonConvert.SerializeObject(array, Formatting.None);
             return View();
@@ -41,7 +41,7 @@ namespace SCAMS.Controllers
             bool add = int.TryParse(id, out intProductId);
             if (add)
             {
-                batch = ServiceSingleton.Instance.DBManager.RetrieveBatch(intProductId);
+                batch = ServiceSingleton.Instance.DBService.RetrieveBatch(intProductId);
             }
 
             TempData["batch"] = batch;

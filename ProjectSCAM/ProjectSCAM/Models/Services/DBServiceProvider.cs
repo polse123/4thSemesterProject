@@ -90,8 +90,8 @@ namespace ProjectSCAM.Models.Logic
         private readonly string VERY_ILLEGAL = "--";
 
         /// <summary>
-        /// Constructor for the DBManager.
-        /// A QueryExecuter is created inside the DBManager and connection is initialized.
+        /// Constructor for the DBService.
+        /// A QueryExecuter is created inside the DBService and connection is initialized.
         /// </summary>
         /// <param name="server"></param>
         /// <param name="port"></param>
@@ -104,7 +104,7 @@ namespace ProjectSCAM.Models.Logic
         }
 
         /// <summary>
-        /// Constructor for the DBManager.
+        /// Constructor for the DBService.
         /// An already initialized QueryExecuter is provided.
         /// </summary>
         /// <param name="exe"></param>

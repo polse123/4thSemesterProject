@@ -26,7 +26,7 @@ namespace MvcMovie.Controllers
             }
 
             //return View(msvm);
-            ViewBag.Machines = ServiceSingleton.Instance.DBManager.RetrieveMachines();
+            ViewBag.Machines = ServiceSingleton.Instance.DBService.RetrieveMachines();
             ViewBag.Machine = new MachineModel();
             return View();
         }
@@ -45,7 +45,7 @@ namespace MvcMovie.Controllers
             {
                 // NEEDS UPDATING
                 /*
-                Singleton.Instance.DBManager.RegisterMachine(m.Ip, m.Description);
+                Singleton.Instance.DBService.RegisterMachine(m.Ip, m.Description);
                 TempData["statusMessage"] = "Machine registered";
                 */
                 return RedirectToAction("Index");
@@ -58,7 +58,7 @@ namespace MvcMovie.Controllers
         public void SetMachine()
         {
             Session["SelectedMachine"] = Request["ip"];
-            ServiceSingleton.Instance.opcManager.InitConnection(Session["SelectedMachine"].ToString());
+            ServiceSingleton.Instance.OPCService.InitConnection(Session["SelectedMachine"].ToString());
         }
     }
 }

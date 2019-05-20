@@ -44,7 +44,7 @@ namespace ProjectSCAM.Models
         }
         public void Update()
         {
-            ServiceSingleton.Instance.DBManager.EditPriority(Id, Priority);
+            ServiceSingleton.Instance.DBService.EditPriority(Id, Priority);
         }
     }
 }

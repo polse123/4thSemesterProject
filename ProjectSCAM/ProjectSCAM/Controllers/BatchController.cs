@@ -22,7 +22,7 @@ namespace SCAMS.Controllers
             }
             else
             {
-                IList<BatchModel> list = ServiceSingleton.Instance.DBManager.RetrieveBatches(false);
+                IList<BatchModel> list = ServiceSingleton.Instance.DBService.RetrieveBatches(false);
                 return View(list);
             }
 
@@ -35,7 +35,7 @@ namespace SCAMS.Controllers
             bool add = int.TryParse(id, out intId);
             if (add)
             {
-                BatchModel m = ServiceSingleton.Instance.DBManager.RetrieveBatch(intId);
+                BatchModel m = ServiceSingleton.Instance.DBService.RetrieveBatch(intId);
 
                 if (m != null)
                 {
@@ -55,7 +55,7 @@ namespace SCAMS.Controllers
             bool add = int.TryParse(latest, out intLatest);
             if (add)
             {
-                list = ServiceSingleton.Instance.DBManager.RetrieveBatchesByAmount(intLatest, false);
+                list = ServiceSingleton.Instance.DBService.RetrieveBatchesByAmount(intLatest, false);
             }
 
             TempData["batches"] = list;
@@ -70,7 +70,7 @@ namespace SCAMS.Controllers
                 string month = date.Substring(0, 2);
                 string year = date.Substring(3, 4);
                 System.Diagnostics.Debug.WriteLine(month + " - " + year);
-                TempData["batches"] = ServiceSingleton.Instance.DBManager.RetrieveBatchesByMonth(month, year, false);
+                TempData["batches"] = ServiceSingleton.Instance.DBService.RetrieveBatchesByMonth(month, year, false);
             } else
             {
                 TempData["batches"] = list;
@@ -86,7 +86,7 @@ namespace SCAMS.Controllers
             bool add = int.TryParse(machineId, out intMachineId);
             if (add)
             {
-                list = ServiceSingleton.Instance.DBManager.RetrieveBatchesByMachine(intMachineId, false);
+                list = ServiceSingleton.Instance.DBService.RetrieveBatchesByMachine(intMachineId, false);
             }
 
             TempData["batches"] = list;
@@ -100,7 +100,7 @@ namespace SCAMS.Controllers
             bool add = int.TryParse(recipe, out intProductType);
             if (add)
             {
-                list = ServiceSingleton.Instance.DBManager.RetrieveBatchesByRecipe(intProductType,false);
+                list = ServiceSingleton.Instance.DBService.RetrieveBatchesByRecipe(intProductType,false);
             }
 
             TempData["batches"] = list;
@@ -132,8 +132,8 @@ namespace SCAMS.Controllers
             bool create = int.TryParse(id, out intId);
             if(create) {
 
-                BatchModel m = ServiceSingleton.Instance.DBManager.RetrieveBatch(intId);
-                m.Values = ServiceSingleton.Instance.DBManager.RetrieveBatchValues(intId);
+                BatchModel m = ServiceSingleton.Instance.DBService.RetrieveBatch(intId);
+                m.Values = ServiceSingleton.Instance.DBService.RetrieveBatchValues(intId);
                 m.CreateBatchReport();
             }
            

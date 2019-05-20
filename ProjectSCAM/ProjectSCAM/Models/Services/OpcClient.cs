@@ -356,7 +356,7 @@ namespace ProjectSCAM.Models
             if (!isProcessRunning)
             {
                 float speed;
-                float recipeMaxSpeed = ServiceSingleton.Instance.DBManager.RetrieveMaxSpeed((int)productType);
+                float recipeMaxSpeed = ServiceSingleton.Instance.DBService.RetrieveMaxSpeed((int)productType);
                 if(machineSpeed > recipeMaxSpeed) {
                     speed = recipeMaxSpeed;
                 } else {
