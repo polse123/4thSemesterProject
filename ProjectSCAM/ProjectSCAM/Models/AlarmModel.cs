@@ -43,20 +43,20 @@ namespace ProjectSCAM.Models
             if (opc == null)
             {
                 MachineModel m;
-                foreach (MachineModel machine in ServiceSingleton.Instance.DBManager.RetrieveMachines())
+                foreach (MachineModel machine in ServiceSingleton.Instance.DBService.RetrieveMachines())
                 {
                     System.Diagnostics.Debug.WriteLine(machine.Id + "x");
                     if (machine.Id == MachineId)
                     {
                         m = machine;
-                        opc = ServiceSingleton.Instance.opcManager.GetOpcConnection(m.Ip);
+                        opc = ServiceSingleton.Instance.OPCService.GetOpcConnection(m.Ip);
                     }
                 }
             }
         }
         private void UpdateHandler(int userid)
         {
-            ServiceSingleton.Instance.DBManager.SetAlarmHandler(userid, Id);
+            ServiceSingleton.Instance.DBService.SetAlarmHandler(userid, Id);
         }
         public bool Handle(int userid)
         {
@@ -65,8 +65,8 @@ namespace ProjectSCAM.Models
             {
                 if (opc.Barley > 30000 && opc.Wheat > 30000 && opc.Yeast > 30000 && opc.Malt > 30000 && opc.Hops > 30000)
                 {
-                    ServiceSingleton.Instance.DBManager.SetAlarmHandler(userid, Id);
-                    ServiceSingleton.Instance.opcManager.AlarmManager.ActiveAlarms.Remove(this);
+                    ServiceSingleton.Instance.DBService.SetAlarmHandler(userid, Id);
+                    ServiceSingleton.Instance.OPCService.AlarmManager.ActiveAlarms.Remove(this);
                     return true;
                 }
                 else
@@ -78,8 +78,8 @@ namespace ProjectSCAM.Models
             {
                 if (opc.MaintenanceCounter <= (opc.MaintenanceTrigger * 0.8))
                 {
-                    ServiceSingleton.Instance.DBManager.SetAlarmHandler(userid, Id);
-                    ServiceSingleton.Instance.opcManager.AlarmManager.ActiveAlarms.Remove(this);
+                    ServiceSingleton.Instance.DBService.SetAlarmHandler(userid, Id);
+                    ServiceSingleton.Instance.OPCService.AlarmManager.ActiveAlarms.Remove(this);
                     return true;
                 }
                 else
@@ -89,8 +89,8 @@ namespace ProjectSCAM.Models
             }
             else
             {
-                ServiceSingleton.Instance.DBManager.SetAlarmHandler(userid, Id);
-                ServiceSingleton.Instance.opcManager.AlarmManager.ActiveAlarms.Remove(this);
+                ServiceSingleton.Instance.DBService.SetAlarmHandler(userid, Id);
+                ServiceSingleton.Instance.OPCService.AlarmManager.ActiveAlarms.Remove(this);
                 return true;
             }
         }

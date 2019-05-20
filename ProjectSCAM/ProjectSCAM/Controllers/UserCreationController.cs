@@ -22,7 +22,7 @@ namespace SCAMS.Controllers
             {
                 ViewBag.statusMessage = "";
             }
-            ViewBag.UserTypes = ServiceSingleton.Instance.DBManager.RetrieveUserTypes();
+            ViewBag.UserTypes = ServiceSingleton.Instance.DBService.RetrieveUserTypes();
             return View();
         }
 
@@ -32,7 +32,7 @@ namespace SCAMS.Controllers
             bool success = false;
             if (ModelState.IsValid)
             {
-                success = ServiceSingleton.Instance.DBManager.RegisterUser(m.Username, m.Password,
+                success = ServiceSingleton.Instance.DBService.RegisterUser(m.Username, m.Password,
                        m.FirstName, m.LastName, m.Email, m.PhoneNumber, m.UserType);
             }
             if (success)

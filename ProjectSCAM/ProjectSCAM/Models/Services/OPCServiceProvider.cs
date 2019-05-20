@@ -18,7 +18,7 @@ namespace ProjectSCAM.Models.Logic {
 
         public void InitConnection(string ip)
         {
-            foreach (AlarmModel alarm in ServiceSingleton.Instance.DBManager.RetrieveUnhandledAlarms(GetMachineId(ip)))
+            foreach (AlarmModel alarm in ServiceSingleton.Instance.DBService.RetrieveUnhandledAlarms(GetMachineId(ip)))
             {
                 AlarmManager.ActiveAlarms.Add(alarm);
             }
@@ -50,8 +50,8 @@ namespace ProjectSCAM.Models.Logic {
                 {
                     opc.AddValues();
                     DateTime end = DateTime.Now;
-                    OEE oee = new OEE((int)opc.AcceptableProducts, (int)opc.DefectProducts, opc.Start, end, ServiceSingleton.Instance.DBManager.RetrieveMaxSpeed(opc.Recipe));
-                    ServiceSingleton.Instance.DBManager.RegisterBatch((int)opc.AcceptableProducts, (int)opc.DefectProducts,
+                    OEE oee = new OEE((int)opc.AcceptableProducts, (int)opc.DefectProducts, opc.Start, end, ServiceSingleton.Instance.DBService.RetrieveMaxSpeed(opc.Recipe));
+                    ServiceSingleton.Instance.DBService.RegisterBatch((int)opc.AcceptableProducts, (int)opc.DefectProducts,
                         opc.Start.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.AddYears(10).ToString("MM/dd/yyyy"), true,
                         oee.CalculatePerformance(), oee.CalculateQuality(), oee.CalculateAvailability(),
                         (int)opc.MachSpeed,
@@ -62,7 +62,7 @@ namespace ProjectSCAM.Models.Logic {
             if (e.PropertyName.Equals("StopReasonId") && AlarmManager.ActiveAlarms.Count == 0 && opc.StateCurrent != 4 && opc.StopReasonId != 0 && opc.AmountToProduce != 0)
             {
                 opc.AddValues();
-                AlarmModel alarm = ServiceSingleton.Instance.DBManager.RegisterBatchAndAlarm((int)opc.AcceptableProducts, (int)opc.DefectProducts,
+                AlarmModel alarm = ServiceSingleton.Instance.DBService.RegisterBatchAndAlarm((int)opc.AcceptableProducts, (int)opc.DefectProducts,
                         opc.Start.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.AddYears(10).ToString("MM/dd/yyyy"), false, 1, 1, 1,
                         (int)opc.MachSpeed,
                         3, GetMachineId(opc.Ip), opc.BatchValues.TemperatureValues, opc.BatchValues.HumidityValues, opc.BatchValues.VibrationValues, DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), (int)opc.StopReasonId);
@@ -76,7 +76,7 @@ namespace ProjectSCAM.Models.Logic {
         private MachineModel GetMachine(string ip)
         {
             MachineModel machine = new MachineModel();
-            foreach (MachineModel m in ServiceSingleton.Instance.DBManager.RetrieveMachines())
+            foreach (MachineModel m in ServiceSingleton.Instance.DBService.RetrieveMachines())
             {
                 if (m.Ip.Equals(ip))
                 {
@@ -88,7 +88,7 @@ namespace ProjectSCAM.Models.Logic {
 
         private int GetMachineId(string ip)
         {
-            IList<MachineModel> machines = ServiceSingleton.Instance.DBManager.RetrieveMachines();
+            IList<MachineModel> machines = ServiceSingleton.Instance.DBService.RetrieveMachines();
             int i = 0;
             foreach (MachineModel m in machines)
             {
@@ -109,10 +109,10 @@ namespace ProjectSCAM.Models.Logic {
                 switch (command)
                 {
                     case "start":
-                        if (ServiceSingleton.Instance.DBManager.RetrieveFromBatchQueue().Count > 0 && opc.StateCurrent == 4)
+                        if (ServiceSingleton.Instance.DBService.RetrieveFromBatchQueue().Count > 0 && opc.StateCurrent == 4)
                         {
-                            BatchQueueModel bqm = ServiceSingleton.Instance.DBManager.RetrieveFromBatchQueue()[0];
-                            ServiceSingleton.Instance.DBManager.RemoveFromBatchQueue(bqm.Id);
+                            BatchQueueModel bqm = ServiceSingleton.Instance.DBService.RetrieveFromBatchQueue()[0];
+                            ServiceSingleton.Instance.DBService.RemoveFromBatchQueue(bqm.Id);
                             opc.StartMachine(10, bqm.BeerId, bqm.Amount, bqm.Speed);
 
                         }

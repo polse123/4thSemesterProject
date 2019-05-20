@@ -7,11 +7,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
-namespace SCAMS.Controllers
-{
+namespace SCAMS.Controllers {
     [AuthorizeUser(Type = "1")]
-    public class BatchController : Controller
-    {
+    public class BatchController : Controller {
         public ActionResult Index()
         {
             if (TempData["batches"] != null)
@@ -22,7 +20,7 @@ namespace SCAMS.Controllers
             }
             else
             {
-                IList<BatchModel> list = ServiceSingleton.Instance.DBManager.RetrieveBatches(false);
+                IList<BatchModel> list = ServiceSingleton.Instance.DBService.RetrieveBatches(false);
                 return View(list);
             }
 
@@ -35,7 +33,7 @@ namespace SCAMS.Controllers
             bool add = int.TryParse(id, out intId);
             if (add)
             {
-                BatchModel m = ServiceSingleton.Instance.DBManager.RetrieveBatch(intId);
+                BatchModel m = ServiceSingleton.Instance.DBService.RetrieveBatch(intId);
 
                 if (m != null)
                 {
@@ -55,7 +53,7 @@ namespace SCAMS.Controllers
             bool add = int.TryParse(latest, out intLatest);
             if (add)
             {
-                list = ServiceSingleton.Instance.DBManager.RetrieveBatchesByAmount(intLatest, false);
+                list = ServiceSingleton.Instance.DBService.RetrieveBatchesByAmount(intLatest, false);
             }
 
             TempData["batches"] = list;
@@ -65,13 +63,14 @@ namespace SCAMS.Controllers
         public ActionResult GetBatchesByDate(string date)
         {
             IList<BatchModel> list = new List<BatchModel>();
-            if(date.Length == 7)
+            if (date.Length == 7)
             {
                 string month = date.Substring(0, 2);
                 string year = date.Substring(3, 4);
                 System.Diagnostics.Debug.WriteLine(month + " - " + year);
-                TempData["batches"] = ServiceSingleton.Instance.DBManager.RetrieveBatchesByMonth(month, year, false);
-            } else
+                TempData["batches"] = ServiceSingleton.Instance.DBService.RetrieveBatchesByMonth(month, year, false);
+            }
+            else
             {
                 TempData["batches"] = list;
             }
@@ -86,7 +85,7 @@ namespace SCAMS.Controllers
             bool add = int.TryParse(machineId, out intMachineId);
             if (add)
             {
-                list = ServiceSingleton.Instance.DBManager.RetrieveBatchesByMachine(intMachineId, false);
+                list = ServiceSingleton.Instance.DBService.RetrieveBatchesByMachine(intMachineId, false);
             }
 
             TempData["batches"] = list;
@@ -100,7 +99,7 @@ namespace SCAMS.Controllers
             bool add = int.TryParse(recipe, out intProductType);
             if (add)
             {
-                list = ServiceSingleton.Instance.DBManager.RetrieveBatchesByRecipe(intProductType,false);
+                list = ServiceSingleton.Instance.DBService.RetrieveBatchesByRecipe(intProductType, false);
             }
 
             TempData["batches"] = list;
@@ -125,18 +124,22 @@ namespace SCAMS.Controllers
             return RedirectToAction("Index", "History");
         }
         [HttpPost]
-        public void CreateBatchReport(string id) {
-            System.Diagnostics.Debug.WriteLine(id);
+        public void CreateBatchReport(string id)
+        {
             int intId;
-            
-            bool create = int.TryParse(id, out intId);
-            if(create) {
 
-                BatchModel m = ServiceSingleton.Instance.DBManager.RetrieveBatch(intId);
-                m.Values = ServiceSingleton.Instance.DBManager.RetrieveBatchValues(intId);
-                m.CreateBatchReport();
+            bool create = int.TryParse(id, out intId);
+            if (create)
+            {
+                BatchModel m = BatchModel.Read(intId);
+                if (m != null)
+                {
+                    m.GetValues();
+                    m.CreateBatchReport();
+                }
+
             }
-           
+
         }
 
         public ActionResult RecallButton()

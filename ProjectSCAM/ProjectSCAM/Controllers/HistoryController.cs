@@ -27,6 +27,7 @@ namespace SCAMS.Controllers
             }
             else
             {
+
                 if (TempData["id"] != null)
                 {
                     i = int.Parse(TempData["id"].ToString());
@@ -47,7 +48,7 @@ namespace SCAMS.Controllers
             bool add = int.TryParse(id, out intProductId);
             if (add)
             {
-                batch = ServiceSingleton.Instance.DBManager.RetrieveBatch(intProductId);
+                batch = ServiceSingleton.Instance.DBService.RetrieveBatch(intProductId);
             }
 
             TempData["batch"] = batch;
