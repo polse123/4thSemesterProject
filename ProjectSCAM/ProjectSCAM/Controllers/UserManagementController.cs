@@ -13,7 +13,7 @@ namespace SCAMS.Controllers
     {
         public ActionResult Index()
         {
-            IList<UserModel> users = Singleton.Instance.DBManager.RetrieveUsers(true);
+            IList<UserModel> users = ServiceSingleton.Instance.DBManager.RetrieveUsers(true);
             return View(users);
         }
 
@@ -26,7 +26,7 @@ namespace SCAMS.Controllers
             try
             {
                 int.TryParse(value, out int userId);
-                Singleton.Instance.DBManager.MakeUserInactive(userId);
+                ServiceSingleton.Instance.DBManager.MakeUserInactive(userId);
             }
             catch (Exception) { }
             return RedirectToAction("Index");

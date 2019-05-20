@@ -122,7 +122,7 @@
                 $("#produced").text(data.AcceptableProducts);
                 $("#failed").text(data.DefectProducts);
                 $("#speed").text(data.MachSpeed); // add speed node to monitored items in opc
-                $("#type").text(3); // add type node to monitored items in opc
+                $("#type").text(data.BeerId); // add type node to monitored items in opc
                 $("#producing").text(data.AmountToProduce);
             // temp/humidity/vibration
                 $("#temp").text(data.TempCurrent);

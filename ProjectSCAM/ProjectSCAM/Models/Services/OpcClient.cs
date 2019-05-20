@@ -33,12 +33,12 @@ namespace ProjectSCAM.Models
         //private double beerType;
         private double maintenanceTrigger = 0;
         private double maintenanceCounter;
-        public bool Producing { get; set; }
 
         private Session session;
         public event PropertyChangedEventHandler PropertyChanged;
         public string Ip { get; set; }
         public int Recipe { get; set; }
+        public int BeerId { get; set; }
         public BatchValueCollection BatchValues;
         public MachineModel Machine { get; set; }
 
@@ -48,7 +48,6 @@ namespace ProjectSCAM.Models
             Machine = m;
             BatchValues = new BatchValueCollection();
             Ip = ip;
-            Producing = false;
             Connect();
             if (session.ConnectionStatus != ServerConnectionStatus.Disconnected)
             {
@@ -357,13 +356,12 @@ namespace ProjectSCAM.Models
             if (!isProcessRunning)
             {
                 float speed;
-                float recipeMaxSpeed = Singleton.Instance.DBManager.RetrieveMaxSpeed((int)productType);
+                float recipeMaxSpeed = ServiceSingleton.Instance.DBManager.RetrieveMaxSpeed((int)productType);
                 if(machineSpeed > recipeMaxSpeed) {
                     speed = recipeMaxSpeed;
                 } else {
                     speed = machineSpeed;
                 }
-                Producing = true;
                 isProcessRunning = true;
                 Start = DateTime.Now;
                 Recipe = (int)productType;
@@ -394,8 +392,18 @@ namespace ProjectSCAM.Models
                     changeRequest));
 
                 Write(nodesToWrite);
+                AddValues();
                 isProcessRunning = false;
             }
+        }
+        public void AddValues()
+        {
+            BatchValues.TemperatureValues.Add(new KeyValuePair<string, double>(DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"),
+                ReadCurrentTemperature()));
+            BatchValues.HumidityValues.Add(new KeyValuePair<string, double>(DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"),
+                ReadCurrentHumidity()));
+            BatchValues.VibrationValues.Add(new KeyValuePair<string, double>(DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"),
+                ReadCurrentVibration()));
         }
 
         //Write to OPC

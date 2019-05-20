@@ -98,15 +98,15 @@ namespace ProjectSCAM.Models
         }
         public static BatchModel Read(int id)
         {
-            return Singleton.Instance.DBManager.RetrieveBatch(id);
+            return ServiceSingleton.Instance.DBManager.RetrieveBatch(id);
         }
         public void CreateBatchReport() {
-            Singleton.Instance.CreateBatchReport(Id, BeerId, AcceptableProducts, DefectProducts, Values);
+            ServiceSingleton.Instance.CreateBatchReport(Id, BeerId, AcceptableProducts, DefectProducts, Values);
         }
 
         public void getValues()
         {
-            Values = Singleton.Instance.DBManager.RetrieveBatchValues(Id);
+            Values = ServiceSingleton.Instance.DBManager.RetrieveBatchValues(Id);
         }
 
         public BatchModel()

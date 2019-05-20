@@ -64,7 +64,7 @@ namespace ProjectSCAM.Models.Logic {
             string path = Path.GetDirectoryName(System.AppDomain.CurrentDomain.BaseDirectory);
             path = Directory.GetParent(path).FullName;
             path = Directory.GetParent(Directory.GetParent(path).FullName).FullName;
-            path += @"\4thSemesterProject\ProjectSCAM\ProjectSCAM\Models\Logic\BatchReports\";
+            path += @"\4thSemesterProject\ProjectSCAM\ProjectSCAM\Models\Services\BatchReports\";
 
             // Save the new workbook
             ep.SaveAs(new FileInfo(path + "BatchReport" + batchID + ".xlsx"));
@@ -74,7 +74,7 @@ namespace ProjectSCAM.Models.Logic {
             string path = Path.GetDirectoryName(System.AppDomain.CurrentDomain.BaseDirectory);
             path = Directory.GetParent(path).FullName;
             path = Directory.GetParent(Directory.GetParent(path).FullName).FullName;
-            path += @"\4thSemesterProject\ProjectSCAM\ProjectSCAM\Models\Logic\BatchReports\BatchReport"+batchId;
+            path += @"\4thSemesterProject\ProjectSCAM\ProjectSCAM\Models\Services\BatchReports\BatchReport"+batchId;
 
             GemBox.Spreadsheet.SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
 

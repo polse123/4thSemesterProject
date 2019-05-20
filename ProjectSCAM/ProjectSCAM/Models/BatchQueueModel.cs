@@ -21,6 +21,7 @@ namespace ProjectSCAM.Models
         public int Amount { get; set; }
         [Required]
         [DefaultValue(1)]
+        [Range(1,600)]
         public int Speed { get; set; }
         [Required]
         [DefaultValue(1)]
@@ -43,7 +44,7 @@ namespace ProjectSCAM.Models
         }
         public void Update()
         {
-            Singleton.Instance.DBManager.EditPriority(Id, Priority);
+            ServiceSingleton.Instance.DBManager.EditPriority(Id, Priority);
         }
     }
 }

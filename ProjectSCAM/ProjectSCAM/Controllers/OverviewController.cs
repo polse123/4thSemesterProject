@@ -17,7 +17,7 @@ namespace SCAMS.Controllers
         public ActionResult Index()
         {
 
-            ViewBag.BatchQueue = Singleton.Instance.DBManager.RetrieveFromBatchQueue();
+            ViewBag.BatchQueue = ServiceSingleton.Instance.DBManager.RetrieveFromBatchQueue();
             return View(ViewBag);
         }
 
@@ -32,7 +32,7 @@ namespace SCAMS.Controllers
             {
                 try
                 {
-                    Singleton.Instance.opcManager.HandleCommand(Session["SelectedMachine"].ToString(), value);
+                    ServiceSingleton.Instance.opcManager.HandleCommand(Session["SelectedMachine"].ToString(), value);
                     return "command valid";
                 }
                 catch (Exception ex)
@@ -50,7 +50,7 @@ namespace SCAMS.Controllers
         [HttpGet]
         public string RefreshBQ()
         {
-            IList<BatchQueueModel> batchq = Singleton.Instance.DBManager.RetrieveFromBatchQueue();
+            IList<BatchQueueModel> batchq = ServiceSingleton.Instance.DBManager.RetrieveFromBatchQueue();
             return JsonConvert.SerializeObject(batchq, Formatting.None);
 
         }
@@ -59,7 +59,7 @@ namespace SCAMS.Controllers
         {
             if (Session["SelectedMachine"] != null)
             {
-                var x = Singleton.Instance.opcManager.GetOpcConnection(Session["SelectedMachine"].ToString());
+                var x = ServiceSingleton.Instance.opcManager.GetOpcConnection(Session["SelectedMachine"].ToString());
                 return Json(x);
             }
             else

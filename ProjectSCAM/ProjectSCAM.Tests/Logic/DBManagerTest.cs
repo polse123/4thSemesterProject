@@ -11,7 +11,7 @@ namespace ProjectSCAM.Tests.Logic
     [TestClass]
     public class DBManagerTest
     {
-        private DBManager dbManager;
+        private DBServiceProvider dbManager;
         private QueryExecuter exe;
 
         // server, port, user id, password, database
@@ -21,7 +21,7 @@ namespace ProjectSCAM.Tests.Logic
         public DBManagerTest()
         {
             exe = new QueryExecuter(DB_INFO[0], DB_INFO[1], DB_INFO[2], DB_INFO[3], DB_INFO[4]);
-            dbManager = new DBManager(exe);
+            dbManager = new DBServiceProvider(exe);
         }
 
         [TestMethod]

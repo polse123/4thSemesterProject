@@ -231,23 +231,23 @@
     <Compile Include="Models\AuthorizeUserAttribute.cs" />
     <Compile Include="Models\BatchModel.cs" />
     <Compile Include="Models\BatchQueueModel.cs" />
-    <Compile Include="Models\Logic\BatchReportServiceProvider.cs" />
-    <Compile Include="Models\Logic\BatchValueCollection.cs" />
+    <Compile Include="Models\Services\BatchReportServiceProvider.cs" />
+    <Compile Include="Models\Services\BatchValueCollection.cs" />
     <Compile Include="Models\BeerModel.cs" />
     <Compile Include="Models\CustomerModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\Logic\AlarmManager.cs" />
-    <Compile Include="Models\Logic\DBManager.cs" />
-    <Compile Include="Models\Logic\OEE.cs" />
-    <Compile Include="Models\Logic\OPCManager.cs" />
-    <Compile Include="Models\Logic\QueryExecuter.cs" />
+    <Compile Include="Models\Services\AlarmManager.cs" />
+    <Compile Include="Models\Services\DBServiceProvider.cs" />
+    <Compile Include="Models\Services\OEE.cs" />
+    <Compile Include="Models\Services\OPCServiceProvider.cs" />
+    <Compile Include="Models\Services\QueryExecuter.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\MachineModel.cs" />
     <Compile Include="Models\MachineSelectViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\Logic\OpcClient.cs" />
+    <Compile Include="Models\Services\OpcClient.cs" />
     <Compile Include="Models\RecipeModel.cs" />
-    <Compile Include="Models\Logic\Singleton.cs" />
+    <Compile Include="Models\Services\ServiceSingleton.cs" />
     <Compile Include="Models\StopReasonModel.cs" />
     <Compile Include="Models\TrackingModel.cs" />
     <Compile Include="Models\UserModel.cs" />
@@ -353,7 +353,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\Logic\BatchReports\" />
+    <Folder Include="Models\Services\BatchReports\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

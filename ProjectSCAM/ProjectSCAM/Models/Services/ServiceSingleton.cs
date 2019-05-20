@@ -5,11 +5,11 @@ using System.Linq;
 using System.Web;
 
 namespace ProjectSCAM.Models.Logic {
-    public sealed class Singleton {
-        public DBManager DBManager { get; set; }
-        public OPCManager opcManager { get; set; }
+    public sealed class ServiceSingleton {
+        public DBServiceProvider DBManager { get; set; }
+        public OPCServiceProvider opcManager { get; set; }
         public BatchReportServiceProvider BatchReportGenerator { get; set; }
-        private static readonly Singleton instance = new Singleton();
+        private static readonly ServiceSingleton instance = new ServiceSingleton();
 
         // server, port, user id, password, database
         private readonly string[] DB_INFO = {"balarama.db.elephantsql.com",
@@ -17,21 +17,21 @@ namespace ProjectSCAM.Models.Logic {
 
         // Explicit static constructor to tell C# compiler
         // not to mark type as beforefieldinit
-        static Singleton()
+        static ServiceSingleton()
         {
         }
 
-        private Singleton()
+        private ServiceSingleton()
         {
-            DBManager = new DBManager(DB_INFO[0], DB_INFO[1], DB_INFO[2], DB_INFO[3], DB_INFO[4]);
-            opcManager = new OPCManager();
+            DBManager = new DBServiceProvider(DB_INFO[0], DB_INFO[1], DB_INFO[2], DB_INFO[3], DB_INFO[4]);
+            opcManager = new OPCServiceProvider();
             BatchReportGenerator = new BatchReportServiceProvider();
         }
         public  void CreateBatchReport(float batchId,float productType, int aProduct, int dProduct, BatchValueCollection bv) {
             BatchReportGenerator.GenerateFile(batchId, productType, aProduct, dProduct, bv);
         }
 
-        public static Singleton Instance
+        public static ServiceSingleton Instance
         {
             get
             {

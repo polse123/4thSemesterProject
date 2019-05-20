@@ -26,7 +26,7 @@ namespace SCAMS.Controllers
             }
             else
             {
-                List<BatchModel> SortedList = Singleton.Instance.DBManager.RetrieveBatches(true).OrderBy(o => o.Speed).ToList();
+                List<BatchModel> SortedList = ServiceSingleton.Instance.DBManager.RetrieveBatches(true).OrderBy(o => o.Speed).ToList();
                 ViewBag.DataPoints = JsonConvert.SerializeObject(SortedList, Formatting.None);
 
                 return View();
@@ -41,7 +41,7 @@ namespace SCAMS.Controllers
             bool add = int.TryParse(recipe, out intProductType);
             if (add)
             {
-                list = Singleton.Instance.DBManager.RetrieveBatchesByRecipe(intProductType, true);
+                list = ServiceSingleton.Instance.DBManager.RetrieveBatchesByRecipe(intProductType, true);
             }
 
             TempData["batches"] = list;

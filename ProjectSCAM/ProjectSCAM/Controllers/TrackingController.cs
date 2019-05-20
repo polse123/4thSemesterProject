@@ -13,14 +13,14 @@ namespace ProjectSCAM.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Batches = Singleton.Instance.DBManager.RetrieveBatches(true);
-            ViewBag.Customers = Singleton.Instance.DBManager.RetrieveCustomers();
+            ViewBag.Batches = ServiceSingleton.Instance.DBManager.RetrieveBatches(true);
+            ViewBag.Customers = ServiceSingleton.Instance.DBManager.RetrieveCustomers();
             return View();
         }
 
         public ActionResult Sell(TrackingModel model)
         {
-            bool success = Singleton.Instance.DBManager.SetSale(model.BatchId, model.CustomerId);
+            bool success = ServiceSingleton.Instance.DBManager.SetSale(model.BatchId, model.CustomerId);
             if (success)
             {
                 ViewBag.SellMessage = "Success";
@@ -34,7 +34,7 @@ namespace ProjectSCAM.Controllers
 
         public ActionResult Recall(TrackingModel model)
         {
-            bool success = Singleton.Instance.DBManager.RecallBatch(model.BatchId);
+            bool success = ServiceSingleton.Instance.DBManager.RecallBatch(model.BatchId);
             if (success)
             {
                 ViewBag.RecallMessage = "Success";
@@ -48,7 +48,7 @@ namespace ProjectSCAM.Controllers
 
         public ActionResult CreateCustomer(TrackingModel model)
         {
-            bool success = Singleton.Instance.DBManager.RegisterCustomer(model.CustomerName);
+            bool success = ServiceSingleton.Instance.DBManager.RegisterCustomer(model.CustomerName);
             if (success)
             {
                 ViewBag.CreateMessage = "Success";
@@ -66,13 +66,13 @@ namespace ProjectSCAM.Controllers
 
             if (TempData["batchId"] != null)
             {
-                beers = Singleton.Instance.DBManager.RetrieveBeers((int)TempData["batchId"]);
+                beers = ServiceSingleton.Instance.DBManager.RetrieveBeers((int)TempData["batchId"]);
                 ViewBag.batchId = TempData["batchid"];
                 TempData["batchId"] = null;
             }
             else
             {
-                beers = Singleton.Instance.DBManager.RetrieveBeers(model.BatchId);
+                beers = ServiceSingleton.Instance.DBManager.RetrieveBeers(model.BatchId);
                 ViewBag.BatchId = model.BatchId;
             }
 
@@ -89,7 +89,7 @@ namespace ProjectSCAM.Controllers
 
         public ActionResult RegisterBeerAsDefect(BeerModel model)
         {
-            Singleton.Instance.DBManager.SetBeerAsDefect(model.ProductNumber, model.BatchId);
+            ServiceSingleton.Instance.DBManager.SetBeerAsDefect(model.ProductNumber, model.BatchId);
             TempData["batchid"] = model.BatchId;
             return RedirectToAction("Beers");
         }

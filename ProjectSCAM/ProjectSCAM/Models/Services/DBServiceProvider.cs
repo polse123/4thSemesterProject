@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ProjectSCAM.Models.Logic
 {
-    public class DBManager
+    public class DBServiceProvider
     {
         /// <summary>
         /// The Query Executer.
@@ -98,7 +98,7 @@ namespace ProjectSCAM.Models.Logic
         /// <param name="userid"></param>
         /// <param name="password"></param>
         /// <param name="database"></param>
-        public DBManager(string server, string port, string userid, string password, string database)
+        public DBServiceProvider(string server, string port, string userid, string password, string database)
         {
             exe = new QueryExecuter(server, port, userid, password, database);
         }
@@ -108,7 +108,7 @@ namespace ProjectSCAM.Models.Logic
         /// An already initialized QueryExecuter is provided.
         /// </summary>
         /// <param name="exe"></param>
-        public DBManager(QueryExecuter exe)
+        public DBServiceProvider(QueryExecuter exe)
         {
             this.exe = exe;
         }
@@ -596,7 +596,8 @@ namespace ProjectSCAM.Models.Logic
                 CheckExpirationDate(expirationDate) &&
                 performance >= 0 && performance <= 1 &&
                 quality >= 0 && quality <= 1 &&
-                availability >= 0 && availability <= 1)
+                availability >= 0 && availability <= 1 &&
+                speed > 0)
             {
                 // Security
                 RemoveBadBatchValues(new IList<KeyValuePair<string, double>>[] { temperatureValues, humidityValues, vibrationsValues });

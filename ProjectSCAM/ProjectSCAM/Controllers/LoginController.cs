@@ -39,7 +39,7 @@ namespace SCAMS.Controllers
 
             if (ModelState.IsValid)
             {
-                UserModel uM = Singleton.Instance.DBManager.RetrieveUser(u.Username, u.Password, true);
+                UserModel uM = ServiceSingleton.Instance.DBManager.RetrieveUser(u.Username, u.Password, true);
                 if (uM != null)
                 {
                     if (uM.UserType == 1) //Mangler login til admin eller andre usertypes!
