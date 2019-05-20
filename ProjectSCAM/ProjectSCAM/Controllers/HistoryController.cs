@@ -13,19 +13,25 @@ namespace SCAMS.Controllers
     [AuthorizeUser(Type = "1")]
     public class HistoryController : Controller
     {
+        int i=1;
         public ActionResult Index()
         {
+            
 
             if (TempData["batch"] != null)
             {
-                BatchModel SortedList = (BatchModel)TempData["batch"];
+                BatchModel array = (BatchModel)TempData["batch"];
                 TempData["batch"] = null;
-                
+
                 return View();
             }
             else
             {
-                BatchModel array = ServiceSingleton.Instance.DBManager.RetrieveBatch(1);
+                if (TempData["id"] != null)
+                {
+                    i = int.Parse(TempData["id"].ToString());
+                }
+                BatchModel array = ServiceSingleton.Instance.DBManager.RetrieveBatch(i);
                 array.Values = ServiceSingleton.Instance.DBManager.RetrieveBatchValues(array.Id);
 
             ViewBag.DataPoints = JsonConvert.SerializeObject(array, Formatting.None);

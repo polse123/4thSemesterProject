@@ -23,10 +23,7 @@
     <table class="batchtableclass" id="batchtable">
         <tbody>
             <tr>
-                <form action="/history/getbatchesbyid" method="get">
-                    <input type="hidden" name="id" value="1" />
-                    <input type="submit" value="batch 1" />
-                </form>
+                
             </tr>
         </tbody>
     </table>
@@ -54,26 +51,28 @@
             console.log(result.Values.TemperatureValues[i].Key);
             console.log(result.Values.TemperatureValues[i].Value);
             
-            if (min > result.Values.TemperatureValues[i].Value) {
+            if (result.Values.TemperatureValues[min].Value > result.Values.TemperatureValues[i].Value) {
                 min = i;
             }
-            if (max < result.Values.TemperatureValues[i].Value) {
+            if (result.Values.TemperatureValues[max].Value < result.Values.TemperatureValues[i].Value) {
                 max = i;
             }
+            console.log("min: "+min);
+            console.log("max: "+max);
         }
       
-            var chart = new CanvasJS.Chart("chartContainer", {
-                animationEnabled: true,
-                title: {
-                    text: "Number of iPhones Sold in Different Quarters"
-                },
-                axisX: {
-                    minimum: new Date(result.TimestampStart),
+        var chart = new CanvasJS.Chart("chartContainer", {
+            animationEnabled: true,
+            title: {
+                text: "Temperature Values"
+            },
+            axisX: {
+                minimum: new Date(result.Values.TemperatureValues[0].Key),
                     maximum: new Date(result.TimestampEnd),
                 },
                 axisY: {
-                    minimum: result.Values.TemperatureValues[min].Value,
-                    maximum: result.Values.TemperatureValues[max].Value,
+                    minimum: result.Values.TemperatureValues[min].Value-1,
+                    maximum: result.Values.TemperatureValues[max].Value+1,
                     title: "Number of Sales",
                     titleFontColor: "#4F81BC",
                     suffix: " C"
@@ -81,7 +80,7 @@
                 data: [{
                     indexLabelFontColor: "darkSlateGray",
                     name: "views",
-                    type: "area",
+                    type: "line",
                     yValueFormatString: "#,##0.0 C",
                     dataPoints: dataPoints,
                 }]
@@ -89,21 +88,7 @@
             chart.render();
 
     }
-
     drawChartForTemperature();
 </script>
-<script>
-    function stringToDate(_date, _format, _delimiter) {
-        var formatLowerCase = _format.toLowerCase();
-        var formatItems = formatLowerCase.split(_delimiter);
-        var dateItems = _date.split(_delimiter);
-        var monthIndex = formatItems.indexOf("mm");
-        var dayIndex = formatItems.indexOf("dd");
-        var yearIndex = formatItems.indexOf("yyyy");
-        var month = parseInt(dateItems[monthIndex]);
-        month -= 1;
-        var formatedDate = new Date(dateItems[yearIndex], month, dateItems[dayIndex]);
-        return formatedDate;
-    }
-</script>
+
 
