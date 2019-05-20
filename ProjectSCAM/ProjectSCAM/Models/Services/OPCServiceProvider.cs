@@ -49,6 +49,7 @@ namespace ProjectSCAM.Models.Logic {
                 if (opc.StateCurrent == 17)
                 {
                     opc.AddValues();
+                    DateTime end = DateTime.Now;
                     OEE oee = new OEE((int)opc.AcceptableProducts, (int)opc.DefectProducts, opc.Start, end, ServiceSingleton.Instance.DBManager.RetrieveMaxSpeed(opc.Recipe));
                     ServiceSingleton.Instance.DBManager.RegisterBatch((int)opc.AcceptableProducts, (int)opc.DefectProducts,
                         opc.Start.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.AddYears(10).ToString("MM/dd/yyyy"), true,
