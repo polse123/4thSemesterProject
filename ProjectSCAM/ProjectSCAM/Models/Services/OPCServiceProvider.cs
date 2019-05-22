@@ -73,7 +73,7 @@ namespace ProjectSCAM.Models.Logic {
 
             }
         }
-        private MachineModel GetMachine(string ip)
+        public MachineModel GetMachine(string ip)
         {
             MachineModel machine = new MachineModel();
             foreach (MachineModel m in ServiceSingleton.Instance.DBService.RetrieveMachines())

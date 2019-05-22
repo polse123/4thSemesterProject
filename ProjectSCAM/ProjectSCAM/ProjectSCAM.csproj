@@ -243,7 +243,6 @@
     <Compile Include="Models\Services\QueryExecuter.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\MachineModel.cs" />
-    <Compile Include="Models\MachineSelectViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Services\OpcClient.cs" />
     <Compile Include="Models\RecipeModel.cs" />

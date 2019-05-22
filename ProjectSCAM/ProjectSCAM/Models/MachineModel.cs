@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectSCAM.Models.Logic;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -86,5 +87,16 @@ namespace ProjectSCAM.Models
         }
 
         public MachineModel() { }
+        public static MachineModel GetFromDatabase(string ip)
+        {
+            return ServiceSingleton.Instance.OPCService.GetMachine(ip);
+
+        }
+        public void Update() {
+            ServiceSingleton.Instance.DBService.EditMachine((int)Id, Ip, Description,  NameSpaceIndex,
+            AmountNode, StateNode, DefectNode, AcceptableNode, AmountToProduceNode, MachSpeedNode,
+            TemperatureNode, HumidityNode, VibrationNode, StopreasonNode, BatchIdNode, BarleyNode,
+            HopsNode, MaltNode, WheatNode, YeastNode, MaintenanceTriggerNode, MaintenanceCounterNode);
+        }
     }
 }

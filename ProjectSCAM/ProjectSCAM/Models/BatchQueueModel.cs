@@ -18,6 +18,7 @@ namespace ProjectSCAM.Models
         public int Priority { get; set; }
         [Required]
         [DefaultValue(1)]
+        [Range(1,int.MaxValue)]
         public int Amount { get; set; }
         [Required]
         [DefaultValue(1)]

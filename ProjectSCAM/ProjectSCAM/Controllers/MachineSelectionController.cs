@@ -25,7 +25,6 @@ namespace MvcMovie.Controllers {
 
             //return View(msvm);
             ViewBag.Machines = ServiceSingleton.Instance.DBService.RetrieveMachines();
-            ViewBag.Machine = new MachineModel();
             return View();
         }
         [HttpPost]
@@ -62,6 +61,26 @@ namespace MvcMovie.Controllers {
         {
             Session["SelectedMachine"] = Request["ip"];
             ServiceSingleton.Instance.OPCService.InitConnection(Session["SelectedMachine"].ToString());
+        }
+        public ActionResult EditMachine()
+        {
+            if(Session["SelectedMachine"] != null)
+            {
+                MachineModel m = MachineModel.GetFromDatabase(Session["SelectedMachine"].ToString());
+                return View("EditMachine", m);
+            } else
+            {
+                return View("Index");
+            }
+
+        }
+        public ActionResult Edit(MachineModel m)
+        {
+            if(ModelState.IsValid)
+            {
+                m.Update();
+            }
+            return View("Index");
         }
     }
 }
