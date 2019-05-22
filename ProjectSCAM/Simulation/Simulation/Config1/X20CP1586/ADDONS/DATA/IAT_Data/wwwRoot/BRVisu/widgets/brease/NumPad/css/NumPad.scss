@@ -1,0 +1,220 @@
+@import '../../../../css/libs/variables';
+@import '../../../../css/libs/mixins';
+
+$border-outer-color: #333;
+$text-color: #3E3E47;
+$slider-color: $active-color;
+$btn-active-color: $active-color;
+
+$thumbwidth: 22px;
+$knobwidth: 22px;
+$thumbborder: 1px;
+$trackwidth: 6px;
+$outwidth: 58px;
+
+.breaseNumPad.breaseWindow {
+    .numpadHeader {
+        margin-left: -9px;
+        margin-right: -8px;
+        border-bottom-left-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+    }
+}
+
+.numpad {
+    background: #FFF;
+    display: block;
+
+    button {
+        @include appearance(none);
+        @include box-sizing(border-box);
+        background: none;
+        border: none;
+        display: block;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    .breaseNumPadTop {
+        height: 120px;
+        position: relative;
+        border-bottom: 1px solid $border-outer-color;
+    }
+
+    .minValueBox {
+        position: absolute;
+        top: 70px;
+        left: 5px;
+        width: 70px;
+        text-align: center;
+    }
+
+    .maxValueBox {
+        position: absolute;
+        top: 70px;
+        right: 5px;
+        width: 90px;
+        text-align: center;
+        direction: rtl;
+    }
+
+    .minValue, .maxValue {
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 120%;
+        color: $text-color;
+        display: block;
+    }
+
+    label {
+        font-weight: bold;
+        font-size: 12px;
+        line-height: 120%;
+        color: $text-color;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .breaseNumpadSlider {
+        position: absolute;
+        top: 68px;
+        left: 85px;
+        overflow: visible;
+        width: 160px;
+        height: 16px;
+
+        .numpadSlider_track {
+            width: 160px;
+            height: 16px;
+            top: 0;
+            left: 0;
+            position: absolute;
+            z-index: 1;
+
+            .numpadSlider_track_inner {
+                position: absolute;
+                top: 5px;
+                left: 0;
+                line-height: 6px;
+                width: 160px;
+                height: 6px;
+                background-color: #c8c8c8;
+            }
+        }
+
+        .numpadSlider_thumb {
+            width: $thumbwidth;
+            height: 62px;
+            top: -51px;
+            left: 34px;
+            position: absolute;
+            z-index: 2;
+
+            .numpadSlider_knob {
+                position: absolute;
+                bottom: -($knobwidth - $trackwidth) / 2;
+                width: $knobwidth;
+                height: $knobwidth;
+                @include border-radius(50%);
+                background-color: #FFF;
+                border: $thumbborder solid #555555;
+                z-index: 5;
+                box-sizing: border-box;
+            }
+
+            .numpadSlider_output {
+                @include displayFlexBox(true);
+                @include flex-direction(row);
+                @include align-items(center);
+                @include flex-wrap(nowrap);
+                @include justify-content(center);
+                @include box-sizing(border-box);
+                z-index: 5;
+                position: absolute;
+                background-color: transparent;
+                height: 42px;
+                text-align: center;
+                color: #333;
+                line-height: 42px;
+                padding: 1px 4px 0 4px;
+                min-width: $outwidth;
+                max-width: 102px;
+                top: 0;
+                left: -($outwidth/2)+($knobwidth/2);
+
+                &:after {
+                    content: '';
+                    width: 0;
+                    height: 0;
+                    border-left: 5px solid transparent;
+                    border-right: 5px solid transparent;
+                    border-top: 6px solid transparent;
+                    position: absolute;
+                    bottom: -6px;
+                    left: 50%;
+                    margin-left: -5px;
+                }
+
+                span {
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: block;
+                    font-size:16px;
+
+                    &.error {
+                        color: red;
+                    }
+                }
+            }
+        }
+    }
+
+    .breaseNumPadButtons {
+        position: relative;
+
+        button {
+            width: 84px;
+            height: 60px;
+            border-right: 1px solid $border-outer-color;
+            border-bottom: 1px solid $border-outer-color;
+            float: left;
+            text-align: center;
+            line-height: 58px;
+            font-size: 20px;
+
+            &.active {
+                background: $btn-active-color;
+                color: #FFF;
+            }
+
+            &:nth-child(4n+4) {
+                border-right: none;
+            }
+
+            &[data-value="0"] {
+                width: 168px;
+                border-right: 1px solid $border-outer-color;
+            }
+
+            &[data-value="-1"] {
+                font-size: 25px;
+            }
+        }
+
+        .breaseNumPadEnter {
+            height: 120px;
+            width: 84px;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            border-right: none;
+            font-size: 35px;
+        }
+    }
+
+    .clearfix {
+        clear: both;
+    }
+}

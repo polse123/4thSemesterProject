@@ -1,0 +1,1 @@
+.breaseFlexBox{background-color:#ffffff;border:1px solid #dfdfdf;box-sizing:border-box;overflow:hidden}.breaseFlexBox>.container{box-sizing:border-box;width:100%;height:100%;display:flex;flex-wrap:nowrap}.breaseFlexBox>.container.vertical{flex-direction:column}.breaseFlexBox>.container.horizontal{flex-direction:row}

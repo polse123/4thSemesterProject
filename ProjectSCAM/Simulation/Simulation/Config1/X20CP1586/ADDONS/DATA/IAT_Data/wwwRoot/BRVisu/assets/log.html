@@ -1,0 +1,229 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>log</title>
+    <meta charset="utf-8" />
+    <script src="performance/FileSaver.js"></script>
+    <script src="../jquery.js"></script>
+    <script>
+
+        var app = {
+
+            start: function () {
+                this.output = $('<div class="output"></div>').appendTo(document.getElementById('content'));
+                this.write();
+            },
+            write: function () {
+                var log = localStorage.getItem("log"),
+                    time = document.getElementById('inTime').checked,
+                    line = document.getElementById('inLine').checked,
+                    type = document.getElementById('inType').checked,
+                    file = document.getElementById('inFile').checked;
+
+                if (log) {
+                    var entries = log.split('|#|'),
+                    str = '<p>referrer: ' + document.referrer + '</p>', entry;
+                    for (var i = 0; i < entries.length; i += 1) {
+                        entry = JSON.parse(entries[i]);
+                        str += '<p style="color:' + entry.color + ';background-color:' + entry.backColor + ';">' + ((time) ? '[' + _formatDate(new Date(entry.time), true) + ']' : '') + ((type) ? '[' + entry.type + ']' : '') + entry.message + ' (' + ((file) ? entry.file : '') + ((line) ? ':' + entry.line : '') + ')</p>';
+                    }
+
+                    app.output.html(str);
+                } else {
+                    app.output.html('<p>no log entries</p>');
+                }
+            }
+        }
+
+
+        $(document).ready(function () {
+
+            app.start();
+
+            _setReferrerParams();
+            $('#btnNavigate').on('click', _navigate);
+            $('#btnSave').on('click', _save);
+            $('#btnVisu').on('click', _visuLink);
+            $('#btnBottom').on('click', _bottomLink);
+            $('#btnReload').on('click', function (e) { document.location.reload(); });
+
+            $('#inTime').on('change', app.write);
+            $('#inLine').on('change', app.write);
+            $('#inType').on('change', app.write);
+            $('#inFile').on('change', app.write);
+        });
+
+        function _extract(key, from) {
+            var result = from.substring(from.indexOf(key) + key.length + 1);
+            if (result.indexOf('&') !== -1) {
+                result = result.substring(0, result.indexOf('&'));
+            }
+            return result;
+        }
+
+        function _save() {
+
+            $.ajax({
+                url: "/BRVisu/TPVersion.txt",
+                type: "get",
+                async: false,
+                success: _saveWithTP
+            });
+        }
+
+        function _saveWithTP(TPVersion) {
+
+
+
+
+            var log = localStorage.getItem("log"),
+                data = '';
+            if (log) {
+                var arEntries = [],
+                    entries = log.split('|#|'),
+                    entry;
+                for (var i = 0; i < entries.length; i += 1) {
+                    entry = JSON.parse(entries[i]);
+                    arEntries.push(entry);
+                }
+                data = JSON.stringify(arEntries);
+            }
+
+
+
+
+
+            var blob = new Blob([data], { type: "application/json" });
+            var now = new Date(),
+                savedate = _formatDate(now);
+
+            var visuId = '',
+                referrer = document.referrer;
+            if (referrer.indexOf('visuId') !== -1) {
+                visuId = _extract('visuId', referrer);
+            }
+
+            saveAs(blob, savedate + '_' + navigator.platform + ((visuId) ? '_' + visuId : 'undefinedVisu') + "_TP" + TPVersion + "_log.json");
+        }
+
+        function _formatDate(date, ms) {
+            return date.getFullYear() + '-' + _format(date.getMonth() + 1) + '-' + _format(date.getDate()) + 'T' + _format(date.getHours()) + ':' + _format(date.getMinutes()) + ':' + _format(date.getSeconds()) + ((ms) ? '-' + _format(date.getMilliseconds(), 3) : '');
+
+        }
+        function _format(n, d) {
+            var digits = (d !== undefined) ? d : 2;
+            return ('00000' + n).substr(-digits);
+        }
+
+        function _setReferrerParams() {
+            var visuId, debug, storageLog,
+                referrer = document.referrer;
+            if (referrer.indexOf('visuId') !== -1) {
+                visuId = _extract('visuId', referrer);
+            }
+            if (visuId) { $('#inVisuId').val(visuId); }
+
+            if (referrer.indexOf('debug') !== -1) {
+                debug = _extract('debug', referrer);
+            }
+            if (debug === 'true') {
+                $('#inDebug').prop("checked", true);
+            } else {
+                $('#inDebug').prop("checked", false);
+            }
+            if (referrer.indexOf('storageLog') !== -1) {
+                storageLog = _extract('storageLog', referrer);
+            }
+            if (storageLog === 'true') {
+                $('#inStorage').prop("checked", true);
+            } else {
+                $('#inStorage').prop("checked", false);
+            }
+
+        }
+
+        function _navigate(e) {
+            var visuId = $('#inVisuId').val(),
+                debug = document.getElementById('inDebug').checked,
+                watchdog = document.getElementById('inWatchdog').checked,
+                storageLog = document.getElementById('inStorage').checked;
+
+            var url = "/index.html?visuId=" + visuId + ((watchdog) ? "&watchdog=0" : "") + "&debug=" + debug + "&storageLog=" + storageLog + '&t=' + Date.now();
+            document.location.href = url;
+        }
+
+
+        function _visuLink(e) {
+            document.location.href = "/index.html?visuId=Visu";
+        }
+        function _bottomLink(e) {
+            document.location.href = "#bottom";
+        }
+
+    </script>
+    <style>
+        div.visuLink {
+            background-color: white;
+            box-sizing: border-box;
+            position: fixed;
+            top: 5px;
+            left: 10px;
+            font-size: 18px;
+            line-height: 25px;
+        }
+
+        div.output {
+            background-color: white;
+            box-sizing: border-box;
+            padding-top: 52px;
+        }
+
+        [type="checkbox"] {
+            width: 20px;
+            height: 20px;
+        }
+
+        p {
+            font-family: monospace;
+            color: black;
+            font-size: 11px;
+            margin: 0;
+            padding: 2px 6px;
+        }
+
+        .buttons {
+            position: fixed;
+            top: 100px;
+            right: 0px;
+        }
+
+        .sideBar {
+            width: 50px;
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="buttons">
+        <button id="btnReload" class="sideBar">reload</button><br />
+        <button id="btnSave" class="sideBar">save</button><br />
+        <button id="btnVisu" class="sideBar">visu</button><br />
+        <button id="btnBottom" class="sideBar">down</button><br />
+    </div>
+    <div class="visuLink">
+        <button id="btnNavigate">open Visu</button>
+        <input type="text" value="Visu" id="inVisuId" />
+        <input type="checkbox" id="inDebug" checked="checked" /><label for="inDebug" class="big">debug</label>
+        <input type="checkbox" id="inStorage" checked="checked" /><label for="inStorage" class="big">storageLog</label>
+        <input type="checkbox" id="inWatchdog" /><label for="inWatchdog" class="big">watchdog=0</label>
+        <br />
+        <input type="checkbox" id="inTime" /><label for="inTime" class="big">time</label>
+        <input type="checkbox" id="inType" /><label for="inType" class="big">type</label>
+        <input type="checkbox" id="inFile" checked="checked" /><label for="inFile" class="big">file</label>
+        <input type="checkbox" id="inLine" /><label for="inLine" class="big">line</label>
+    </div>
+    <div id="content"></div>
+    <div id="footer"><a name="bottom"></a></div>
+</body>
+</html>

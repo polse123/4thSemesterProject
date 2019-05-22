@@ -1,0 +1,28 @@
+
+
+Thu May 09 13:48:18 2019
+No ARsim registration found!
+  Bernecker & Rainer 
+
+
+
+Thu May 09 13:48:18 2019
+COMMAND_COLDSTART
+InstanceName : 01d5065d17fd2950
+
+WorkingPath :
+C:\Users\J\Downloads\Simulation\Simulation\Config1\X20CP1586\
+
+
+
+Thu May 09 13:48:18 2019
+COMMAND_COLDSTART
+Version : E4.34
+
+
+
+Thu May 09 16:02:22 2019
+COMMAND_TERMINATE
+
+
+Thu May 09 16:02:23 2019

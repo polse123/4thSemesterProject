@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WidgetLibrary xmlns="http://www.br-automation.com/iat2014/widget">
+	<Widget name="brease.core.BaseWidget">
+		<ASEngineeringInfo>
+			<IsProjectable>false</IsProjectable>
+		</ASEngineeringInfo>
+		<Dependencies>
+			<Files>
+			</Files>
+			<Widgets>
+			</Widgets>
+		</Dependencies>
+		<Categories>
+		</Categories>
+		<Descriptions>
+		</Descriptions>
+		<Parents>
+			<Parent>*</Parent>
+		</Parents>
+		<Children>
+		</Children>
+		<Methods>
+			<Method name="SetEnable">
+				<Description>setter for binding of &apos;enable&apos;</Description>
+				<Arguments>
+					<Argument name="value" type="Boolean" index="0">
+						<Description>State of &apos;enable&apos; (false = disabled, true = enabled)&lt;/p&gt;
+
+
+
+						</Description>
+					</Argument>
+				</Arguments>
+			</Method>
+			<Method name="SetStyle">
+				<Arguments>
+					<Argument name="value" type="StyleReference" index="0">
+					</Argument>
+				</Arguments>
+			</Method>
+			<Method name="SetVisible">
+				<Description>Sets the visibility of the widget.</Description>
+				<Arguments>
+					<Argument name="value" type="Boolean" index="0">
+						<Description>State of visibility (false = hide, true = show)&lt;/p&gt;
+
+
+
+						</Description>
+					</Argument>
+				</Arguments>
+			</Method>
+		</Methods>
+		<Events>
+			<Event name="Click">
+				<Description>Fired when element is clicked on.</Description>
+				<Arguments>
+					<Argument name="origin" type="String" index="0">
+						<Description>id of widget that triggered this event&lt;/p&gt;
+
+
+
+						</Description>
+					</Argument>
+				</Arguments>
+			</Event>
+			<Event name="EnableChanged">
+				<Arguments>
+					<Argument name="value" type="Boolean" index="0">
+						<Description>value reflects state of property &apos;enable&apos;.&lt;br/&gt;
+Fired when enabled state changes.&lt;/p&gt;
+
+
+
+						</Description>
+					</Argument>
+				</Arguments>
+			</Event>
+			<Event name="VisibleChanged">
+				<Arguments>
+					<Argument name="value" type="Boolean" index="0">
+						<Description>value reflects state of property &apos;visible&apos;.&lt;br/&gt;
+Fired when visible state changes.&lt;/p&gt;
+
+
+
+						</Description>
+					</Argument>
+				</Arguments>
+			</Event>
+		</Events>
+		<Properties>
+			<Property name="enable" type="Boolean" initOnly="false" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Behavior" defaultValue="true">
+				<Description>Initial option to enable widget.
+				</Description>
+			</Property>
+			<Property name="permissionOperate" type="RoleCollection" initOnly="true" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Accessibility">
+				<Description>restricts operability to users, which have given roles
+				</Description>
+			</Property>
+			<Property name="permissionView" type="RoleCollection" initOnly="true" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Accessibility">
+				<Description>restricts visibility to users, which have given roles
+				</Description>
+			</Property>
+			<Property name="style" type="StyleReference" initOnly="false" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Appearance" defaultValue="default">
+				<Description>reference to a style for this widget type
+				</Description>
+			</Property>
+			<Property name="visible" type="Boolean" initOnly="false" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Behavior" defaultValue="true">
+				<Description>change visibility
+				</Description>
+			</Property>
+		</Properties>
+	<BindingTemplates>
+  
+</BindingTemplates>
+<PropertyGroups>
+  <PropertyGroup name="Size" type="String" category="Layout">
+    <Description>outer height and width of widget</Description>
+  </PropertyGroup>
+  <PropertyGroup name="Position" type="String" category="Layout">
+    <Description>top and left of widget</Description>
+  </PropertyGroup>
+</PropertyGroups>
+<StyleProperties defaultStyle="default">
+  <StyleProperty name="width" type="Size" not_styleable="true" owner="brease.core.BaseWidget" category="Layout" groupRefId="Size" groupOrder="1">
+    <StyleElement attribute="@include elemWidth($value)"/>
+    <Description>outer width of widget</Description>
+  </StyleProperty>
+  <StyleProperty name="height" type="Size" not_styleable="true" owner="brease.core.BaseWidget" category="Layout" groupRefId="Size" groupOrder="2">
+    <StyleElement attribute="@include elemHeight($value)"/>
+    <Description>outer height of widget</Description>
+  </StyleProperty>
+  <StyleProperty name="top" type="Integer" not_styleable="true" owner="brease.core.BaseWidget" category="Layout" groupRefId="Position" groupOrder="1">
+    <StyleElement attribute="@include elemTop($value)"/>
+    <Description>absolute position measured from top boundary of parent container</Description>
+  </StyleProperty>
+  <StyleProperty name="left" type="Integer" not_styleable="true" owner="brease.core.BaseWidget" category="Layout" groupRefId="Position" groupOrder="2">
+    <StyleElement attribute="@include elemLeft($value)"/>
+    <Description>absolute position measured from left boundary of parent container</Description>
+  </StyleProperty>
+  <StyleProperty name="zIndex" type="UInteger" not_styleable="true" owner="brease.core.BaseWidget" category="Layout" required="true">
+    <StyleElement attribute="z-index"/>
+    <Description>The zIndex property specifies the z-order of a widget and its childs.&lt;br/&gt;&#xD;
+        When widgets overlap, z-order determines which one covers the other. A widget with a larger zIndex generally covers a widget with a lower one.&lt;br/&gt;&#xD;
+        The zIndex must be unique within a content.&lt;br/&gt;</Description>
+  </StyleProperty>
+</StyleProperties>
+</Widget>
+</WidgetLibrary>

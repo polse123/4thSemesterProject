@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WidgetLibrary xmlns="http://www.br-automation.com/iat2014/widget">
+	<Widget name="widgets.brease.BarChart">
+		<ASEngineeringInfo>
+			<IsProjectable>true</IsProjectable>
+		</ASEngineeringInfo>
+		<Dependencies>
+			<Files>
+				<File>widgets/brease/DataHandlerWidget/DataHandlerWidget.js</File>
+				<File>brease/events/BreaseEvent.js</File>
+				<File>brease/enum/Enum.js</File>
+				<File>brease/core/Utils.js</File>
+				<File>brease/decorators/MeasurementSystemDependency.js</File>
+				<File>brease/config/NumberFormat.js</File>
+				<File>widgets/brease/BarChart/libs/Renderer.js</File>
+			</Files>
+			<Widgets>
+				<Widget>widgets/brease/BarChart/BarChart.js</Widget>
+				<Widget>widgets/brease/DataHandlerWidget/DataHandlerWidget.js</Widget>
+			</Widgets>
+		</Dependencies>
+		<Categories>
+			<Category name="Category">Chart</Category>
+			<Category name="Category">Container</Category>
+		</Categories>
+		<Descriptions>
+			<Description name="short">Container für BarChartItems</Description>
+			<Description name="de">Ein BarChart ist ein Chart welcher Daten mithilfe von Rechtecken, in Abhängigkeit ihres Wertes representiert</Description>
+			<Description name="en">A BarChart is a chart which represents data with rectangular bars,
+which lenghts are propertional to the values they represent			</Description>
+		</Descriptions>
+		<Inheritance>
+			<Class level="0">widgets.brease.BarChart</Class>
+			<Class level="1">widgets.brease.DataHandlerWidget</Class>
+			<Class level="2">brease.core.BaseWidget</Class>
+		</Inheritance>
+		<Parents>
+			<Parent>*</Parent>
+		</Parents>
+		<Children>
+			<Child>widgets.brease.BarChartItem</Child>
+			<Child>widgets.brease.BarChartThreshold</Child>
+		</Children>
+		<Methods>
+			<Method name="SetEnable">
+				<Description>setter for binding of &apos;enable&apos;</Description>
+				<Arguments>
+					<Argument name="value" type="Boolean" index="0">
+						<Description>State of &apos;enable&apos; (false = disabled, true = enabled)&lt;/p&gt;
+
+
+
+						</Description>
+					</Argument>
+				</Arguments>
+			</Method>
+			<Method name="SetStyle">
+				<Arguments>
+					<Argument name="value" type="StyleReference" index="0">
+					</Argument>
+				</Arguments>
+			</Method>
+			<Method name="SetUnit">
+				<Description>Sets unit</Description>
+				<Arguments>
+					<Argument name="unit" type="brease.config.MeasurementSystemUnit" index="0">
+					</Argument>
+				</Arguments>
+			</Method>
+			<Method name="SetVisible">
+				<Description>Sets the visibility of the widget.</Description>
+				<Arguments>
+					<Argument name="value" type="Boolean" index="0">
+						<Description>State of visibility (false = hide, true = show)&lt;/p&gt;
+
+
+
+						</Description>
+					</Argument>
+				</Arguments>
+			</Method>
+		</Methods>
+		<Events>
+			<Event name="Click">
+				<Description>Fired when element is clicked on.</Description>
+				<Arguments>
+					<Argument name="origin" type="String" index="0">
+						<Description>id of widget that triggered this event&lt;/p&gt;
+
+
+
+						</Description>
+					</Argument>
+				</Arguments>
+			</Event>
+			<Event name="EnableChanged">
+				<Arguments>
+					<Argument name="value" type="Boolean" index="0">
+						<Description>value reflects state of property &apos;enable&apos;.&lt;br/&gt;
+Fired when enabled state changes.&lt;/p&gt;
+
+
+
+						</Description>
+					</Argument>
+				</Arguments>
+			</Event>
+			<Event name="VisibleChanged">
+				<Arguments>
+					<Argument name="value" type="Boolean" index="0">
+						<Description>value reflects state of property &apos;visible&apos;.&lt;br/&gt;
+Fired when visible state changes.&lt;/p&gt;
+
+
+
+						</Description>
+					</Argument>
+				</Arguments>
+			</Event>
+		</Events>
+		<Properties>
+			<Property name="barPadding" type="Integer" initOnly="true" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Appearance" defaultValue="5">
+				<Description>space between 2 Bars
+				</Description>
+			</Property>
+			<Property name="chartMargin" type="PixelValCollection" initOnly="true" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Appearance" defaultValue="30px 30px 0px 0px">
+				<Description>Defines margins between the chart area and the external border of the widget
+				</Description>
+			</Property>
+			<Property name="enable" type="Boolean" initOnly="false" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Behavior" defaultValue="true">
+				<Description>Initial option to enable widget.
+				</Description>
+			</Property>
+			<Property name="format" type="brease.config.MeasurementSystemFormat" initOnly="false" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Appearance" defaultValue="{&apos;metric&apos;:{ &apos;decimalPlaces&apos; : 0, &apos;minimumIntegerDigits&apos; : 1 }, &apos;imperial&apos; :{ &apos;decimalPlaces&apos; : 0, &apos;minimumIntegerDigits&apos; : 1 }, &apos;imperial-us&apos; :{ &apos;decimalPlaces&apos; : 0, &apos;minimumIntegerDigits&apos; : 1 }}">
+				<Description>href=&quot;#!/api/brease.config.NumberFormat&quot; rel=&quot;brease.config.NumberFormat&quot; class=&quot;docClass&quot;&gt;brease.config.NumberFormat&lt;/a&gt; for every measurement system.
+Read more about &lt;a href=&quot;../FAQ/FormatNumber.html&quot;&gt;Number Formats				</Description>
+			</Property>
+			<Property name="orientation" type="brease.enum.Orientation" initOnly="true" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Appearance" defaultValue="BottomToTop">
+				<Description>Orientation of the Widget
+Currently supported orientations are only ButtomToTop and LeftToRight. TopToBottom and RightToLeft are reserved for later usage
+				</Description>
+			</Property>
+			<Property name="permissionOperate" type="RoleCollection" initOnly="true" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Accessibility">
+				<Description>restricts operability to users, which have given roles
+				</Description>
+			</Property>
+			<Property name="permissionView" type="RoleCollection" initOnly="true" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Accessibility">
+				<Description>restricts visibility to users, which have given roles
+				</Description>
+			</Property>
+			<Property name="showUnit" type="Boolean" initOnly="true" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Behavior" defaultValue="false">
+				<Description>When true the UnitSymbol for the selected unit is shown on the Y-Axis
+				</Description>
+			</Property>
+			<Property name="showValue" type="Boolean" initOnly="true" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Behavior" defaultValue="true">
+				<Description>When true BarChart is displaying the actual Value of each Bar
+				</Description>
+			</Property>
+			<Property name="style" type="StyleReference" initOnly="false" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Appearance" defaultValue="default">
+				<Description>reference to a style for this widget type
+				</Description>
+			</Property>
+			<Property name="transitionTime" type="UInteger" initOnly="true" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Behavior" defaultValue="0">
+				<Description>Defines the time (in ms) used for a transition when the value of a Bar changes.
+				</Description>
+			</Property>
+			<Property name="unit" type="brease.config.MeasurementSystemUnit" initOnly="false" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Appearance" defaultValue="">
+				<Description>href=&quot;#!/api/brease.config.NumberFormat&quot; rel=&quot;brease.config.NumberFormat&quot; class=&quot;docClass&quot;&gt;brease.config.NumberFormat&lt;/a&gt; for every measurement system
+				</Description>
+			</Property>
+			<Property name="visible" type="Boolean" initOnly="false" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Behavior" defaultValue="true">
+				<Description>change visibility
+				</Description>
+			</Property>
+			<Property name="xAxisHeight" type="Integer" initOnly="true" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Appearance" defaultValue="40">
+				<Description>Height of the xAxis
+				</Description>
+			</Property>
+			<Property name="yAxisWidth" type="Integer" initOnly="true" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Appearance" defaultValue="40">
+				<Description>Width of the yAxis
+				</Description>
+			</Property>
+		</Properties>
+	<BindingTemplates>
+  
+</BindingTemplates>
+<PropertyGroups>
+  <PropertyGroup name="Size" type="String" category="Layout">
+    <Description>outer height and width of widget</Description>
+  </PropertyGroup>
+  <PropertyGroup name="Position" type="String" category="Layout">
+    <Description>top and left of widget</Description>
+  </PropertyGroup>
+</PropertyGroups>
+<StyleProperties defaultStyle="default">
+  <StyleProperty name="width" type="Size" not_styleable="true" owner="widgets.brease.BarChart" category="Layout" groupRefId="Size" groupOrder="1" default="300">
+    <StyleElement attribute="@include elemWidth($value)"/>
+    <Description>outer width of the widget</Description>
+  </StyleProperty>
+  <StyleProperty name="height" type="Size" not_styleable="true" owner="widgets.brease.BarChart" category="Layout" groupRefId="Size" groupOrder="2" default="300">
+    <StyleElement attribute="@include elemHeight($value)"/>
+    <Description>outer height of the widget</Description>
+  </StyleProperty>
+  <StyleProperty name="top" type="Integer" not_styleable="true" owner="brease.core.BaseWidget" category="Layout" groupRefId="Position" groupOrder="1">
+    <StyleElement attribute="@include elemTop($value)"/>
+    <Description>absolute position measured from top boundary of parent container</Description>
+  </StyleProperty>
+  <StyleProperty name="left" type="Integer" not_styleable="true" owner="brease.core.BaseWidget" category="Layout" groupRefId="Position" groupOrder="2">
+    <StyleElement attribute="@include elemLeft($value)"/>
+    <Description>absolute position measured from left boundary of parent container</Description>
+  </StyleProperty>
+  <StyleProperty name="zIndex" type="UInteger" not_styleable="true" owner="brease.core.BaseWidget" category="Layout" required="true">
+    <StyleElement attribute="z-index"/>
+    <Description>The zIndex property specifies the z-order of a widget and its childs.&lt;br/&gt;&#xD;
+        When widgets overlap, z-order determines which one covers the other. A widget with a larger zIndex generally covers a widget with a lower one.&lt;br/&gt;&#xD;
+        The zIndex must be unique within a content.&lt;br/&gt;</Description>
+  </StyleProperty>
+  <StyleProperty name="axisColor" type="Color" category="Appearance" default="#000000">
+    <StyleElement selector=".xAxis" attribute="stroke"/>
+    <StyleElement selector=".yAxis" attribute="stroke"/>
+    <Description>Sets the color of the background. For further information, please check its type</Description>
+  </StyleProperty>
+  <StyleProperty name="textColor" type="Color" category="Appearance" default="#000000">
+    <StyleElement selector=".xAxis text" attribute="stroke"/>
+    <StyleElement selector=".yAxis text" attribute="stroke"/>
+    <StyleElement selector=".xAxis text" attribute="fill"/>
+    <StyleElement selector=".yAxis text" attribute="fill"/>
+    <Description>Sets the color of the text. For further information, please check its type</Description>
+  </StyleProperty>
+  <StyleProperty name="fontSize" type="PixelVal" category="Font" default="12px">
+    <StyleElement selector=".xAxis text" attribute="font-size"/>
+    <StyleElement selector=".yAxis text" attribute="font-size"/>
+    <Description>Sets the size of the text. For further information, please check its type</Description>
+  </StyleProperty>
+  <StyleProperty name="fontName" type="FontName" category="Font" default="Arial">
+    <StyleElement selector=".xAxis text" attribute="font-family"/>
+    <StyleElement selector=".yAxis text" attribute="font-family"/>
+    <Description>Sets the size of the text. For further information, please check its type</Description>
+  </StyleProperty>
+  <StyleProperty name="bold" category="Font" type="Boolean" default="false">
+    <StyleElement selector=".xAxis text" attribute="@include font-weight-bold($value)"/>
+    <StyleElement selector=".yAxis text" attribute="@include font-weight-bold($value)"/>
+    <Description>If *true* font style is bold</Description>
+  </StyleProperty>
+  <StyleProperty name="gridColor" type="Color" category="Appearance" default="#cccccc">
+    <StyleElement selector=".xAxisGrid line" attribute="stroke"/>
+    <StyleElement selector=".yAxisGrid line" attribute="stroke"/>
+    <Description>Sets the color of the gridLine. For further information, please check its type</Description>
+  </StyleProperty>
+  <StyleProperty name="rotation" category="Appearance" type="Rotation" default="0deg">
+    <StyleElement attribute="@include rotate($value)"/>
+    <Description>Rotation of widget.</Description>
+  </StyleProperty>
+  <StyleProperty name="italic" category="Font" type="Boolean" default="false">
+    <StyleElement selector=".xAxis text" attribute="@include font-style-italic($value)"/>
+    <StyleElement selector=".yAxis text" attribute="@include font-style-italic($value)"/>
+    <Description>If *true* font style is italic</Description>
+  </StyleProperty>
+  <StyleProperty name="opacity" type="Opacity" category="Appearance" default="1">
+    <StyleElement attribute="opacity"/>
+    <Description>Opacity of the widget</Description>
+  </StyleProperty>
+  <StyleProperty name="backColor" type="Color" category="Appearance" default="transparent">
+    <StyleElement attribute="background-color"/>
+    <Description>Sets the background color</Description>
+  </StyleProperty>
+  <StyleProperty name="borderStyle" type="BorderStyle" category="Appearance" default="solid">
+    <StyleElement attribute="border-style"/>
+    <Description>Sets the border style</Description>
+  </StyleProperty>
+  <StyleProperty name="borderWidth" type="PixelValCollection" category="Appearance" default="2px">
+    <StyleElement attribute="border-width"/>
+    <Description>Sets the border width</Description>
+  </StyleProperty>
+  <StyleProperty name="borderColor" type="Color" category="Appearance" default="#000000">
+    <StyleElement attribute="border-color"/>
+    <Description>Sets the border color</Description>
+  </StyleProperty>
+  <StyleProperty name="cornerRadius" type="PixelValCollection" category="Appearance" default="0px">
+    <StyleElement attribute="border-radius"/>
+    <Description>Sets the corner radius</Description>
+  </StyleProperty>
+  <StyleProperty name="margin" category="Layout" type="Margin" default="0px">
+    <StyleElement attribute="margin"/>
+    <Description>Margin of the Widget</Description>
+  </StyleProperty>
+</StyleProperties>
+</Widget>
+</WidgetLibrary>

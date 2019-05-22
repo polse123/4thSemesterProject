@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BindingDefinition xmlns="http://www.br-automation.com/iat2014/binding/runtime/v1">
+  <Content id="mainContent">
+    <Binding mode="twoWay">
+<Source xsi:type="opcUa" refId="::Program:Cube.Status.MachSpeed" attribute="value" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+<Target xsi:type="brease" refId="mainContent_NumericOutput7" attribute="value" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+</Binding>
+  </Content>
+  <Content id="mainContent">
+    <Binding mode="twoWay">
+<Source xsi:type="opcUa" refId="::Program:FillingInventory" attribute="value" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+<Target xsi:type="brease" refId="mainContent_Paper1" attribute="visible" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+</Binding>
+  </Content>
+  <Content id="mainContent">
+    <Binding mode="twoWay">
+<Source xsi:type="opcUa" refId="::Program:Data.Value.Temperature" attribute="value" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+<Target xsi:type="brease" refId="mainContent_NumericOutput4" attribute="value" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+</Binding>
+  </Content>
+  <Content id="mainContent">
+    <Binding mode="twoWay">
+<Source xsi:type="opcUa" refId="::Program:Data.Value.RelHumidity" attribute="value" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+<Target xsi:type="brease" refId="mainContent_NumericOutput5" attribute="value" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+</Binding>
+  </Content>
+  <Content id="mainContent">
+    <Binding mode="twoWay">
+<Source xsi:type="opcUa" refId="::Program:Data.Value.Vibration" attribute="value" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+<Target xsi:type="brease" refId="mainContent_NumericOutput6" attribute="value" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+</Binding>
+  </Content>
+  <Content id="mainContent">
+    <Binding mode="twoWay">
+<Source xsi:type="opcUa" refId="::Program:batch_id" attribute="value" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+<Target xsi:type="brease" refId="mainContent_NumericOutput9" attribute="value" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+</Binding>
+  </Content>
+  <Content id="mainContent">
+    <Binding mode="twoWay">
+<Source xsi:type="opcUa" refId="::Program:product.produce_amount" attribute="value" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+<Target xsi:type="brease" refId="mainContent_NumericOutput8" attribute="value" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+</Binding>
+  </Content>
+  <Content id="mainContent">
+    <Binding mode="twoWay">
+<Source xsi:type="opcUa" refId="::Program:product.bad" attribute="value" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+<Target xsi:type="brease" refId="mainContent_NumericOutput3" attribute="value" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+</Binding>
+  </Content>
+  <Content id="mainContent">
+    <Binding mode="twoWay">
+<Source xsi:type="opcUa" refId="::Program:product.good" attribute="value" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+<Target xsi:type="brease" refId="mainContent_NumericOutput2" attribute="value" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+</Binding>
+  </Content>
+  <Content id="mainContent">
+    <Binding mode="twoWay">
+<Source xsi:type="opcUa" refId="::Program:product.produced" attribute="value" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+<Target xsi:type="brease" refId="mainContent_NumericOutput1" attribute="value" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+</Binding>
+  </Content>
+  <Content id="mainContent">
+    <Binding mode="twoWay">
+<Source xsi:type="opcUa" refId="::Program:Inventory.Barley" attribute="value" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+<Target xsi:type="brease" refId="mainContent_BarChartItem1" attribute="value" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+</Binding>
+  </Content>
+  <Content id="mainContent">
+    <Binding mode="twoWay">
+<Source xsi:type="opcUa" refId="::Program:Inventory.Hops" attribute="value" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+<Target xsi:type="brease" refId="mainContent_BarChartItem2" attribute="value" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+</Binding>
+  </Content>
+  <Content id="mainContent">
+    <Binding mode="twoWay">
+<Source xsi:type="opcUa" refId="::Program:Inventory.Malt" attribute="value" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+<Target xsi:type="brease" refId="mainContent_BarChartItem3" attribute="value" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+</Binding>
+  </Content>
+  <Content id="mainContent">
+    <Binding mode="twoWay">
+<Source xsi:type="opcUa" refId="::Program:Inventory.Wheat" attribute="value" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+<Target xsi:type="brease" refId="mainContent_BarChartItem4" attribute="value" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+</Binding>
+  </Content>
+  <Content id="mainContent">
+    <Binding mode="twoWay">
+<Source xsi:type="opcUa" refId="::Program:Inventory.Yeast" attribute="value" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+<Target xsi:type="brease" refId="mainContent_BarChartItem5" attribute="value" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+</Binding>
+  </Content>
+  <Content id="rightContent">
+    <Binding mode="twoWay">
+<Source xsi:type="opcUa" refId="::Program:Maintenance.Counter" attribute="value" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+<Target xsi:type="brease" refId="rightContent_BarChartItem1" attribute="value" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+</Binding>
+  </Content>
+</BindingDefinition>

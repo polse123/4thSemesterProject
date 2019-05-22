@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?> <StyleInformation name="widgets.brease.BarChartItem" xmlns="http://www.br-automation.com/iat2014/widgetStyles" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+<StyleProperties>
+    <StyleProperty name="height" category="Layout" type="Size" not_styleable="true" hide="true">
+      <StyleElement attribute="@include elemHeight($value)"></StyleElement>
+      <Description>outer height of the widget</Description>
+    </StyleProperty>
+    <StyleProperty name="width" category="Layout" type="Size" not_styleable="true" hide="true">
+      <StyleElement attribute="@include elemWidth($value)"></StyleElement>
+      <Description>outer width of the widget</Description>
+    </StyleProperty>
+    <StyleProperty name="top" type="Integer" not_styleable="true" category="Layout" hide="true">
+      <StyleElement attribute="@include elemTop($value)"></StyleElement>
+      <Description>absolute position measured from top boundary of parent container</Description>
+    </StyleProperty>
+    <StyleProperty name="left" type="Integer" not_styleable="true" category="Layout" hide="true">
+      <StyleElement attribute="@include elemLeft($value)"></StyleElement>
+      <Description>absolute position measured from left boundary of parent container</Description>
+    </StyleProperty>
+
+  <StyleProperty name="borderWidth" type="PixelValCollection"  category="Appearance" default="2px">
+    <StyleElement selector="rect.bar" attribute="@include SVGFactorBorder($value, 2)"></StyleElement>
+    <Description>Sets the width of the border. For further information, please check its type</Description>
+  </StyleProperty>
+  <StyleProperty name="borderColor" type="ColorCollection"  category="Appearance" default="#000000">
+    <StyleElement selector="rect.bar" attribute="stroke"></StyleElement>
+    <Description>Sets the color of the border. For further information, please check its type</Description>
+  </StyleProperty>
+  <StyleProperty name="backColor" type="Color"  category="Appearance" default="#FF8800">
+    <StyleElement selector="rect.bar" attribute="fill"></StyleElement>
+    <Description>Sets the color of the background. For further information, please check its type</Description>
+  </StyleProperty>
+
+
+  <StyleProperty name="textColor" type="Color" category="Appearance" default="#000000" >
+    <StyleElement selector="text" attribute="fill"></StyleElement>
+    <Description> Sets the height of the displayed value </Description>
+  </StyleProperty>
+
+
+  <StyleProperty name="fontSize" type="PixelVal" category="Font" default="12px" >
+    <StyleElement selector="text" attribute="font-size"></StyleElement>
+    <Description> Sets the height of the displayed value </Description>
+  </StyleProperty>
+
+
+  <StyleProperty name="fontName" type="FontName" category="Font" default="Arial">
+    <StyleElement selector="text" attribute="font-family"></StyleElement>
+    <Description> Sets the font name of the displayed value </Description>
+  </StyleProperty>
+
+
+  <StyleProperty name="bold" type="Boolean" category="Font" default="false">
+    <StyleElement selector="text" attribute="@include font-weight-bold($value)"></StyleElement>
+    <Description> Sets the bold property of the displayed value </Description>
+  </StyleProperty>
+
+  
+  <StyleProperty name="italic" type="Boolean" category="Font" default="false">
+    <StyleElement selector="text" attribute="@include font-style-italic($value)"></StyleElement>
+    <Description> Sets the italic property of the displayed value </Description>
+  </StyleProperty>
+  
+
+  
+  <StyleProperty name="opacity" type="Opacity"  category="Appearance" default="1">
+    <StyleElement attribute="opacity"></StyleElement>
+    <Description>Opacity of the widget</Description>
+  </StyleProperty>
+  
+  </StyleProperties>
+</StyleInformation>
+	

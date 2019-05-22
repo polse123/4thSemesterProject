@@ -17,43 +17,43 @@ namespace ProjectSCAM.Models
         [DisplayName("Enter a short description")]
         [Required]
         public string Description { get; set; }
-
+        [Required]
         public int NameSpaceIndex { get; set; }
-
+        [Required]
         public string AmountNode { get; set; }
-
+        [Required]
         public string StateNode { get; set; }
-
+        [Required]
         public string DefectNode { get; set; }
-
+        [Required]
         public string AcceptableNode { get; set; }
-
+        [Required]
         public string AmountToProduceNode { get; set; }
-
+        [Required]
         public string MachSpeedNode { get; set; }
-
+        [Required]
         public string TemperatureNode { get; set; }
-
+        [Required]
         public string HumidityNode { get; set; }
-
+        [Required]
         public string VibrationNode { get; set; }
-
+        [Required]
         public string StopreasonNode { get; set; }
-
+        [Required]
         public string BatchIdNode { get; set; }
-
+        [Required]
         public string BarleyNode { get; set; }
-
+        [Required]
         public string HopsNode { get; set; }
-
+        [Required]
         public string MaltNode { get; set; }
-
+        [Required]
         public string WheatNode { get; set; }
-
+        [Required]
         public string YeastNode { get; set; }
-
+        [Required]
         public string MaintenanceTriggerNode { get; set; }
-
+        [Required]
         public string MaintenanceCounterNode { get; set; }
 
         public MachineModel(int? id, string ip, string description, int nameSpaceIndex,

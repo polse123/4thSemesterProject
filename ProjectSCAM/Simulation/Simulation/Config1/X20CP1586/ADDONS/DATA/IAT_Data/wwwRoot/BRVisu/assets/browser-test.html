@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+<head>
+    <title>B&R Browser Test</title>
+    <meta charset="utf-8" />
+    <style>
+        body {
+            padding: 20px;
+            background-color: white;
+            color: black;
+            font-size:13px;
+        }
+
+        table {
+            border: none;
+            border-collapse: collapse;
+        }
+
+        td {
+            border: 1px solid #ededed;
+            white-space: nowrap;
+            padding: 4px 0;
+            line-height:15px;
+        }
+        tr.optional td {
+            background-color:#efefef;
+        }
+
+            td.label {
+                padding: 4px 6px;
+            }
+
+            td.ok {
+                color: green;
+                text-align: center;
+            }
+
+            td.fail {
+                color: #cc0000;
+                text-align: center;
+                font-family:'Comic Sans MS', sans-serif;
+                font-weight:bold;
+                font-size:15px;
+            }
+    </style>
+    <script src="/BRVisu/jquery.js"></script>
+    <script src="js/modernizr-build.js"></script>
+    <script>
+        var testSuite = {
+
+            modernizr: [
+                { key: 'json', label: 'JSON' },
+                { key: 'cookies', label: 'cookies' },
+                { key: 'canvas', label: 'canvas (basic support)' },
+                { key: 'canvastext', label: 'canvas text api' },
+                { key: 'borderradius', label: 'css border radius' },
+                { key: 'boxshadow', label: 'css boxshadow' },
+                { key: 'opacity', label: 'css opacity' },
+                { key: 'boxsizing', label: 'css boxsizing', css: 'boxSizing' },
+                { key: 'flexbox', label: 'Flexible Box Model', css: 'flexbox' },
+                { key: 'csstransitions', label: 'css transitions' },
+                { key: 'hashchange', label: 'hash change' },
+                { key: 'xhr2', label: 'XMLHttpRequest Level 2' },
+                { key: 'unicode', label: 'unicode' },
+                { key: 'websockets', label: 'websockets' },
+                { key: 'video', label: 'HTML5 video' },
+                { key: 'performance', label: 'performance', optional: true },
+                { key: 'requestanimationframe', label: 'requestAnimationFrame', js: 'requestAnimationFrame', optional: true }
+            ],
+            custom: [
+                { label: 'data-* attributes', test: 'custom01' },
+                { label: 'defineProperty', test: 'custom02' }
+            ],
+            index: {
+                custom: 0,
+                modernizr: 0
+            },
+
+            start: function () {
+                //for (i = 0; i < testSuite.custom.length; i += 1) {
+                //    testSuite.setResult(testSuite[testSuite.custom[i].test](), testSuite.custom[i]);
+                //}
+                //for (var i = 0; i < testSuite.modernizr.length; i += 1) {
+                //    testSuite.setResult(Modernizr[testSuite.modernizr[i].key], testSuite.modernizr[i]);
+                //}
+
+                testSuite.setResult(testSuite[testSuite.custom[0].test](), "custom", 0);
+            },
+
+            setResult: function (success, type, index) {
+                var item = testSuite[type][index];
+                console.log(JSON.stringify({ success: success, item: item }));
+                console.log(success);
+
+                var prefixed;
+                if (!success) {
+                    if (item.css) {
+                        prefixed = Modernizr.prefixed(item.css);
+                    } else if (item.js) {
+                        prefixed = Modernizr.prefixed(item.js, window, false);
+                    }
+                    if (prefixed !== undefined && prefixed !== false) {
+                        success = true;
+                    }
+                }
+                        console.log('prefixed:' + prefixed);
+                console.log('--------------------------');
+                $('#result').append('<tr' + ((item.optional === true) ? ' class="optional" title="optional feature"' : '') + '><td class="label">' + item.label + '</td><td class="' + ((success) ? "ok" : "fail") + '">' + ((success) ? "&#x2714;" : "x") + '</td>' + ((prefixed != undefined) ? '<td class="label">' + prefixed + '</td>' : '') + '</tr>');
+
+                if (testSuite[type][index + 1] !== undefined) {
+                    if (type === 'custom') {
+                        window.setTimeout(function () {
+                            testSuite.setResult(testSuite[testSuite[type][index + 1].test](), type, index + 1);
+                        }, 0);
+                    }
+                    if (type === 'modernizr') {
+                        window.setTimeout(function () {
+                            testSuite.setResult(Modernizr[testSuite.modernizr[index + 1].key], type, index + 1);
+                        }, 0);
+                    }
+                } else if (type === 'custom') {
+                    type = 'modernizr';
+                    window.setTimeout(function () {
+                        testSuite.setResult(Modernizr[testSuite.modernizr[0].key], type, 0);
+                    }, 0);
+                }
+            },
+
+            custom01: function () {
+                return (document.getElementById('result').getAttribute('data-test') == "test");
+            },
+
+            custom02: function () {
+                return typeof Object.defineProperty == 'function';
+            }
+        };
+
+        $(document).ready(function () {
+            $('#userAgent').html(navigator.userAgent);
+            testSuite.start();
+
+            console.log(Modernizr.websockets);
+        });
+    </script>
+</head>
+<body>
+    <div><strong>your browser: </strong><span id="userAgent"></span></div>
+    <br /><br />
+    <table id="result" data-test="test">
+        <thead>
+            <tr>
+                <th>Feature</th>
+                <th style="width:40px;"></th>
+                <th>prefixed</th>
+            </tr>
+        </thead>
+    </table>
+    <br /><br />
+    <a href="http://jquery.com/browser-support/" target="_blank">-> jquery browser support</a>
+
+</body>
+</html>

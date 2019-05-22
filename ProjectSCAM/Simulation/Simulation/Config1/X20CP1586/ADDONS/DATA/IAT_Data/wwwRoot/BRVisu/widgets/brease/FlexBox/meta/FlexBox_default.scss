@@ -1,0 +1,33 @@
+@import "mixins.scss";
+@mixin widgets_brease_FlexBox_base {
+	@include elemWidth(200);
+	@include elemHeight(150);
+	border-width: 1px;
+> .header {
+	border-width: 1px;
+}
+	@include border-radius(0px);
+	background-color: transparent;
+> .container {
+	background-image: none;
+}
+	border-color: #DFDFDF;
+> .header {
+	border-color: #DFDFDF;
+}
+	border-style: solid;
+> .header {
+	border-bottom-style: solid;
+}
+	opacity: 1;
+	@include box-shadow(none);
+> .container {
+	padding: 10px;
+}
+	margin: 0px;
+
+}
+
+.widgets_brease_FlexBox_style_default {
+@include widgets_brease_FlexBox_base 
+}

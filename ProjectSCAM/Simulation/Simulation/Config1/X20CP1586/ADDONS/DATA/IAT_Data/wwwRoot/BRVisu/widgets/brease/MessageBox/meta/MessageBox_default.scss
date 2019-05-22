@@ -1,0 +1,91 @@
+@import "mixins.scss";
+@mixin widgets_brease_MessageBox_base {
+	@include elemWidth(500);
+	@include elemHeight(156);
+.breaseMessageBoxContentBox {
+	border-width: 5px;
+}
+.breaseMessageBoxHeader {
+	border-radius: 0px;
+}
+.messageBoxFooter {
+	border-radius: 0px;
+}
+.breaseMessageBoxHeader {
+	background-color: #333;
+}
+.messageBoxFooter {
+	background-color: #333;
+}
+.breaseMessageBoxHeader {
+	background-image: none;
+}
+.breaseMessageBoxContentBox {
+	border-color: #333333;
+}
+.breaseMessageBoxContentBox {
+	border-style: solid;
+}
+.breaseMessageBoxHeader {
+	border-width: 0px;
+}
+.breaseMessageBoxHeader {
+	border-color: #333;
+}
+.breaseMessageBoxHeader {
+	border-style: none;
+}
+.breaseMessageBoxHeader div {
+	color: #FFF;
+}
+.breaseMessageBoxHeader div {
+	font-family: Arial;
+}
+.breaseMessageBoxHeader div {
+	font-size: 12px;
+}
+.breaseMessageBoxHeader div {
+	@include font-weight-bold(true);
+}
+.breaseMessageBoxHeader div {
+	@include font-style-italic(false);
+}
+.breaseMessageBoxHeader div {
+	@include text-alignment(center);
+}
+	opacity: 1;
+	@include box-shadow(none);
+.breaseMessageBoxContentBox {
+	padding: 0px;
+}
+	margin: 0px;
+.icon.error {
+	background-image: url('../') !important;
+}
+.icon.asterisk {
+	background-image: url('../') !important;
+}
+.icon.exclamation {
+	background-image: url('../') !important;
+}
+.icon.hand {
+	background-image: url('../') !important;
+}
+.icon.information {
+	background-image: url('../') !important;
+}
+.icon.question {
+	background-image: url('../') !important;
+}
+.icon.stop {
+	background-image: url('../') !important;
+}
+.icon.warning {
+	background-image: url('../') !important;
+}
+
+}
+
+.widgets_brease_MessageBox_style_default {
+@include widgets_brease_MessageBox_base 
+}

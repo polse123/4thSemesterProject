@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StyleInformation name="widgets.brease.NumericOutput" xmlns="http://www.br-automation.com/iat2014/widgetStyles"
+									xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  
+	<StyleProperties>
+ 
+		<StyleProperty name="borderWidth" type="PixelValCollection" category="Appearance" default="2px">
+			<StyleElement attribute="border-width"></StyleElement>
+      <Description>
+        Sets the border width of the widget. For further information, please see its type
+      </Description>
+		</StyleProperty>
+		
+		<StyleProperty name="borderColor" category="Appearance" type="ColorCollection" default="#999999" >
+			<StyleElement attribute="border-color"></StyleElement>
+      <Description>
+        Sets the border color of the widget. For further information, please see its type
+      </Description>
+		</StyleProperty>
+
+		<StyleProperty name="unitFontSize" category="Font" type="PixelVal" default="14px" >
+			<StyleElement selector=".breaseNumericOutput_unit" attribute="font-size"></StyleElement>
+			<Description>
+				Sets the font size of the possible unit displayed
+			</Description>
+		</StyleProperty>
+
+		<StyleProperty name="textColor" category="Appearance" type="Color" default="#000000" >
+			<StyleElement selector="input" attribute="color"></StyleElement>
+			<StyleElement selector="span.breaseNumericOutput_unit" attribute="color"></StyleElement>
+			<Description>
+        Sets the color of the displayed text
+			</Description>
+		</StyleProperty>
+
+    <StyleProperty name="backColor" category="Appearance" type="Color" default="#FFFFFF" >
+      <StyleElement attribute="background-color"></StyleElement>
+      <Description>
+        Sets the background color of the widget
+      </Description>
+    </StyleProperty>
+
+    <StyleProperty name="backGroundGradient" category="Appearance" type="Gradient" default="none">
+      <StyleElement attribute="background-image"></StyleElement>
+      <Description>
+        Background as a gradient
+      </Description>
+    </StyleProperty>
+
+    <StyleProperty name="borderColor" category="Appearance" type="ColorCollection" default="#555555" >
+      <StyleElement attribute="border-color"></StyleElement>
+      <Description>
+        Sets the border color of the widget. For further information, please see its type
+      </Description>
+    </StyleProperty>  
+
+		<StyleProperty name="activeBorderWidth" category="Appearance" type="PixelValCollection" hide="true">
+    </StyleProperty>
+
+		<StyleProperty name="disabledBorderWidth" category="Appearance" type="PixelValCollection" hide="true">
+    </StyleProperty>
+
+		<StyleProperty name="disabledBackColor" category="Appearance" type="Color" hide="true">
+    </StyleProperty>
+
+		<StyleProperty name="disabledBackGroundGradient" category="Appearance" type="Gradient" hide="true">
+    </StyleProperty>
+
+			<StyleProperty name="disabledBorderColor" category="Appearance" type="ColorCollection" hide="true">
+    </StyleProperty>
+
+			<StyleProperty name="activeBorderColor" category="Appearance" type="ColorCollection" hide="true">
+    </StyleProperty>
+
+					<StyleProperty name="activeBackColor" category="Appearance" type="Color" hide="true">
+    </StyleProperty>
+
+			<StyleProperty name="activeTextColor" category="Appearance" type="Color" hide="true">
+    </StyleProperty>
+
+				<StyleProperty name="disabledTextColor" category="Appearance" type="Color" hide="true">
+    </StyleProperty>
+		
+	</StyleProperties>
+</StyleInformation>
+	
+	
+

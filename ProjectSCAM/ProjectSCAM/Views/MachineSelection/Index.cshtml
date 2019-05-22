@@ -32,18 +32,19 @@
         <div class="descriptionBox">
             <button input type="submit" onclick="setMachine()" id="start" class="buttons"> Start</button> <br>
             <span id="description"></span>
-
         </div>
-    <h2>
-        Create a machine
-    </h2>
+        <form action="/machineselection/editmachine" method="get">
+
+        </form>
+
     <div class="machineForm">
 
-        @using (Html.BeginForm("Create", "MachineSelection", FormMethod.Post)) {
+        @using (Html.BeginForm("Create", "MachineSelection", FormMethod.Post))
+        {
             @Html.ValidationSummary(true)
             @Html.AntiForgeryToken()
             <fieldset>
-                <legend>Machine</legend>
+                <legend>Create Machine</legend>
                 <div class="editor-label">
                     @Html.LabelFor(model => model.Ip)
                 </div>
@@ -198,10 +199,181 @@
                 <input type="submit" value="Create New Machine" />
             </fieldset>
         }
+        </div>
+        <div class="machineForm">
 
-    </div>
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    }
+            @using (Html.BeginForm("Edit", "MachineSelection", FormMethod.Post))
+            {
+                @Html.ValidationSummary(true)
+                @Html.AntiForgeryToken()
+            <fieldset>
+                <legend>Edit existing machine</legend>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Id)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.Id)
+                    @Html.ValidationMessageFor(model => model.Id)
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Ip)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.Ip)
+                    @Html.ValidationMessageFor(model => model.Ip)
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Description)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.Description)
+                    @Html.ValidationMessageFor(model => model.Description)
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.NameSpaceIndex)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.NameSpaceIndex)
+                    @Html.ValidationMessageFor(model => model.NameSpaceIndex)
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.AmountNode)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.AmountNode)
+                    @Html.ValidationMessageFor(model => model.AmountNode)
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.StateNode)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.StateNode)
+                    @Html.ValidationMessageFor(model => model.StateNode)
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.DefectNode)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.DefectNode)
+                    @Html.ValidationMessageFor(model => model.DefectNode)
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.AcceptableNode)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.AcceptableNode)
+                    @Html.ValidationMessageFor(model => model.AcceptableNode)
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.AmountToProduceNode)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.AmountToProduceNode)
+                    @Html.ValidationMessageFor(model => model.AmountToProduceNode)
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.MachSpeedNode)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.MachSpeedNode)
+                    @Html.ValidationMessageFor(model => model.MachSpeedNode)
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.TemperatureNode)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.TemperatureNode)
+                    @Html.ValidationMessageFor(model => model.TemperatureNode)
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.HumidityNode)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.HumidityNode)
+                    @Html.ValidationMessageFor(model => model.HumidityNode)
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.VibrationNode)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.VibrationNode)
+                    @Html.ValidationMessageFor(model => model.VibrationNode)
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.StopreasonNode)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.StopreasonNode)
+                    @Html.ValidationMessageFor(model => model.StopreasonNode)
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.BatchIdNode)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.BatchIdNode)
+                    @Html.ValidationMessageFor(model => model.BatchIdNode)
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.BarleyNode)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.BarleyNode)
+                    @Html.ValidationMessageFor(model => model.BarleyNode)
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.HopsNode)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.HopsNode)
+                    @Html.ValidationMessageFor(model => model.HopsNode)
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.MaltNode)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.MaltNode)
+                    @Html.ValidationMessageFor(model => model.MaltNode)
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.WheatNode)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.WheatNode)
+                    @Html.ValidationMessageFor(model => model.WheatNode)
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.YeastNode)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.YeastNode)
+                    @Html.ValidationMessageFor(model => model.YeastNode)
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.MaintenanceTriggerNode)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.MaintenanceTriggerNode)
+                    @Html.ValidationMessageFor(model => model.MaintenanceTriggerNode)
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.MaintenanceCounterNode)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.MaintenanceCounterNode)
+                    @Html.ValidationMessageFor(model => model.MaintenanceCounterNode)
+                </div>
+                <div class="editor-field">
+                    <span>@ViewBag.statusMessage</span>
+                    @Html.HiddenFor(model => model.Id)
+                </div>
+                <input type="submit" value="Edit " />
+            </fieldset>
+            }
+            </div>
+
+        </div>
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }
 </body>
 </html>

@@ -350,6 +350,7 @@
     <Content Include="Views\Overview\Index.cshtml" />
     <Content Include="Views\Tracking\Index.cshtml" />
     <Content Include="Views\Tracking\Beers.cshtml" />
+    <Content Include="Views\MachineSelection\EditMachine.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,46 @@
+@import "mixins.scss";
+@mixin widgets_brease_Label_base {
+	@include elemWidth(80);
+	@include elemHeight(30);
+	border-width: 0px;
+	@include border-radius(0px);
+	background-color: transparent;
+	background-image: none;
+	border-color: #C8C8C8;
+&:before {
+	border-color: #C8C8C8;
+}
+&:after {
+	border-color: #C8C8C8;
+}
+	border-style: none;
+&:before {
+	border-style: none;
+}
+&:after {
+	border-style: none;
+}
+	color: #000000;
+	@include text-alignment-all('left');
+	opacity: 1;
+	@include rotate(0deg);
+span {
+	font-family: Arial;
+}
+	font-size: 14px;
+	@include font-weight-bold(false);
+	@include font-style-italic(false);
+span {
+	@include text-decoration-underline(false);
+}
+span {
+	padding: 0px 15px 0px 15px;
+}
+	margin: 0px;
+	@include box-shadow(none);
+
+}
+
+.widgets_brease_Label_style_default {
+@include widgets_brease_Label_base 
+}

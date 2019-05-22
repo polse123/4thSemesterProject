@@ -1,0 +1,7 @@
+@import "mixins.scss";
+@mixin widgets_brease_FragmentLoader_base {
+	@include elemWidth(200);
+	@include elemHeight(200);
+
+}
+

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Help>
+	<Section Text="Definitions">
+		<Page Text="Config" File="config.html#top" />
+		<Page Text="DataTypes" File="datatypes.html#top" />
+		<Page Text="Enum" File="enum.html#top" />
+		<Page Text="Types" File="types.html#top" />
+	</Section>
+</Help>

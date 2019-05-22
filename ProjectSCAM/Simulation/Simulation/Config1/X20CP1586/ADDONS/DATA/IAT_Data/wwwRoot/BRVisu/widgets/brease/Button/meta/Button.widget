@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WidgetLibrary xmlns="http://www.br-automation.com/iat2014/widget">
+	<Widget name="widgets.brease.Button">
+		<ASEngineeringInfo>
+			<IsProjectable>true</IsProjectable>
+		</ASEngineeringInfo>
+		<Dependencies>
+			<Files>
+				<File>brease/core/BaseWidget.js</File>
+				<File>brease/decorators/LanguageDependency.js</File>
+				<File>brease/enum/Enum.js</File>
+				<File>brease/core/Types.js</File>
+				<File>brease/core/Utils.js</File>
+				<File>widgets/brease/common/libs/wfUtils/UtilsImage.js</File>
+				<File>brease/events/BreaseEvent.js</File>
+			</Files>
+			<Widgets>
+				<Widget>widgets/brease/Button/Button.js</Widget>
+			</Widgets>
+		</Dependencies>
+		<Categories>
+			<Category name="Category">Buttons</Category>
+		</Categories>
+		<Descriptions>
+			<Description name="short">Button mit projektierten Aktionen (onClick)</Description>
+			<Description name="de">Löst ein Ereignis mit einer zugeordneten Aktion aus, wenn der Benutzer darauf klickt</Description>
+			<Description name="en">Raises an event with an associated action when the user clicks it</Description>
+		</Descriptions>
+		<Inheritance>
+			<Class level="0">widgets.brease.Button</Class>
+			<Class level="1">brease.core.BaseWidget</Class>
+		</Inheritance>
+		<Parents>
+			<Parent>*</Parent>
+		</Parents>
+		<Children>
+		</Children>
+		<Methods>
+			<Method name="RemoveImage">
+				<Description>Remove an image.</Description>
+			</Method>
+			<Method name="RemoveMouseDownText">
+				<Description>Remove mouseDownText.</Description>
+			</Method>
+			<Method name="RemoveText">
+				<Description>Remove text.</Description>
+			</Method>
+			<Method name="SetEnable">
+				<Description>setter for binding of &apos;enable&apos;</Description>
+				<Arguments>
+					<Argument name="value" type="Boolean" index="0">
+						<Description>State of &apos;enable&apos; (false = disabled, true = enabled)&lt;/p&gt;
+
+
+
+						</Description>
+					</Argument>
+				</Arguments>
+			</Method>
+			<Method name="SetImage">
+				<Description>Sets an image.</Description>
+				<Arguments>
+					<Argument name="image" type="ImagePath" index="0">
+					</Argument>
+				</Arguments>
+			</Method>
+			<Method name="SetMouseDownImage">
+				<Description>Sets the image when mouse down</Description>
+				<Arguments>
+					<Argument name="mouseDownImage" type="ImagePath" index="0">
+					</Argument>
+				</Arguments>
+			</Method>
+			<Method name="SetMouseDownText">
+				<Description>Sets the visible text for pressed state. This method can remove an optional textkey.</Description>
+				<Arguments>
+					<Argument name="text" type="String" index="0">
+					</Argument>
+					<Argument name="keepKey" type="Boolean" index="1">
+						<Description>Set true, if textkey should not be removed</Description>
+					</Argument>
+				</Arguments>
+			</Method>
+			<Method name="SetStyle">
+				<Arguments>
+					<Argument name="value" type="StyleReference" index="0">
+					</Argument>
+				</Arguments>
+			</Method>
+			<Method name="SetText">
+				<Description>Sets the visible text. This method can remove an optional textkey.</Description>
+				<Arguments>
+					<Argument name="text" type="String" index="0">
+					</Argument>
+					<Argument name="keepKey" type="Boolean" index="1">
+						<Description>Set true, if textkey should not be removed</Description>
+					</Argument>
+				</Arguments>
+			</Method>
+			<Method name="SetVisible">
+				<Description>Sets the visibility of the widget.</Description>
+				<Arguments>
+					<Argument name="value" type="Boolean" index="0">
+						<Description>State of visibility (false = hide, true = show)&lt;/p&gt;
+
+
+
+						</Description>
+					</Argument>
+				</Arguments>
+			</Method>
+		</Methods>
+		<Events>
+			<Event name="Click">
+				<Description>Fired when element is clicked on.</Description>
+			</Event>
+			<Event name="DoubleClick">
+				<Description>Fired when element has double click.</Description>
+			</Event>
+			<Event name="EnableChanged">
+				<Arguments>
+					<Argument name="value" type="Boolean" index="0">
+						<Description>value reflects state of property &apos;enable&apos;.&lt;br/&gt;
+Fired when enabled state changes.&lt;/p&gt;
+
+
+
+						</Description>
+					</Argument>
+				</Arguments>
+			</Event>
+			<Event name="MouseDown">
+				<Description>Fired when widget enters mouseDown state</Description>
+			</Event>
+			<Event name="MouseUp">
+				<Description>Fired when widget enters mouseUp state</Description>
+			</Event>
+			<Event name="VisibleChanged">
+				<Arguments>
+					<Argument name="value" type="Boolean" index="0">
+						<Description>value reflects state of property &apos;visible&apos;.&lt;br/&gt;
+Fired when visible state changes.&lt;/p&gt;
+
+
+
+						</Description>
+					</Argument>
+				</Arguments>
+			</Event>
+		</Events>
+		<Properties>
+			<Property name="breakWord" type="Boolean" initOnly="true" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Behavior" defaultValue="false">
+				<Description>Allows lines to be broken within words if an otherwise unbreakable string is too long to fit.
+				</Description>
+			</Property>
+			<Property name="ellipsis" type="Boolean" initOnly="true" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Behavior" defaultValue="false">
+				<Description>If true, overflow of text is symbolized with an ellipsis. This option has no effect, if wordWrap = true.
+				</Description>
+			</Property>
+			<Property name="enable" type="Boolean" initOnly="false" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Behavior" defaultValue="true">
+				<Description>Initial option to enable widget.
+				</Description>
+			</Property>
+			<Property name="image" type="ImagePath" initOnly="false" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Appearance" defaultValue="">
+				<Description>Path to an optional image.
+				</Description>
+			</Property>
+			<Property name="imageAlign" type="brease.enum.ImageAlign" initOnly="true" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Appearance" defaultValue="left">
+				<Description>Position of image relative to text.
+				</Description>
+			</Property>
+			<Property name="mouseDownImage" type="ImagePath" initOnly="false" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Appearance" defaultValue="">
+				<Description>Path to an optional image for mouseDown.
+				</Description>
+			</Property>
+			<Property name="mouseDownText" type="String" initOnly="false" localizable="true" editableBinding="false" readOnly="false" required="false" projectable="true" category="Appearance" defaultValue="">
+				<Description>Text which is displayed in the button when pressed
+				</Description>
+			</Property>
+			<Property name="multiLine" type="Boolean" initOnly="true" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Behavior" defaultValue="false">
+				<Description>If true, more than one line is possible.&lt;br/&gt;
+Text will wrap when necessary (if property wordWrap is set to true) or at explicit line breaks (\n).
+If false, text will never wrap to the next line. The text continues on the same line.
+				</Description>
+			</Property>
+			<Property name="permissionOperate" type="RoleCollection" initOnly="true" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Accessibility">
+				<Description>restricts operability to users, which have given roles
+				</Description>
+			</Property>
+			<Property name="permissionView" type="RoleCollection" initOnly="true" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Accessibility">
+				<Description>restricts visibility to users, which have given roles
+				</Description>
+			</Property>
+			<Property name="style" type="StyleReference" initOnly="false" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Appearance" defaultValue="default">
+				<Description>reference to a style for this widget type
+				</Description>
+			</Property>
+			<Property name="text" type="String" initOnly="false" localizable="true" editableBinding="false" readOnly="false" required="false" projectable="true" category="Appearance" defaultValue="">
+				<Description>Text which is displayed in the button
+				</Description>
+			</Property>
+			<Property name="visible" type="Boolean" initOnly="false" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Behavior" defaultValue="true">
+				<Description>change visibility
+				</Description>
+			</Property>
+			<Property name="wordWrap" type="Boolean" initOnly="true" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Behavior" defaultValue="false">
+				<Description>If true, text will wrap when necessary.&lt;br/&gt;
+This property has no effect, if multiLine=false
+				</Description>
+			</Property>
+		</Properties>
+	<BindingTemplates>
+  
+</BindingTemplates>
+<PropertyGroups>
+  <PropertyGroup name="Size" type="String" category="Layout">
+    <Description>outer height and width of widget</Description>
+  </PropertyGroup>
+  <PropertyGroup name="Position" type="String" category="Layout">
+    <Description>top and left of widget</Description>
+  </PropertyGroup>
+</PropertyGroups>
+<StyleProperties defaultStyle="default">
+  <StyleProperty name="width" type="Size" not_styleable="true" owner="widgets.brease.Button" category="Layout" groupRefId="Size" groupOrder="1" default="100">
+    <StyleElement attribute="@include elemWidth($value)"/>
+    <Description>outer width of widget</Description>
+  </StyleProperty>
+  <StyleProperty name="height" type="Size" not_styleable="true" owner="widgets.brease.Button" category="Layout" groupRefId="Size" groupOrder="2" default="30">
+    <StyleElement attribute="@include elemHeight($value)"/>
+    <Description>outer height of widget</Description>
+  </StyleProperty>
+  <StyleProperty name="top" type="Integer" not_styleable="true" owner="brease.core.BaseWidget" category="Layout" groupRefId="Position" groupOrder="1">
+    <StyleElement attribute="@include elemTop($value)"/>
+    <Description>absolute position measured from top boundary of parent container</Description>
+  </StyleProperty>
+  <StyleProperty name="left" type="Integer" not_styleable="true" owner="brease.core.BaseWidget" category="Layout" groupRefId="Position" groupOrder="2">
+    <StyleElement attribute="@include elemLeft($value)"/>
+    <Description>absolute position measured from left boundary of parent container</Description>
+  </StyleProperty>
+  <StyleProperty name="zIndex" type="UInteger" not_styleable="true" owner="brease.core.BaseWidget" category="Layout" required="true">
+    <StyleElement attribute="z-index"/>
+    <Description>The zIndex property specifies the z-order of a widget and its childs.&lt;br/&gt;&#xD;
+        When widgets overlap, z-order determines which one covers the other. A widget with a larger zIndex generally covers a widget with a lower one.&lt;br/&gt;&#xD;
+        The zIndex must be unique within a content.&lt;br/&gt;</Description>
+  </StyleProperty>
+  <StyleProperty name="imageWidth" type="Size" not_styleable="true" category="Appearance" default="0">
+    <StyleElement selector="img" attribute="@include imageWidth($value)"/>
+    <StyleElement selector="svg" attribute="@include imageWidth($value)"/>
+    <Description>width of the image</Description>
+  </StyleProperty>
+  <StyleProperty name="imageHeight" type="Size" not_styleable="true" category="Appearance" default="0">
+    <StyleElement selector="img" attribute="@include imageHeight($value)"/>
+    <StyleElement selector="svg" attribute="@include imageHeight($value)"/>
+    <Description>height of the image</Description>
+  </StyleProperty>
+  <StyleProperty name="imageColor" category="Appearance" type="Color" default="#000000">
+    <StyleElement selector="&amp;:not(.active):not(.disabled) svg" attribute="fill"/>
+    <Description>Color of the image - only apply if a SVG image is used</Description>
+  </StyleProperty>
+  <StyleProperty name="mouseDownImageColor" category="Appearance" type="Color" default="#000000">
+    <StyleElement selector="&amp;.active svg" attribute="fill"/>
+    <Description>Color of the image - only apply if a SVG image is used</Description>
+  </StyleProperty>
+  <StyleProperty name="disabledImageColor" category="Appearance" type="Color" default="#000000">
+    <StyleElement selector="&amp;.disabled svg" attribute="fill"/>
+    <Description>Color of the image - only apply if a SVG image is used</Description>
+  </StyleProperty>
+  <StyleProperty name="borderStyle" type="BorderStyle" category="Appearance" default="solid">
+    <StyleElement attribute="border-style"/>
+    <StyleElement selector="&amp;.active" attribute="border-style"/>
+    <StyleElement selector="&amp;.checked" attribute="border-style"/>
+    <StyleElement selector="&amp;.disabled" attribute="border-style"/>
+    <Description>Style of the Border of the widget</Description>
+  </StyleProperty>
+  <StyleProperty name="borderWidth" type="PixelValCollection" category="Appearance" default="2px">
+    <StyleElement attribute="border-width"/>
+    <StyleElement selector="&amp;.disabled" attribute="border-width"/>
+    <Description>Sets the width of the border. For further information, please check its type</Description>
+  </StyleProperty>
+  <StyleProperty name="cornerRadius" type="PixelValCollection" category="Appearance" default="0px">
+    <StyleElement attribute="@include border-radius($value)"/>
+    <Description>Sets the radius of the widget rounded corners. For further information, please check its type</Description>
+  </StyleProperty>
+  <StyleProperty name="backColor" category="Appearance" type="Color" default="#DBDBDB">
+    <StyleElement selector="&amp;:not(.disabled)" attribute="background-color"/>
+    <Description>Sets the background color</Description>
+  </StyleProperty>
+  <StyleProperty name="disabledBackColor" category="Appearance" type="Color" default="#F1F1F1">
+    <StyleElement selector="&amp;.disabled" attribute="background-color"/>
+    <StyleElement selector="&amp;.disabled.active" attribute="background-color"/>
+    <StyleElement selector="&amp;.disabled.checked" attribute="background-color"/>
+    <Description>Sets the background color when disabled</Description>
+  </StyleProperty>
+  <StyleProperty name="backGroundGradient" category="Appearance" type="Gradient" default="none">
+    <StyleElement selector="&amp;:not(.disabled)" attribute="background-image"/>
+    <Description>Background as a gradient</Description>
+  </StyleProperty>
+  <StyleProperty name="disabledBackGroundGradient" category="Appearance" type="Gradient" default="none">
+    <StyleElement selector="&amp;.disabled" attribute="background-image"/>
+    <StyleElement selector="&amp;.disabled.active" attribute="background-image"/>
+    <StyleElement selector="&amp;.disabled.checked" attribute="background-image"/>
+    <Description>Background as a gradient</Description>
+  </StyleProperty>
+  <StyleProperty name="mouseDownBackGroundGradient" category="Appearance" type="Gradient" default="none">
+    <StyleElement selector="&amp;.active:not(.disabled):not(.editMode)" attribute="background-image"/>
+    <StyleElement selector="&amp;.checked:not(.disabled)" attribute="background-image"/>
+    <Description>Background as a gradient when button is clicked</Description>
+  </StyleProperty>
+  <StyleProperty name="backGround" category="Appearance" type="ImagePath" default="">
+    <StyleElement attribute="@include backGroundImage('../$value')"/>
+    <Description>Sets the path for an image as background</Description>
+  </StyleProperty>
+  <StyleProperty name="borderColor" category="Appearance" type="ColorCollection" default="#5B7C70">
+    <StyleElement selector="&amp;:not(.disabled)" attribute="border-color"/>
+    <Description>Sets the border color</Description>
+  </StyleProperty>
+  <StyleProperty name="disabledBorderColor" category="Appearance" type="ColorCollection" default="#FFFFFF #C8C8C8 #C8C8C8 #FFFFFF">
+    <StyleElement selector="&amp;.disabled" attribute="border-color"/>
+    <StyleElement selector="&amp;.disabled.active" attribute="border-color"/>
+    <StyleElement selector="&amp;.disabled.checked" attribute="border-color"/>
+    <Description>Sets the color of the border when disabled</Description>
+  </StyleProperty>
+  <StyleProperty name="textColor" category="Appearance" type="Color" default="#000000">
+    <StyleElement selector="&amp;:not(.disabled) span" attribute="color"/>
+    <Description>Sets the color of the text when enabled</Description>
+  </StyleProperty>
+  <StyleProperty name="disabledTextColor" category="Appearance" type="Color" default="#989898">
+    <StyleElement selector="&amp;.disabled span" attribute="color"/>
+    <StyleElement selector="&amp;.disabled.active span" attribute="color"/>
+    <StyleElement selector="&amp;.disabled:checked span" attribute="color"/>
+    <Description>Sets the color of the text when disabled</Description>
+  </StyleProperty>
+  <StyleProperty name="mouseDownBorderColor" category="Appearance" type="ColorCollection" default="#FD7B01">
+    <StyleElement selector="&amp;.active:not(.disabled):not(.editMode)" attribute="border-color"/>
+    <StyleElement selector="&amp;.checked:not(.disabled)" attribute="border-color"/>
+    <Description>border color when button is clicked</Description>
+  </StyleProperty>
+  <StyleProperty name="mouseDownBorderWidth" category="Appearance" type="PixelValCollection" default="2px">
+    <StyleElement selector="&amp;.active:not(.disabled):not(.editMode)" attribute="border-width"/>
+    <StyleElement selector="&amp;.checked:not(.disabled)" attribute="border-width"/>
+    <Description>border width when button is clicked</Description>
+  </StyleProperty>
+  <StyleProperty name="mouseDownBackColor" category="Appearance" type="Color" default="#DBDBDB">
+    <StyleElement selector="&amp;.active:not(.disabled):not(.editMode)" attribute="background-color"/>
+    <StyleElement selector="&amp;.checked:not(.disabled)" attribute="background-color"/>
+    <Description>back color when button is clicked</Description>
+  </StyleProperty>
+  <StyleProperty name="mouseDownTextColor" category="Appearance" type="Color" default="#000000">
+    <StyleElement selector="&amp;.active:not(.disabled):not(.editMode) span" attribute="color"/>
+    <StyleElement selector="&amp;.checked:not(.disabled) span" attribute="color"/>
+    <Description>text color when button is clicked</Description>
+  </StyleProperty>
+  <StyleProperty name="textAlign" category="Appearance" type="brease.enum.TextAlign" default="center">
+    <StyleElement attribute="@include text-alignment($value)"/>
+    <Description>Alignment of the text</Description>
+  </StyleProperty>
+  <StyleProperty name="opacity" category="Appearance" type="Opacity" default="1">
+    <StyleElement attribute="opacity"/>
+    <Description>Opacity of the widget</Description>
+  </StyleProperty>
+  <StyleProperty name="rotation" category="Appearance" type="Rotation" default="0deg">
+    <StyleElement attribute="@include rotate($value)"/>
+    <Description>Rotation of widget.</Description>
+  </StyleProperty>
+  <StyleProperty name="fontSize" category="Font" type="PixelVal" default="12px">
+    <StyleElement selector="span" attribute="font-size"/>
+    <Description>Fontsize of the text in pixel</Description>
+  </StyleProperty>
+  <StyleProperty name="fontName" category="Font" type="FontName" default="Arial">
+    <StyleElement selector="span" attribute="font-family"/>
+    <Description>Fontname of the text</Description>
+  </StyleProperty>
+  <StyleProperty name="bold" category="Font" type="Boolean" default="false">
+    <StyleElement selector="span" attribute="@include font-weight-bold($value)"/>
+    <Description>If *true* font style is bold</Description>
+  </StyleProperty>
+  <StyleProperty name="italic" category="Font" type="Boolean" default="false">
+    <StyleElement selector="span" attribute="@include font-style-italic($value)"/>
+    <Description>If *true* font style is italic</Description>
+  </StyleProperty>
+  <StyleProperty name="padding" category="Layout" type="Padding" default="0px 10px">
+    <StyleElement attribute="padding"/>
+    <Description>Padding of the Widget</Description>
+  </StyleProperty>
+  <StyleProperty name="margin" category="Layout" type="Margin" default="0px">
+    <StyleElement attribute="margin"/>
+    <Description>Margin of the Widget</Description>
+  </StyleProperty>
+  <StyleProperty name="shadow" type="Shadow" category="Appearance" default="none">
+    <StyleElement attribute="@include box-shadow($value)"/>
+    <StyleElement selector="&amp;.disabled.active" attribute="@include box-shadow($value)"/>
+    <StyleElement selector="&amp;.disabled.checked" attribute="@include box-shadow($value)"/>
+    <Description>Shadow of the Widget</Description>
+  </StyleProperty>
+  <StyleProperty name="mouseDownShadow" type="Shadow" category="Appearance" default="none">
+    <StyleElement selector="&amp;.active:not(.disabled):not(.editMode)" attribute="@include box-shadow($value)"/>
+    <StyleElement selector="&amp;.checked:not(.disabled)" attribute="@include box-shadow($value)"/>
+    <Description>Shadow of the Widget when button clicked</Description>
+  </StyleProperty>
+</StyleProperties>
+</Widget>
+</WidgetLibrary>

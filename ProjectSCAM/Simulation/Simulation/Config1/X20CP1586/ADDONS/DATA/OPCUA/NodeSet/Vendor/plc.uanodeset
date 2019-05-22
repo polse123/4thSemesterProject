@@ -1,0 +1,1199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UANodeSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:uax="http://opcfoundation.org/UA/2008/02/Types.xsd" xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd" xmlns:s1="urn:B&amp;R/plc/Types.xsd" xmlns:s2="http://PLCopen.org/OpcUa/IEC61131-3/Types.xsd" xmlns:s3="http://opcfoundation.org/UA/DI/Types.xsd" xmlns:ua="http://unifiedautomation.com/Configuration/NodeSet.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <NamespaceUris>
+        <Uri>urn:B&amp;R/plc/</Uri>
+        <Uri>http://PLCopen.org/OpcUa/IEC61131-3/</Uri>
+        <Uri>http://opcfoundation.org/UA/DI/</Uri>
+    </NamespaceUris>
+    <Models>
+        <Model ModelUri="urn:B&amp;R/plc/" PublicationDate="2013-10-11T00:00:00Z" Version="1.00">
+            <RequiredModel ModelUri="http://opcfoundation.org/UA/" PublicationDate="2016-04-15T00:00:00Z" Version="1.03"/>
+            <RequiredModel ModelUri="http://opcfoundation.org/UA/DI/" PublicationDate="2013-12-02T00:00:00Z" Version="1.01"/>
+            <RequiredModel ModelUri="http://PLCopen.org/OpcUa/IEC61131-3/" PublicationDate="2010-03-24T00:00:00Z" Version="1.00"/>
+        </Model>
+    </Models>
+    <Aliases>
+        <Alias Alias="Boolean">i=1</Alias>
+        <Alias Alias="Int32">i=6</Alias>
+        <Alias Alias="String">i=12</Alias>
+        <Alias Alias="DateTime">i=13</Alias>
+        <Alias Alias="ByteString">i=15</Alias>
+        <Alias Alias="NodeId">i=17</Alias>
+        <Alias Alias="LocalizedText">i=21</Alias>
+        <Alias Alias="Organizes">i=35</Alias>
+        <Alias Alias="HasModellingRule">i=37</Alias>
+        <Alias Alias="HasEncoding">i=38</Alias>
+        <Alias Alias="HasDescription">i=39</Alias>
+        <Alias Alias="HasTypeDefinition">i=40</Alias>
+        <Alias Alias="HasSubtype">i=45</Alias>
+        <Alias Alias="HasProperty">i=46</Alias>
+        <Alias Alias="HasComponent">i=47</Alias>
+        <Alias Alias="IdType">i=256</Alias>
+        <Alias Alias="NumericRange">i=291</Alias>
+        <Alias Alias="Argument">i=296</Alias>
+        <Alias Alias="BrAccessRightsDataType">ns=1;i=50010</Alias>
+        <Alias Alias="BrRoleAccessDataType">ns=1;i=50020</Alias>
+        <Alias Alias="BrNodeAccessDataType">ns=1;i=50030</Alias>
+        <Alias Alias="BrAuthorizationDataType">ns=1;i=50040</Alias>
+    </Aliases>
+    <Extensions>
+        <Extension>
+            <ua:ModelInfo Tool="UaModeler" Hash="ka6L+4wlsr4/6iN8EP3GlQ==" Version="1.5.1"/>
+        </Extension>
+        <Extension>
+            <Provider>PLC</Provider>
+        </Extension>
+    </Extensions>
+    <UADataType NodeId="ns=1;i=50000" BrowseName="1:BrRangeViolationActionDataType">
+        <DisplayName>BrRangeViolationActionDataType</DisplayName>
+        <References>
+            <Reference ReferenceType="HasSubtype" IsForward="false">i=29</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;i=6001</Reference>
+        </References>
+        <Definition Name="1:BrRangeViolationActionDataType">
+            <Field Name="Accept" Value="0"/>
+            <Field Name="Reject" Value="1"/>
+            <Field Name="Clamp" Value="2"/>
+        </Definition>
+    </UADataType>
+    <UAVariable DataType="LocalizedText" ParentNodeId="ns=1;i=50000" ValueRank="1" NodeId="ns=1;i=6001" ArrayDimensions="3" BrowseName="EnumStrings">
+        <DisplayName>EnumStrings</DisplayName>
+        <References>
+            <Reference ReferenceType="HasModellingRule">i=78</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=50000</Reference>
+        </References>
+        <Value>
+            <uax:ListOfLocalizedText>
+                <uax:LocalizedText>
+                    <uax:Text>Accept</uax:Text>
+                </uax:LocalizedText>
+                <uax:LocalizedText>
+                    <uax:Text>Reject</uax:Text>
+                </uax:LocalizedText>
+                <uax:LocalizedText>
+                    <uax:Text>Clamp</uax:Text>
+                </uax:LocalizedText>
+            </uax:ListOfLocalizedText>
+        </Value>
+    </UAVariable>
+    <UADataType NodeId="ns=1;i=50010" BrowseName="1:BrAccessRightsDataType">
+        <DisplayName>BrAccessRightsDataType</DisplayName>
+        <References>
+            <Reference ReferenceType="HasSubtype" IsForward="false">i=22</Reference>
+            <Reference ReferenceType="HasEncoding">ns=1;i=5006</Reference>
+            <Reference ReferenceType="HasEncoding">ns=1;i=5007</Reference>
+        </References>
+        <Definition Name="1:BrAccessRightsDataType">
+            <Field DataType="String" Name="Name"/>
+            <Field DataType="Boolean" Name="Allow"/>
+            <Field DataType="Boolean" Name="Reserved"/>
+        </Definition>
+    </UADataType>
+    <UAVariable DataType="String" ParentNodeId="ns=1;i=6002" NodeId="ns=1;i=6006" BrowseName="1:BrAccessRightsDataType">
+        <DisplayName>BrAccessRightsDataType</DisplayName>
+        <References>
+            <Reference ReferenceType="HasDescription" IsForward="false">ns=1;i=5006</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=6002</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=69</Reference>
+        </References>
+        <Value>
+            <uax:String>BrAccessRightsDataType</uax:String>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="String" ParentNodeId="ns=1;i=6004" NodeId="ns=1;i=6007" BrowseName="1:BrAccessRightsDataType">
+        <DisplayName>BrAccessRightsDataType</DisplayName>
+        <References>
+            <Reference ReferenceType="HasDescription" IsForward="false">ns=1;i=5007</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=6004</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=69</Reference>
+        </References>
+        <Value>
+            <uax:String>//xs:element[@name='BrAccessRightsDataType']</uax:String>
+        </Value>
+    </UAVariable>
+    <UADataType NodeId="ns=1;i=50040" BrowseName="1:BrAuthorizationDataType">
+        <DisplayName>BrAuthorizationDataType</DisplayName>
+        <References>
+            <Reference ReferenceType="HasEncoding">ns=1;i=5012</Reference>
+            <Reference ReferenceType="HasEncoding">ns=1;i=5013</Reference>
+            <Reference ReferenceType="HasSubtype" IsForward="false">i=22</Reference>
+        </References>
+        <Definition Name="1:BrAuthorizationDataType">
+            <Field DataType="NodeId" Name="NodeId"/>
+            <Field DataType="Boolean" Name="Inherit"/>
+            <Field DataType="BrNodeAccessDataType" ValueRank="1" Name="Nodes"/>
+        </Definition>
+    </UADataType>
+    <UAVariable DataType="String" ParentNodeId="ns=1;i=6002" NodeId="ns=1;i=6018" BrowseName="1:BrAuthorizationDataType">
+        <DisplayName>BrAuthorizationDataType</DisplayName>
+        <References>
+            <Reference ReferenceType="HasDescription" IsForward="false">ns=1;i=5012</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=6002</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=69</Reference>
+        </References>
+        <Value>
+            <uax:String>BrAuthorizationDataType</uax:String>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="String" ParentNodeId="ns=1;i=6004" NodeId="ns=1;i=6019" BrowseName="1:BrAuthorizationDataType">
+        <DisplayName>BrAuthorizationDataType</DisplayName>
+        <References>
+            <Reference ReferenceType="HasDescription" IsForward="false">ns=1;i=5013</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=6004</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=69</Reference>
+        </References>
+        <Value>
+            <uax:String>//xs:element[@name='BrAuthorizationDataType']</uax:String>
+        </Value>
+    </UAVariable>
+    <UADataType NodeId="ns=1;i=50030" BrowseName="1:BrNodeAccessDataType">
+        <DisplayName>BrNodeAccessDataType</DisplayName>
+        <References>
+            <Reference ReferenceType="HasSubtype" IsForward="false">i=22</Reference>
+            <Reference ReferenceType="HasEncoding">ns=1;i=5010</Reference>
+            <Reference ReferenceType="HasEncoding">ns=1;i=5011</Reference>
+        </References>
+        <Definition Name="1:BrNodeAccessDataType">
+            <Field DataType="BrRoleAccessDataType" ValueRank="1" Name="Roles"/>
+        </Definition>
+    </UADataType>
+    <UAVariable DataType="String" ParentNodeId="ns=1;i=6002" NodeId="ns=1;i=6015" BrowseName="1:BrNodeAccessDataType">
+        <DisplayName>BrNodeAccessDataType</DisplayName>
+        <References>
+            <Reference ReferenceType="HasDescription" IsForward="false">ns=1;i=5010</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=6002</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=69</Reference>
+        </References>
+        <Value>
+            <uax:String>BrNodeAccessDataType</uax:String>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="String" ParentNodeId="ns=1;i=6004" NodeId="ns=1;i=6016" BrowseName="1:BrNodeAccessDataType">
+        <DisplayName>BrNodeAccessDataType</DisplayName>
+        <References>
+            <Reference ReferenceType="HasDescription" IsForward="false">ns=1;i=5011</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=6004</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=69</Reference>
+        </References>
+        <Value>
+            <uax:String>//xs:element[@name='BrNodeAccessDataType']</uax:String>
+        </Value>
+    </UAVariable>
+    <UADataType NodeId="ns=1;i=50020" BrowseName="1:BrRoleAccessDataType">
+        <DisplayName>BrRoleAccessDataType</DisplayName>
+        <References>
+            <Reference ReferenceType="HasSubtype" IsForward="false">i=22</Reference>
+            <Reference ReferenceType="HasEncoding">ns=1;i=5008</Reference>
+            <Reference ReferenceType="HasEncoding">ns=1;i=5009</Reference>
+        </References>
+        <Definition Name="1:BrRoleAccessDataType">
+            <Field DataType="String" Name="Name"/>
+            <Field DataType="BrAccessRightsDataType" ValueRank="1" Name="Rights"/>
+        </Definition>
+    </UADataType>
+    <UAVariable DataType="String" ParentNodeId="ns=1;i=6002" NodeId="ns=1;i=6011" BrowseName="1:BrRoleAccessDataType">
+        <DisplayName>BrRoleAccessDataType</DisplayName>
+        <References>
+            <Reference ReferenceType="HasDescription" IsForward="false">ns=1;i=5008</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=6002</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=69</Reference>
+        </References>
+        <Value>
+            <uax:String>BrRoleAccessDataType</uax:String>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="String" ParentNodeId="ns=1;i=6004" NodeId="ns=1;i=6012" BrowseName="1:BrRoleAccessDataType">
+        <DisplayName>BrRoleAccessDataType</DisplayName>
+        <References>
+            <Reference ReferenceType="HasDescription" IsForward="false">ns=1;i=5009</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=6004</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=69</Reference>
+        </References>
+        <Value>
+            <uax:String>//xs:element[@name='BrRoleAccessDataType']</uax:String>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="ByteString" NodeId="ns=1;i=6002" BrowseName="1:BR.PLC">
+        <DisplayName>BR.PLC</DisplayName>
+        <Description>Collects the data type descriptions of urn:B&amp;R/plc/</Description>
+        <References>
+            <Reference ReferenceType="HasComponent">ns=1;i=6006</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;i=6018</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;i=6015</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;i=6011</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=72</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;i=6003</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">i=93</Reference>
+        </References>
+        <Value>
+            <uax:ByteString>PG9wYzpUeXBlRGljdGlvbmFyeSB4bWxuczp4c2k9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZ
+        W1hLWluc3RhbmNlIiB4bWxuczp0bnM9InVybjpCJmFtcDtSL3BsYy8iIERlZmF1bHRCeXRlT
+        3JkZXI9IkxpdHRsZUVuZGlhbiIgeG1sbnM6b3BjPSJodHRwOi8vb3BjZm91bmRhdGlvbi5vc
+        mcvQmluYXJ5U2NoZW1hLyIgeG1sbnM6dWE9Imh0dHA6Ly9vcGNmb3VuZGF0aW9uLm9yZy9VQ
+        S8iIFRhcmdldE5hbWVzcGFjZT0idXJuOkImYW1wO1IvcGxjLyI+CiA8b3BjOkltcG9ydCBOY
+        W1lc3BhY2U9Imh0dHA6Ly9vcGNmb3VuZGF0aW9uLm9yZy9VQS8iLz4KIDxvcGM6U3RydWN0d
+        XJlZFR5cGUgQmFzZVR5cGU9InVhOkV4dGVuc2lvbk9iamVjdCIgTmFtZT0iQnJBY2Nlc3NSa
+        WdodHNEYXRhVHlwZSI+CiAgPG9wYzpGaWVsZCBUeXBlTmFtZT0ib3BjOkNoYXJBcnJheSIgT
+        mFtZT0iTmFtZSIvPgogIDxvcGM6RmllbGQgVHlwZU5hbWU9Im9wYzpCb29sZWFuIiBOYW1lP
+        SJBbGxvdyIvPgogIDxvcGM6RmllbGQgVHlwZU5hbWU9Im9wYzpCb29sZWFuIiBOYW1lPSJSZ
+        XNlcnZlZCIvPgogPC9vcGM6U3RydWN0dXJlZFR5cGU+CiA8b3BjOlN0cnVjdHVyZWRUeXBlI
+        EJhc2VUeXBlPSJ1YTpFeHRlbnNpb25PYmplY3QiIE5hbWU9IkJyQXV0aG9yaXphdGlvbkRhd
+        GFUeXBlIj4KICA8b3BjOkZpZWxkIFR5cGVOYW1lPSJ1YTpOb2RlSWQiIE5hbWU9Ik5vZGVJZ
+        CIvPgogIDxvcGM6RmllbGQgVHlwZU5hbWU9Im9wYzpCb29sZWFuIiBOYW1lPSJJbmhlcml0I
+        i8+CiAgPG9wYzpGaWVsZCBUeXBlTmFtZT0ib3BjOkludDMyIiBOYW1lPSJOb09mTm9kZXMiL
+        z4KICA8b3BjOkZpZWxkIExlbmd0aEZpZWxkPSJOb09mTm9kZXMiIFR5cGVOYW1lPSJ0bnM6Q
+        nJOb2RlQWNjZXNzRGF0YVR5cGUiIE5hbWU9Ik5vZGVzIi8+CiA8L29wYzpTdHJ1Y3R1cmVkV
+        HlwZT4KIDxvcGM6U3RydWN0dXJlZFR5cGUgQmFzZVR5cGU9InVhOkV4dGVuc2lvbk9iamVjd
+        CIgTmFtZT0iQnJOb2RlQWNjZXNzRGF0YVR5cGUiPgogIDxvcGM6RmllbGQgVHlwZU5hbWU9I
+        m9wYzpJbnQzMiIgTmFtZT0iTm9PZlJvbGVzIi8+CiAgPG9wYzpGaWVsZCBMZW5ndGhGaWVsZ
+        D0iTm9PZlJvbGVzIiBUeXBlTmFtZT0idG5zOkJyUm9sZUFjY2Vzc0RhdGFUeXBlIiBOYW1lP
+        SJSb2xlcyIvPgogPC9vcGM6U3RydWN0dXJlZFR5cGU+CiA8b3BjOlN0cnVjdHVyZWRUeXBlI
+        EJhc2VUeXBlPSJ1YTpFeHRlbnNpb25PYmplY3QiIE5hbWU9IkJyUm9sZUFjY2Vzc0RhdGFUe
+        XBlIj4KICA8b3BjOkZpZWxkIFR5cGVOYW1lPSJvcGM6Q2hhckFycmF5IiBOYW1lPSJOYW1lI
+        i8+CiAgPG9wYzpGaWVsZCBUeXBlTmFtZT0ib3BjOkludDMyIiBOYW1lPSJOb09mUmlnaHRzI
+        i8+CiAgPG9wYzpGaWVsZCBMZW5ndGhGaWVsZD0iTm9PZlJpZ2h0cyIgVHlwZU5hbWU9InRuc
+        zpCckFjY2Vzc1JpZ2h0c0RhdGFUeXBlIiBOYW1lPSJSaWdodHMiLz4KIDwvb3BjOlN0cnVjd
+        HVyZWRUeXBlPgogPG9wYzpFbnVtZXJhdGVkVHlwZSBMZW5ndGhJbkJpdHM9IjMyIiBOYW1lP
+        SJCclJhbmdlVmlvbGF0aW9uQWN0aW9uRGF0YVR5cGUiPgogIDxvcGM6RW51bWVyYXRlZFZhb
+        HVlIE5hbWU9IkFjY2VwdCIgVmFsdWU9IjAiLz4KICA8b3BjOkVudW1lcmF0ZWRWYWx1ZSBOY
+        W1lPSJSZWplY3QiIFZhbHVlPSIxIi8+CiAgPG9wYzpFbnVtZXJhdGVkVmFsdWUgTmFtZT0iQ
+        2xhbXAiIFZhbHVlPSIyIi8+CiA8L29wYzpFbnVtZXJhdGVkVHlwZT4KPC9vcGM6VHlwZURpY
+        3Rpb25hcnk+Cg==</uax:ByteString>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="String" ParentNodeId="ns=1;i=6002" NodeId="ns=1;i=6003" BrowseName="NamespaceUri">
+        <DisplayName>NamespaceUri</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=6002</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:String>urn:B&amp;R/plc/</uax:String>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="ByteString" NodeId="ns=1;i=6004" BrowseName="1:BR.PLC">
+        <DisplayName>BR.PLC</DisplayName>
+        <Description>Collects the data type descriptions of urn:B&amp;R/plc/</Description>
+        <References>
+            <Reference ReferenceType="HasComponent">ns=1;i=6007</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;i=6019</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;i=6016</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;i=6012</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=72</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;i=6005</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">i=92</Reference>
+        </References>
+        <Value>
+            <uax:ByteString>PHhzOnNjaGVtYSBlbGVtZW50Rm9ybURlZmF1bHQ9InF1YWxpZmllZCIgdGFyZ2V0TmFtZXNwYWNlPSJ1c
+        m46QiZhbXA7Ui9wbGMvVHlwZXMueHNkIiB4bWxuczp0bnM9InVybjpCJmFtcDtSL3BsYy9Ue
+        XBlcy54c2QiIHhtbG5zOnVhPSJodHRwOi8vb3BjZm91bmRhdGlvbi5vcmcvVUEvMjAwOC8wM
+        i9UeXBlcy54c2QiIHhtbG5zOnhzPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxL1hNTFNjaGVtY
+        SI+CiA8eHM6aW1wb3J0IG5hbWVzcGFjZT0iaHR0cDovL29wY2ZvdW5kYXRpb24ub3JnL1VBL
+        zIwMDgvMDIvVHlwZXMueHNkIi8+CiA8eHM6c2ltcGxlVHlwZSBuYW1lPSJCclJhbmdlVmlvb
+        GF0aW9uQWN0aW9uRGF0YVR5cGUiPgogIDx4czpyZXN0cmljdGlvbiBiYXNlPSJ4czpzdHJpb
+        mciPgogICA8eHM6ZW51bWVyYXRpb24gdmFsdWU9IkFjY2VwdF8wIi8+CiAgIDx4czplbnVtZ
+        XJhdGlvbiB2YWx1ZT0iUmVqZWN0XzEiLz4KICAgPHhzOmVudW1lcmF0aW9uIHZhbHVlPSJDb
+        GFtcF8yIi8+CiAgPC94czpyZXN0cmljdGlvbj4KIDwveHM6c2ltcGxlVHlwZT4KIDx4czplb
+        GVtZW50IHR5cGU9InRuczpCclJhbmdlVmlvbGF0aW9uQWN0aW9uRGF0YVR5cGUiIG5hbWU9I
+        kJyUmFuZ2VWaW9sYXRpb25BY3Rpb25EYXRhVHlwZSIvPgogPHhzOmNvbXBsZXhUeXBlIG5hb
+        WU9Ikxpc3RPZkJyUmFuZ2VWaW9sYXRpb25BY3Rpb25EYXRhVHlwZSI+CiAgPHhzOnNlcXVlb
+        mNlPgogICA8eHM6ZWxlbWVudCBtaW5PY2N1cnM9IjAiIG1heE9jY3Vycz0idW5ib3VuZGVkI
+        iB0eXBlPSJ0bnM6QnJSYW5nZVZpb2xhdGlvbkFjdGlvbkRhdGFUeXBlIiBuYW1lPSJCclJhb
+        mdlVmlvbGF0aW9uQWN0aW9uRGF0YVR5cGUiIG5pbGxhYmxlPSJ0cnVlIi8+CiAgPC94czpzZ
+        XF1ZW5jZT4KIDwveHM6Y29tcGxleFR5cGU+CiA8eHM6ZWxlbWVudCB0eXBlPSJ0bnM6TGlzd
+        E9mQnJSYW5nZVZpb2xhdGlvbkFjdGlvbkRhdGFUeXBlIiBuYW1lPSJMaXN0T2ZCclJhbmdlV
+        mlvbGF0aW9uQWN0aW9uRGF0YVR5cGUiIG5pbGxhYmxlPSJ0cnVlIi8+CiA8eHM6Y29tcGxle
+        FR5cGUgbmFtZT0iQnJBY2Nlc3NSaWdodHNEYXRhVHlwZSI+CiAgPHhzOnNlcXVlbmNlPgogI
+        CA8eHM6ZWxlbWVudCBtaW5PY2N1cnM9IjAiIG1heE9jY3Vycz0iMSIgdHlwZT0ieHM6c3Rya
+        W5nIiBuYW1lPSJOYW1lIi8+CiAgIDx4czplbGVtZW50IG1pbk9jY3Vycz0iMCIgbWF4T2Njd
+        XJzPSIxIiB0eXBlPSJ4czpib29sZWFuIiBuYW1lPSJBbGxvdyIvPgogICA8eHM6ZWxlbWVud
+        CBtaW5PY2N1cnM9IjAiIG1heE9jY3Vycz0iMSIgdHlwZT0ieHM6Ym9vbGVhbiIgbmFtZT0iU
+        mVzZXJ2ZWQiLz4KICA8L3hzOnNlcXVlbmNlPgogPC94czpjb21wbGV4VHlwZT4KIDx4czplb
+        GVtZW50IHR5cGU9InRuczpCckFjY2Vzc1JpZ2h0c0RhdGFUeXBlIiBuYW1lPSJCckFjY2Vzc
+        1JpZ2h0c0RhdGFUeXBlIi8+CiA8eHM6Y29tcGxleFR5cGUgbmFtZT0iTGlzdE9mQnJBY2Nlc
+        3NSaWdodHNEYXRhVHlwZSI+CiAgPHhzOnNlcXVlbmNlPgogICA8eHM6ZWxlbWVudCBtaW5PY
+        2N1cnM9IjAiIG1heE9jY3Vycz0idW5ib3VuZGVkIiB0eXBlPSJ0bnM6QnJBY2Nlc3NSaWdod
+        HNEYXRhVHlwZSIgbmFtZT0iQnJBY2Nlc3NSaWdodHNEYXRhVHlwZSIgbmlsbGFibGU9InRyd
+        WUiLz4KICA8L3hzOnNlcXVlbmNlPgogPC94czpjb21wbGV4VHlwZT4KIDx4czplbGVtZW50I
+        HR5cGU9InRuczpMaXN0T2ZCckFjY2Vzc1JpZ2h0c0RhdGFUeXBlIiBuYW1lPSJMaXN0T2ZCc
+        kFjY2Vzc1JpZ2h0c0RhdGFUeXBlIiBuaWxsYWJsZT0idHJ1ZSIvPgogPHhzOmNvbXBsZXhUe
+        XBlIG5hbWU9IkJyQXV0aG9yaXphdGlvbkRhdGFUeXBlIj4KICA8eHM6c2VxdWVuY2U+CiAgI
+        Dx4czplbGVtZW50IG1pbk9jY3Vycz0iMCIgbWF4T2NjdXJzPSIxIiB0eXBlPSJ1YTpOb2RlS
+        WQiIG5hbWU9Ik5vZGVJZCIvPgogICA8eHM6ZWxlbWVudCBtaW5PY2N1cnM9IjAiIG1heE9jY
+        3Vycz0iMSIgdHlwZT0ieHM6Ym9vbGVhbiIgbmFtZT0iSW5oZXJpdCIvPgogICA8eHM6ZWxlb
+        WVudCBtaW5PY2N1cnM9IjAiIG1heE9jY3Vycz0iMSIgdHlwZT0idG5zOkxpc3RPZkJyTm9kZ
+        UFjY2Vzc0RhdGFUeXBlIiBuYW1lPSJOb2RlcyIvPgogIDwveHM6c2VxdWVuY2U+CiA8L3hzO
+        mNvbXBsZXhUeXBlPgogPHhzOmVsZW1lbnQgdHlwZT0idG5zOkJyQXV0aG9yaXphdGlvbkRhd
+        GFUeXBlIiBuYW1lPSJCckF1dGhvcml6YXRpb25EYXRhVHlwZSIvPgogPHhzOmNvbXBsZXhUe
+        XBlIG5hbWU9Ikxpc3RPZkJyQXV0aG9yaXphdGlvbkRhdGFUeXBlIj4KICA8eHM6c2VxdWVuY
+        2U+CiAgIDx4czplbGVtZW50IG1pbk9jY3Vycz0iMCIgbWF4T2NjdXJzPSJ1bmJvdW5kZWQiI
+        HR5cGU9InRuczpCckF1dGhvcml6YXRpb25EYXRhVHlwZSIgbmFtZT0iQnJBdXRob3JpemF0a
+        W9uRGF0YVR5cGUiIG5pbGxhYmxlPSJ0cnVlIi8+CiAgPC94czpzZXF1ZW5jZT4KIDwveHM6Y
+        29tcGxleFR5cGU+CiA8eHM6ZWxlbWVudCB0eXBlPSJ0bnM6TGlzdE9mQnJBdXRob3JpemF0a
+        W9uRGF0YVR5cGUiIG5hbWU9Ikxpc3RPZkJyQXV0aG9yaXphdGlvbkRhdGFUeXBlIiBuaWxsY
+        WJsZT0idHJ1ZSIvPgogPHhzOmNvbXBsZXhUeXBlIG5hbWU9IkJyTm9kZUFjY2Vzc0RhdGFUe
+        XBlIj4KICA8eHM6c2VxdWVuY2U+CiAgIDx4czplbGVtZW50IG1pbk9jY3Vycz0iMCIgbWF4T
+        2NjdXJzPSIxIiB0eXBlPSJ0bnM6TGlzdE9mQnJSb2xlQWNjZXNzRGF0YVR5cGUiIG5hbWU9I
+        lJvbGVzIi8+CiAgPC94czpzZXF1ZW5jZT4KIDwveHM6Y29tcGxleFR5cGU+CiA8eHM6ZWxlb
+        WVudCB0eXBlPSJ0bnM6QnJOb2RlQWNjZXNzRGF0YVR5cGUiIG5hbWU9IkJyTm9kZUFjY2Vzc
+        0RhdGFUeXBlIi8+CiA8eHM6Y29tcGxleFR5cGUgbmFtZT0iTGlzdE9mQnJOb2RlQWNjZXNzR
+        GF0YVR5cGUiPgogIDx4czpzZXF1ZW5jZT4KICAgPHhzOmVsZW1lbnQgbWluT2NjdXJzPSIwI
+        iBtYXhPY2N1cnM9InVuYm91bmRlZCIgdHlwZT0idG5zOkJyTm9kZUFjY2Vzc0RhdGFUeXBlI
+        iBuYW1lPSJCck5vZGVBY2Nlc3NEYXRhVHlwZSIgbmlsbGFibGU9InRydWUiLz4KICA8L3hzO
+        nNlcXVlbmNlPgogPC94czpjb21wbGV4VHlwZT4KIDx4czplbGVtZW50IHR5cGU9InRuczpMa
+        XN0T2ZCck5vZGVBY2Nlc3NEYXRhVHlwZSIgbmFtZT0iTGlzdE9mQnJOb2RlQWNjZXNzRGF0Y
+        VR5cGUiIG5pbGxhYmxlPSJ0cnVlIi8+CiA8eHM6Y29tcGxleFR5cGUgbmFtZT0iQnJSb2xlQ
+        WNjZXNzRGF0YVR5cGUiPgogIDx4czpzZXF1ZW5jZT4KICAgPHhzOmVsZW1lbnQgbWluT2Njd
+        XJzPSIwIiBtYXhPY2N1cnM9IjEiIHR5cGU9InhzOnN0cmluZyIgbmFtZT0iTmFtZSIvPgogI
+        CA8eHM6ZWxlbWVudCBtaW5PY2N1cnM9IjAiIG1heE9jY3Vycz0iMSIgdHlwZT0idG5zOkxpc
+        3RPZkJyQWNjZXNzUmlnaHRzRGF0YVR5cGUiIG5hbWU9IlJpZ2h0cyIvPgogIDwveHM6c2Vxd
+        WVuY2U+CiA8L3hzOmNvbXBsZXhUeXBlPgogPHhzOmVsZW1lbnQgdHlwZT0idG5zOkJyUm9sZ
+        UFjY2Vzc0RhdGFUeXBlIiBuYW1lPSJCclJvbGVBY2Nlc3NEYXRhVHlwZSIvPgogPHhzOmNvb
+        XBsZXhUeXBlIG5hbWU9Ikxpc3RPZkJyUm9sZUFjY2Vzc0RhdGFUeXBlIj4KICA8eHM6c2Vxd
+        WVuY2U+CiAgIDx4czplbGVtZW50IG1pbk9jY3Vycz0iMCIgbWF4T2NjdXJzPSJ1bmJvdW5kZ
+        WQiIHR5cGU9InRuczpCclJvbGVBY2Nlc3NEYXRhVHlwZSIgbmFtZT0iQnJSb2xlQWNjZXNzR
+        GF0YVR5cGUiIG5pbGxhYmxlPSJ0cnVlIi8+CiAgPC94czpzZXF1ZW5jZT4KIDwveHM6Y29tc
+        GxleFR5cGU+CiA8eHM6ZWxlbWVudCB0eXBlPSJ0bnM6TGlzdE9mQnJSb2xlQWNjZXNzRGF0Y
+        VR5cGUiIG5hbWU9Ikxpc3RPZkJyUm9sZUFjY2Vzc0RhdGFUeXBlIiBuaWxsYWJsZT0idHJ1Z
+        SIvPgo8L3hzOnNjaGVtYT4K</uax:ByteString>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="String" ParentNodeId="ns=1;i=6004" NodeId="ns=1;i=6005" BrowseName="NamespaceUri">
+        <DisplayName>NamespaceUri</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=6004</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:String>urn:B&amp;R/plc/Types.xsd</uax:String>
+        </Value>
+    </UAVariable>
+    <UAVariableType DataType="BrAccessRightsDataType" NodeId="ns=1;i=2001" BrowseName="1:BrAccessRightsType">
+        <DisplayName>BrAccessRightsType</DisplayName>
+        <References>
+            <Reference ReferenceType="HasComponent">ns=1;i=6009</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;i=6008</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;i=6010</Reference>
+            <Reference ReferenceType="HasSubtype" IsForward="false">i=63</Reference>
+        </References>
+    </UAVariableType>
+    <UAVariable DataType="Boolean" ParentNodeId="ns=1;i=2001" NodeId="ns=1;i=6009" BrowseName="1:Allow">
+        <DisplayName>Allow</DisplayName>
+        <Description>Allow state of the access right</Description>
+        <References>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=2001</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasModellingRule">i=78</Reference>
+        </References>
+        <Value>
+            <uax:Boolean>false</uax:Boolean>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="String" ParentNodeId="ns=1;i=2001" NodeId="ns=1;i=6008" BrowseName="1:Name">
+        <DisplayName>Name</DisplayName>
+        <Description>Name of the access right</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasModellingRule">i=78</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=2001</Reference>
+        </References>
+        <Value>
+            <uax:String></uax:String>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="Boolean" ParentNodeId="ns=1;i=2001" NodeId="ns=1;i=6010" BrowseName="1:Reserved">
+        <DisplayName>Reserved</DisplayName>
+        <Description>Reserved for future use</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasModellingRule">i=78</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=2001</Reference>
+        </References>
+        <Value>
+            <uax:Boolean>false</uax:Boolean>
+        </Value>
+    </UAVariable>
+    <UAVariableType DataType="BrAuthorizationDataType" NodeId="ns=1;i=2004" BrowseName="1:BrAuthorizationType">
+        <DisplayName>BrAuthorizationType</DisplayName>
+        <References>
+            <Reference ReferenceType="HasComponent">ns=1;i=6021</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;i=6020</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;i=6022</Reference>
+            <Reference ReferenceType="HasSubtype" IsForward="false">i=63</Reference>
+        </References>
+    </UAVariableType>
+    <UAVariable DataType="Boolean" ParentNodeId="ns=1;i=2004" NodeId="ns=1;i=6021" BrowseName="1:Inherit">
+        <DisplayName>Inherit</DisplayName>
+        <Description>Inheritance state of the authorization</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=2004</Reference>
+            <Reference ReferenceType="HasModellingRule">i=78</Reference>
+        </References>
+        <Value>
+            <uax:Boolean>false</uax:Boolean>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="NodeId" ParentNodeId="ns=1;i=2004" NodeId="ns=1;i=6020" BrowseName="1:NodeId">
+        <DisplayName>NodeId</DisplayName>
+        <Description>Node to which the authorization is associated</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasModellingRule">i=78</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=2004</Reference>
+        </References>
+        <Value>
+            <uax:NodeId>
+                <uax:Identifier>i=0</uax:Identifier>
+            </uax:NodeId>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="BrNodeAccessDataType" ParentNodeId="ns=1;i=2004" ValueRank="1" NodeId="ns=1;i=6022" BrowseName="1:Nodes">
+        <DisplayName>Nodes</DisplayName>
+        <Description>List of role based nodes</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasModellingRule">i=78</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=2004</Reference>
+        </References>
+    </UAVariable>
+    <UAVariableType DataType="BrNodeAccessDataType" NodeId="ns=1;i=2003" BrowseName="1:BrNodeAccessType">
+        <DisplayName>BrNodeAccessType</DisplayName>
+        <References>
+            <Reference ReferenceType="HasComponent">ns=1;i=6017</Reference>
+            <Reference ReferenceType="HasSubtype" IsForward="false">i=63</Reference>
+        </References>
+    </UAVariableType>
+    <UAVariable DataType="BrRoleAccessDataType" ParentNodeId="ns=1;i=2003" ValueRank="1" NodeId="ns=1;i=6017" BrowseName="1:Roles">
+        <DisplayName>Roles</DisplayName>
+        <Description>Roles assigned to the node</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasModellingRule">i=78</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=2003</Reference>
+        </References>
+    </UAVariable>
+    <UAVariableType DataType="BrRoleAccessDataType" NodeId="ns=1;i=2002" BrowseName="1:BrRoleAccessType">
+        <DisplayName>BrRoleAccessType</DisplayName>
+        <References>
+            <Reference ReferenceType="HasComponent">ns=1;i=6013</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;i=6014</Reference>
+            <Reference ReferenceType="HasSubtype" IsForward="false">i=63</Reference>
+        </References>
+    </UAVariableType>
+    <UAVariable DataType="String" ParentNodeId="ns=1;i=2002" NodeId="ns=1;i=6013" BrowseName="1:Name">
+        <DisplayName>Name</DisplayName>
+        <Description>Name of the role</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasModellingRule">i=78</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=2002</Reference>
+        </References>
+        <Value>
+            <uax:String></uax:String>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="BrAccessRightsDataType" ParentNodeId="ns=1;i=2002" ValueRank="1" NodeId="ns=1;i=6014" BrowseName="1:Rights">
+        <DisplayName>Rights</DisplayName>
+        <Description>List of access rights for the role</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasModellingRule">i=78</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=2002</Reference>
+        </References>
+    </UAVariable>
+    <UAObjectType NodeId="ns=1;i=10001" BrowseName="1:BrAppModuleType">
+        <DisplayName>BrAppModuleType</DisplayName>
+        <References>
+            <Reference ReferenceType="HasSubtype" IsForward="false">i=58</Reference>
+        </References>
+    </UAObjectType>
+    <UAObjectType NodeId="ns=1;i=10004" BrowseName="1:BrOpcUaAuthorizationType">
+        <DisplayName>BrOpcUaAuthorizationType</DisplayName>
+        <Description>OPC-UA authorization configuration type</Description>
+        <References>
+            <Reference ReferenceType="HasSubtype" IsForward="false">i=58</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;i=7001</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;i=7002</Reference>
+        </References>
+    </UAObjectType>
+    <UAMethod ParentNodeId="ns=1;i=10004" NodeId="ns=1;i=7001" BrowseName="1:GetAuthorizations">
+        <DisplayName>GetAuthorizations</DisplayName>
+        <Description>Get roles and rights from nodes</Description>
+        <References>
+            <Reference ReferenceType="HasProperty">ns=1;i=6023</Reference>
+            <Reference ReferenceType="HasModellingRule">i=78</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;i=6024</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=10004</Reference>
+        </References>
+    </UAMethod>
+    <UAVariable DataType="Argument" ParentNodeId="ns=1;i=7001" ValueRank="1" NodeId="ns=1;i=6023" ArrayDimensions="1" BrowseName="InputArguments">
+        <DisplayName>InputArguments</DisplayName>
+        <References>
+            <Reference ReferenceType="HasModellingRule">i=78</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=7001</Reference>
+        </References>
+        <Value>
+            <uax:ListOfExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>NodeIds</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=17</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>1</uax:ValueRank>
+                            <uax:ArrayDimensions>
+                                <uax:UInt32>0</uax:UInt32>
+                            </uax:ArrayDimensions>
+                            <uax:Description>
+                                <uax:Text>Nodes to read the authorization from</uax:Text>
+                            </uax:Description>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+            </uax:ListOfExtensionObject>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="Argument" ParentNodeId="ns=1;i=7001" ValueRank="1" NodeId="ns=1;i=6024" ArrayDimensions="2" BrowseName="OutputArguments">
+        <DisplayName>OutputArguments</DisplayName>
+        <References>
+            <Reference ReferenceType="HasModellingRule">i=78</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=7001</Reference>
+        </References>
+        <Value>
+            <uax:ListOfExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>Authorizations</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>ns=1;i=50040</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>1</uax:ValueRank>
+                            <uax:ArrayDimensions>
+                                <uax:UInt32>0</uax:UInt32>
+                            </uax:ArrayDimensions>
+                            <uax:Description>
+                                <uax:Text>Returns the requested authorizations</uax:Text>
+                            </uax:Description>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>NodeIdsStatus</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=19</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>1</uax:ValueRank>
+                            <uax:ArrayDimensions>
+                                <uax:UInt32>0</uax:UInt32>
+                            </uax:ArrayDimensions>
+                            <uax:Description>
+                                <uax:Text>Returns a status code with the failure reason</uax:Text>
+                            </uax:Description>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+            </uax:ListOfExtensionObject>
+        </Value>
+    </UAVariable>
+    <UAMethod ParentNodeId="ns=1;i=10004" NodeId="ns=1;i=7002" BrowseName="1:SetAuthorizations">
+        <DisplayName>SetAuthorizations</DisplayName>
+        <Description>Set roles and rights for nodes</Description>
+        <References>
+            <Reference ReferenceType="HasProperty">ns=1;i=6025</Reference>
+            <Reference ReferenceType="HasModellingRule">i=78</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;i=6026</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=10004</Reference>
+        </References>
+    </UAMethod>
+    <UAVariable DataType="Argument" ParentNodeId="ns=1;i=7002" ValueRank="1" NodeId="ns=1;i=6025" ArrayDimensions="1" BrowseName="InputArguments">
+        <DisplayName>InputArguments</DisplayName>
+        <References>
+            <Reference ReferenceType="HasModellingRule">i=78</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=7002</Reference>
+        </References>
+        <Value>
+            <uax:ListOfExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>Authorizations</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>ns=1;i=50040</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>1</uax:ValueRank>
+                            <uax:ArrayDimensions>
+                                <uax:UInt32>0</uax:UInt32>
+                            </uax:ArrayDimensions>
+                            <uax:Description>
+                                <uax:Text>Authorizations to set</uax:Text>
+                            </uax:Description>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+            </uax:ListOfExtensionObject>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="Argument" ParentNodeId="ns=1;i=7002" ValueRank="1" NodeId="ns=1;i=6026" ArrayDimensions="1" BrowseName="OutputArguments">
+        <DisplayName>OutputArguments</DisplayName>
+        <References>
+            <Reference ReferenceType="HasModellingRule">i=78</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=7002</Reference>
+        </References>
+        <Value>
+            <uax:ListOfExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>AuthorizationsStatus</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=19</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>1</uax:ValueRank>
+                            <uax:ArrayDimensions>
+                                <uax:UInt32>0</uax:UInt32>
+                            </uax:ArrayDimensions>
+                            <uax:Description>
+                                <uax:Text>Returns a status code with the failure reason</uax:Text>
+                            </uax:Description>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+            </uax:ListOfExtensionObject>
+        </Value>
+    </UAVariable>
+    <UAObjectType NodeId="ns=1;i=10000" BrowseName="1:BrPlcType">
+        <DisplayName>BrPlcType</DisplayName>
+        <References>
+            <Reference ReferenceType="HasSubtype" IsForward="false">i=58</Reference>
+        </References>
+    </UAObjectType>
+    <UAObjectType NodeId="ns=1;i=10002" BrowseName="1:BrTaskType">
+        <DisplayName>BrTaskType</DisplayName>
+        <References>
+            <Reference ReferenceType="HasSubtype" IsForward="false">i=58</Reference>
+        </References>
+    </UAObjectType>
+    <UAObject NodeId="ns=1;i=21001" BrowseName="1:PLC">
+        <DisplayName>PLC</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">ns=2;i=1001</Reference>
+            <Reference ReferenceType="Organizes" IsForward="false">ns=3;i=5001</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;i=21002</Reference>
+        </References>
+    </UAObject>
+    <UAObject ParentNodeId="ns=1;i=21001" NodeId="ns=1;i=21002" BrowseName="2:Resources">
+        <DisplayName>Resources</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">ns=3;i=1004</Reference>
+            <Reference ReferenceType="Organizes">ns=1;i=21004</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=21001</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;i=21003</Reference>
+        </References>
+    </UAObject>
+    <UAObject NodeId="ns=1;i=21004" BrowseName="1:CPU">
+        <DisplayName>CPU</DisplayName>
+        <References>
+            <Reference ReferenceType="Organizes" IsForward="false">ns=1;i=21002</Reference>
+            <Reference ReferenceType="HasTypeDefinition">ns=2;i=1002</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;i=40000</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;i=40001</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;i=40002</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;i=40003</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;i=40004</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;i=40005</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;i=40006</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;i=40007</Reference>
+        </References>
+    </UAObject>
+    <UAVariable DataType="String" ParentNodeId="ns=1;i=21004" NodeId="ns=1;i=40000" BrowseName="3:DeviceManual">
+        <DisplayName>DeviceManual</DisplayName>
+        <Description>Address (pathname in the file system or a URL | Web address) of user manual for the device</Description>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=21004</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="String" ParentNodeId="ns=1;i=21004" NodeId="ns=1;i=40001" BrowseName="3:DeviceRevision">
+        <DisplayName>DeviceRevision</DisplayName>
+        <Description>Overall revision level of the device</Description>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=21004</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="String" ParentNodeId="ns=1;i=21004" NodeId="ns=1;i=40002" BrowseName="3:HardwareRevision">
+        <DisplayName>HardwareRevision</DisplayName>
+        <Description>Revision level of the hardware of the device</Description>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=21004</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Extensions>
+            <Extension>
+                <Delegates>
+                    <Delegate Type="Read">uaPlcCpuReadProperty</Delegate>
+                </Delegates>
+            </Extension>
+        </Extensions>
+    </UAVariable>
+    <UAVariable DataType="LocalizedText" ParentNodeId="ns=1;i=21004" NodeId="ns=1;i=40003" BrowseName="3:Manufacturer">
+        <DisplayName>Manufacturer</DisplayName>
+        <Description>Model name of the device</Description>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=21004</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Extensions>
+            <Extension>
+                <Delegates>
+                    <Delegate Type="Read">uaPlcCpuReadProperty</Delegate>
+                </Delegates>
+            </Extension>
+        </Extensions>
+    </UAVariable>
+    <UAVariable DataType="LocalizedText" ParentNodeId="ns=1;i=21004" NodeId="ns=1;i=40004" BrowseName="3:Model">
+        <DisplayName>Model</DisplayName>
+        <Description>Name of the company that manufactured the device</Description>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=21004</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Extensions>
+            <Extension>
+                <Delegates>
+                    <Delegate Type="Read">uaPlcCpuReadProperty</Delegate>
+                </Delegates>
+            </Extension>
+        </Extensions>
+    </UAVariable>
+    <UAVariable DataType="Int32" ParentNodeId="ns=1;i=21004" NodeId="ns=1;i=40005" BrowseName="3:RevisionCounter">
+        <DisplayName>RevisionCounter</DisplayName>
+        <Description>An incremental counter indicating the number of times the static data within the Device has been modified</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=21004</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="String" ParentNodeId="ns=1;i=21004" NodeId="ns=1;i=40006" BrowseName="3:SerialNumber">
+        <DisplayName>SerialNumber</DisplayName>
+        <Description>Identifier that uniquely identifies, within a manufacturer, a device instance</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=21004</Reference>
+        </References>
+        <Extensions>
+            <Extension>
+                <Delegates>
+                    <Delegate Type="Read">uaPlcCpuReadProperty</Delegate>
+                </Delegates>
+            </Extension>
+        </Extensions>
+    </UAVariable>
+    <UAVariable DataType="String" ParentNodeId="ns=1;i=21004" NodeId="ns=1;i=40007" BrowseName="3:SoftwareRevision">
+        <DisplayName>SoftwareRevision</DisplayName>
+        <Description>Revision level of the software/firmware of the device</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=21004</Reference>
+        </References>
+        <Extensions>
+            <Extension>
+                <Delegates>
+                    <Delegate Type="Read">uaPlcCpuReadProperty</Delegate>
+                </Delegates>
+            </Extension>
+        </Extensions>
+    </UAVariable>
+    <UAObject ParentNodeId="ns=1;i=21002" NodeId="ns=1;i=21003" BrowseName="3:SupportedTypes">
+        <DisplayName>SupportedTypes</DisplayName>
+        <Description>Folder maintaining the set of (sub-types of) BaseObjectTypes that can be instantiated in the ConfigurableComponent</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=61</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=21002</Reference>
+        </References>
+    </UAObject>
+    <UAObject NodeId="ns=1;i=20000" BrowseName="1:PLC">
+        <DisplayName>PLC</DisplayName>
+        <References>
+            <Reference ReferenceType="Organizes">ns=1;i=21005</Reference>
+            <Reference ReferenceType="HasTypeDefinition">ns=1;i=10000</Reference>
+            <Reference ReferenceType="Organizes" IsForward="false">i=85</Reference>
+        </References>
+    </UAObject>
+    <UAObject NodeId="ns=1;i=21005" BrowseName="1:AccessAndSecurity">
+        <DisplayName>AccessAndSecurity</DisplayName>
+        <Description>Configure access and security</Description>
+        <References>
+            <Reference ReferenceType="Organizes" IsForward="false">ns=1;i=20000</Reference>
+            <Reference ReferenceType="Organizes">ns=1;i=21006</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=61</Reference>
+        </References>
+    </UAObject>
+    <UAObject NodeId="ns=1;i=21006" BrowseName="1:Authorization">
+        <DisplayName>Authorization</DisplayName>
+        <Description>Configure authorization</Description>
+        <References>
+            <Reference ReferenceType="Organizes" IsForward="false">ns=1;i=21005</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=61</Reference>
+            <Reference ReferenceType="Organizes">ns=1;i=21007</Reference>
+        </References>
+    </UAObject>
+    <UAObject NodeId="ns=1;i=21007" BrowseName="1:OpcUA">
+        <DisplayName>OpcUA</DisplayName>
+        <Description>Configure authorization for OPC-UA</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">ns=1;i=10004</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;i=30004</Reference>
+            <Reference ReferenceType="Organizes" IsForward="false">ns=1;i=21006</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;i=30005</Reference>
+        </References>
+    </UAObject>
+    <UAMethod ParentNodeId="ns=1;i=21007" NodeId="ns=1;i=30004" BrowseName="1:GetAuthorizations" MethodDeclarationId="ns=1;i=7001">
+        <DisplayName>GetAuthorizations</DisplayName>
+        <Description>Get roles and rights from nodes</Description>
+        <References>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=21007</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;i=40009</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;i=40010</Reference>
+        </References>
+        <Extensions>
+            <Extension>
+                <Delegates>
+                    <Delegate Type="Call">uaPlcSecurityOpcUaGetAuthorizations</Delegate>
+                </Delegates>
+            </Extension>
+        </Extensions>
+    </UAMethod>
+    <UAVariable DataType="Argument" ParentNodeId="ns=1;i=30004" ValueRank="1" NodeId="ns=1;i=40009" ArrayDimensions="1" BrowseName="InputArguments">
+        <DisplayName>InputArguments</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=30004</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:ListOfExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>NodeIds</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=17</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>1</uax:ValueRank>
+                            <uax:ArrayDimensions>
+                                <uax:UInt32>0</uax:UInt32>
+                            </uax:ArrayDimensions>
+                            <uax:Description>
+                                <uax:Text>Nodes to read the authorization from</uax:Text>
+                            </uax:Description>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+            </uax:ListOfExtensionObject>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="Argument" ParentNodeId="ns=1;i=30004" ValueRank="1" NodeId="ns=1;i=40010" ArrayDimensions="2" BrowseName="OutputArguments">
+        <DisplayName>OutputArguments</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=30004</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:ListOfExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>Authorizations</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>ns=1;i=50040</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>1</uax:ValueRank>
+                            <uax:ArrayDimensions>
+                                <uax:UInt32>0</uax:UInt32>
+                            </uax:ArrayDimensions>
+                            <uax:Description>
+                                <uax:Text>Returns the requested authorizations</uax:Text>
+                            </uax:Description>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>NodeIdsStatus</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=19</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>1</uax:ValueRank>
+                            <uax:ArrayDimensions>
+                                <uax:UInt32>0</uax:UInt32>
+                            </uax:ArrayDimensions>
+                            <uax:Description>
+                                <uax:Text>Returns a status code with the failure reason</uax:Text>
+                            </uax:Description>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+            </uax:ListOfExtensionObject>
+        </Value>
+    </UAVariable>
+    <UAMethod ParentNodeId="ns=1;i=21007" NodeId="ns=1;i=30005" BrowseName="1:SetAuthorizations" MethodDeclarationId="ns=1;i=7002">
+        <DisplayName>SetAuthorizations</DisplayName>
+        <Description>Set roles and rights for nodes</Description>
+        <References>
+            <Reference ReferenceType="HasProperty">ns=1;i=40011</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;i=40012</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=21007</Reference>
+        </References>
+        <Extensions>
+            <Extension>
+                <Delegates>
+                    <Delegate Type="Call">uaPlcSecurityOpcUaSetAuthorizations</Delegate>
+                </Delegates>
+            </Extension>
+        </Extensions>
+    </UAMethod>
+    <UAVariable DataType="Argument" ParentNodeId="ns=1;i=30005" ValueRank="1" NodeId="ns=1;i=40011" ArrayDimensions="1" BrowseName="InputArguments">
+        <DisplayName>InputArguments</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=30005</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:ListOfExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>Authorizations</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>ns=1;i=50040</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>1</uax:ValueRank>
+                            <uax:ArrayDimensions>
+                                <uax:UInt32>0</uax:UInt32>
+                            </uax:ArrayDimensions>
+                            <uax:Description>
+                                <uax:Text>Authorizations to set</uax:Text>
+                            </uax:Description>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+            </uax:ListOfExtensionObject>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="Argument" ParentNodeId="ns=1;i=30005" ValueRank="1" NodeId="ns=1;i=40012" ArrayDimensions="1" BrowseName="OutputArguments">
+        <DisplayName>OutputArguments</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=30005</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:ListOfExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>AuthorizationsStatus</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=19</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>1</uax:ValueRank>
+                            <uax:ArrayDimensions>
+                                <uax:UInt32>0</uax:UInt32>
+                            </uax:ArrayDimensions>
+                            <uax:Description>
+                                <uax:Text>Returns a status code with the failure reason</uax:Text>
+                            </uax:Description>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+            </uax:ListOfExtensionObject>
+        </Value>
+    </UAVariable>
+    <UAObject SymbolicName="urn_B_R_plc_" NodeId="ns=1;i=5001" BrowseName="1:urn:B&amp;R/plc/">
+        <DisplayName>urn:B&amp;R/plc/</DisplayName>
+        <Description>Provides the metadata for a namespace used by the server.</Description>
+        <References>
+            <Reference ReferenceType="HasProperty">ns=1;i=6027</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=11616</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;i=6028</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;i=6029</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;i=6030</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;i=6031</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;i=6032</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;i=6033</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">i=11715</Reference>
+        </References>
+    </UAObject>
+    <UAVariable DataType="Boolean" ParentNodeId="ns=1;i=5001" NodeId="ns=1;i=6027" BrowseName="IsNamespaceSubset">
+        <DisplayName>IsNamespaceSubset</DisplayName>
+        <Description>If TRUE then the server only supports a subset of the namespace.</Description>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=5001</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:Boolean>false</uax:Boolean>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="DateTime" ParentNodeId="ns=1;i=5001" NodeId="ns=1;i=6028" BrowseName="NamespacePublicationDate">
+        <DisplayName>NamespacePublicationDate</DisplayName>
+        <Description>The publication date for the namespace.</Description>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=5001</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:DateTime>2013-10-11T00:00:00Z</uax:DateTime>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="String" ParentNodeId="ns=1;i=5001" NodeId="ns=1;i=6029" BrowseName="NamespaceUri">
+        <DisplayName>NamespaceUri</DisplayName>
+        <Description>The URI of the namespace.</Description>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=5001</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:String>urn:B&amp;R/plc/</uax:String>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="String" ParentNodeId="ns=1;i=5001" NodeId="ns=1;i=6030" BrowseName="NamespaceVersion">
+        <DisplayName>NamespaceVersion</DisplayName>
+        <Description>The human readable string representing version of the namespace.</Description>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=5001</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:String>1.00</uax:String>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="IdType" ParentNodeId="ns=1;i=5001" ValueRank="1" NodeId="ns=1;i=6031" BrowseName="StaticNodeIdTypes">
+        <DisplayName>StaticNodeIdTypes</DisplayName>
+        <Description>A list of IdTypes for nodes which are the same in every server that exposes them.</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=5001</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="NumericRange" ParentNodeId="ns=1;i=5001" ValueRank="1" NodeId="ns=1;i=6032" BrowseName="StaticNumericNodeIdRange">
+        <DisplayName>StaticNumericNodeIdRange</DisplayName>
+        <Description>A list of ranges for numeric node ids which are the same in every server that exposes them.</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=5001</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="String" ParentNodeId="ns=1;i=5001" NodeId="ns=1;i=6033" BrowseName="StaticStringNodeIdPattern">
+        <DisplayName>StaticStringNodeIdPattern</DisplayName>
+        <Description>A regular expression which matches string node ids are the same in every server that exposes them.</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=5001</Reference>
+        </References>
+    </UAVariable>
+    <UAObject SymbolicName="DefaultBinary" NodeId="ns=1;i=5006" BrowseName="Default Binary">
+        <DisplayName>Default Binary</DisplayName>
+        <References>
+            <Reference ReferenceType="HasDescription">ns=1;i=6006</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=76</Reference>
+            <Reference ReferenceType="HasEncoding" IsForward="false">ns=1;i=50010</Reference>
+        </References>
+    </UAObject>
+    <UAObject SymbolicName="DefaultXml" NodeId="ns=1;i=5007" BrowseName="Default XML">
+        <DisplayName>Default XML</DisplayName>
+        <References>
+            <Reference ReferenceType="HasDescription">ns=1;i=6007</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=76</Reference>
+            <Reference ReferenceType="HasEncoding" IsForward="false">ns=1;i=50010</Reference>
+        </References>
+    </UAObject>
+    <UAObject SymbolicName="DefaultBinary" NodeId="ns=1;i=5008" BrowseName="Default Binary">
+        <DisplayName>Default Binary</DisplayName>
+        <References>
+            <Reference ReferenceType="HasDescription">ns=1;i=6011</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=76</Reference>
+            <Reference ReferenceType="HasEncoding" IsForward="false">ns=1;i=50020</Reference>
+        </References>
+    </UAObject>
+    <UAObject SymbolicName="DefaultXml" NodeId="ns=1;i=5009" BrowseName="Default XML">
+        <DisplayName>Default XML</DisplayName>
+        <References>
+            <Reference ReferenceType="HasDescription">ns=1;i=6012</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=76</Reference>
+            <Reference ReferenceType="HasEncoding" IsForward="false">ns=1;i=50020</Reference>
+        </References>
+    </UAObject>
+    <UAObject SymbolicName="DefaultBinary" NodeId="ns=1;i=5010" BrowseName="Default Binary">
+        <DisplayName>Default Binary</DisplayName>
+        <References>
+            <Reference ReferenceType="HasDescription">ns=1;i=6015</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=76</Reference>
+            <Reference ReferenceType="HasEncoding" IsForward="false">ns=1;i=50030</Reference>
+        </References>
+    </UAObject>
+    <UAObject SymbolicName="DefaultXml" NodeId="ns=1;i=5011" BrowseName="Default XML">
+        <DisplayName>Default XML</DisplayName>
+        <References>
+            <Reference ReferenceType="HasDescription">ns=1;i=6016</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=76</Reference>
+            <Reference ReferenceType="HasEncoding" IsForward="false">ns=1;i=50030</Reference>
+        </References>
+    </UAObject>
+    <UAObject SymbolicName="DefaultBinary" NodeId="ns=1;i=5012" BrowseName="Default Binary">
+        <DisplayName>Default Binary</DisplayName>
+        <References>
+            <Reference ReferenceType="HasDescription">ns=1;i=6018</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=76</Reference>
+            <Reference ReferenceType="HasEncoding" IsForward="false">ns=1;i=50040</Reference>
+        </References>
+    </UAObject>
+    <UAObject SymbolicName="DefaultXml" NodeId="ns=1;i=5013" BrowseName="Default XML">
+        <DisplayName>Default XML</DisplayName>
+        <References>
+            <Reference ReferenceType="HasDescription">ns=1;i=6019</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=76</Reference>
+            <Reference ReferenceType="HasEncoding" IsForward="false">ns=1;i=50040</Reference>
+        </References>
+    </UAObject>
+</UANodeSet>

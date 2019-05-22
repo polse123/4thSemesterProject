@@ -6,11 +6,9 @@ using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
 
-namespace MvcMovie.Controllers
-{
+namespace MvcMovie.Controllers {
     [AuthorizeUser(Type = "1")]
-    public class MachineSelectionController : Controller
-    {
+    public class MachineSelectionController : Controller {
         // 
         // GET: /MachineSelection/ 
 
@@ -48,6 +46,11 @@ namespace MvcMovie.Controllers
                 Singleton.Instance.DBService.RegisterMachine(m.Ip, m.Description);
                 TempData["statusMessage"] = "Machine registered";
                 */
+                ServiceSingleton.Instance.DBService.RegisterMachine(m.Ip, m.Description, m.NameSpaceIndex,
+            m.AmountNode, m.StateNode, m.DefectNode, m.AcceptableNode, m.AmountToProduceNode, m.MachSpeedNode,
+            m.TemperatureNode, m.HumidityNode, m.VibrationNode, m.StopreasonNode, m.BatchIdNode, m.BarleyNode,
+            m.HopsNode, m.MaltNode, m.WheatNode, m.YeastNode, m.MaintenanceTriggerNode, m.MaintenanceCounterNode);
+                TempData["statusMessage"] = "Machine registered";
                 return RedirectToAction("Index");
             }
             TempData["statusMessage"] = s;

@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Configuration>
+  <Element ID="MappViewConfiguration" Type="MAPPVIEWCFG">
+    <Group ID="Server">
+      <Selector ID="WebServerProtocol" Value="1">
+        <Property ID="WebServerPort" Value="81" />
+      </Selector>
+      <Property ID="MaxClientConnections" Value="16" />
+      <Property ID="MaxBRClientConnections" Value="16" />
+      <Selector ID="ClientConnectionsLicensingMode" Value="LicensingModeConfiguredMaxClients" />
+      <Group ID="TcpProxyConf">
+        <Selector ID="InsecureMode" Value="1" />
+      </Group>
+    </Group>
+    <Group ID="OpcUa">
+      <Property ID="ServerConnectionTimeout" Value="5000" />
+      <Group ID="SamplingRates">
+        <Property ID="default" Value="200" />
+        <Property ID="slow" Value="1000" />
+        <Property ID="fast" Value="100" />
+      </Group>
+    </Group>
+    <Group ID="Client">
+      <Group ID="ContentCaching">
+        <Property ID="cachingSlots" Value="200" />
+        <Property ID="preserveOldValues" Value="TRUE" />
+      </Group>
+    </Group>
+  </Element>
+</Configuration>

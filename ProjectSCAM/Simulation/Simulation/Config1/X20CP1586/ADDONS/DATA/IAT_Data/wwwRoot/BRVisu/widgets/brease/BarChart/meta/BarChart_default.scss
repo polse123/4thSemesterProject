@@ -1,0 +1,66 @@
+@import "mixins.scss";
+@mixin widgets_brease_BarChart_base {
+	@include elemWidth(300);
+	@include elemHeight(300);
+.xAxis {
+	stroke: #000000;
+}
+.yAxis {
+	stroke: #000000;
+}
+.xAxis text {
+	stroke: #000000;
+}
+.yAxis text {
+	stroke: #000000;
+}
+.xAxis text {
+	fill: #000000;
+}
+.yAxis text {
+	fill: #000000;
+}
+.xAxis text {
+	font-size: 12px;
+}
+.yAxis text {
+	font-size: 12px;
+}
+.xAxis text {
+	font-family: Arial;
+}
+.yAxis text {
+	font-family: Arial;
+}
+.xAxis text {
+	@include font-weight-bold(false);
+}
+.yAxis text {
+	@include font-weight-bold(false);
+}
+.xAxisGrid line {
+	stroke: #cccccc;
+}
+.yAxisGrid line {
+	stroke: #cccccc;
+}
+	@include rotate(0deg);
+.xAxis text {
+	@include font-style-italic(false);
+}
+.yAxis text {
+	@include font-style-italic(false);
+}
+	opacity: 1;
+	background-color: transparent;
+	border-style: solid;
+	border-width: 2px;
+	border-color: #000000;
+	border-radius: 0px;
+	margin: 0px;
+
+}
+
+.widgets_brease_BarChart_style_default {
+@include widgets_brease_BarChart_base 
+}
