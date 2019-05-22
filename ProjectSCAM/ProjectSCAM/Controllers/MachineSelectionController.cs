@@ -41,7 +41,7 @@ namespace ProjectSCAM.Controllers {
             }
             if (ModelState.IsValid)
             {
-                ServiceSingleton.Instance.DBService.RegisterMachine(m.Ip, m.Description, m.NameSpaceIndex,
+              ServiceSingleton.Instance.DBService.RegisterMachine(m.Ip, m.Description, m.NameSpaceIndex,
             m.AmountNode, m.StateNode, m.DefectNode, m.AcceptableNode, m.AmountToProduceNode, m.MachSpeedNode,
             m.TemperatureNode, m.HumidityNode, m.VibrationNode, m.StopreasonNode, m.BatchIdNode, m.BarleyNode,
             m.HopsNode, m.MaltNode, m.WheatNode, m.YeastNode, m.MaintenanceTriggerNode, m.MaintenanceCounterNode);

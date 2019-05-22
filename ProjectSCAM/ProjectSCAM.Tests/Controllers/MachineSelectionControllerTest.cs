@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using MvcContrib.TestHelper;
 using ProjectSCAM.Controllers;
 using ProjectSCAM.Models;
 using ProjectSCAM.Models.Logic;
@@ -17,7 +18,6 @@ namespace ProjectSCAM.Tests.Controllers
         [TestMethod]
         public void Index()
         {
-            ServiceSingleton svt = ServiceSingleton.Instance;
             // Arrange
             MachineSelectionController controller = new MachineSelectionController();
 
@@ -42,6 +42,24 @@ namespace ProjectSCAM.Tests.Controllers
             // Assert
             Assert.IsTrue(result.RouteValues["action"].Equals("Index"));
             Assert.IsTrue(controller.ViewData.ModelState.Count > 0);
+            Assert.IsTrue(controller.TempData["statusMessage"].ToString().Contains("Error"));
+        }
+        [TestMethod]
+        public void CreateValidMachine()
+        {
+            // Arrange
+            MachineSelectionController controller = new MachineSelectionController();
+            MachineModel m = new MachineModel(1,"testy","testy",4,"test", "test", "test", "test", "test", "test", "test", "test", "test", "test",
+                "test", "test", "test", "test", "test", "test", "test","test");
+
+            // Act
+
+            RedirectToRouteResult result = controller.Create(m) as RedirectToRouteResult;
+
+            // Assert
+            Assert.IsTrue(result.RouteValues["action"].Equals("Index"));
+            Assert.IsTrue(controller.ViewData.ModelState.Count < 1);
+            Assert.AreEqual("Machine registered",controller.TempData["statusMessage"].ToString());
         }
 
         
@@ -49,26 +67,15 @@ namespace ProjectSCAM.Tests.Controllers
         public void SetMachine()
         {
             // Arrange
+            TestControllerBuilder builder = new TestControllerBuilder();
             MachineSelectionController controller = new MachineSelectionController();
-            Mock<ControllerContext> moqContext;
-            Mock<HttpRequestBase> moqRequest;
-            Mock<HttpSessionStateBase> moqSession;
-            moqContext = new Mock<ControllerContext>();
-            moqRequest = new Mock<HttpRequestBase>();
-            moqSession = new Mock<HttpSessionStateBase>();
-            moqContext.Setup(x => x.HttpContext.Session).Returns(moqSession.Object);
-
-            controller.ControllerContext = moqContext.Object;
-
+            builder.InitializeController(controller);
             // Act
-               controller.SetMachine("123");
-            OpcClient opc;
-            ServiceSingleton.Instance.OPCService.OpcConnections.TryGetValue("123", out opc);
-            //      RedirectToRouteResult result = controller.Create(m) as RedirectToRouteResult;
+            controller.SetMachine("123");
 
             // Assert
-            Assert.IsNotNull(opc);
-            //   Assert.IsTrue(controller.ViewData.ModelState.Count > 0);
+            Assert.IsTrue(ServiceSingleton.Instance.OPCService.OpcConnections.ContainsKey("123"));
+
         }
     }
 }
