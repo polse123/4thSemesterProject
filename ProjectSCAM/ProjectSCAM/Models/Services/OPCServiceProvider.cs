@@ -5,7 +5,7 @@ using System.Threading;
 using System.Web;
 
 namespace ProjectSCAM.Models.Logic {
-    public class OPCServiceProvider {
+    public class OPCServiceProvider : IOPCServiceProvider {
         public Dictionary<string, OpcClient> OpcConnections { get; set; }
         public AlarmManager AlarmManager { get; set; }
         private BatchValueCollection bvc = new BatchValueCollection();

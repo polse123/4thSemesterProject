@@ -238,6 +238,9 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Services\AlarmManager.cs" />
     <Compile Include="Models\Services\DBServiceProvider.cs" />
+    <Compile Include="Models\Interfaces\IDBServiceProvider.cs" />
+    <Compile Include="Models\Interfaces\IOPCServiceProvider.cs" />
+    <Compile Include="Models\Interfaces\IBatchReportServiceProvider.cs" />
     <Compile Include="Models\Services\OEE.cs" />
     <Compile Include="Models\Services\OPCServiceProvider.cs" />
     <Compile Include="Models\Services\QueryExecuter.cs" />
@@ -288,6 +291,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="ClassDiagram1.cd" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

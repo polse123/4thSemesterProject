@@ -79,7 +79,7 @@ namespace ProjectSCAM.Controllers {
             {
                 m.Update();
             }
-            return View("Index");
+            return RedirectToAction("Index");
         }
     }
 }

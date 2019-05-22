@@ -5,10 +5,10 @@ using System.Linq;
 using System.Web;
 
 namespace ProjectSCAM.Models.Logic {
-    public sealed class ServiceSingleton {
-        public DBServiceProvider DBService { get; set; }
-        public OPCServiceProvider OPCService { get; set; }
-        public BatchReportServiceProvider BatchReportService { get; set; }
+    public sealed class ServiceSingleton{
+        public IDBServiceProvider DBService { get; set; }
+        public IOPCServiceProvider OPCService { get; set; }
+        public IBatchReportServiceProvider BatchReportService { get; set; }
         private static readonly ServiceSingleton instance = new ServiceSingleton();
 
         // server, port, user id, password, database
@@ -31,7 +31,7 @@ namespace ProjectSCAM.Models.Logic {
             BatchReportService.GenerateFile(batchId, productType, aProduct, dProduct, bv);
         }
 
-        public static ServiceSingleton Instance
+        public static IServiceSingleton Instance
         {
             get
             {
