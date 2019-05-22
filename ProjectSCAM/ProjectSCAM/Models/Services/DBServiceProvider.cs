@@ -5,8 +5,7 @@ using System.Text;
 
 namespace ProjectSCAM.Models.Logic
 {
-    public class DBServiceProvider
-    {
+    public class DBServiceProvider : IDBServiceProvider {
         /// <summary>
         /// The Query Executer.
         /// </summary>

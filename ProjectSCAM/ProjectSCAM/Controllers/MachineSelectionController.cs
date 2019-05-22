@@ -40,11 +40,6 @@ namespace MvcMovie.Controllers {
             }
             if (ModelState.IsValid)
             {
-                // NEEDS UPDATING
-                /*
-                Singleton.Instance.DBService.RegisterMachine(m.Ip, m.Description);
-                TempData["statusMessage"] = "Machine registered";
-                */
                 ServiceSingleton.Instance.DBService.RegisterMachine(m.Ip, m.Description, m.NameSpaceIndex,
             m.AmountNode, m.StateNode, m.DefectNode, m.AcceptableNode, m.AmountToProduceNode, m.MachSpeedNode,
             m.TemperatureNode, m.HumidityNode, m.VibrationNode, m.StopreasonNode, m.BatchIdNode, m.BarleyNode,
@@ -80,7 +75,7 @@ namespace MvcMovie.Controllers {
             {
                 m.Update();
             }
-            return View("Index");
+            return RedirectToAction("Index");
         }
     }
 }
