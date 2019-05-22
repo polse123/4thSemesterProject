@@ -85,10 +85,10 @@ namespace ProjectSCAM.Tests.Controllers
             MachineSelectionController controller = new MachineSelectionController();
             builder.InitializeController(controller);
             // Act
-            ViewResult result = controller.EditMachine() as ViewResult;
+            RedirectToRouteResult result = controller.EditMachine() as RedirectToRouteResult;
 
             // Assert
-            Assert.AreEqual("Index", result.ViewName);
+            Assert.IsTrue(result.RouteValues["action"].Equals("Index"));
 
         }
         [TestMethod]

@@ -69,7 +69,7 @@ namespace ProjectSCAM.Controllers {
                 return View("EditMachine", m);
             } else
             {
-                return View("Index");
+               return  RedirectToAction("Index");
             }
 
         }
