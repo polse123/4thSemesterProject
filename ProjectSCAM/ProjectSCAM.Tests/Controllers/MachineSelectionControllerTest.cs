@@ -17,6 +17,7 @@ namespace ProjectSCAM.Tests.Controllers
         [TestMethod]
         public void Index()
         {
+            ServiceSingleton svt = ServiceSingleton.Instance;
             // Arrange
             MachineSelectionController controller = new MachineSelectionController();
 

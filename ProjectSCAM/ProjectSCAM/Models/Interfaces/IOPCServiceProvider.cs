@@ -2,7 +2,7 @@
 
 namespace ProjectSCAM.Models.Logic {
     public interface IOPCServiceProvider {
-        AlarmManager AlarmManager { get; set; }
+        IList<AlarmModel> ActiveAlarms { get; set; }
         Dictionary<string, OpcClient> OpcConnections { get; set; }
 
         MachineModel GetMachine(string ip);

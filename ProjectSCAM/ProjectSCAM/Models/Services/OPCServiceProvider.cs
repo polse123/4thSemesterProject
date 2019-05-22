@@ -7,12 +7,12 @@ using System.Web;
 namespace ProjectSCAM.Models.Logic {
     public class OPCServiceProvider : IOPCServiceProvider {
         public Dictionary<string, OpcClient> OpcConnections { get; set; }
-        public AlarmManager AlarmManager { get; set; }
+        public IList<AlarmModel> ActiveAlarms { get; set; }
         private BatchValueCollection bvc = new BatchValueCollection();
 
         public OPCServiceProvider()
         {
-            AlarmManager = new AlarmManager();
+            ActiveAlarms = new List<AlarmModel>();
             OpcConnections = new Dictionary<string, OpcClient>();
         }
 
@@ -20,7 +20,7 @@ namespace ProjectSCAM.Models.Logic {
         {
             foreach (AlarmModel alarm in ServiceSingleton.Instance.DBService.RetrieveUnhandledAlarms(GetMachineId(ip)))
             {
-                AlarmManager.ActiveAlarms.Add(alarm);
+                ActiveAlarms.Add(alarm);
             }
             OpcClient c = new OpcClient(ip, GetMachine(ip));
             if (OpcConnections.ContainsKey(ip))
@@ -59,7 +59,7 @@ namespace ProjectSCAM.Models.Logic {
 
                 }
             }
-            if (e.PropertyName.Equals("StopReasonId") && AlarmManager.ActiveAlarms.Count == 0 && opc.StateCurrent != 4 && opc.StopReasonId != 0 && opc.AmountToProduce != 0)
+            if (e.PropertyName.Equals("StopReasonId") && ActiveAlarms.Count == 0 && opc.StateCurrent != 4 && opc.StopReasonId != 0 && opc.AmountToProduce != 0)
             {
                 opc.AddValues();
                 AlarmModel alarm = ServiceSingleton.Instance.DBService.RegisterBatchAndAlarm((int)opc.AcceptableProducts, (int)opc.DefectProducts,
@@ -67,7 +67,7 @@ namespace ProjectSCAM.Models.Logic {
                         (int)opc.MachSpeed,
                         3, GetMachineId(opc.Ip), opc.BatchValues.TemperatureValues, opc.BatchValues.HumidityValues, opc.BatchValues.VibrationValues, DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), (int)opc.StopReasonId);
                 alarm.MachineId = GetMachineId(opc.Ip);
-                AlarmManager.ActiveAlarms.Add(alarm);
+                ActiveAlarms.Add(alarm);
                 opc.ResetMachine();
 
 

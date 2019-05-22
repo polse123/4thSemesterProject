@@ -22,20 +22,20 @@ namespace ProjectSCAM.Controllers
         }
         [HttpGet]
         public string Popup() {
-            bool shouldPopup = ServiceSingleton.Instance.OPCService.AlarmManager.ActiveAlarms.Count > 0;
+            bool shouldPopup = ServiceSingleton.Instance.OPCService.ActiveAlarms.Count > 0;
             if (shouldPopup) {
-                System.Diagnostics.Debug.WriteLine(ServiceSingleton.Instance.OPCService.AlarmManager.ActiveAlarms[0].Id);
+                System.Diagnostics.Debug.WriteLine(ServiceSingleton.Instance.OPCService.ActiveAlarms[0].Id);
             }
             return JsonConvert.SerializeObject(shouldPopup, Formatting.None);
         }
         [HttpGet]
         public string GetAlarm() {
-            AlarmModel alarm = ServiceSingleton.Instance.OPCService.AlarmManager.ActiveAlarms[0];
+            AlarmModel alarm = ServiceSingleton.Instance.OPCService.ActiveAlarms[0];
             return JsonConvert.SerializeObject(alarm, Formatting.None);
         }
         [HttpPost]
         public void Handle() {
-            ServiceSingleton.Instance.OPCService.AlarmManager.ActiveAlarms[0].Handle(int.Parse(Session["userID"].ToString()));
+            ServiceSingleton.Instance.OPCService.ActiveAlarms[0].Handle(int.Parse(Session["userID"].ToString()));
         }
         [HttpGet]
         public ActionResult GetAlarmsByMachine(string machineId) {

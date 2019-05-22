@@ -236,7 +236,6 @@
     <Compile Include="Models\BeerModel.cs" />
     <Compile Include="Models\CustomerModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\Services\AlarmManager.cs" />
     <Compile Include="Models\Services\DBServiceProvider.cs" />
     <Compile Include="Models\Interfaces\IDBServiceProvider.cs" />
     <Compile Include="Models\Interfaces\IOPCServiceProvider.cs" />

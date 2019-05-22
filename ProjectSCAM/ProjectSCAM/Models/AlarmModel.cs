@@ -66,7 +66,7 @@ namespace ProjectSCAM.Models
                 if (opc.Barley > 30000 && opc.Wheat > 30000 && opc.Yeast > 30000 && opc.Malt > 30000 && opc.Hops > 30000)
                 {
                     ServiceSingleton.Instance.DBService.SetAlarmHandler(userid, Id);
-                    ServiceSingleton.Instance.OPCService.AlarmManager.ActiveAlarms.Remove(this);
+                    ServiceSingleton.Instance.OPCService.ActiveAlarms.Remove(this);
                     return true;
                 }
                 else
@@ -79,7 +79,7 @@ namespace ProjectSCAM.Models
                 if (opc.MaintenanceCounter <= (opc.MaintenanceTrigger * 0.8))
                 {
                     ServiceSingleton.Instance.DBService.SetAlarmHandler(userid, Id);
-                    ServiceSingleton.Instance.OPCService.AlarmManager.ActiveAlarms.Remove(this);
+                    ServiceSingleton.Instance.OPCService.ActiveAlarms.Remove(this);
                     return true;
                 }
                 else
@@ -90,7 +90,7 @@ namespace ProjectSCAM.Models
             else
             {
                 ServiceSingleton.Instance.DBService.SetAlarmHandler(userid, Id);
-                ServiceSingleton.Instance.OPCService.AlarmManager.ActiveAlarms.Remove(this);
+                ServiceSingleton.Instance.OPCService.ActiveAlarms.Remove(this);
                 return true;
             }
         }

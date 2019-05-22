@@ -31,7 +31,7 @@ namespace ProjectSCAM.Models.Logic {
             BatchReportService.GenerateFile(batchId, productType, aProduct, dProduct, bv);
         }
 
-        public static IServiceSingleton Instance
+        public static ServiceSingleton Instance
         {
             get
             {
