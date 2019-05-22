@@ -77,5 +77,52 @@ namespace ProjectSCAM.Tests.Controllers
             Assert.IsTrue(ServiceSingleton.Instance.OPCService.OpcConnections.ContainsKey("123"));
 
         }
+        [TestMethod]
+        public void EditMachine_null()
+        {
+            // Arrange
+            TestControllerBuilder builder = new TestControllerBuilder();
+            MachineSelectionController controller = new MachineSelectionController();
+            builder.InitializeController(controller);
+            // Act
+            ViewResult result = controller.EditMachine() as ViewResult;
+
+            // Assert
+            Assert.AreEqual("Index", result.ViewName);
+
+        }
+        [TestMethod]
+        public void EditMachine()
+        {
+            // Arrange
+            TestControllerBuilder builder = new TestControllerBuilder();
+            builder.Session["SelectedMachine"] = "123";
+            MachineSelectionController controller = new MachineSelectionController();
+            builder.InitializeController(controller);
+
+            // Act
+            ViewResult result = controller.EditMachine() as ViewResult;
+
+            // Assert
+            Assert.AreEqual("EditMachine", result.ViewName);
+        }
+        [TestMethod]
+        public void Edit()
+        {
+            // Arrange
+            TestControllerBuilder builder = new TestControllerBuilder();
+            MachineSelectionController controller = new MachineSelectionController();
+            builder.InitializeController(controller);
+            MachineModel m = ServiceSingleton.Instance.OPCService.GetMachine("123");
+            string currentval = m.AcceptableNode;
+            string newVal = m.AcceptableNode + "1";
+            m.AcceptableNode = newVal;
+            // Act
+            ViewResult result = controller.Edit(m) as ViewResult;
+            m = ServiceSingleton.Instance.OPCService.GetMachine("123");
+            // Assert
+            Assert.AreEqual(newVal, m.AcceptableNode);
+
+        }
     }
 }
