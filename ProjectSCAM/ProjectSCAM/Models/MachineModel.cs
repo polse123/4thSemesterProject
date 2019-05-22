@@ -13,7 +13,7 @@ namespace ProjectSCAM.Models
         public int? Id { get; set; }
         [DisplayName("Enter IP address")]
         [Required]
-        [StringLength(40, ErrorMessage = "IP length can't be more than 40.")]
+        [MaxLength(40, ErrorMessage = "IP length can't be more than 40.")]
         public string Ip { get; set; }
         [DisplayName("Enter a short description")]
         [Required]

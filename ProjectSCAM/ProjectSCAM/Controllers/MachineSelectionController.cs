@@ -6,9 +6,10 @@ using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
 
-namespace MvcMovie.Controllers {
+namespace ProjectSCAM.Controllers {
     [AuthorizeUser(Type = "1")]
-    public class MachineSelectionController : Controller {
+    public class MachineSelectionController : Controller
+    {
         // 
         // GET: /MachineSelection/ 
 
@@ -40,11 +41,6 @@ namespace MvcMovie.Controllers {
             }
             if (ModelState.IsValid)
             {
-                // NEEDS UPDATING
-                /*
-                Singleton.Instance.DBService.RegisterMachine(m.Ip, m.Description);
-                TempData["statusMessage"] = "Machine registered";
-                */
                 ServiceSingleton.Instance.DBService.RegisterMachine(m.Ip, m.Description, m.NameSpaceIndex,
             m.AmountNode, m.StateNode, m.DefectNode, m.AcceptableNode, m.AmountToProduceNode, m.MachSpeedNode,
             m.TemperatureNode, m.HumidityNode, m.VibrationNode, m.StopreasonNode, m.BatchIdNode, m.BarleyNode,
@@ -57,9 +53,12 @@ namespace MvcMovie.Controllers {
         }
 
         [HttpPost]
-        public void SetMachine()
+        public void SetMachine(string ip)
         {
-            Session["SelectedMachine"] = Request["ip"];
+            Console.WriteLine(ip);
+            System.Diagnostics.Debug.WriteLine("lmao2");
+            Session["SelectedMachine"] = ip;
+            Console.WriteLine(Session["SelectedMachine"].ToString());
             ServiceSingleton.Instance.OPCService.InitConnection(Session["SelectedMachine"].ToString());
         }
         public ActionResult EditMachine()

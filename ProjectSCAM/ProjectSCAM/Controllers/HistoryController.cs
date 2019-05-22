@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
-namespace SCAMS.Controllers
+namespace ProjectSCAM.Controllers
 {
     [AuthorizeUser(Type = "1")]
     public class HistoryController : Controller
