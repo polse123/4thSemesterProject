@@ -55,7 +55,7 @@ namespace ProjectSCAM.Models.Logic {
                         opc.Start.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.AddYears(10).ToString("MM/dd/yyyy"), true,
                         oee.CalculatePerformance(), oee.CalculateQuality(), oee.CalculateAvailability(),
                         (int)opc.MachSpeed,
-                        3, GetMachineId(opc.Ip), opc.BatchValues.TemperatureValues, opc.BatchValues.HumidityValues, opc.BatchValues.VibrationValues);
+                        opc.Recipe, GetMachineId(opc.Ip), opc.BatchValues.TemperatureValues, opc.BatchValues.HumidityValues, opc.BatchValues.VibrationValues);
 
                 }
             }
@@ -65,7 +65,7 @@ namespace ProjectSCAM.Models.Logic {
                 AlarmModel alarm = ServiceSingleton.Instance.DBService.RegisterBatchAndAlarm((int)opc.AcceptableProducts, (int)opc.DefectProducts,
                         opc.Start.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), DateTime.Now.AddYears(10).ToString("MM/dd/yyyy"), false, 1, 1, 1,
                         (int)opc.MachSpeed,
-                        3, GetMachineId(opc.Ip), opc.BatchValues.TemperatureValues, opc.BatchValues.HumidityValues, opc.BatchValues.VibrationValues, DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), (int)opc.StopReasonId);
+                        opc.Recipe, GetMachineId(opc.Ip), opc.BatchValues.TemperatureValues, opc.BatchValues.HumidityValues, opc.BatchValues.VibrationValues, DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), (int)opc.StopReasonId);
                 alarm.MachineId = GetMachineId(opc.Ip);
                 ActiveAlarms.Add(alarm);
                 opc.ResetMachine();
@@ -113,6 +113,7 @@ namespace ProjectSCAM.Models.Logic {
                         {
                             BatchQueueModel bqm = ServiceSingleton.Instance.DBService.RetrieveFromBatchQueue()[0];
                             ServiceSingleton.Instance.DBService.RemoveFromBatchQueue(bqm.Id);
+                            System.Diagnostics.Debug.WriteLine(bqm.BeerId);
                             opc.StartMachine(10, bqm.BeerId, bqm.Amount, bqm.Speed);
 
                         }

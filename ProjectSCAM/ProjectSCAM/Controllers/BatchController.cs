@@ -15,12 +15,11 @@ namespace ProjectSCAM.Controllers {
             if (TempData["batches"] != null)
             {
                 IList<BatchModel> list = (IList<BatchModel>)TempData["batches"];
-                TempData["batches"] = null;
                 return View(list);
             }
             else
             {
-                IList<BatchModel> list = ServiceSingleton.Instance.DBService.RetrieveBatches(false);
+                IList<BatchModel> list = BatchModel.GetBatches(false);
                 return View(list);
             }
 
@@ -110,7 +109,6 @@ namespace ProjectSCAM.Controllers {
         [HttpGet]
         public ActionResult HistoryButton(string id)
         {
-            // string id = Request["id"];
             if (id != null)
             {
                 TempData["id"] = id;
@@ -119,8 +117,6 @@ namespace ProjectSCAM.Controllers {
             {
                 TempData["id"] = "0";
             }
-            //Need to make sure that ID is set and not null.
-            //TempData["id"] = id;
             return RedirectToAction("Index", "History");
         }
         [HttpPost]

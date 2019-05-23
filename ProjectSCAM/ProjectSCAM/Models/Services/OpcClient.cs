@@ -8,10 +8,8 @@ using System.Windows.Markup;
 using UnifiedAutomation.UaBase;
 using UnifiedAutomation.UaClient;
 
-namespace ProjectSCAM.Models
-{
-    public class OpcClient : INotifyPropertyChanged
-    {
+namespace ProjectSCAM.Models {
+    public class OpcClient : INotifyPropertyChanged {
         public DateTime Start { get; set; }
         private bool isProcessRunning = false;
         private double processedProducts;
@@ -38,12 +36,11 @@ namespace ProjectSCAM.Models
         public event PropertyChangedEventHandler PropertyChanged;
         public string Ip { get; set; }
         public int Recipe { get; set; }
-        public int BeerId { get; set; }
         public BatchValueCollection BatchValues;
         public MachineModel Machine { get; set; }
 
         //Constructor with OPC connect and CreateSubscription
-        public OpcClient(string ip,MachineModel m)
+        public OpcClient(string ip, MachineModel m)
         {
             Machine = m;
             BatchValues = new BatchValueCollection();
@@ -162,90 +159,88 @@ namespace ProjectSCAM.Models
         }
         private void OnDataChanged(Subscription s, DataChangedEventArgs e)
         {
+            string sop = "" + Machine.StateNode + "";
             foreach (DataChange dc in e.DataChanges)
             {
-                switch (dc.MonitoredItem.NodeId.Identifier.ToString())
+                string identifier = dc.MonitoredItem.NodeId.Identifier.ToString();
+                if (identifier.Equals(Machine.StateNode))
                 {
-                    // current state
-                    case "::Program:Cube.Status.StateCurrent":
-                        StateCurrent = double.Parse(dc.Value.ToString());
-                        break;
-                    // products processed
-                    case "::Program:Cube.Admin.ProdProcessedCount":
-                        ProcessedProducts = double.Parse(dc.Value.ToString());
-                        break;
-                    //  temperature
-                    case "::Program:Cube.Status.Parameter[3].Value":
-                        TempCurrent = double.Parse((dc.Value.WrappedValue.ToFloat().ToString()));
-                        BatchValues.TemperatureValues.Add(new KeyValuePair<string, double>
-                            (DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), TempCurrent));
-                        break;
-                    // defect products processed
-                    case "::Program:Cube.Admin.ProdDefectiveCount":
-                        DefectProducts = double.Parse(dc.Value.ToString());
-                        break;
-                    // acceptable products processed
-                    case "::Program:product.good":
-                        AcceptableProducts = double.Parse(dc.Value.ToString());
-                        break;
-                    // amount of products to be produced
-                    case "::Program:product.produce_amount":
-                        AmountToProduce = double.Parse(dc.Value.ToString());
-                        break;
-                    // products per minute
-                    case "::Program:Cube.Status.MachSpeed":
-                        MachSpeed = double.Parse(dc.Value.ToString());
-                        break;
-                    //relative humidity
-                    case "::Program:Cube.Status.Parameter[2].Value":
-                        HumidityCurrent = double.Parse((dc.Value.WrappedValue.ToFloat().ToString()));
-                        BatchValues.HumidityValues.Add(new KeyValuePair<string, double>
-                            (DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), HumidityCurrent));
-                        break;
-                    //vibration
-                    case "::Program:Cube.Status.Parameter[4].Value":
-                        VibrationCurrent = double.Parse((dc.Value.WrappedValue.ToFloat().ToString()));
-                        BatchValues.VibrationValues.Add(new KeyValuePair<string, double>
-                            (DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), VibrationCurrent));
-                        break;
-                    //stop reason id  StopReasonId
-                    case "::Program:Cube.Admin.StopReason.ID":
-                        StopReasonId = double.Parse(dc.Value.ToString());
-                        break;
-                    //batch id  BatchId
-                    case "::Program:Cube.Status.Parameter[0].Value":
-                        BatchId = double.Parse(dc.Value.ToString());
-                        break;
-                    //barley 
-                    case "::Program:Inventory.Barley":
-                        Barley = double.Parse(dc.Value.ToString());
-                        break;
-                    //hops
-                    case "::Program:Inventory.Hops":
-                        Hops = double.Parse(dc.Value.ToString());
-                        break;
-                    //malt
-                    case "::Program:Inventory.Malt":
-                        Malt = double.Parse(dc.Value.ToString());
-                        break;
-                    //wheat
-                    case "::Program:Inventory.Wheat":
-                        Wheat = double.Parse(dc.Value.ToString());
-                        break;
-                    //yeast
-                    case "::Program:Inventory.Yeast":
-                        Yeast = double.Parse(dc.Value.ToString());
-                        break;
-                    //maintenance trigger
-                    case "::Program.Maintenance.Trigger":
-                        MaintenanceTrigger = double.Parse(dc.Value.ToString());
-                        break;
-                    //maintenance counter
-                    case "::Program:Maintenance.Counter":
-                        MaintenanceCounter = double.Parse(dc.Value.ToString());
-                        break;
-                    default:
-                        break;
+                    StateCurrent = double.Parse(dc.Value.ToString());
+                }
+                else if (identifier.Equals(Machine.AmountNode))
+                {
+                    ProcessedProducts = double.Parse(dc.Value.ToString());
+                }
+                else if (identifier.Equals(Machine.TemperatureNode))
+                {
+                    TempCurrent = double.Parse((dc.Value.WrappedValue.ToFloat().ToString()));
+                    BatchValues.TemperatureValues.Add(new KeyValuePair<string, double>
+                        (DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), TempCurrent));
+
+                }
+                else if (identifier.Equals(Machine.DefectNode))
+                {
+                    DefectProducts = double.Parse(dc.Value.ToString());
+                }
+                else if (identifier.Equals(Machine.AcceptableNode))
+                {
+                    AcceptableProducts = double.Parse(dc.Value.ToString());
+                }
+                else if (identifier.Equals(Machine.AmountToProduceNode))
+                {
+                    AmountToProduce = double.Parse(dc.Value.ToString());
+                }
+                else if (identifier.Equals(Machine.MachSpeedNode))
+                {
+                    MachSpeed = double.Parse(dc.Value.ToString());
+                }
+                else if (identifier.Equals(Machine.HumidityNode))
+                {
+                    HumidityCurrent = double.Parse((dc.Value.WrappedValue.ToFloat().ToString()));
+                    BatchValues.HumidityValues.Add(new KeyValuePair<string, double>
+                        (DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), HumidityCurrent));
+                }
+                else if (identifier.Equals(Machine.VibrationNode))
+                {
+                    VibrationCurrent = double.Parse((dc.Value.WrappedValue.ToFloat().ToString()));
+                    BatchValues.VibrationValues.Add(new KeyValuePair<string, double>
+                        (DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), VibrationCurrent));
+                }
+                else if (identifier.Equals(Machine.StopreasonNode))
+                {
+                    StopReasonId = double.Parse(dc.Value.ToString());
+                }
+                else if (identifier.Equals(Machine.BatchIdNode))
+                {
+                    BatchId = double.Parse(dc.Value.ToString());
+                }
+                else if (identifier.Equals(Machine.BarleyNode))
+                {
+                    Barley = double.Parse(dc.Value.ToString());
+                }
+                else if (identifier.Equals(Machine.HopsNode))
+                {
+                    Hops = double.Parse(dc.Value.ToString());
+                }
+                else if (identifier.Equals(Machine.MaltNode))
+                {
+                    Malt = double.Parse(dc.Value.ToString());
+                }
+                else if (identifier.Equals(Machine.WheatNode))
+                {
+                    Wheat = double.Parse(dc.Value.ToString());
+                }
+                else if (identifier.Equals(Machine.YeastNode))
+                {
+                    Yeast = double.Parse(dc.Value.ToString());
+                }
+                else if (identifier.Equals(Machine.MaintenanceTriggerNode))
+                {
+                    MaintenanceTrigger = double.Parse(dc.Value.ToString());
+                }
+                else if (identifier.Equals(Machine.MaintenanceCounterNode))
+                {
+                    MaintenanceCounter = double.Parse(dc.Value.ToString());
                 }
             }
         }
@@ -263,7 +258,7 @@ namespace ProjectSCAM.Models
             StopReasonId = 0;
             BatchId = 0;
             BatchValues = new BatchValueCollection();
-            
+
         }
 
         public void Disconnect()
@@ -357,9 +352,12 @@ namespace ProjectSCAM.Models
             {
                 float speed;
                 float recipeMaxSpeed = ServiceSingleton.Instance.DBService.RetrieveMaxSpeed((int)productType);
-                if(machineSpeed > recipeMaxSpeed) {
+                if (machineSpeed > recipeMaxSpeed)
+                {
                     speed = recipeMaxSpeed;
-                } else {
+                }
+                else
+                {
                     speed = machineSpeed;
                 }
                 isProcessRunning = true;
@@ -371,6 +369,7 @@ namespace ProjectSCAM.Models
                 start.Value = 2;
                 DataValue changeRequest = new DataValue();
                 changeRequest.Value = true;
+                System.Diagnostics.Debug.WriteLine(Recipe);
 
                 //write the nodes & clear the collection
                 //Thread.Sleep(2000);
@@ -380,7 +379,7 @@ namespace ProjectSCAM.Models
                     Attributes.Value, CreateDataValue(batchId)));
                 // product type
                 nodesToWrite.Add(CreateWriteValue("::Program:Cube.Command.Parameter[1].Value", 6,
-                    Attributes.Value, CreateDataValue(productType)));
+                    Attributes.Value, CreateDataValue(Recipe)));
                 // amount of product to be produced
                 nodesToWrite.Add(CreateWriteValue("::Program:Cube.Command.Parameter[2].Value", 6,
                     Attributes.Value, CreateDataValue(amountToProduce)));
@@ -590,42 +589,34 @@ namespace ProjectSCAM.Models
             }
         }
 
-        public double ProcessedProducts
-        {
+        public double ProcessedProducts {
             get { return processedProducts; }
-            set
-            {
+            set {
                 processedProducts = value;
                 OnPropertyChanged("ProcessedProducts");
             }
         }
 
-        public double AcceptableProducts
-        {
+        public double AcceptableProducts {
             get { return acceptableProducts; }
-            set
-            {
+            set {
                 acceptableProducts = value;
                 OnPropertyChanged("AcceptableProducts");
             }
         }
 
-        public double DefectProducts
-        {
+        public double DefectProducts {
             get { return defectProducts; }
-            set
-            {
+            set {
                 defectProducts = value;
                 OnPropertyChanged("DefectProducts");
             }
         }
 
-        public double AmountToProduce
-        {
+        public double AmountToProduce {
             get { return amountToProduce; }
 
-            set
-            {
+            set {
                 amountToProduce = value;
                 OnPropertyChanged("AmountToProduce");
             }
@@ -633,139 +624,111 @@ namespace ProjectSCAM.Models
 
 
 
-        public double StateCurrent
-        {
+        public double StateCurrent {
             get { return stateCurrent; }
-            set
-            {
+            set {
                 stateCurrent = value;
                 OnPropertyChanged("StateCurrent");
             }
         }
 
-        public double TempCurrent
-        {
+        public double TempCurrent {
             get { return tempCurrent; }
-            set
-            {
+            set {
                 tempCurrent = value;
                 OnPropertyChanged("TempCurrent");
             }
         }
 
-        public double HumidityCurrent
-        {
+        public double HumidityCurrent {
             get { return humidityCurrent; }
-            set
-            {
+            set {
                 humidityCurrent = value;
                 OnPropertyChanged("HumidityCurrent");
             }
         }
 
-        public double VibrationCurrent
-        {
+        public double VibrationCurrent {
             get { return vibrationCurrent; }
-            set
-            {
+            set {
                 vibrationCurrent = value;
                 OnPropertyChanged("VibrationCurrent");
             }
         }
 
-        public double BatchId
-        {
+        public double BatchId {
             get { return batchId; }
-            set
-            {
+            set {
                 stopReasonId = value;
                 OnPropertyChanged("BatchId");
             }
         }
 
-        public double StopReasonId
-        {
+        public double StopReasonId {
             get { return stopReasonId; }
-            set
-            {
+            set {
                 stopReasonId = value;
                 OnPropertyChanged("StopReasonId");
             }
         }
 
-        public double Barley
-        {
+        public double Barley {
             get { return barley; }
-            set
-            {
+            set {
                 barley = value;
                 OnPropertyChanged("Barley");
             }
         }
 
-        public double Hops
-        {
+        public double Hops {
             get { return hops; }
-            set
-            {
+            set {
                 hops = value;
                 OnPropertyChanged("Hops");
             }
         }
 
-        public double Malt
-        {
+        public double Malt {
             get { return malt; }
-            set
-            {
+            set {
                 malt = value;
                 OnPropertyChanged("Malt");
             }
         }
-        public double MachSpeed
-        {
+        public double MachSpeed {
             get { return machSpeed; }
-            set
-            {
+            set {
                 machSpeed = value;
                 OnPropertyChanged("MachSpeed");
             }
         }
 
-        public double Wheat
-        {
+        public double Wheat {
             get { return wheat; }
-            set
-            {
+            set {
                 wheat = value;
                 OnPropertyChanged("Wheat");
             }
         }
 
-        public double Yeast
-        {
+        public double Yeast {
             get { return yeast; }
-            set
-            {
+            set {
                 yeast = value;
                 OnPropertyChanged("Yeast");
             }
         }
 
-        public double MaintenanceTrigger
-        {
+        public double MaintenanceTrigger {
             get { return maintenanceTrigger; }
-            set
-            {
+            set {
                 maintenanceTrigger = value;
                 OnPropertyChanged("MaintenanceTrigger");
             }
         }
 
-        public double MaintenanceCounter
-        {
-            get
-            {
+        public double MaintenanceCounter {
+            get {
                 if (maintenanceTrigger == 0)
                 {
                     return maintenanceCounter;
@@ -775,8 +738,7 @@ namespace ProjectSCAM.Models
                     return (int)(maintenanceCounter / maintenanceTrigger * 100);
                 }
             }
-            set
-            {
+            set {
                 maintenanceCounter = value;
                 OnPropertyChanged("MaintenanceCounter");
             }

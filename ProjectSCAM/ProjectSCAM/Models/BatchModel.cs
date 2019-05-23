@@ -113,5 +113,9 @@ namespace ProjectSCAM.Models
         {
             Values = new BatchValueCollection();
         }
+        public static IList<BatchModel> GetBatches(bool successfulOnly)
+        {
+            return ServiceSingleton.Instance.DBService.RetrieveBatches(successfulOnly);
+        }
     }
 }

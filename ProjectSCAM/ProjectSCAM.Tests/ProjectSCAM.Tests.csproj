@@ -101,6 +101,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\MachineSelectionControllerTest.cs" />
+    <Compile Include="Controllers\BatchControllerTest.cs" />
     <Compile Include="Logic\DBServiceTest.cs" />
     <Compile Include="Logic\OPCServiceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

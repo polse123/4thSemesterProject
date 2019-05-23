@@ -55,8 +55,6 @@ namespace ProjectSCAM.Controllers {
         [HttpPost]
         public void SetMachine(string ip)
         {
-            Console.WriteLine(ip);
-            System.Diagnostics.Debug.WriteLine("lmao2");
             Session["SelectedMachine"] = ip;
             Console.WriteLine(Session["SelectedMachine"].ToString());
             ServiceSingleton.Instance.OPCService.InitConnection(Session["SelectedMachine"].ToString());

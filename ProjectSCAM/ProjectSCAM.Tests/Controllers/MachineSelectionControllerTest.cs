@@ -117,9 +117,11 @@ namespace ProjectSCAM.Tests.Controllers
             string currentval = m.AcceptableNode;
             string newVal = m.AcceptableNode + "1";
             m.AcceptableNode = newVal;
+
             // Act
             ViewResult result = controller.Edit(m) as ViewResult;
             m = ServiceSingleton.Instance.OPCService.GetMachine("123");
+
             // Assert
             Assert.AreEqual(newVal, m.AcceptableNode);
 
