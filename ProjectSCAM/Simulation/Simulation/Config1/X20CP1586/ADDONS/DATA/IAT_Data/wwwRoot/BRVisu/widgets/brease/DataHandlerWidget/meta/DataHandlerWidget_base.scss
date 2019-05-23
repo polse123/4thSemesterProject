@@ -1,0 +1,7 @@
+@import "mixins.scss";
+@mixin widgets_brease_DataHandlerWidget_base {
+	@include elemWidth(0);
+	@include elemHeight(0);
+
+}
+

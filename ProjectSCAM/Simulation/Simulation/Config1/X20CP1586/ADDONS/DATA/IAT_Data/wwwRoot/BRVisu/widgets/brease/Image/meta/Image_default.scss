@@ -1,0 +1,17 @@
+@import "mixins.scss";
+@mixin widgets_brease_Image_base {
+	@include elemWidth(150);
+	@include elemHeight(100);
+	border-style: none;
+	border-width: 2px;
+	border-color: #333;
+	opacity: 1;
+	@include rotate(0deg);
+	margin: 0px;
+	@include box-shadow(none);
+
+}
+
+.widgets_brease_Image_style_default {
+@include widgets_brease_Image_base 
+}

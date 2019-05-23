@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.br-automation.com/iat2015/contentDefinition/v2" xmlns:iat="http://www.br-automation.com/iat2015/contentDefinition/v2" xmlns:types="http://www.br-automation.com/iat2015/widgetTypes/v2" elementFormDefault="qualified">
+<xs:complexType name="widgets.brease.ImageRestrict" abstract="true">
+	<xs:complexContent>
+		<xs:restriction base="iat:brease.core.BaseContentWidget">
+			<xs:attribute name="height" use="optional" type="types:Size" default="100" />
+			<xs:attribute name="width" use="optional" type="types:Size" default="150" />
+		</xs:restriction>
+	</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="widgets.brease.Image">
+	<xs:complexContent>
+		<xs:extension base="iat:widgets.brease.ImageRestrict">
+			<xs:attribute name="image" use="optional" type="types:ImagePath" default="" />
+			<xs:attribute name="sizeMode" use="optional" type="types:brease.enum.SizeMode" default="contain" />
+			<xs:attribute name="borderStyle" use="optional" type="types:BorderStyle" default="none" />
+			<xs:attribute name="borderWidth" use="optional" type="types:PixelValCollection" default="2px" />
+			<xs:attribute name="borderColor" use="optional" type="types:ColorCollection" default="#333" />
+			<xs:attribute name="opacity" use="optional" type="types:Opacity" default="1" />
+			<xs:attribute name="rotation" use="optional" type="types:Rotation" default="0deg" />
+			<xs:attribute name="margin" use="optional" type="types:Margin" default="0px" />
+			<xs:attribute name="shadow" use="optional" type="types:Shadow" default="none" />
+		</xs:extension>
+	</xs:complexContent>
+</xs:complexType>
+</xs:schema>

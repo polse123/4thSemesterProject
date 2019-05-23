@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WidgetLibrary xmlns="http://www.br-automation.com/iat2014/widget">
+	<Widget name="widgets.brease.DateTimePicker">
+		<ASEngineeringInfo>
+			<IsProjectable>false</IsProjectable>
+		</ASEngineeringInfo>
+		<Dependencies>
+			<Files>
+				<File>widgets/brease/Window/Window.js</File>
+				<File>widgets/brease/DateTimePicker/libs/SliderWheel.js</File>
+				<File>brease/events/BreaseEvent.js</File>
+				<File>brease/helper/DateFormatter.js</File>
+				<File>brease/decorators/CultureDependency.js</File>
+			</Files>
+			<Widgets>
+				<Widget>widgets/brease/DateTimePicker/DateTimePicker.js</Widget>
+				<Widget>widgets/brease/Window/Window.js</Widget>
+			</Widgets>
+		</Dependencies>
+		<Categories>
+			<Category name="Category">Controls</Category>
+			<Category name="IO">Input</Category>
+			<Category name="IO">Output</Category>
+			<Category name="IO">System</Category>
+			<Category name="Operation">Touch</Category>
+			<Category name="Operation">Mouse</Category>
+			<Category name="Appliance">Text</Category>
+			<Category name="Performance">Low</Category>
+			<Category name="Performance">Medium</Category>
+			<Category name="Performance">High</Category>
+		</Categories>
+		<Descriptions>
+			<Description name="short">Eingabe Zeit</Description>
+			<Description name="de">Ermöglicht dem Benutzer eine Zeit einzugeben</Description>
+			<Description name="en">Enables the uster to enter a time value</Description>
+		</Descriptions>
+		<Inheritance>
+			<Class level="0">widgets.brease.DateTimePicker</Class>
+			<Class level="1">widgets.brease.Window</Class>
+			<Class level="2">brease.core.BaseWidget</Class>
+		</Inheritance>
+		<Parents>
+			<Parent>*</Parent>
+		</Parents>
+		<Children>
+		</Children>
+		<Methods>
+		</Methods>
+		<Properties>
+			<Property name="enable" type="Boolean" initOnly="false" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Behavior" defaultValue="true">
+				<Description>Initial option to enable widget.
+				</Description>
+			</Property>
+			<Property name="modal" type="Boolean" initOnly="true" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" defaultValue="true">
+				<Description>If true, the window will be modal, in the meaning that no interaction with beneath page is possible. A semi transparent overlay between window and parent application will catch user actions.&lt;br/&gt;
+It depends on settings &apos;showCloseButton&apos; and &apos;forceInteraction&apos; how the user can close the window.
+				</Description>
+			</Property>
+			<Property name="permissionOperate" type="RoleCollection" initOnly="true" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Accessibility">
+				<Description>restricts operability to users, which have given roles
+				</Description>
+			</Property>
+			<Property name="permissionView" type="RoleCollection" initOnly="true" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Accessibility">
+				<Description>restricts visibility to users, which have given roles
+				</Description>
+			</Property>
+			<Property name="position" type="Object" initOnly="true" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" defaultValue="{&apos;horizontal&apos;:&apos;center&apos;, &apos;vertical&apos;:&apos;middle&apos;}">
+				<Description>Horizontal and vertical position of the Window.&lt;br/&gt;
+Either a string (horizontal:left/center/right, vertical:top/middle/bottom) or an integer.&lt;br/&gt;
+Example :
+
+&lt;pre&gt;&lt;code&gt;{&apos;horizontal&apos;: &apos;center&apos;, &apos;vertical&apos;: 105}
+&lt;/code&gt;&lt;/pre&gt;
+				</Description>
+			</Property>
+			<Property name="style" type="StyleReference" initOnly="false" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Appearance" defaultValue="default">
+				<Description>reference to a style for this widget type
+				</Description>
+			</Property>
+			<Property name="visible" type="Boolean" initOnly="false" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Behavior" defaultValue="true">
+				<Description>change visibility
+				</Description>
+			</Property>
+		</Properties>
+	<BindingTemplates>
+  
+</BindingTemplates>
+<PropertyGroups>
+  <PropertyGroup name="Size" type="String" category="Layout">
+    <Description>outer height and width of widget</Description>
+  </PropertyGroup>
+  <PropertyGroup name="Position" type="String" category="Layout">
+    <Description>top and left of widget</Description>
+  </PropertyGroup>
+</PropertyGroups>
+<StyleProperties defaultStyle="default">
+  <StyleProperty name="width" type="Size" not_styleable="true" owner="widgets.brease.DateTimePicker" category="Layout" groupRefId="Size" groupOrder="1" default="296">
+    <StyleElement attribute="@include elemWidth($value)"/>
+    <Description>outer width of widget</Description>
+  </StyleProperty>
+  <StyleProperty name="height" type="Size" not_styleable="true" owner="widgets.brease.DateTimePicker" category="Layout" groupRefId="Size" groupOrder="2" default="360">
+    <StyleElement attribute="@include elemHeight($value)"/>
+    <Description>outer height of widget</Description>
+  </StyleProperty>
+  <StyleProperty name="top" type="Integer" not_styleable="true" owner="brease.core.BaseWidget" category="Layout" groupRefId="Position" groupOrder="1">
+    <StyleElement attribute="@include elemTop($value)"/>
+    <Description>absolute position measured from top boundary of parent container</Description>
+  </StyleProperty>
+  <StyleProperty name="left" type="Integer" not_styleable="true" owner="brease.core.BaseWidget" category="Layout" groupRefId="Position" groupOrder="2">
+    <StyleElement attribute="@include elemLeft($value)"/>
+    <Description>absolute position measured from left boundary of parent container</Description>
+  </StyleProperty>
+  <StyleProperty name="zIndex" type="UInteger" not_styleable="true" owner="brease.core.BaseWidget" category="Layout" required="true">
+    <StyleElement attribute="z-index"/>
+    <Description>The zIndex property specifies the z-order of a widget and its childs.&lt;br/&gt;&#xD;
+        When widgets overlap, z-order determines which one covers the other. A widget with a larger zIndex generally covers a widget with a lower one.&lt;br/&gt;&#xD;
+        The zIndex must be unique within a content.&lt;br/&gt;</Description>
+  </StyleProperty>
+  <StyleProperty name="cornerRadius" category="Appearance" type="PixelValCollection" default="0px">
+    <StyleElement attribute="@include border-radius($value)"/>
+    <StyleElement selector="header" attribute="@include border-top-radius($value)"/>
+    <StyleElement selector=".dateTimePickerBody .dateTimePickerControl" attribute="@include border-bottom-radius($value-9px)"/>
+    <StyleElement selector=".dateTimePickerBody .dateTimePickerControl .dateTimePickerEnter" attribute="@include border-bottom-right-radius($value-9px)"/>
+    <StyleElement selector=".dateTimePickerBody .dateTimePickerControl .dateTimePickerReset" attribute="@include border-bottom-left-radius($value-9px)"/>
+    <Description>corner radius of the edge of DateTimePicker</Description>
+  </StyleProperty>
+  <StyleProperty name="headerGradient" category="Appearance" type="Gradient" default="none">
+    <StyleElement selector="header" attribute="background-image"/>
+    <Description>color gradient of header</Description>
+  </StyleProperty>
+  <StyleProperty name="borderColor" category="Appearance" type="ColorCollection" default="#333333">
+    <StyleElement attribute="border-color"/>
+    <StyleElement selector="header" attribute="background-color"/>
+    <StyleElement selector="&amp;.arrowLeft .breaseWindowArrow" attribute="border-right-color"/>
+    <StyleElement selector="&amp;.arrowRight .breaseWindowArrow" attribute="border-left-color"/>
+    <StyleElement selector="&amp;.arrowTop .breaseWindowArrow" attribute="border-bottom-color"/>
+    <StyleElement selector="&amp;.arrowBottom .breaseWindowArrow" attribute="border-top-color"/>
+    <Description>border color of DateTimePicker including header and arrow</Description>
+  </StyleProperty>
+  <StyleProperty name="textColor" category="Appearance" type="Color" default="#000000">
+    <StyleElement selector=".dateTimePickerBody .dateTimePickerHeadings .actDate" attribute="color"/>
+    <StyleElement selector=".dateTimePickerBody button" attribute="color"/>
+    <Description>text color for whole DateTimePicker</Description>
+  </StyleProperty>
+  <StyleProperty name="opacity" category="Appearance" type="Opacity" default="1">
+    <StyleElement attribute="opacity"/>
+    <Description>opacity of whole DateTimePicker</Description>
+  </StyleProperty>
+  <StyleProperty name="fontName" category="Appearance" type="FontName" default="Arial">
+    <StyleElement selector=".dateTimePickerBody .dateTimePickerHeadings .actDate" attribute="font-family"/>
+    <StyleElement selector=".dateTimePickerBody button" attribute="font-family"/>
+    <Description>font name for whole DateTimePicker</Description>
+  </StyleProperty>
+  <StyleProperty name="shadow" category="Appearance" type="Shadow" default="none">
+    <StyleElement attribute="@include box-shadow($value)"/>
+    <Description>shadow of whole DateTimePicker</Description>
+  </StyleProperty>
+  <StyleProperty name="backColor" category="Appearance" type="Color" default="#333333">
+    <StyleElement selector=".dateTimePickerBody" attribute="background-color"/>
+    <Description>background color of DateTimePicker except the header</Description>
+  </StyleProperty>
+  <StyleProperty name="backGroundGradient" category="Appearance" type="Gradient" default="none">
+    <StyleElement selector=".dateTimePickerBody" attribute="background-image"/>
+    <Description>background gradient of DateTimePicker except the header</Description>
+  </StyleProperty>
+  <StyleProperty name="mouseDownBackColor" category="Appearance" type="Color" default="#FF8800">
+    <StyleElement selector=".dateTimePickerBody .dateTimePickerControl .dateTimePickerEnter.active" attribute="background-color"/>
+    <StyleElement selector=".dateTimePickerBody .dateTimePickerControl .dateTimePickerReset.active" attribute="background-color"/>
+    <Description>background color of enter and reset button in pressed state</Description>
+  </StyleProperty>
+  <StyleProperty name="mouseDownTextColor" category="Appearance" type="Color" default="#FFFFFF">
+    <StyleElement selector=".dateTimePickerBody .dateTimePickerControl .dateTimePickerEnter.active" attribute="color"/>
+    <StyleElement selector=".dateTimePickerBody .dateTimePickerControl .dateTimePickerReset.active" attribute="color"/>
+    <Description>text color of enter and reset button in pressed state</Description>
+  </StyleProperty>
+  <StyleProperty name="buttonBackGroundGradient" category="Appearance" type="Gradient" default="none">
+    <StyleElement selector=".dateTimePickerBody .dateTimePickerControl .dateTimePickerEnter" attribute="background-image"/>
+    <StyleElement selector=".dateTimePickerBody .dateTimePickerControl .dateTimePickerReset" attribute="background-image"/>
+    <Description>background gradient of enter and reset button</Description>
+  </StyleProperty>
+  <StyleProperty name="buttonMouseDownBackGroundGradient" category="Appearance" type="Gradient" default="none">
+    <StyleElement selector=".dateTimePickerBody .dateTimePickerControl .dateTimePickerEnter.active" attribute="background-image"/>
+    <StyleElement selector=".dateTimePickerBody .dateTimePickerControl .dateTimePickerReset.active" attribute="background-image"/>
+    <Description>background gradient of enter and reset button in mousedown state</Description>
+  </StyleProperty>
+  <StyleProperty name="lineColor" category="Appearance" type="Color" default="#d4d4d4">
+    <StyleElement selector=".dateTimePickerBody .dateTimePickerButtons button" attribute="border-bottom-color"/>
+    <Description>color of separating lines between wheel values</Description>
+  </StyleProperty>
+  <StyleProperty name="activeLineColor" category="Appearance" type="Color" default="#FF8800">
+    <StyleElement selector=".dateTimePickerBody .dateTimePickerButtons .marker" attribute="background-color"/>
+    <Description>color of separating lines above and below selected wheel values</Description>
+  </StyleProperty>
+</StyleProperties>
+</Widget>
+</WidgetLibrary>

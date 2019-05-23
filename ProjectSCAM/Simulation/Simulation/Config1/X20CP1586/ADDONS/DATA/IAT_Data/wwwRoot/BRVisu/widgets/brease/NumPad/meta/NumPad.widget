@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WidgetLibrary xmlns="http://www.br-automation.com/iat2014/widget">
+	<Widget name="widgets.brease.NumPad">
+		<ASEngineeringInfo>
+			<IsProjectable>false</IsProjectable>
+		</ASEngineeringInfo>
+		<Dependencies>
+			<Files>
+				<File>widgets/brease/Window/Window.js</File>
+				<File>brease/events/BreaseEvent.js</File>
+				<File>brease/enum/Enum.js</File>
+				<File>brease/core/Utils.js</File>
+				<File>brease/config/NumberFormat.js</File>
+				<File>widgets/brease/NumPad/libs/NumPadSlider.js</File>
+			</Files>
+			<Widgets>
+				<Widget>widgets/brease/NumPad/NumPad.js</Widget>
+				<Widget>widgets/brease/Window/Window.js</Widget>
+			</Widgets>
+		</Dependencies>
+		<Categories>
+			<Category name="Category">System</Category>
+		</Categories>
+		<Descriptions>
+			<Description name="short">NumPad zur Eingabe numerischer Werte</Description>
+			<Description name="de">NumPad zur Eingabe numerischer Werte</Description>
+			<Description name="en">NumPad for the input of numeric values</Description>
+			<Description name="ASHelp">The NumPad widget can not be used in a content directly, but its possible to use styles for it.</Description>
+		</Descriptions>
+		<Inheritance>
+			<Class level="0">widgets.brease.NumPad</Class>
+			<Class level="1">widgets.brease.Window</Class>
+			<Class level="2">brease.core.BaseWidget</Class>
+		</Inheritance>
+		<Parents>
+			<Parent>*</Parent>
+		</Parents>
+		<Children>
+		</Children>
+		<Methods>
+		</Methods>
+		<Properties>
+			<Property name="enable" type="Boolean" initOnly="false" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Behavior" defaultValue="true">
+				<Description>Initial option to enable widget.
+				</Description>
+			</Property>
+			<Property name="modal" type="Boolean" initOnly="true" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" defaultValue="true">
+				<Description>If true, the window will be modal, in the meaning that no interaction with beneath page is possible. A semi transparent overlay between window and parent application will catch user actions.&lt;br/&gt;
+It depends on settings &apos;showCloseButton&apos; and &apos;forceInteraction&apos; how the user can close the window.
+				</Description>
+			</Property>
+			<Property name="permissionOperate" type="RoleCollection" initOnly="true" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Accessibility">
+				<Description>restricts operability to users, which have given roles
+				</Description>
+			</Property>
+			<Property name="permissionView" type="RoleCollection" initOnly="true" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Accessibility">
+				<Description>restricts visibility to users, which have given roles
+				</Description>
+			</Property>
+			<Property name="position" type="Object" initOnly="true" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" defaultValue="{&apos;horizontal&apos;:&apos;center&apos;, &apos;vertical&apos;:&apos;middle&apos;}">
+				<Description>Horizontal and vertical position of the Window.&lt;br/&gt;
+Either a string (horizontal:left/center/right, vertical:top/middle/bottom) or an integer.&lt;br/&gt;
+Example :
+
+&lt;pre&gt;&lt;code&gt;{&apos;horizontal&apos;: &apos;center&apos;, &apos;vertical&apos;: 105}
+&lt;/code&gt;&lt;/pre&gt;
+				</Description>
+			</Property>
+			<Property name="style" type="StyleReference" initOnly="false" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Appearance" defaultValue="default">
+				<Description>reference to a style for this widget type
+				</Description>
+			</Property>
+			<Property name="visible" type="Boolean" initOnly="false" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Behavior" defaultValue="true">
+				<Description>change visibility
+				</Description>
+			</Property>
+		</Properties>
+	<BindingTemplates>
+  
+</BindingTemplates>
+<PropertyGroups>
+  <PropertyGroup name="Size" type="String" category="Layout">
+    <Description>outer height and width of widget</Description>
+  </PropertyGroup>
+  <PropertyGroup name="Position" type="String" category="Layout">
+    <Description>top and left of widget</Description>
+  </PropertyGroup>
+</PropertyGroups>
+<StyleProperties defaultStyle="default">
+  <StyleProperty name="width" type="Size" not_styleable="true" owner="widgets.brease.NumPad" category="Layout" groupRefId="Size" groupOrder="1" default="354">
+    <StyleElement attribute="@include elemWidth($value)"/>
+    <Description>outer width of widget</Description>
+  </StyleProperty>
+  <StyleProperty name="height" type="Size" not_styleable="true" owner="widgets.brease.NumPad" category="Layout" groupRefId="Size" groupOrder="2" default="411">
+    <StyleElement attribute="@include elemHeight($value)"/>
+    <Description>outer height of widget</Description>
+  </StyleProperty>
+  <StyleProperty name="top" type="Integer" not_styleable="true" owner="brease.core.BaseWidget" category="Layout" groupRefId="Position" groupOrder="1">
+    <StyleElement attribute="@include elemTop($value)"/>
+    <Description>absolute position measured from top boundary of parent container</Description>
+  </StyleProperty>
+  <StyleProperty name="left" type="Integer" not_styleable="true" owner="brease.core.BaseWidget" category="Layout" groupRefId="Position" groupOrder="2">
+    <StyleElement attribute="@include elemLeft($value)"/>
+    <Description>absolute position measured from left boundary of parent container</Description>
+  </StyleProperty>
+  <StyleProperty name="zIndex" type="UInteger" not_styleable="true" owner="brease.core.BaseWidget" category="Layout" required="true">
+    <StyleElement attribute="z-index"/>
+    <Description>The zIndex property specifies the z-order of a widget and its childs.&lt;br/&gt;&#xD;
+        When widgets overlap, z-order determines which one covers the other. A widget with a larger zIndex generally covers a widget with a lower one.&lt;br/&gt;&#xD;
+        The zIndex must be unique within a content.&lt;br/&gt;</Description>
+  </StyleProperty>
+  <StyleProperty name="cornerRadius" category="Appearance" type="PixelValCollection" default="0px">
+    <StyleElement attribute="@include border-radius($value)"/>
+    <StyleElement selector=".numpadHeader" attribute="@include border-radius($value)"/>
+  </StyleProperty>
+  <StyleProperty name="backColor" category="Appearance" type="Color" default="#FFFFFF">
+    <StyleElement selector=".numpad" attribute="background-color"/>
+  </StyleProperty>
+  <StyleProperty name="backGroundGradient" category="Appearance" type="Gradient" default="none">
+    <StyleElement selector=".numpad" attribute="background-image"/>
+  </StyleProperty>
+  <StyleProperty name="headerGradient" category="Appearance" type="Gradient" default="none">
+    <StyleElement selector=".numpadHeader" attribute="background-image"/>
+  </StyleProperty>
+  <StyleProperty name="borderColor" category="Appearance" type="ColorCollection" default="#333333">
+    <StyleElement attribute="border-color"/>
+    <StyleElement selector="header" attribute="background-color"/>
+    <StyleElement selector="&amp;.arrowLeft .breaseWindowArrow" attribute="border-right-color"/>
+    <StyleElement selector="&amp;.arrowRight .breaseWindowArrow" attribute="border-left-color"/>
+  </StyleProperty>
+  <StyleProperty name="textColor" category="Appearance" type="Color" default="#000000">
+    <StyleElement selector=".breaseNumPadButtons button" attribute="color"/>
+  </StyleProperty>
+  <StyleProperty name="mouseDownBackColor" category="Appearance" type="Color" default="#FFA800">
+    <StyleElement selector=".breaseNumPadButtons button.active" attribute="background-color"/>
+  </StyleProperty>
+  <StyleProperty name="mouseDownTextColor" category="Appearance" type="Color" default="#000000">
+    <StyleElement selector=".breaseNumPadButtons button.active" attribute="color"/>
+  </StyleProperty>
+  <StyleProperty name="buttonBackGroundGradient" category="Appearance" type="Gradient" default="none">
+    <StyleElement selector=".breaseNumPadButtons button" attribute="background-image"/>
+  </StyleProperty>
+  <StyleProperty name="buttonMouseDownBackGroundGradient" category="Appearance" type="Gradient" default="none">
+    <StyleElement selector=".breaseNumPadButtons button.active" attribute="background-image"/>
+  </StyleProperty>
+  <StyleProperty name="buttonBackColor" category="Appearance" type="Color" default="#FFFFFF">
+    <StyleElement selector=".breaseNumPadButtons button" attribute="background-color"/>
+  </StyleProperty>
+  <StyleProperty name="opacity" category="Appearance" type="Opacity" default="1">
+    <StyleElement attribute="opacity"/>
+  </StyleProperty>
+  <StyleProperty name="fontName" type="FontName" default="Arial">
+    <StyleElement attribute="font-family"/>
+  </StyleProperty>
+  <StyleProperty name="shadow" type="Shadow" default="none">
+    <StyleElement attribute="@include box-shadow($value)"/>
+  </StyleProperty>
+  <StyleProperty name="sliderForeColor" category="Appearance" type="Color" default="#FFF">
+    <StyleElement selector=".breaseNumpadSlider .numpadSlider_thumb .numpadSlider_knob" attribute="background-color"/>
+  </StyleProperty>
+  <StyleProperty name="sliderForeGroundGradient" category="Appearance" type="Gradient" default="none">
+    <StyleElement selector=".breaseNumpadSlider .numpadSlider_thumb .numpadSlider_knob" attribute="background-image"/>
+  </StyleProperty>
+  <StyleProperty name="sliderOutputBackColor" category="Appearance" type="Color" default="transparent">
+    <StyleElement selector=".breaseNumpadSlider .numpadSlider_thumb .numpadSlider_output" attribute="background-color"/>
+    <StyleElement selector=".breaseNumpadSlider .numpadSlider_thumb .numpadSlider_output:after" attribute="border-top-color"/>
+  </StyleProperty>
+</StyleProperties>
+</Widget>
+</WidgetLibrary>

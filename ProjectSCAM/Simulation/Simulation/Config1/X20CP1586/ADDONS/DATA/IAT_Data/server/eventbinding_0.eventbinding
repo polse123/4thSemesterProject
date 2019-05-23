@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<EventBindingDefinition xmlns="http://www.br-automation.com/iat2014/eventbinding/runtime/v2">
+  <Content id="leftContent">
+    <EventBinding>
+      <Source type="widgets.brease.Button.Event" refId="leftContent_Button1" event="Click" />
+      <EventHandler>
+		<Sequence>
+			<Step order="0">			
+		        <Action>
+		          <Target type="opcUa.NodeAction" refId="::Program:Cube.Command.CntrlCmd">
+		            <Method type="opcUa.NodeAction.SetValueNumber"><Parameter name="value" xsi:type="ANY_REAL" value="1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" /></Method>
+		          </Target>
+		        </Action>
+			</Step>
+			<Step order="1">			
+				<Action>
+					<Target type="opcUa.NodeAction" refId="::Program:Cube.Command.CmdChangeRequest">
+						<Method type="opcUa.NodeAction.SetValueBool"><Parameter name="value" xsi:type="BOOL" value="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" /></Method>
+					</Target>
+				</Action>
+			</Step>
+		</Sequence>
+      </EventHandler>
+    </EventBinding>
+  </Content>
+  <Content id="leftContent">
+    <EventBinding>
+		<Source type="widgets.brease.Button.Event" refId="leftContent_Button2" event="Click" />
+		<EventHandler>
+			<Sequence>
+				<Step order="0">			
+					<Action>
+						<Target type="opcUa.NodeAction" refId="::Program:Cube.Command.CntrlCmd">
+							<Method type="opcUa.NodeAction.SetValueNumber"><Parameter name="value" xsi:type="ANY_REAL" value="2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" /></Method>
+						</Target>
+					</Action>
+				</Step>
+				<Step order="1">			
+					<Action>
+						<Target type="opcUa.NodeAction" refId="::Program:Cube.Command.CmdChangeRequest">
+							<Method type="opcUa.NodeAction.SetValueBool"><Parameter name="value" xsi:type="BOOL" value="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" /></Method>
+						</Target>
+					</Action>
+				</Step>
+			</Sequence>
+		</EventHandler>
+	</EventBinding>
+  </Content>
+  <Content id="leftContent">
+    <EventBinding>
+		<Source type="widgets.brease.Button.Event" refId="leftContent_Button3" event="Click" />
+		<EventHandler>
+			<Sequence>
+				<Step order="0">			
+					<Action>
+						<Target type="opcUa.NodeAction" refId="::Program:Cube.Command.CntrlCmd">
+							<Method type="opcUa.NodeAction.SetValueNumber"><Parameter name="value" xsi:type="ANY_REAL" value="3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" /></Method>
+						</Target>
+					</Action>
+				</Step>
+				<Step order="1">			
+					<Action>
+						<Target type="opcUa.NodeAction" refId="::Program:Cube.Command.CmdChangeRequest">
+							<Method type="opcUa.NodeAction.SetValueBool"><Parameter name="value" xsi:type="BOOL" value="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" /></Method>
+						</Target>
+					</Action>
+				</Step>
+			</Sequence>
+		</EventHandler>
+	</EventBinding>
+  </Content>
+  <Content id="leftContent">
+    <EventBinding>
+		<Source type="widgets.brease.Button.Event" refId="leftContent_Button4" event="Click" />
+		<EventHandler>
+			<Sequence>
+				<Step order="0">			
+					<Action>
+						<Target type="opcUa.NodeAction" refId="::Program:Cube.Command.CntrlCmd">
+							<Method type="opcUa.NodeAction.SetValueNumber"><Parameter name="value" xsi:type="ANY_REAL" value="4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" /></Method>
+						</Target>
+					</Action>
+				</Step>
+				<Step order="1">			
+					<Action>
+						<Target type="opcUa.NodeAction" refId="::Program:Cube.Command.CmdChangeRequest">
+							<Method type="opcUa.NodeAction.SetValueBool"><Parameter name="value" xsi:type="BOOL" value="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" /></Method>
+						</Target>
+					</Action>
+				</Step>
+			</Sequence>
+		</EventHandler>
+	</EventBinding>
+  </Content>
+  <Content id="leftContent">
+    <EventBinding>
+		<Source type="widgets.brease.Button.Event" refId="leftContent_Button5" event="Click" />
+		<EventHandler>
+			<Sequence>
+				<Step order="0">			
+					<Action>
+						<Target type="opcUa.NodeAction" refId="::Program:Cube.Command.CntrlCmd">
+							<Method type="opcUa.NodeAction.SetValueNumber"><Parameter name="value" xsi:type="ANY_REAL" value="5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" /></Method>
+						</Target>
+					</Action>
+				</Step>
+				<Step order="1">			
+					<Action>
+						<Target type="opcUa.NodeAction" refId="::Program:Cube.Command.CmdChangeRequest">
+							<Method type="opcUa.NodeAction.SetValueBool"><Parameter name="value" xsi:type="BOOL" value="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" /></Method>
+						</Target>
+					</Action>
+				</Step>
+			</Sequence>
+		</EventHandler>
+	</EventBinding>
+  </Content>
+</EventBindingDefinition>

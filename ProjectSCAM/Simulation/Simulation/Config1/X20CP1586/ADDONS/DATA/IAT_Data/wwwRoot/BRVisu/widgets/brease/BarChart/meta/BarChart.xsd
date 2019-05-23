@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.br-automation.com/iat2015/contentDefinition/v2" xmlns:iat="http://www.br-automation.com/iat2015/contentDefinition/v2" xmlns:types="http://www.br-automation.com/iat2015/widgetTypes/v2" elementFormDefault="qualified">
+<xs:complexType name="widgets.brease.BarChartRestrict" abstract="true">
+	<xs:complexContent>
+		<xs:restriction base="iat:brease.core.BaseContentWidget">
+			<xs:attribute name="height" use="optional" type="types:Size" default="300" />
+			<xs:attribute name="width" use="optional" type="types:Size" default="300" />
+		</xs:restriction>
+	</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="widgets.brease.BarChart">
+	<xs:complexContent>
+		<xs:extension base="iat:widgets.brease.BarChartRestrict">
+			<xs:all>
+				<xs:element name="Widgets" type="iat:Widgets" minOccurs="1" maxOccurs="1">
+					<xs:unique name="widgets.brease.BarChart.zIndex">
+						<xs:selector xpath="./iat:Widget"/>
+						<xs:field xpath="@zIndex"/>
+					</xs:unique>
+				</xs:element>
+			</xs:all>
+			<xs:attribute name="barPadding" use="optional" type="types:Integer" default="5" />
+			<xs:attribute name="chartMargin" use="optional" type="types:PixelValCollection" default="30px 30px 0px 0px" />
+			<xs:attribute name="format" use="optional" type="types:brease.config.MeasurementSystemFormat" default="{&apos;metric&apos;:{ &apos;decimalPlaces&apos; : 0, &apos;minimumIntegerDigits&apos; : 1 }, &apos;imperial&apos; :{ &apos;decimalPlaces&apos; : 0, &apos;minimumIntegerDigits&apos; : 1 }, &apos;imperial-us&apos; :{ &apos;decimalPlaces&apos; : 0, &apos;minimumIntegerDigits&apos; : 1 }}" />
+			<xs:attribute name="orientation" use="optional" type="types:brease.enum.Orientation" default="BottomToTop" />
+			<xs:attribute name="showUnit" use="optional" type="types:Boolean" default="false" />
+			<xs:attribute name="showValue" use="optional" type="types:Boolean" default="true" />
+			<xs:attribute name="transitionTime" use="optional" type="types:UInteger" default="0" />
+			<xs:attribute name="unit" use="optional" type="types:brease.config.MeasurementSystemUnit" default="" />
+			<xs:attribute name="xAxisHeight" use="optional" type="types:Integer" default="40" />
+			<xs:attribute name="yAxisWidth" use="optional" type="types:Integer" default="40" />
+			<xs:attribute name="axisColor" use="optional" type="types:Color" default="#000000" />
+			<xs:attribute name="textColor" use="optional" type="types:Color" default="#000000" />
+			<xs:attribute name="fontSize" use="optional" type="types:PixelVal" default="12px" />
+			<xs:attribute name="fontName" use="optional" type="types:FontName" default="Arial" />
+			<xs:attribute name="bold" use="optional" type="types:Boolean" default="false" />
+			<xs:attribute name="gridColor" use="optional" type="types:Color" default="#cccccc" />
+			<xs:attribute name="rotation" use="optional" type="types:Rotation" default="0deg" />
+			<xs:attribute name="italic" use="optional" type="types:Boolean" default="false" />
+			<xs:attribute name="opacity" use="optional" type="types:Opacity" default="1" />
+			<xs:attribute name="backColor" use="optional" type="types:Color" default="transparent" />
+			<xs:attribute name="borderStyle" use="optional" type="types:BorderStyle" default="solid" />
+			<xs:attribute name="borderWidth" use="optional" type="types:PixelValCollection" default="2px" />
+			<xs:attribute name="borderColor" use="optional" type="types:Color" default="#000000" />
+			<xs:attribute name="cornerRadius" use="optional" type="types:PixelValCollection" default="0px" />
+			<xs:attribute name="margin" use="optional" type="types:Margin" default="0px" />
+		</xs:extension>
+	</xs:complexContent>
+</xs:complexType>
+</xs:schema>

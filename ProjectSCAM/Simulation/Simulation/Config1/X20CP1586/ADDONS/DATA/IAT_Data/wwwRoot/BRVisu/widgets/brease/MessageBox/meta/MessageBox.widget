@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WidgetLibrary xmlns="http://www.br-automation.com/iat2014/widget">
+	<Widget name="widgets.brease.MessageBox">
+		<ASEngineeringInfo>
+			<IsProjectable>false</IsProjectable>
+		</ASEngineeringInfo>
+		<Dependencies>
+			<Files>
+				<File>widgets/brease/Window/Window.js</File>
+				<File>widgets/brease/MessageBox/libs/ButtonManager.js</File>
+				<File>brease/events/BreaseEvent.js</File>
+				<File>brease/enum/Enum.js</File>
+				<File>brease/core/Utils.js</File>
+				<File>brease/controller/PopUpManager.js</File>
+			</Files>
+			<Widgets>
+				<Widget>widgets/brease/MessageBox/MessageBox.js</Widget>
+				<Widget>widgets/brease/Window/Window.js</Widget>
+			</Widgets>
+		</Dependencies>
+		<Categories>
+			<Category name="Category">System</Category>
+		</Categories>
+		<Descriptions>
+		</Descriptions>
+		<Inheritance>
+			<Class level="0">widgets.brease.MessageBox</Class>
+			<Class level="1">widgets.brease.Window</Class>
+			<Class level="2">brease.core.BaseWidget</Class>
+		</Inheritance>
+		<Parents>
+			<Parent>*</Parent>
+		</Parents>
+		<Children>
+		</Children>
+		<Methods>
+		</Methods>
+		<Properties>
+			<Property name="enable" type="Boolean" initOnly="false" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Behavior" defaultValue="true">
+				<Description>Initial option to enable widget.
+				</Description>
+			</Property>
+			<Property name="permissionOperate" type="RoleCollection" initOnly="true" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Accessibility">
+				<Description>restricts operability to users, which have given roles
+				</Description>
+			</Property>
+			<Property name="permissionView" type="RoleCollection" initOnly="true" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Accessibility">
+				<Description>restricts visibility to users, which have given roles
+				</Description>
+			</Property>
+			<Property name="position" type="Object" initOnly="true" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" defaultValue="{&apos;horizontal&apos;:&apos;center&apos;, &apos;vertical&apos;:&apos;middle&apos;}">
+				<Description>Horizontal and vertical position of the Window.&lt;br/&gt;
+Either a string (horizontal:left/center/right, vertical:top/middle/bottom) or an integer.&lt;br/&gt;
+Example :
+
+&lt;pre&gt;&lt;code&gt;{&apos;horizontal&apos;: &apos;center&apos;, &apos;vertical&apos;: 105}
+&lt;/code&gt;&lt;/pre&gt;
+				</Description>
+			</Property>
+			<Property name="style" type="StyleReference" initOnly="false" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Appearance" defaultValue="default">
+				<Description>reference to a style for this widget type
+				</Description>
+			</Property>
+			<Property name="visible" type="Boolean" initOnly="false" localizable="false" editableBinding="false" readOnly="false" required="false" projectable="true" category="Behavior" defaultValue="true">
+				<Description>change visibility
+				</Description>
+			</Property>
+		</Properties>
+	<BindingTemplates>
+  
+</BindingTemplates>
+<PropertyGroups>
+  <PropertyGroup name="Size" type="String" category="Layout">
+    <Description>outer height and width of widget</Description>
+  </PropertyGroup>
+  <PropertyGroup name="Position" type="String" category="Layout">
+    <Description>top and left of widget</Description>
+  </PropertyGroup>
+</PropertyGroups>
+<StyleProperties defaultStyle="default">
+  <StyleProperty name="width" type="Size" not_styleable="true" owner="widgets.brease.MessageBox" category="Layout" groupRefId="Size" groupOrder="1" default="500">
+    <StyleElement attribute="@include elemWidth($value)"/>
+    <Description>outer width of widget</Description>
+  </StyleProperty>
+  <StyleProperty name="height" type="Size" not_styleable="true" owner="widgets.brease.MessageBox" category="Layout" groupRefId="Size" groupOrder="2" default="156">
+    <StyleElement attribute="@include elemHeight($value)"/>
+    <Description>outer height of widget</Description>
+  </StyleProperty>
+  <StyleProperty name="top" type="Integer" not_styleable="true" owner="brease.core.BaseWidget" category="Layout" groupRefId="Position" groupOrder="1">
+    <StyleElement attribute="@include elemTop($value)"/>
+    <Description>absolute position measured from top boundary of parent container</Description>
+  </StyleProperty>
+  <StyleProperty name="left" type="Integer" not_styleable="true" owner="brease.core.BaseWidget" category="Layout" groupRefId="Position" groupOrder="2">
+    <StyleElement attribute="@include elemLeft($value)"/>
+    <Description>absolute position measured from left boundary of parent container</Description>
+  </StyleProperty>
+  <StyleProperty name="zIndex" type="UInteger" not_styleable="true" owner="brease.core.BaseWidget" category="Layout" required="true">
+    <StyleElement attribute="z-index"/>
+    <Description>The zIndex property specifies the z-order of a widget and its childs.&lt;br/&gt;&#xD;
+        When widgets overlap, z-order determines which one covers the other. A widget with a larger zIndex generally covers a widget with a lower one.&lt;br/&gt;&#xD;
+        The zIndex must be unique within a content.&lt;br/&gt;</Description>
+  </StyleProperty>
+  <StyleProperty name="borderWidth" type="PixelValCollection" default="5px">
+    <StyleElement selector=".breaseMessageBoxContentBox" attribute="border-width"/>
+    <Description>usage (Syntax like CSS):&#xD;
+        - single Value for all directions e.g. 2px&#xD;
+        - seperate Value for each direction e.g. 1px 2px 3px 4px</Description>
+  </StyleProperty>
+  <StyleProperty name="cornerRadius" type="PixelValCollection" default="0px">
+    <StyleElement selector=".breaseMessageBoxHeader" attribute="border-radius"/>
+    <StyleElement selector=".messageBoxFooter" attribute="border-radius"/>
+    <Description>usage (Syntax like CSS):&#xD;
+        - single Value for all directions e.g. 2px&#xD;
+        - seperate Value for each direction e.g. 1px 2px 3px 4px</Description>
+  </StyleProperty>
+  <StyleProperty name="backColor" type="Color" default="#333">
+    <StyleElement selector=".breaseMessageBoxHeader" attribute="background-color"/>
+    <StyleElement selector=".messageBoxFooter" attribute="background-color"/>
+    <Description>usage (Syntax like CSS):&#xD;
+        - HEX Color code: #FFFFFF&#xD;
+        - rgba Component syntax: rgba(100,100,100,255)&#xD;
+        - transparent</Description>
+  </StyleProperty>
+  <StyleProperty name="headerGradient" category="Appearance" type="Gradient" default="none">
+    <StyleElement selector=".breaseMessageBoxHeader" attribute="background-image"/>
+    <Description>Background as a gradient&#xD;
+        for further information see CSS Gradients</Description>
+  </StyleProperty>
+  <StyleProperty name="borderColor" type="ColorCollection" default="#333333">
+    <StyleElement selector=".breaseMessageBoxContentBox" attribute="border-color"/>
+    <Description>usage (Syntax like CSS):&#xD;
+        - single Value for all directions e.g. #FFF&#xD;
+        - seperate Value for each direction e.g. #FFF #333 #FFF #333</Description>
+  </StyleProperty>
+  <StyleProperty name="borderStyle" type="BorderStyle" default="solid">
+    <StyleElement selector=".breaseMessageBoxContentBox" attribute="border-style"/>
+    <Description>Style of the Border of the widget&#xD;
+        Possible Values: solid, dotted, none</Description>
+  </StyleProperty>
+  <StyleProperty name="headerBorderWidth" type="PixelValCollection" default="0px">
+    <StyleElement selector=".breaseMessageBoxHeader" attribute="border-width"/>
+    <Description>usage (Syntax like CSS):&#xD;
+        - single Value for all directions e.g. 2px&#xD;
+        - seperate Value for each direction e.g. 1px 2px 3px 4px</Description>
+  </StyleProperty>
+  <StyleProperty name="headerBorderColor" type="ColorCollection" default="#333">
+    <StyleElement selector=".breaseMessageBoxHeader" attribute="border-color"/>
+    <Description>usage (Syntax like CSS):&#xD;
+        - single Value for all directions e.g. #FFF&#xD;
+        - seperate Value for each direction e.g. #FFF #333 #FFF #333</Description>
+  </StyleProperty>
+  <StyleProperty name="headerBorderStyle" type="BorderStyle" default="none">
+    <StyleElement selector=".breaseMessageBoxHeader" attribute="border-style"/>
+    <Description>Style of the Border of the widget&#xD;
+        Possible Values: solid, dotted, none</Description>
+  </StyleProperty>
+  <StyleProperty name="textColor" type="Color" default="#FFF">
+    <StyleElement selector=".breaseMessageBoxHeader div" attribute="color"/>
+    <Description>usage (Syntax like CSS):&#xD;
+        - HEX Color code: #FFFFFF&#xD;
+        - rgba Component syntax: rgba(100,100,100,255)</Description>
+  </StyleProperty>
+  <StyleProperty name="fontName" type="FontName" default="Arial">
+    <StyleElement selector=".breaseMessageBoxHeader div" attribute="font-family"/>
+    <Description>Fontname of the text.</Description>
+  </StyleProperty>
+  <StyleProperty name="fontSize" type="PixelVal" default="12px">
+    <StyleElement selector=".breaseMessageBoxHeader div" attribute="font-size"/>
+    <Description>Fontsize of the text in pixel. e.g 24px</Description>
+  </StyleProperty>
+  <StyleProperty name="bold" type="Boolean" default="true">
+    <StyleElement selector=".breaseMessageBoxHeader div" attribute="@include font-weight-bold($value)"/>
+    <Description>If **true** font style is bold</Description>
+  </StyleProperty>
+  <StyleProperty name="italic" type="Boolean" default="false">
+    <StyleElement selector=".breaseMessageBoxHeader div" attribute="@include font-style-italic($value)"/>
+    <Description>If **true** font style is italic</Description>
+  </StyleProperty>
+  <StyleProperty name="textAlign" category="Appearance" type="brease.enum.TextAlign" default="center">
+    <StyleElement selector=".breaseMessageBoxHeader div" attribute="@include text-alignment($value)"/>
+    <Description>Alignment of the text:&#xD;
+        - left&#xD;
+        - center&#xD;
+        - right</Description>
+  </StyleProperty>
+  <StyleProperty name="opacity" type="Opacity" default="1">
+    <StyleElement attribute="opacity"/>
+    <Description>Opacity of the widget&#xD;
+        0 = 0% invisible&#xD;
+        1 = 100%</Description>
+  </StyleProperty>
+  <StyleProperty name="shadow" type="Shadow" default="none">
+    <StyleElement attribute="@include box-shadow($value)"/>
+    <Description>Shadow of the Widget&#xD;
+        usage (Syntax like CSS):&#xD;
+        - h-shadow v-shadow [blur] [spread] color e.g. 10px 10px 5px #888888</Description>
+  </StyleProperty>
+  <StyleProperty name="padding" type="Padding" default="0px">
+    <StyleElement selector=".breaseMessageBoxContentBox" attribute="padding"/>
+    <Description>Padding of the Widget&#xD;
+        usage (Syntax like CSS):&#xD;
+        - single Value for all directions e.g. 2px&#xD;
+        - seperate Value for each direction e.g. 1px 2px 3px 4px</Description>
+  </StyleProperty>
+  <StyleProperty name="margin" category="Layout" type="Margin" default="0px">
+    <StyleElement attribute="margin"/>
+    <Description>Margin of the Widget&#xD;
+        usage (Syntax like CSS):&#xD;
+        - single Value for all directions e.g. 2px&#xD;
+        - seperate Value for each direction e.g. 1px 2px 3px 4px</Description>
+  </StyleProperty>
+  <StyleProperty name="iconError" type="ImagePath" default="">
+    <StyleElement selector=".icon.error" attribute="background-image: url('../$value') !important"/>
+    <Description>Icon for type Error</Description>
+  </StyleProperty>
+  <StyleProperty name="iconAsterisk" type="ImagePath" default="">
+    <StyleElement selector=".icon.asterisk" attribute="background-image: url('../$value') !important"/>
+    <Description>Icon for type Asterisk</Description>
+  </StyleProperty>
+  <StyleProperty name="iconExclamation" type="ImagePath" default="">
+    <StyleElement selector=".icon.exclamation" attribute="background-image: url('../$value') !important"/>
+    <Description>Icon for type Exclamation</Description>
+  </StyleProperty>
+  <StyleProperty name="iconHand" type="ImagePath" default="">
+    <StyleElement selector=".icon.hand" attribute="background-image: url('../$value') !important"/>
+    <Description>Icon for type Hand</Description>
+  </StyleProperty>
+  <StyleProperty name="iconInformation" type="ImagePath" default="">
+    <StyleElement selector=".icon.information" attribute="background-image: url('../$value') !important"/>
+    <Description>Icon for type Information</Description>
+  </StyleProperty>
+  <StyleProperty name="iconQuestion" type="ImagePath" default="">
+    <StyleElement selector=".icon.question" attribute="background-image: url('../$value') !important"/>
+    <Description>Icon for type Question</Description>
+  </StyleProperty>
+  <StyleProperty name="iconStop" type="ImagePath" default="">
+    <StyleElement selector=".icon.stop" attribute="background-image: url('../$value') !important"/>
+    <Description>Icon for type Stop</Description>
+  </StyleProperty>
+  <StyleProperty name="iconWarning" type="ImagePath" default="">
+    <StyleElement selector=".icon.warning" attribute="background-image: url('../$value') !important"/>
+    <Description>Icon for type Warning</Description>
+  </StyleProperty>
+</StyleProperties>
+</Widget>
+</WidgetLibrary>

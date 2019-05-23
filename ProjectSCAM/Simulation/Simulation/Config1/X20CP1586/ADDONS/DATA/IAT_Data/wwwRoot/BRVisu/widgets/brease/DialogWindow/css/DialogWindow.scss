@@ -1,0 +1,90 @@
+@import '../../../../css/libs/mixins.scss';
+
+$border-outer-color: #333;
+$text-color: #3E3E47;
+
+.breaseWindow {
+    &.breaseDialogWindow {
+        background-color: transparent;
+        width: 880px;
+        @include box-sizing(border-box);
+        border-left: none;
+        border-bottom: none;
+        border-right: none;
+        border-top: none;
+    }
+
+    header.breaseDialogWindowHeader .breaseWindowClose {
+        right: 0px;
+    }
+
+    .breaseDialogWindowHeader {
+        border-bottom-left-radius: 0px !important;
+        border-bottom-right-radius: 0px !important;
+
+        div.innerHeader {
+            position: relative;
+            padding-left: 8px;
+            @include displayFlexBox(false);
+            @include flex-direction(row);
+            @include flex-wrap(nowrap);
+            @include align-items(stretch);
+            @include box-sizing(border-box);
+
+            .textDiv {
+                display: inline-block;
+                box-sizing: content-box;
+                @include flex(0 1 auto);
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                pointer-events: none;
+                margin: 0 0 0 5px;
+                padding: 0;
+                height: 100%;
+            }
+
+            .imageDiv {
+                display: inline-block;
+                box-sizing: content-box;
+                @include flex(0 0 auto);
+                background-repeat: no-repeat;
+                background-position: center right;
+                margin: 0 3px 0 0;
+                padding: 0;
+                overflow:hidden;
+            }
+
+            .imageDiv img.dummyImage {
+                display: inline-block;
+                pointer-events: none;
+                opacity: 0;
+            }
+        }
+    }
+}
+
+.breaseWindow.breaseDialogWindow {
+    .breaseDialogWindowContentBox {
+        @include box-sizing(content-box);
+        position: relative;
+        overflow: hidden;
+        border-top-left-radius: 0px !important;
+        border-top-right-radius: 0px !important;
+
+        > .errorText {
+            padding: 35px 0 0 35px;
+            height: 150px;
+            width: 400px;
+            @include box-sizing(border-box);
+        }
+    }
+
+    .breaseWindowClose {
+        &:after {
+            color: #333;
+        }
+
+        overflow: hidden;
+    }
+}

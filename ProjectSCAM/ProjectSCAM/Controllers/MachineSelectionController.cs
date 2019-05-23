@@ -6,8 +6,7 @@ using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
 
-namespace MvcMovie.Controllers
-{
+namespace ProjectSCAM.Controllers {
     [AuthorizeUser(Type = "1")]
     public class MachineSelectionController : Controller
     {
@@ -27,7 +26,6 @@ namespace MvcMovie.Controllers
 
             //return View(msvm);
             ViewBag.Machines = ServiceSingleton.Instance.DBService.RetrieveMachines();
-            ViewBag.Machine = new MachineModel();
             return View();
         }
         [HttpPost]
@@ -43,11 +41,11 @@ namespace MvcMovie.Controllers
             }
             if (ModelState.IsValid)
             {
-                // NEEDS UPDATING
-                /*
-                Singleton.Instance.DBService.RegisterMachine(m.Ip, m.Description);
+              ServiceSingleton.Instance.DBService.RegisterMachine(m.Ip, m.Description, m.NameSpaceIndex,
+            m.AmountNode, m.StateNode, m.DefectNode, m.AcceptableNode, m.AmountToProduceNode, m.MachSpeedNode,
+            m.TemperatureNode, m.HumidityNode, m.VibrationNode, m.StopreasonNode, m.BatchIdNode, m.BarleyNode,
+            m.HopsNode, m.MaltNode, m.WheatNode, m.YeastNode, m.MaintenanceTriggerNode, m.MaintenanceCounterNode);
                 TempData["statusMessage"] = "Machine registered";
-                */
                 return RedirectToAction("Index");
             }
             TempData["statusMessage"] = s;
@@ -55,10 +53,33 @@ namespace MvcMovie.Controllers
         }
 
         [HttpPost]
-        public void SetMachine()
+        public void SetMachine(string ip)
         {
-            Session["SelectedMachine"] = Request["ip"];
+            Console.WriteLine(ip);
+            System.Diagnostics.Debug.WriteLine("lmao2");
+            Session["SelectedMachine"] = ip;
+            Console.WriteLine(Session["SelectedMachine"].ToString());
             ServiceSingleton.Instance.OPCService.InitConnection(Session["SelectedMachine"].ToString());
+        }
+        public ActionResult EditMachine()
+        {
+            if(Session["SelectedMachine"] != null)
+            {
+                MachineModel m = MachineModel.GetFromDatabase(Session["SelectedMachine"].ToString());
+                return View("EditMachine", m);
+            } else
+            {
+               return  RedirectToAction("Index");
+            }
+
+        }
+        public ActionResult Edit(MachineModel m)
+        {
+            if(ModelState.IsValid)
+            {
+                m.Update();
+            }
+            return RedirectToAction("Index");
         }
     }
 }

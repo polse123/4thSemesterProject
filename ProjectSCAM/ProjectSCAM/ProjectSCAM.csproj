@@ -209,14 +209,11 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AlarmController.cs" />
     <Compile Include="Controllers\BatchController.cs" />
     <Compile Include="Controllers\HistoryController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MachineSelectionController.cs" />
-    <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OptimizationController.cs" />
     <Compile Include="Controllers\OverviewController.cs" />
     <Compile Include="Controllers\ProductionController.cs" />
@@ -236,14 +233,15 @@
     <Compile Include="Models\BeerModel.cs" />
     <Compile Include="Models\CustomerModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\Services\AlarmManager.cs" />
     <Compile Include="Models\Services\DBServiceProvider.cs" />
+    <Compile Include="Models\Interfaces\IDBServiceProvider.cs" />
+    <Compile Include="Models\Interfaces\IOPCServiceProvider.cs" />
+    <Compile Include="Models\Interfaces\IBatchReportServiceProvider.cs" />
     <Compile Include="Models\Services\OEE.cs" />
     <Compile Include="Models\Services\OPCServiceProvider.cs" />
     <Compile Include="Models\Services\QueryExecuter.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\MachineModel.cs" />
-    <Compile Include="Models\MachineSelectViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Services\OpcClient.cs" />
     <Compile Include="Models\RecipeModel.cs" />
@@ -289,6 +287,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="ClassDiagram1.cd" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -350,6 +349,7 @@
     <Content Include="Views\Overview\Index.cshtml" />
     <Content Include="Views\Tracking\Index.cshtml" />
     <Content Include="Views\Tracking\Beers.cshtml" />
+    <Content Include="Views\MachineSelection\EditMachine.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

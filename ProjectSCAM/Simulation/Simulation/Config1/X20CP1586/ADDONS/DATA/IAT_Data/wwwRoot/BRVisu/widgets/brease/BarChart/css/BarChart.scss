@@ -1,0 +1,61 @@
+﻿@import '../../../../css/libs/variables.scss';
+@import '../../../../css/libs/mixins.scss';
+
+.breaseBarChart{
+	height: 300px;
+	width: 300px;
+    border-width: 2px;
+    border-color: #000;
+    border-style: solid;
+    background-color: transparent;
+    border-radius: 0px; 
+
+
+	.yAxis{
+		stroke: #000000;
+		stroke-width: 1px;        
+        text{
+            stroke: #000000;
+            fill: #000000;
+            font-size: 12px;
+            font-family: Arial;
+            font-weight: normal;
+            stroke-width: 0px;
+        }
+        path{
+            fill: none;
+        }
+	}
+	.xAxis{
+		stroke: #000000;
+		stroke-width: 1px;
+        text{
+            stroke: #000000;
+            fill: #000000;
+            font-size: 12px;
+            font-family: Arial;
+            font-weight: normal;
+            stroke-width: 0px;
+        }
+        path{
+            fill: none;
+        }
+	}
+	.yAxisGrid{
+		fill: none;
+		line{
+			stroke: #cccccc;
+			stroke-width: 1px;
+		}
+        text{
+            stroke: transparent;
+        }
+	}
+	.xAxisGrid{
+		fill: none;
+		line{
+			stroke: #cccccc;
+			stroke-width: 1px;
+		}
+	}
+}

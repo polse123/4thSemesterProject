@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectSCAM.Models.Logic;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -12,48 +13,48 @@ namespace ProjectSCAM.Models
         public int? Id { get; set; }
         [DisplayName("Enter IP address")]
         [Required]
-        [StringLength(40, ErrorMessage = "IP length can't be more than 40.")]
+        [MaxLength(40, ErrorMessage = "IP length can't be more than 40.")]
         public string Ip { get; set; }
         [DisplayName("Enter a short description")]
         [Required]
         public string Description { get; set; }
-
+        [Required]
         public int NameSpaceIndex { get; set; }
-
+        [Required]
         public string AmountNode { get; set; }
-
+        [Required]
         public string StateNode { get; set; }
-
+        [Required]
         public string DefectNode { get; set; }
-
+        [Required]
         public string AcceptableNode { get; set; }
-
+        [Required]
         public string AmountToProduceNode { get; set; }
-
+        [Required]
         public string MachSpeedNode { get; set; }
-
+        [Required]
         public string TemperatureNode { get; set; }
-
+        [Required]
         public string HumidityNode { get; set; }
-
+        [Required]
         public string VibrationNode { get; set; }
-
+        [Required]
         public string StopreasonNode { get; set; }
-
+        [Required]
         public string BatchIdNode { get; set; }
-
+        [Required]
         public string BarleyNode { get; set; }
-
+        [Required]
         public string HopsNode { get; set; }
-
+        [Required]
         public string MaltNode { get; set; }
-
+        [Required]
         public string WheatNode { get; set; }
-
+        [Required]
         public string YeastNode { get; set; }
-
+        [Required]
         public string MaintenanceTriggerNode { get; set; }
-
+        [Required]
         public string MaintenanceCounterNode { get; set; }
 
         public MachineModel(int? id, string ip, string description, int nameSpaceIndex,
@@ -86,5 +87,16 @@ namespace ProjectSCAM.Models
         }
 
         public MachineModel() { }
+        public static MachineModel GetFromDatabase(string ip)
+        {
+            return ServiceSingleton.Instance.OPCService.GetMachine(ip);
+
+        }
+        public void Update() {
+            ServiceSingleton.Instance.DBService.EditMachine((int)Id, Ip, Description,  NameSpaceIndex,
+            AmountNode, StateNode, DefectNode, AcceptableNode, AmountToProduceNode, MachSpeedNode,
+            TemperatureNode, HumidityNode, VibrationNode, StopreasonNode, BatchIdNode, BarleyNode,
+            HopsNode, MaltNode, WheatNode, YeastNode, MaintenanceTriggerNode, MaintenanceCounterNode);
+        }
     }
 }

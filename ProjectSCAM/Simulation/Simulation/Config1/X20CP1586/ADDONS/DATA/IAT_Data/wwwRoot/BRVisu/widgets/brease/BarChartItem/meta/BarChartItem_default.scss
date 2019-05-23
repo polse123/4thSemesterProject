@@ -1,0 +1,33 @@
+@import "mixins.scss";
+@mixin widgets_brease_BarChartItem_base {
+rect.bar {
+	@include SVGFactorBorder(2px, 2);
+}
+rect.bar {
+	stroke: #000000;
+}
+rect.bar {
+	fill: #FF8800;
+}
+text {
+	fill: #000000;
+}
+text {
+	font-size: 12px;
+}
+text {
+	font-family: Arial;
+}
+text {
+	@include font-weight-bold(false);
+}
+text {
+	@include font-style-italic(false);
+}
+	opacity: 1;
+
+}
+
+.widgets_brease_BarChartItem_style_default {
+@include widgets_brease_BarChartItem_base 
+}

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
-namespace SCAMS.Controllers
+namespace ProjectSCAM.Controllers
 {
     //[AuthorizeUser(Type = "0")]
     public class UserManagementController : Controller

@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?AutomationStudio Version=4.3.7.46 SP?>
+<Package PackageType="MediaPackage" xmlns="http://br-automation.co.at/AS/Package">
+  <Objects>
+    <Object Type="File">can.svg</Object>
+    <Object Type="File">spin.svg</Object>
+    <Object Type="File">BRLOGO.png</Object>
+    <Object Type="File">humidity.png</Object>
+    <Object Type="File">thermometer.svg</Object>
+    <Object Type="File">power.svg</Object>
+    <Object Type="File">beer.svg</Object>
+    <Object Type="File">accept.svg</Object>
+    <Object Type="File">defect.svg</Object>
+    <Object Type="File">speedometer.svg</Object>
+    <Object Type="File">beertap.svg</Object>
+    <Object Type="File">package.svg</Object>
+    <Object Type="File">SDU_LOGO.png</Object>
+    <Object Type="File">maintenance.svg</Object>
+    <Object Type="File">vibration.svg</Object>
+  </Objects>
+</Package>

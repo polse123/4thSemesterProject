@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?> <StyleInformation name="widgets.brease.BarChart" xmlns="http://www.br-automation.com/iat2014/widgetStyles" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+<StyleProperties>
+    <StyleProperty name="height" category="Layout" type="Size" not_styleable="true" default="300">
+      <StyleElement attribute="@include elemHeight($value)"></StyleElement>
+      <Description>outer height of the widget</Description>
+    </StyleProperty>
+    <StyleProperty name="width" category="Layout" type="Size" not_styleable="true" default="300">
+      <StyleElement attribute="@include elemWidth($value)"></StyleElement>
+      <Description>outer width of the widget</Description>
+    </StyleProperty>
+
+  <StyleProperty name="axisColor" type="Color"  category="Appearance" default="#000000">
+    <StyleElement selector=".xAxis" attribute="stroke"></StyleElement>
+    <StyleElement selector=".yAxis" attribute="stroke"></StyleElement>
+    <Description>Sets the color of the background. For further information, please check its type</Description>
+  </StyleProperty>
+
+  <StyleProperty name="textColor" type="Color"  category="Appearance" default="#000000">
+    <StyleElement selector=".xAxis text" attribute="stroke"></StyleElement>
+    <StyleElement selector=".yAxis text" attribute="stroke"></StyleElement>
+    <StyleElement selector=".xAxis text" attribute="fill"></StyleElement>
+    <StyleElement selector=".yAxis text" attribute="fill"></StyleElement>
+    <Description>Sets the color of the text. For further information, please check its type</Description>
+  </StyleProperty>
+
+  <StyleProperty name="fontSize" type="PixelVal"  category="Font" default="12px">
+    <StyleElement selector=".xAxis text" attribute="font-size"></StyleElement>
+    <StyleElement selector=".yAxis text" attribute="font-size"></StyleElement>
+    <Description>Sets the size of the text. For further information, please check its type</Description>
+  </StyleProperty>
+  
+  <StyleProperty name="fontName" type="FontName"  category="Font" default="Arial">
+    <StyleElement selector=".xAxis text" attribute="font-family"></StyleElement>
+    <StyleElement selector=".yAxis text" attribute="font-family"></StyleElement>
+    <Description>Sets the size of the text. For further information, please check its type</Description>
+  </StyleProperty>
+  
+  <StyleProperty name="bold" category="Font" type="Boolean" default="false">
+    <StyleElement selector=".xAxis text" attribute="@include font-weight-bold($value)"></StyleElement>
+    <StyleElement selector=".yAxis text" attribute="@include font-weight-bold($value)"></StyleElement>
+    <Description>
+      If *true* font style is bold
+    </Description>
+  </StyleProperty>
+
+  <StyleProperty name="gridColor" type="Color"  category="Appearance" default="#cccccc">
+    <StyleElement selector=".xAxisGrid line" attribute="stroke"></StyleElement>
+    <StyleElement selector=".yAxisGrid line" attribute="stroke"></StyleElement>
+    <Description>Sets the color of the gridLine. For further information, please check its type</Description>
+  </StyleProperty>
+
+  <StyleProperty name="rotation" category="Appearance" type="Rotation" default="0deg">
+    <StyleElement attribute="@include rotate($value)"></StyleElement>
+    <Description>
+      Rotation of widget.
+    </Description>
+  </StyleProperty>
+  
+  <StyleProperty name="italic" category="Font" type="Boolean" default="false">
+    <StyleElement selector=".xAxis text" attribute="@include font-style-italic($value)"></StyleElement>
+    <StyleElement selector=".yAxis text" attribute="@include font-style-italic($value)"></StyleElement>
+    <Description>
+      If *true* font style is italic
+    </Description>
+  </StyleProperty>
+  
+  <StyleProperty name="opacity" type="Opacity"  category="Appearance" default="1">
+    <StyleElement attribute="opacity"></StyleElement>
+    <Description>Opacity of the widget</Description>
+  </StyleProperty>
+
+  <StyleProperty name="backColor" type="Color"  category="Appearance" default="transparent">
+    <StyleElement attribute="background-color"></StyleElement>
+    <Description>Sets the background color</Description>
+  </StyleProperty>
+  
+  <StyleProperty name="borderStyle" type="BorderStyle"  category="Appearance" default="solid">
+    <StyleElement attribute="border-style"></StyleElement>
+    <Description>Sets the border style</Description>
+  </StyleProperty>
+
+  <StyleProperty name="borderWidth" type="PixelValCollection"  category="Appearance" default="2px">
+    <StyleElement attribute="border-width"></StyleElement>
+    <Description>Sets the border width</Description>
+  </StyleProperty>
+
+  <StyleProperty name="borderColor" type="Color"  category="Appearance" default="#000000">
+    <StyleElement attribute="border-color"></StyleElement>
+    <Description>Sets the border color</Description>
+  </StyleProperty>
+
+  <StyleProperty name="cornerRadius" type="PixelValCollection"  category="Appearance" default="0px">
+    <StyleElement attribute="border-radius"></StyleElement>
+    <Description>Sets the corner radius</Description>
+  </StyleProperty>
+  
+  <StyleProperty name="margin" category="Layout" type="Margin" default="0px">
+    <StyleElement attribute="margin"></StyleElement>
+    <Description>Margin of the Widget</Description>
+  </StyleProperty>
+  
+  </StyleProperties>
+</StyleInformation>

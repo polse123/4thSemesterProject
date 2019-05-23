@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 using ProjectSCAM.Models;
 using ProjectSCAM.Models.Logic;
 
-namespace SCAMS.Controllers
+namespace ProjectSCAM.Controllers
 {
     [AuthorizeUser(Type = "1")]
     public class OverviewController : Controller
