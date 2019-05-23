@@ -22,10 +22,10 @@ namespace ProjectSCAM.Controllers
         }
 
         [HttpPost]
-        public string MachineControl()
+        public string MachineControl(string command)
         {
             // get value of command variable in the request
-            string value = Request["command"];
+            string value = command;
             // let opc manager handle the command
             if (Session["SelectedMachine"] != null)
             {
@@ -36,7 +36,6 @@ namespace ProjectSCAM.Controllers
                 }
                 catch (Exception ex)
                 {
-                    System.Diagnostics.Debug.WriteLine(Session["SelectedMachine"]);
                     return ex.Message;
                 }
             }

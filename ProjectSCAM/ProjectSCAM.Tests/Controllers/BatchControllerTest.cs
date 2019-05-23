@@ -109,6 +109,7 @@ namespace ProjectSCAM.Tests.Controllers {
             builder.InitializeController(controller);
             string id = "1";
 
+            
             // Act
             RedirectToRouteResult result = controller.GetBatchesByRecipe(id) as RedirectToRouteResult;
             var tempData = controller.TempData["batches"].ToString();
@@ -136,28 +137,6 @@ namespace ProjectSCAM.Tests.Controllers {
             // Assert
             Assert.IsTrue(result.RouteValues["action"].Equals("Index"));
             Assert.IsNotNull(tempData);
-        }
-        [TestMethod]
-        public void CreateBatchReport()
-        {
-            // Arrange
-            TestControllerBuilder builder = new TestControllerBuilder();
-            builder.HttpContext.Request.RequestType = "POST";
-            BatchController controller = new BatchController();
-            builder.InitializeController(controller);
-            string path = Path.GetDirectoryName(System.AppDomain.CurrentDomain.BaseDirectory);
-            path = Directory.GetParent(path).FullName;
-            path = Directory.GetParent(Directory.GetParent(path).FullName).FullName;
-            path += @"\4thSemesterProject\ProjectSCAM\ProjectSCAM\Models\Services\BatchReports\BatchReport1.xlsx";
-            string id = "1";
-
-            // Act
-            controller.CreateBatchReport(id);
-            bool a = File.Exists(path);
-
-
-            // Assert
-            Assert.IsTrue(a);
         }
     }
 }

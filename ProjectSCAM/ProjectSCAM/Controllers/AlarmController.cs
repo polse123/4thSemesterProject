@@ -13,7 +13,6 @@ namespace ProjectSCAM.Controllers
             System.Diagnostics.Debug.WriteLine(ServiceSingleton.Instance.DBService.RetrieveMachines()[0].Id);
             if (TempData["alarms"] != null) {
                 IList<AlarmModel> list = (IList<AlarmModel>)TempData["alarms"];
-                TempData["alarms"] = null;
                 return View(list);
             } else {
                 IList<AlarmModel> list = ServiceSingleton.Instance.DBService.RetrieveAlarms();
@@ -35,17 +34,17 @@ namespace ProjectSCAM.Controllers
         }
         [HttpPost]
         public void Handle() {
-            ServiceSingleton.Instance.OPCService.ActiveAlarms[0].Handle(int.Parse(Session["userID"].ToString()));
+            if(ServiceSingleton.Instance.OPCService.ActiveAlarms.Count > 0)
+            {
+                ServiceSingleton.Instance.OPCService.ActiveAlarms[0].Handle(int.Parse(Session["userID"].ToString()));
+            }
         }
         [HttpGet]
         public ActionResult GetAlarmsByMachine(string machineId) {
-            System.Diagnostics.Debug.WriteLine(machineId + "out");
             IList<AlarmModel> list = new List<AlarmModel>();
             int intMachineId;
             bool add = int.TryParse(machineId, out intMachineId);
             if (add) {
-                System.Diagnostics.Debug.WriteLine("in");
-                System.Diagnostics.Debug.WriteLine(intMachineId);
                 list = ServiceSingleton.Instance.DBService.RetrieveAlarmsByMachine(intMachineId);
             }
 

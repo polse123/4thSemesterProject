@@ -100,8 +100,15 @@
     <Reference Include="System.Net.Http.WebRequest" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\LoginControllerTest.cs" />
     <Compile Include="Controllers\MachineSelectionControllerTest.cs" />
     <Compile Include="Controllers\BatchControllerTest.cs" />
+    <Compile Include="Controllers\OverviewControllerTest.cs" />
+    <Compile Include="Controllers\AlarmControllerTest.cs" />
+    <Compile Include="Controllers\HistoryControllerTest.cs" />
+    <Compile Include="Controllers\ProductionControllerTest.cs" />
+    <Compile Include="Controllers\TrackingControllerTest.cs" />
+    <Compile Include="Controllers\UserCreationControllerTest.cs" />
     <Compile Include="Logic\DBServiceTest.cs" />
     <Compile Include="Logic\OPCServiceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

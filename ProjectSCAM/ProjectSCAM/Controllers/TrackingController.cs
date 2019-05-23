@@ -67,8 +67,7 @@ namespace ProjectSCAM.Controllers
             if (TempData["batchId"] != null)
             {
                 beers = ServiceSingleton.Instance.DBService.RetrieveBeers((int)TempData["batchId"]);
-                ViewBag.batchId = TempData["batchid"];
-                TempData["batchId"] = null;
+                ViewBag.BatchId = TempData["batchid"];
             }
             else
             {

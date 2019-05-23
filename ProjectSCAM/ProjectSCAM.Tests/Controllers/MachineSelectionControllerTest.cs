@@ -69,6 +69,7 @@ namespace ProjectSCAM.Tests.Controllers
             // Arrange
             TestControllerBuilder builder = new TestControllerBuilder();
             MachineSelectionController controller = new MachineSelectionController();
+
             builder.InitializeController(controller);
             // Act
             controller.SetMachine("123");

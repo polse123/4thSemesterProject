@@ -42,13 +42,9 @@ namespace ProjectSCAM.Controllers
                 UserModel uM = ServiceSingleton.Instance.DBService.RetrieveUser(u.Username, u.Password, true);
                 if (uM != null)
                 {
-                    if (uM.UserType == 1) //Mangler login til admin eller andre usertypes!
+                    if (uM.UserType == 1) 
                     {// session husk!!
-                        //Session["userType"] = uM.UserType;
-                        //model.userRole = usermodelDB.userRole;
-                        //FormsAuthentication.SetAuthCookie(model.userRole, true);
-                        //System.Web.HttpContext.Current.Session["UserRole"] = usermodelDB.userRole;
-                        //var ia = System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
+                        
                         System.Web.HttpContext.Current.Session["UserType"] = "1";
 
                         Session["userType"] = uM.UserType;
