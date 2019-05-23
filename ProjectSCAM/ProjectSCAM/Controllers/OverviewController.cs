@@ -26,7 +26,6 @@ namespace ProjectSCAM.Controllers
         {
             // get value of command variable in the request
             string value = Request["command"];
-
             // let opc manager handle the command
             if (Session["SelectedMachine"] != null)
             {
