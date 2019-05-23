@@ -115,7 +115,6 @@ namespace ProjectSCAM.Models.Logic {
                             ServiceSingleton.Instance.DBService.RemoveFromBatchQueue(bqm.Id);
                             System.Diagnostics.Debug.WriteLine(bqm.BeerId);
                             opc.StartMachine(10, bqm.BeerId, bqm.Amount, bqm.Speed);
-
                         }
                         break;
                     case "stop":

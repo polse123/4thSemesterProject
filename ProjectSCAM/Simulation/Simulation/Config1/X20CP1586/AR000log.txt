@@ -1,67 +1,34 @@
 
 
-Thu May 09 19:22:15 2019
+Thu May 23 23:26:17 2019
 No ARsim registration found!
   Bernecker & Rainer 
 
 
 
-Thu May 09 19:22:15 2019
+Thu May 23 23:26:17 2019
 COMMAND_COLDSTART
-InstanceName : 01d5068bbf1a72a0
+InstanceName : 01d511ae288febc0
 
 WorkingPath :
-C:\Users\J\Downloads\Simulation\Simulation\Config1\X20CP1586\
+C:\Users\J\Documents\GitHub\4thSemesterProject\ProjectSCAM\Simulation\Simulation\Config1\X20CP1586\
 
 
 
-Thu May 09 19:22:15 2019
+Thu May 23 23:26:18 2019
 COMMAND_COLDSTART
 Version : E4.34
 
 
 
-Thu May 09 19:23:35 2019
+Thu May 23 23:35:20 2019
 COMMAND_TERMINATE
 
 
-Thu May 09 19:23:36 2019
+Thu May 23 23:35:21 2019
 
 
-Thu May 09 19:23:36 2019
+Thu May 23 23:35:21 2019
 COMMAND_COLDSTART
 Version : E4.34
 
-
-
-Fri May 10 09:06:23 2019
-COMMAND_TERMINATE
-
-
-Fri May 10 09:06:24 2019
-
-
-Wed May 15 13:05:47 2019
-COMMAND_COLDSTART
-Version : E4.34
-
-
-
-Wed May 15 13:06:16 2019
-COMMAND_TERMINATE
-
-
-Wed May 15 13:06:17 2019
-
-
-Wed May 15 13:06:17 2019
-COMMAND_COLDSTART
-Version : E4.34
-
-
-
-Thu May 16 10:49:06 2019
-COMMAND_TERMINATE
-
-
-Thu May 16 10:49:07 2019

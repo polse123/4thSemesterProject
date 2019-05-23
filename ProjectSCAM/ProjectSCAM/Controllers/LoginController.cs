@@ -43,7 +43,7 @@ namespace ProjectSCAM.Controllers
                 if (uM != null)
                 {
                     if (uM.UserType == 1) 
-                    {// session husk!!
+                    {// Session husk!!
                         
                         System.Web.HttpContext.Current.Session["UserType"] = "1";
 
@@ -56,7 +56,7 @@ namespace ProjectSCAM.Controllers
 
                     }
                     if (uM.UserType == 0) //Mangler login til admin eller andre usertypes!
-                    {// session husk!!
+                    {// Session husk!!
                         //Session["userType"] = uM.UserType;
                         //model.userRole = usermodelDB.userRole;
                         //FormsAuthentication.SetAuthCookie(model.userRole, true);

@@ -18,11 +18,9 @@ namespace ProjectSCAM.Controllers
         }
 
         [HttpPost]
-        public ActionResult MakeUserInactive()
+        public ActionResult MakeUserInactive(string userid)
         {
-            string value = Request["userId"];
-            System.Diagnostics.Debug.WriteLine(value);
-
+            string value = userid;
             try
             {
                 int.TryParse(value, out int userId);
