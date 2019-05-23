@@ -390,7 +390,6 @@ namespace ProjectSCAM.Models
                 nodesToWrite.Add(CreateWriteValue("::Program:Cube.Command.CntrlCmd", 6, Attributes.Value, start));
                 nodesToWrite.Add(CreateWriteValue("::Program:Cube.Command.CmdChangeRequest", 6, Attributes.Value,
                     changeRequest));
-
                 Write(nodesToWrite);
                 AddValues();
                 isProcessRunning = false;

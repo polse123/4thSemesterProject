@@ -13,6 +13,7 @@ namespace SCAMS.Controllers
     [AuthorizeUser(Type = "1")]
     public class HistoryController : Controller
     {
+
         int i=1;
         public ActionResult Index()
         {
@@ -33,8 +34,10 @@ namespace SCAMS.Controllers
                     i = int.Parse(TempData["id"].ToString());
                 }
                 BatchModel array = ServiceSingleton.Instance.DBService.RetrieveBatch(i);
-                array.Values = ServiceSingleton.Instance.DBService.RetrieveBatchValues(array.Id);
-
+                if (array != null)
+                {
+                    array.Values = ServiceSingleton.Instance.DBService.RetrieveBatchValues(array.Id);
+                }
             ViewBag.DataPoints = JsonConvert.SerializeObject(array, Formatting.None);
             return View();
             
