@@ -106,7 +106,7 @@
 <script>
     function contentLoaded() {
         $.ajax({
-            type: 'GET',
+            type: 'POST',
             url: '@Url.Action("Message")',
             dataType: 'json',
             data: { id: '' },
