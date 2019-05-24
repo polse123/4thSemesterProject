@@ -115,7 +115,7 @@ namespace ProjectSCAM.Controllers {
             }
             else
             {
-                TempData["id"] = "0";
+                TempData["id"] = "31";
             }
             return RedirectToAction("Index", "History");
         }
