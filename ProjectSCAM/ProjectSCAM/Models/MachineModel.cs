@@ -93,10 +93,6 @@ namespace ProjectSCAM.Models
 
         }
         public void Update() {
-            System.Diagnostics.Debug.WriteLine(Id.ToString() + Ip+ Description+ NameSpaceIndex+
-            AmountNode+ StateNode+ DefectNode+ AcceptableNode+ AmountToProduceNode+ MachSpeedNode+
-            TemperatureNode+ HumidityNode+ VibrationNode+ StopreasonNode+ BatchIdNode+ BarleyNode+
-            HopsNode+ MaltNode+ WheatNode+ YeastNode+ MaintenanceTriggerNode+ MaintenanceCounterNode);
             ServiceSingleton.Instance.DBService.EditMachine((int)Id, Ip, Description,  NameSpaceIndex,
             AmountNode, StateNode, DefectNode, AcceptableNode, AmountToProduceNode, MachSpeedNode,
             TemperatureNode, HumidityNode, VibrationNode, StopreasonNode, BatchIdNode, BarleyNode,

@@ -10,6 +10,7 @@ namespace ProjectSCAM.Controllers
     public class AlarmController : Controller {
         public ActionResult Index() {
             ViewBag.Machines = ServiceSingleton.Instance.DBService.RetrieveMachines();
+            System.Diagnostics.Debug.WriteLine(ServiceSingleton.Instance.DBService.RetrieveMachines()[0].Id);
             if (TempData["alarms"] != null) {
                 IList<AlarmModel> list = (IList<AlarmModel>)TempData["alarms"];
                 return View(list);
@@ -56,6 +57,7 @@ namespace ProjectSCAM.Controllers
             if (date.Length == 7) {
                 string month = date.Substring(0, 2);
                 string year = date.Substring(3, 4);
+                System.Diagnostics.Debug.WriteLine(month + " - " + year);
                 TempData["alarms"] = ServiceSingleton.Instance.DBService.RetrieveAlarmsByMonth(month, year);
             } else {
                 TempData["alarms"] = list;

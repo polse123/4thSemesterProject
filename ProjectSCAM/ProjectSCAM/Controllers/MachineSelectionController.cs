@@ -24,6 +24,7 @@ namespace ProjectSCAM.Controllers {
                 ViewBag.statusMessage = "";
             }
 
+            //return View(msvm);
             ViewBag.Machines = ServiceSingleton.Instance.DBService.RetrieveMachines();
             return View();
         }

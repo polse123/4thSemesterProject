@@ -48,7 +48,7 @@ namespace ProjectSCAM.Tests.Controllers {
             TestControllerBuilder builder = new TestControllerBuilder();
             HistoryController controller = new HistoryController();
             builder.InitializeController(controller);
-            string id = "31";
+            string id = "2";
 
             // Act
             RedirectToRouteResult result = controller.GetBatchesById(id) as RedirectToRouteResult;

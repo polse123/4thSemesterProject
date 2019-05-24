@@ -55,8 +55,13 @@ namespace ProjectSCAM.Controllers
                         return RedirectToAction("Index", "Overview");
 
                     }
-                    if (uM.UserType == 0) 
-                    {
+                    if (uM.UserType == 0) //Mangler login til admin eller andre usertypes!
+                    {// session husk!!
+                        //session["userType"] = uM.UserType;
+                        //model.userRole = usermodelDB.userRole;
+                        //FormsAuthentication.SetAuthCookie(model.userRole, true);
+                        //System.Web.HttpContext.Current.session["UserRole"] = usermodelDB.userRole;
+                        //var ia = System.Web.HttpContext.Current.User.Identity.IsAuthenticated;
                         System.Web.HttpContext.Current.Session["UserType"] = "0";
 
                         Session["userType"] = uM.UserType;
@@ -85,6 +90,7 @@ namespace ProjectSCAM.Controllers
         public JsonResult Usertype()
         {
             String x = System.Web.HttpContext.Current.Session["UserType"].ToString();
+        //    MachineModel model = new MachineModel() { Description = "10", Id = 1, Ip = "2" };
             return Json(new { type = x}, JsonRequestBehavior.AllowGet);
         }
     }
