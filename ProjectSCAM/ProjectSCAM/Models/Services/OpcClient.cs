@@ -181,7 +181,7 @@ namespace ProjectSCAM.Models {
                 {
                     TempCurrent = double.Parse((dc.Value.WrappedValue.ToFloat().ToString()));
                     BatchValues.TemperatureValues.Add(new KeyValuePair<string, double>
-                        (DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), TempCurrent));
+                        (DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff").Replace('-','/'), TempCurrent));
 
                 }
                 else if (identifier.Equals(Machine.DefectNode))
@@ -204,13 +204,13 @@ namespace ProjectSCAM.Models {
                 {
                     HumidityCurrent = double.Parse((dc.Value.WrappedValue.ToFloat().ToString()));
                     BatchValues.HumidityValues.Add(new KeyValuePair<string, double>
-                        (DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), HumidityCurrent));
+                        (DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff").Replace('-', '/'), HumidityCurrent));
                 }
                 else if (identifier.Equals(Machine.VibrationNode))
                 {
                     VibrationCurrent = double.Parse((dc.Value.WrappedValue.ToFloat().ToString()));
                     BatchValues.VibrationValues.Add(new KeyValuePair<string, double>
-                        (DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff"), VibrationCurrent));
+                        (DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss:fff").Replace('-', '/'), VibrationCurrent));
                 }
                 else if (identifier.Equals(Machine.StopreasonNode))
                 {

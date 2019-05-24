@@ -9,9 +9,6 @@ namespace ProjectSCAM
     {
         public void Configuration(IAppBuilder app)
         {
-            var culture = new System.Globalization.CultureInfo("en-US");
-            Thread.CurrentThread.CurrentCulture = culture;
-            Thread.CurrentThread.CurrentUICulture = culture;
             ConfigureAuth(app);
         }
     }
