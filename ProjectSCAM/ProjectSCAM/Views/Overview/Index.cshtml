@@ -40,7 +40,8 @@
             <div id="infofields" class="infofieldsclass">
 
                 Producing:  <p id="producing"></p>
-                Acceptable Products:  <p id="produced"></p>
+                Produced: <p id="produced"></p>
+                Acceptable Products:  <p id="acceptable"></p>
                 Defect Products:  <p id="failed"></p>
                 Speed:  <p id="speed"></p>
                 Product Type:  <p id="type"></p>
@@ -105,7 +106,7 @@
 <script>
     function contentLoaded() {
         $.ajax({
-            type: 'POST',
+            type: 'GET',
             url: '@Url.Action("Message")',
             dataType: 'json',
             data: { id: '' },
@@ -119,7 +120,8 @@
                 $("#barley").text(data.Barley);
                 $("#wheat").text(data.Wheat);
             // set value of batch elements
-                $("#produced").text(data.AcceptableProducts);
+                $("#produced").text(data.ProcessedProducts);
+                $("#acceptable").text(data.AcceptableProducts);
                 $("#failed").text(data.DefectProducts);
                 $("#speed").text(data.MachSpeed); // add speed node to monitored items in opc
                 $("#type").text(data.Recipe); // add type node to monitored items in opc

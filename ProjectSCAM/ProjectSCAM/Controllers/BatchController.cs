@@ -66,7 +66,6 @@ namespace ProjectSCAM.Controllers {
             {
                 string month = date.Substring(0, 2);
                 string year = date.Substring(3, 4);
-                System.Diagnostics.Debug.WriteLine(month + " - " + year);
                 TempData["batches"] = ServiceSingleton.Instance.DBService.RetrieveBatchesByMonth(month, year, false);
             }
             else

@@ -57,7 +57,6 @@ namespace ProjectSCAM.Controllers
         {
             if (Session["SelectedMachine"] != null)
             {
-                System.Diagnostics.Debug.WriteLine("lmao" + Session["SelectedMachine"].ToString());
                 var x = ServiceSingleton.Instance.OPCService.GetOpcConnection(Session["SelectedMachine"].ToString());
                 return Json(x);
             }
