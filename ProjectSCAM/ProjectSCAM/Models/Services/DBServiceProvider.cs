@@ -71,7 +71,7 @@ namespace ProjectSCAM.Models.Logic
         /// <summary>
         /// Chars allowed for ip's.
         /// </summary>
-        private readonly char[] LEGAL_FOR_IPS = new char[] { '.' };
+        private readonly char[] LEGAL_FOR_IPS = new char[] { '.',':','/' };
 
         /// <summary>
         /// Chars allowed for text.
@@ -251,11 +251,13 @@ namespace ProjectSCAM.Models.Logic
             string temperatureNode, string humidityNode, string vibrationNode, string stopreasonNode, string batchIdNode, string barleyNode,
             string hopsNode, string maltNode, string wheatNode, string yeastNode, string maintenanceTriggerNode, string maintenanceCounterNode)
         {
+            System.Diagnostics.Debug.WriteLine("in db");
             if (CheckIp(ipAddress) && CheckText(description) && CheckNodeUrls(new string[]
             {amountNode, stateNode, defectNode, acceptableNode, amountToProduceNode, machSpeedNode,
             temperatureNode, humidityNode, vibrationNode, stopreasonNode, batchIdNode, barleyNode,
             hopsNode, maltNode, wheatNode, yeastNode, maintenanceTriggerNode, maintenanceCounterNode}))
             {
+                System.Diagnostics.Debug.WriteLine("in db");
                 string query = string.Format("UPDATE Machines SET ipaddress = '{0}', description = '{1}', namespaceindex = {2}, " +
                 "amounturl = '{3}', stateurl = '{4}', defecturl = '{5}', acceptableurl = '{6}', amounttoproduceurl = '{7}', machspeedurl = '{8}', " +
                 "temperatureurl = '{9}', humidityurl = '{10}', vibrationurl = '{11}', stopreasonurl = '{12}', batchidurl = '{13}', barleyurl = '{14}', " +

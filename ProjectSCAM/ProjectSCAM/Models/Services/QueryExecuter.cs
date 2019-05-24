@@ -65,6 +65,7 @@ namespace ProjectSCAM.Models.Logic
         /// <returns></returns>
         public bool ExecuteQuery(string query)
         {
+            System.Diagnostics.Debug.WriteLine("at lock");
             lock (CONN_LOCK)
             {
                 try

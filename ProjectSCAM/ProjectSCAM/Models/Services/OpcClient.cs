@@ -375,7 +375,6 @@ namespace ProjectSCAM.Models {
                 start.Value = 2;
                 DataValue changeRequest = new DataValue();
                 changeRequest.Value = true;
-                System.Diagnostics.Debug.WriteLine(Recipe);
 
                 //write the nodes & clear the collection
                 //Thread.Sleep(2000);
