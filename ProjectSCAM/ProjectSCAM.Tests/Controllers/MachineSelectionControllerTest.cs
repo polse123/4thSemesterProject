@@ -85,6 +85,7 @@ namespace ProjectSCAM.Tests.Controllers
             TestControllerBuilder builder = new TestControllerBuilder();
             MachineSelectionController controller = new MachineSelectionController();
             builder.InitializeController(controller);
+
             // Act
             RedirectToRouteResult result = controller.EditMachine() as RedirectToRouteResult;
 

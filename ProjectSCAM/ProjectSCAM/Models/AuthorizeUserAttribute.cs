@@ -36,7 +36,7 @@ namespace ProjectSCAM.Models
             {
                 return false;
             }
-            //string userType = httpContext.Session["UserType"].ToString();
+            //string userType = httpContext.session["UserType"].ToString();
             //Logic here
             //Note: Make a split on MultipleRoles, by ','
             //User is in both roles => return true, else return false

@@ -21,7 +21,7 @@ namespace ProjectSCAM.Tests.Logic
 
             //assert
             Assert.IsTrue(ServiceSingleton.Instance.OPCService.OpcConnections.ContainsKey(ip));
-            Assert.AreEqual(UnifiedAutomation.UaClient.ServerConnectionStatus.Connected, opc.Session.ConnectionStatus);
+            Assert.AreEqual(UnifiedAutomation.UaClient.ServerConnectionStatus.Connected, opc.GetSession().ConnectionStatus);
         }
         [TestMethod]
         public void GetMachine()

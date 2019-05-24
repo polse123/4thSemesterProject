@@ -32,7 +32,7 @@ namespace ProjectSCAM.Models {
         private double maintenanceTrigger = 0;
         private double maintenanceCounter;
 
-        public Session Session { get; set; }
+        private Session session;
         public event PropertyChangedEventHandler PropertyChanged;
         public string Ip { get; set; }
         public int Recipe { get; set; }
@@ -46,31 +46,37 @@ namespace ProjectSCAM.Models {
             BatchValues = new BatchValueCollection();
             Ip = ip;
             Connect();
-            if (Session.ConnectionStatus != ServerConnectionStatus.Disconnected)
+            if (session.ConnectionStatus != ServerConnectionStatus.Disconnected)
             {
                 CreateSubscription();
             }
 
         }
+        public Session GetSession()
+        {
+            return session;
+        }
 
         //Connection to OPC
         public void Connect()
         {
-            Session = new Session();
+            session = new Session();
             try
             {
                 //Connect to server with no security (simulator)
-                Session.UseDnsNameAndPortFromDiscoveryUrl = true;
-                Session.Connect(Ip, SecuritySelection.None);
+                session.UseDnsNameAndPortFromDiscoveryUrl = true;
+                session.Connect(Ip, SecuritySelection.None);
+                session.AutomaticReconnect = true;
+               
 
                 //Connect to server with no security (machine)
-                //Session.Connect("opc.tcp://10.112.254.165:4840", SecuritySelection.None);
+                //session.Connect("opc.tcp://10.112.254.165:4840", SecuritySelection.None);
             }
             catch (Exception ex)
             {
 
             }
-            if (Session.ConnectionStatus != ServerConnectionStatus.Disconnected)
+            if (session.ConnectionStatus != ServerConnectionStatus.Disconnected)
             {
                 maintenanceTrigger = ReadMaintenanceTrigger();
             }
@@ -145,7 +151,7 @@ namespace ProjectSCAM.Models {
             monitoredItems.Add(miMaintenanceCounterNode);
 
             // init subscription with parameters
-            s = new Subscription(Session);
+            s = new Subscription(session);
             s.PublishingInterval = 250;
             s.MaxKeepAliveTime = 1000;
             s.Lifetime = 1000000;
@@ -263,7 +269,7 @@ namespace ProjectSCAM.Models {
 
         public void Disconnect()
         {
-            Session.Disconnect();
+            session.Disconnect();
         }
 
         public void ResetMachine()
@@ -424,16 +430,16 @@ namespace ProjectSCAM.Models {
             };
         }
 
-        //Writes a WriteValueCollection to the Session
+        //Writes a WriteValueCollection to the session
         public void Write(WriteValueCollection nodesToWrite)
         {
-            Session.Write(nodesToWrite);
+            session.Write(nodesToWrite);
         }
 
         //TODO skal fjernes herfra og ned (read metoder)
         private void StatusUpdateHandler(Session s, ServerConnectionStatusUpdateEventArgs e)
         {
-            Console.WriteLine("succ");
+            
         }
 
         public Int32 ReadStateCurrent()
@@ -444,7 +450,7 @@ namespace ProjectSCAM.Models {
                 NodeId = new NodeId("::Program:Cube.Status.StateCurrent", 6),
                 AttributeId = Attributes.Value
             });
-            List<DataValue> results = Session.Read(nodesToRead);
+            List<DataValue> results = session.Read(nodesToRead);
             DataValue dv = results[0];
             return (int)dv.Value;
         }
@@ -460,7 +466,7 @@ namespace ProjectSCAM.Models {
             });
 
             List<DataValue> result = null;
-            result = Session.Read(nodesToRead, 0, TimestampsToReturn.Neither, null);
+            result = session.Read(nodesToRead, 0, TimestampsToReturn.Neither, null);
             //return TypeUtils.GetBuiltInType((NodeId)result[0].Value);
             return (int)result[0].Value;
         }
@@ -474,7 +480,7 @@ namespace ProjectSCAM.Models {
                 AttributeId = Attributes.Value
             });
 
-            List<DataValue> results = Session.Read(nodesToRead);
+            List<DataValue> results = session.Read(nodesToRead);
             DataValue dv = results[0];
             return (float)dv.Value;
         }
@@ -488,7 +494,7 @@ namespace ProjectSCAM.Models {
                 AttributeId = Attributes.Value
             });
 
-            List<DataValue> results = Session.Read(nodesToRead);
+            List<DataValue> results = session.Read(nodesToRead);
             DataValue dv = results[0];
             return (float)dv.Value;
         }
@@ -503,7 +509,7 @@ namespace ProjectSCAM.Models {
                 AttributeId = Attributes.Value
             });
 
-            List<DataValue> results = Session.Read(nodesToRead);
+            List<DataValue> results = session.Read(nodesToRead);
             DataValue dv = results[0];
             return (float)dv.Value;
         }
@@ -517,7 +523,7 @@ namespace ProjectSCAM.Models {
                 AttributeId = Attributes.Value
             });
 
-            List<DataValue> results = Session.Read(nodesToRead);
+            List<DataValue> results = session.Read(nodesToRead);
             DataValue dv = results[0];
             return (float)dv.Value;
         }
@@ -531,7 +537,7 @@ namespace ProjectSCAM.Models {
                 AttributeId = Attributes.Value
             });
 
-            List<DataValue> results = Session.Read(nodesToRead);
+            List<DataValue> results = session.Read(nodesToRead);
             DataValue dv = results[0];
             return (float)dv.Value;
         }
@@ -545,7 +551,7 @@ namespace ProjectSCAM.Models {
                 AttributeId = Attributes.Value
             });
 
-            List<DataValue> results = Session.Read(nodesToRead);
+            List<DataValue> results = session.Read(nodesToRead);
             DataValue dv = results[0];
             return (int)dv.Value;
         }
@@ -559,7 +565,7 @@ namespace ProjectSCAM.Models {
                 AttributeId = Attributes.Value
             });
 
-            List<DataValue> results = Session.Read(nodesToRead);
+            List<DataValue> results = session.Read(nodesToRead);
             DataValue dv = results[0];
             return (int)dv.Value;
         }
@@ -573,7 +579,7 @@ namespace ProjectSCAM.Models {
                 AttributeId = Attributes.Value
             });
 
-            List<DataValue> results = Session.Read(nodesToRead);
+            List<DataValue> results = session.Read(nodesToRead);
             DataValue dv = results[0];
             return (UInt16)dv.Value;
         }

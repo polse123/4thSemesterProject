@@ -113,7 +113,6 @@ namespace ProjectSCAM.Models.Logic {
                         {
                             BatchQueueModel bqm = ServiceSingleton.Instance.DBService.RetrieveFromBatchQueue()[0];
                             ServiceSingleton.Instance.DBService.RemoveFromBatchQueue(bqm.Id);
-                            System.Diagnostics.Debug.WriteLine(bqm.BeerId);
                             opc.StartMachine(10, bqm.BeerId, bqm.Amount, bqm.Speed);
                         }
                         break;

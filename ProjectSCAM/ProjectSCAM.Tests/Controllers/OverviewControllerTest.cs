@@ -36,7 +36,7 @@ namespace ProjectSCAM.Tests.Controllers {
             Assert.AreEqual("Select a machine", result);
         }
         [TestMethod]
-        public void MachineControlInvalid()
+            public void MachineControlInvalid()
         {
             // Arrange
             TestControllerBuilder builder = new TestControllerBuilder();
